@@ -1,0 +1,40 @@
+
+spring:
+  mvc:
+    view:
+      # JSP ??
+      prefix: /WEB-INF/views/
+      suffix: .jsp
+  datasource:
+    # DB ??
+    url: ${url}
+    username: ${usrname}
+    password: ${password}
+    driver-class-name: ${driver-class-name}
+  profiles:
+    active: db #, jwt
+  # JPA
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        format_sql: true
+    show-sql: true
+
+# JWT ??
+#jwt:
+#  issuer: ${issuer}
+#  secret_key: ${secret_key}
+
+#MyBatis mapper ??
+mybatis:
+  mapper-locations: classpath:mybatis/mapper/**/**.xml
+
+# ?? ?? ???
+#server:
+#  devtools:
+#    liverload:
+#      enabled: true
+#    restart:
+#      enabled: true
