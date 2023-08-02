@@ -1,4 +1,4 @@
-package com.fiveis.andrcrowd.entity;
+package com.fiveis.andcrowd.entity;
 
 public class And {
 }
