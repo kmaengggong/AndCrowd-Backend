@@ -7,14 +7,13 @@ import java.util.List;
 
 @Mapper
 public interface AndRepository {
-    List<And> findAll();
+    List<And> findAllAnd();
 
-    And findById (int andId);
+    And findById(int andId);
+
     void save(And and);
 
     void deleteById(int andId);
 
     void update(And and);
-
-
 }
