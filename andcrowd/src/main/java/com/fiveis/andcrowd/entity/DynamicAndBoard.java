@@ -1,0 +1,36 @@
+package com.fiveis.andcrowd.entity;
+
+import lombok.*;
+
+import java.time.LocalDateTime;
+
+@Getter
+@Setter
+@Builder
+@ToString
+@AllArgsConstructor
+@NoArgsConstructor
+public class DynamicAndBoard {
+
+    private int andBoardId;
+
+    private int andId;
+
+    private int userId;
+
+    private Integer andBoardTag;
+
+    private String andBoardTitle;
+
+    private String andBoardContent;
+
+    private String andImg;
+
+    private LocalDateTime andBoardPublishedAt;
+
+    private LocalDateTime andBoardUpdatedAt;
+
+    private Integer andBoardViewCount;
+
+    private Boolean isDeleted;
+}
