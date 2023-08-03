@@ -14,7 +14,7 @@ public class AndCategory {
     private int andCategoryId;
 
     @Column(nullable = false)
-    private int andCategoryName;
+    private String andCategoryName;
 
     @Column(nullable = false)
     private boolean isDeleted;
