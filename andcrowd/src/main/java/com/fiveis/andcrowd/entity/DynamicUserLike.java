@@ -8,11 +8,14 @@ import lombok.*;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserOrder {
+public class DynamicUserLike {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int uOrderId;  // 유저 주문 ID
+    private int uLikeId;  // 유저 좋아요 ID
 
     @Column(nullable = false)
-    private int orderID;  // 주문 ID
+    private int projectId;  // 좋아요한 프로젝트 ID
+
+    @Column(nullable = false)
+    private int projectType;  // 프로젝트 유형(0: 모임, 1: 펀딩)
 }

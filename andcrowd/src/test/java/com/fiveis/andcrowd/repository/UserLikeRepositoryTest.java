@@ -1,7 +1,7 @@
 package com.fiveis.andcrowd.repository;
 
 import com.fiveis.andcrowd.entity.Crowd;
-import com.fiveis.andcrowd.entity.UserLike;
+import com.fiveis.andcrowd.entity.DynamicUserLike;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -22,7 +22,7 @@ public class UserLikeRepositoryTest {
         int uLikeId = 1;
         int projectId = 1;
         int uLikeKind = 0;
-        UserLike userLike = UserLike.builder()
+        DynamicUserLike userLike = DynamicUserLike.builder()
                 .projectId(projectId)
                 .uLikeKind(uLikeKind)
                 .build();
