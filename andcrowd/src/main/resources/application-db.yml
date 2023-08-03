@@ -1,4 +1,4 @@
-url:
-username_:
-password:
-driver-class-name:
+url: jdbc:mysql://127.0.0.1:3306/andcrowd_dev
+username_: root
+password: mysql23!
+driver-class-name: com.mysql.cj.jdbc.Driver
