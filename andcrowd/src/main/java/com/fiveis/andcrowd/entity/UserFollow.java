@@ -1,12 +1,8 @@
 package com.fiveis.andcrowd.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
 
-@Entity
 @Getter
 @Builder
 @ToString
@@ -15,6 +11,8 @@ import lombok.*;
 public class UserFollow {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int uFollowId;
+    private int uFollowId;  // 유저 팔로우 ID
 
+    @Column(nullable = false)
+    private int userId;  // 팔로우한 유저 ID
 }

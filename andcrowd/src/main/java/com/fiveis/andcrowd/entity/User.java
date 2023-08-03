@@ -40,7 +40,6 @@ public class User {
     private Date userBirth;  // 생년월일
 
     @Column(nullable = false)
-    // @ColumnDefault("current_time")
     private Date userRegister;  // 가입일
 
     @Column(nullable = false)
@@ -54,4 +53,9 @@ public class User {
 
     @ColumnDefault("FALSE")
     private boolean isAdmin;  // 관리자 권한 여부
+
+    @PrePersist
+    public void setDefaultValue(){
+        this.userRegister = new Date(new java.util.Date().getTime());
+    }
 }

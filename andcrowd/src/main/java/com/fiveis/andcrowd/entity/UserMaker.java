@@ -1,12 +1,8 @@
 package com.fiveis.andcrowd.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
 
-@Entity
 @Getter
 @Builder
 @ToString
@@ -15,5 +11,11 @@ import lombok.*;
 public class UserMaker {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int uMakerId;
+    private int uMakerId;  // 유저 생성 프로젝트 ID
+
+    @Column(nullable = false)
+    private int projectId;  // 프로젝트 ID
+
+    @Column(nullable = false)
+    private int uMakerKind;  // 프로젝트 유형(0: 모임, 1: 펀딩)
 }

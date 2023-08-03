@@ -8,11 +8,11 @@ import lombok.*;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserOrder {
+public class UserAnd {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int uOrderId;  // 유저 주문 ID
+    private int uAndId;  // 유저 참가 모임 ID
 
     @Column(nullable = false)
-    private int orderID;  // 주문 ID
+    private int andId;  // 참여한 모임 ID
 }
