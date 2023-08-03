@@ -5,11 +5,11 @@ spring:
       prefix: /WEB-INF/views/
       suffix: .jsp
   profiles:
-    active: cd
+    active: db
   datasource:
     # DB ??
     url: ${url}
-    username: ${username_}
+    username: ${usrname}
     password: ${password}
     driver-class-name: ${driver-class-name}
   # JPA
