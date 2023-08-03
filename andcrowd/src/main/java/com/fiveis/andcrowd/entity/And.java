@@ -2,6 +2,7 @@ package com.fiveis.andcrowd.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.DynamicInsert;
 
 import java.time.LocalDateTime;
 
@@ -9,10 +10,13 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder @Entity
+@DynamicInsert
+@Table(name = "and_table")
 public class And {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(nullable = false)
     private int andId;
 
     @Column(nullable = false)

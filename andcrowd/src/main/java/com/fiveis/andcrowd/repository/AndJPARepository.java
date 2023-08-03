@@ -9,8 +9,4 @@ import java.util.List;
 @Repository
 public interface AndJPARepository extends JpaRepository<And, Integer> {
     List<And> findAllByUserId(int userId);
-
-    And findByAndId(int andId);
-
-    void deleteByAndId(int andId);
 }

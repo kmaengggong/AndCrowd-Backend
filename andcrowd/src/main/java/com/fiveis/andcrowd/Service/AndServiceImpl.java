@@ -4,6 +4,7 @@ import com.fiveis.andcrowd.entity.And;
 import com.fiveis.andcrowd.repository.AndJPARepository;
 
 import java.util.List;
+import java.util.Optional;
 
 public class AndServiceImpl implements AndService{
 
@@ -15,8 +16,8 @@ public class AndServiceImpl implements AndService{
 
 
     @Override
-    public And findbyAndId(int andId) {
-        return andJPARepository.findByAndId(andId);
+    public Optional<And> findbyId(int andId) {
+        return andJPARepository.findById(andId);
     }
 
     @Override
@@ -25,8 +26,8 @@ public class AndServiceImpl implements AndService{
     }
 
     @Override
-    public void deleteByAndId(int andId) {
-        andJPARepository.deleteByAndId(andId);
+    public void deleteById(int andId) {
+        andJPARepository.deleteById(andId);
     }
 
     @Override
