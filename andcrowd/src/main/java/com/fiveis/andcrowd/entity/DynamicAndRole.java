@@ -7,7 +7,7 @@ import lombok.*;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
-public class DynamicRole {
+public class DynamicAndRole {
 
     private int roleId;
 

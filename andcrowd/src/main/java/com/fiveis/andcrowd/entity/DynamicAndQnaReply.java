@@ -20,7 +20,7 @@ public class DynamicAndQnaReply {
 
     private String andReplyContent;
 
-    private LocalDateTime andReplyPublishedAt;
+    private LocalDateTime publishedAt;
 
     private boolean isDeleted;
 

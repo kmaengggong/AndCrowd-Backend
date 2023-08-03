@@ -25,9 +25,9 @@ public class DynamicAndBoard {
 
     private String andImg;
 
-    private LocalDateTime andBoardPublishedAt;
+    private LocalDateTime publishedAt;
 
-    private LocalDateTime andBoardUpdatedAt;
+    private LocalDateTime updatedAt;
 
     private Integer andBoardViewCount;
 

@@ -7,19 +7,14 @@ import lombok.*;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
-public class DynamicApplicant {
+public class DynamicAndMember {
 
-    private int applyId;
+    private int memberId;
 
     private int andId;
 
     private int userId;
 
-    private int roleId;
-
-    private int andCategoryId;
-
-    private String applyContent;
-
     private boolean isDeleted;
+
 }

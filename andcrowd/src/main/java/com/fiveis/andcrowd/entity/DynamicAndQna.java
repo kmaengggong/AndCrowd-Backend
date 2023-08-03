@@ -22,9 +22,9 @@ public class DynamicAndQna {
 
     private String qnaContent;
 
-    private LocalDateTime qnaPublishedAt;
+    private LocalDateTime publishedAt;
 
-    private LocalDateTime qnaUpdatedAt;
+    private LocalDateTime updatedAt;
 
     private boolean isDeleted;
 }
