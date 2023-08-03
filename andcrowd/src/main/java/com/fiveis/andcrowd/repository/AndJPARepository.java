@@ -7,6 +7,10 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface AndRepository extends JpaRepository<And, Integer> {
+public interface AndJPARepository extends JpaRepository<And, Integer> {
     List<And> findAllByUserId(int userId);
+
+    And findByAndId(int andId);
+
+    void deleteByAndId(int andId);
 }

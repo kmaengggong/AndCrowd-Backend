@@ -1,6 +1,7 @@
 package com.fiveis.andcrowd.Service;
 
 import com.fiveis.andcrowd.entity.And;
+import com.fiveis.andcrowd.repository.AndJPARepository;
 
 import java.util.List;
 
