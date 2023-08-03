@@ -18,4 +18,6 @@ public class DynamicMember {
 
     private int andCategoryId;
 
+    private boolean isDeleted;
+
 }

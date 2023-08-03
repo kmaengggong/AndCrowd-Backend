@@ -27,5 +27,5 @@ public class DynamicAndQna {
 
     private LocalDateTime qnaUpdatedAt;
 
-    private Boolean isDeleted;
+    private boolean isDeleted;
 }

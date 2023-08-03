@@ -32,5 +32,5 @@ public class DynamicAndBoard {
 
     private Integer andBoardViewCount;
 
-    private Boolean isDeleted;
+    private boolean isDeleted;
 }

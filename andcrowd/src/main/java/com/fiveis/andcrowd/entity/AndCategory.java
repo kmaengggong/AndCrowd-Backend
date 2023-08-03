@@ -13,4 +13,6 @@ public class AndCategory {
     private int andCategoryId;
 
     private int andCategoryName;
+
+    private boolean isDeleted;
 }

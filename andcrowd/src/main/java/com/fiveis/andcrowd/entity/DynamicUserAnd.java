@@ -13,4 +13,7 @@ public class DynamicUserAnd {
     private int uAndId;
     
     private int andId;
+
+    private boolean isDeleted;
+
 }

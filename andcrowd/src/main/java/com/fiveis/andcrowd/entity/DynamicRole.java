@@ -17,4 +17,7 @@ public class DynamicRole {
     private String role;
 
     private int roleLimit;
+
+    private boolean isDeleted;
+
 }

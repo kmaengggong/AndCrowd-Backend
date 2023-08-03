@@ -23,6 +23,6 @@ public class DynamicAndQnaReply {
 
     private LocalDateTime andReplyPublishedAt;
 
-    private Boolean isDeleted;
+    private boolean isDeleted;
 
 }
