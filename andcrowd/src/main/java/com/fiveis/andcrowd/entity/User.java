@@ -9,8 +9,11 @@ import java.sql.Date;
 import java.time.LocalDateTime;
 
 @Entity
-@Getter @Builder @ToString
-@AllArgsConstructor @NoArgsConstructor
+@Getter
+@Builder
+@ToString
+@AllArgsConstructor
+@NoArgsConstructor
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,7 +34,7 @@ public class User {
     @Column(nullable = false)
     private String userPhone;  // 전화번호
 
-    private String userProfileImage;  // 프로필 이미지 경로
+    private String userProfileImg;  // 프로필 이미지 경로
 
     @Column(nullable = false)
     private Date userBirth;  // 생년월일

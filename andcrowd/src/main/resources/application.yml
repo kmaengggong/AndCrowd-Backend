@@ -1,18 +1,17 @@
-
 spring:
   mvc:
     view:
       # JSP ??
       prefix: /WEB-INF/views/
       suffix: .jsp
+  profiles:
+    active: db
   datasource:
     # DB ??
     url: ${url}
     username: ${usrname}
     password: ${password}
     driver-class-name: ${driver-class-name}
-  profiles:
-    active: db #, jwt
   # JPA
   jpa:
     hibernate:

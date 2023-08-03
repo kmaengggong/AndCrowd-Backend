@@ -1,9 +1,6 @@
 package com.fiveis.andcrowd.repository;
 
-import com.fiveis.andcrowd.dto.UserFindByIdDTO;
-import com.fiveis.andcrowd.dto.UserUpdateDTO;
 import com.fiveis.andcrowd.entity.User;
-import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -14,9 +11,9 @@ import java.util.Optional;
 
 @SpringBootTest
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-public class UserRepositoryTest {
+public class UserJPARepositoryTest {
     @Autowired
-    UserRepository userRepository;
+    UserJPARepository userJPARepository;
 
     String userEmail = "email@email.com";
     String userPassword = "password";
@@ -52,10 +49,10 @@ public class UserRepositoryTest {
                 .userMarketing(userMarketing)
                 .isAdmin(isAdmin)
                 .build();
-        userRepository.save(user);
+        userJPARepository.save(user);
 
         // Then
-        Assertions.assertNotNull(userRepository.findById(userId));
+        Assertions.assertNotNull(userJPARepository.findById(userId));
     }
 
     @Test
@@ -67,9 +64,9 @@ public class UserRepositoryTest {
         int userId = 1;
 
         // When
-        List<User> allUser = userRepository.findAll();
+        List<User> allUser = userJPARepository.findAll();
         System.out.println(allUser);
-        Optional<User> optionalUser = userRepository.findById(userId);
+        Optional<User> optionalUser = userJPARepository.findById(userId);
         User user = optionalUser.get();
 
         // Then
@@ -123,9 +120,9 @@ public class UserRepositoryTest {
         int userId = 1;
 
         // When
-        userRepository.deleteById(userId);
+        userJPARepository.deleteById(userId);
 
         // Then
-        Assertions.assertEquals(Optional.empty(), userRepository.findById(userId));
+        Assertions.assertEquals(Optional.empty(), userJPARepository.findById(userId));
     }
 }
