@@ -69,6 +69,9 @@ public class And {
     @Column(nullable = false)
     private int adMembershipNum;
 
+    @Column(nullable = false)
+    private boolean isDeleted;
+
     @PrePersist
     public void setDefaultValue(){
         this.publishedAt = LocalDateTime.now();
