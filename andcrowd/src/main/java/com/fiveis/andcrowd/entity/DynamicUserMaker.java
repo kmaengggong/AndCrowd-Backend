@@ -8,7 +8,7 @@ import lombok.*;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserMaker {
+public class DynamicUserMaker {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int uMakerId;  // 유저 생성 프로젝트 ID
@@ -17,5 +17,5 @@ public class UserMaker {
     private int projectId;  // 프로젝트 ID
 
     @Column(nullable = false)
-    private int uMakerKind;  // 프로젝트 유형(0: 모임, 1: 펀딩)
+    private int projectType ;  // 프로젝트 유형(0: 모임, 1: 펀딩)
 }

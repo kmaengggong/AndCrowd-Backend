@@ -8,7 +8,7 @@ import lombok.*;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserAnd {
+public class DynamicUserAnd {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int uAndId;  // 유저 참가 모임 ID

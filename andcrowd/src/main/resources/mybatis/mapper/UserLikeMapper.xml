@@ -20,7 +20,7 @@
             crowd_id = #{projectId}
     </select>
 
-    <insert id="save" parameterType="com.fiveis.andcrowd.entity.UserLike">
+    <insert id="save" parameterType="com.fiveis.andcrowd.entity.DynamicUserLike">
         INSERT INTO user_like
             (project_id, u_like_kind)
         VALUES

@@ -8,11 +8,11 @@ import lombok.*;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserFollow {
+public class DynamicUserOrder {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int uFollowId;  // 유저 팔로우 ID
+    private int uOrderId;  // 유저 주문 ID
 
     @Column(nullable = false)
-    private int userId;  // 팔로우한 유저 ID
+    private int orderID;  // 주문 ID
 }

@@ -3,19 +3,20 @@ package com.fiveis.andcrowd.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+@Entity
 @Getter
 @Builder
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserLike {
+public class Ad {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int uLikeId;  // 유저 좋아요 ID
+    private int adId;  // 광고 ID
 
     @Column(nullable = false)
-    private int projectId;  // 좋아요한 프로젝트 ID
+    private String adName;  // 광고 이름
 
     @Column(nullable = false)
-    private int uLikeKind;  // 프로젝트 유형(0: 모임, 1: 펀딩)
+    private int adPrice;  // 광고 가격
 }
