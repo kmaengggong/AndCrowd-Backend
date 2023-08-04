@@ -6,6 +6,7 @@ spring:
       suffix: .jsp
   profiles:
     active: db, jwt, cd
+=======
   datasource:
     # DB
     url: ${url}
