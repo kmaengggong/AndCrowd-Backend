@@ -27,11 +27,11 @@ jwt:
   issuer: ${issuer}
   secret_key: ${secret_key}
 
-#MyBatis mapper ??
+#MyBatis
 mybatis:
   mapper-locations: classpath:mybatis/mapper/**/**.xml
 
-# ?? ?? ???
+# Server Auto Reload
 #server:
 #  devtools:
 #    liverload:
