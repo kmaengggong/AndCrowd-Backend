@@ -1,4 +1,4 @@
-package com.fiveis.andcrowd.Service;
+package com.fiveis.andcrowd.service;
 
 import com.fiveis.andcrowd.entity.And;
 import com.fiveis.andcrowd.repository.AndJPARepository;
@@ -16,12 +16,12 @@ public class AndServiceImpl implements AndService{
 
 
     @Override
-    public Optional<And> findbyId(int andId) {
+    public Optional<And> findById(int andId) {
         return andJPARepository.findById(andId);
     }
 
     @Override
-    public List<And> findAllbyUserId(int userId) {
+    public List<And> findAllByUserId(int userId) {
         return andJPARepository.findAllByUserId(userId);
     }
 

@@ -1,4 +1,4 @@
-package com.fiveis.andcrowd.Service;
+package com.fiveis.andcrowd.service;
 
 import com.fiveis.andcrowd.entity.And;
 
@@ -6,9 +6,9 @@ import java.util.List;
 import java.util.Optional;
 
 public interface AndService {
-    Optional<And> findbyId(int andId);
+    Optional<And> findById(int andId);
 
-    List<And> findAllbyUserId(int userId);
+    List<And> findAllByUserId(int userId);
 
     void deleteById(int andId);
 
