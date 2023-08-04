@@ -44,6 +44,14 @@ public class AndServiceImpl implements AndService{
         andJPARepository.save(and);
     }
 
+    @Override
+    public void update(And and) {
+        And updatedAnd = andJPARepository.findById(and.getAndId()).get();
+        updatedAnd.setAndTitle(and.getAndTitle());
+        updatedAnd.setAndContent(and.getAndContent());
+        andJPARepository.save(updatedAnd);
+    }
+
 
     public AndDTO.FindById convertToAndFindByIdDTO(And and) {
         return AndDTO.FindById.builder()

@@ -20,4 +20,5 @@ public interface AndService {
 
     public AndDTO.FindById convertToAndFindByIdDTO(And and);
 
+    void update(And and);
 }
