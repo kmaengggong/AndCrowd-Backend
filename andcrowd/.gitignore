@@ -36,6 +36,6 @@ out/
 ### VS Code ###
 .vscode/
 
-### Coustim ###
+### Custom ###
 application-db.yml
-application-cd.yml
+
