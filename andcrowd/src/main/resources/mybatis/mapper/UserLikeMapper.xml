@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.fiveis.andcrowd.repository.UserLikeRepository">
+    <select id="findAll" resultType="com.fiveis.andcrowd.entity.Crowd">
+        SELECT
+            *
+        FROM
+            crowd
+    </select>
+
+    <select id="findById" resultType="com.fiveis.andcrowd.entity.Crowd">
+        SELECT
+            *
+        FROM
+            crowd
+        WHERE
+            crowd_id = #{projectId}
+    </select>
+
+    <insert id="save" parameterType="com.fiveis.andcrowd.entity.DynamicUserLike">
+        INSERT INTO user_like
+            (project_id, u_like_kind)
+        VALUES
+            (#{projectId}, #{uLikeKind})
+    </insert>
+</mapper>
