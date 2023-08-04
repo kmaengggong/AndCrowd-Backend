@@ -3,16 +3,13 @@ package com.fiveis.andcrowd.entity;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
-import org.springframework.cglib.core.Local;
 
 import java.sql.Date;
-import java.time.LocalDateTime;
 
 @Entity
 @Getter
 @Builder
 @ToString
-@AllArgsConstructor
 @NoArgsConstructor
 public class User {
     @Id
@@ -52,10 +49,35 @@ public class User {
     private int userMarketing;  // 마케팅 동의
 
     @ColumnDefault("FALSE")
-    private boolean isAdmin;  // 관리자 권한 여부
+    private Authority authority;  // 관리자 권한 여부
+
+    @Builder
+    public User(int userId, String userEmail, String userPassword, String userName, String userNickname,
+                String userPhone, String userProfileImg, Date userBirth, Date userRegister,
+                int userTos, int userPrivacy, int userMarketing, Authority authority){
+        this.userId = userId;
+        this.userEmail = userEmail;
+        this.userPassword = userPassword;
+        this.userName = userName;
+        this.userNickname = userNickname;
+        this.userPhone = userPhone;
+        this.userProfileImg = userProfileImg;
+        this.userBirth = userBirth;
+        this.userRegister = userRegister;
+        this.userTos = userTos;
+        this.userPrivacy = userPrivacy;
+        this.userMarketing = userMarketing;
+        this.authority = authority;
+    }
 
     @PrePersist
     public void setDefaultValue(){
         this.userRegister = new Date(new java.util.Date().getTime());
+    }
+
+    public void updateUser(String userPassword, String userPhone, String userProfileImg){
+        this.userPassword = userPassword;
+        this.userPhone = userPhone;
+        this.userProfileImg = userProfileImg;
     }
 }
