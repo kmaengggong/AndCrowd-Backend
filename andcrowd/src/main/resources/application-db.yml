@@ -1,5 +1,5 @@
-url: jdbc:mysql://127.0.0.1:3306/andcrowd_test
-username_: root
-password: mysql
-driver-class-name: com.mysql.cj.jdbc.Driver
+url:
+username_:
+password:
+driver-class-name:
 

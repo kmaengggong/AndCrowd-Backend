@@ -5,7 +5,7 @@ spring:
       prefix: /WEB-INF/views/
       suffix: .jsp
   profiles:
-    active: db
+    active: db, cd
   datasource:
     # DB ??
     url: ${url}
