@@ -1,4 +1,4 @@
-package com.fiveis.andcrowd.Service;
+package com.fiveis.andcrowd.service;
 
 import com.fiveis.andcrowd.dto.AndFindAllByUserIdDTO;
 import com.fiveis.andcrowd.dto.AndFindByIdDTO;

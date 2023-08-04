@@ -1,4 +1,4 @@
-package com.fiveis.andcrowd.Service;
+package com.fiveis.andcrowd.service;
 
 import com.fiveis.andcrowd.dto.AndFindAllByUserIdDTO;
 import com.fiveis.andcrowd.dto.AndFindByIdDTO;
@@ -10,6 +10,7 @@ import java.util.Optional;
 
 @Service
 public interface AndService {
+
     Optional<AndFindByIdDTO> findById(int andId);
 
     List<AndFindAllByUserIdDTO> findAllByUserId(int userId);
