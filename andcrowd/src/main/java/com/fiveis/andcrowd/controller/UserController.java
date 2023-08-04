@@ -37,6 +37,7 @@ public class UserController {
 
     @RequestMapping(value="/login", method= RequestMethod.POST)
     public ResponseEntity<?> authenticate(@RequestBody User user) {
+        System.out.println("!!!!! " + user);
         User userInfo = userService.getByCredentials(user.getUserEmail());
 
         if(bCryptPasswordEncoder.matches(user.getPassword(), userInfo.getUserPassword())){

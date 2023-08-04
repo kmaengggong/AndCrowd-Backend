@@ -9,7 +9,7 @@ spring:
   datasource:
     # DB
     url: ${url}
-    username: ${username_}
+    username: ${usrname}
     password: ${password}
     driver-class-name: ${driver-class-name}
   # JPA
@@ -26,11 +26,11 @@ jwt:
   issuer: ${issuer}
   secret_key: ${secret_key}
 
-#MyBatis mapper ??
+#MyBatis
 mybatis:
   mapper-locations: classpath:mybatis/mapper/**/**.xml
 
-# ?? ?? ???
+# Server Auto Reload
 #server:
 #  devtools:
 #    liverload:
