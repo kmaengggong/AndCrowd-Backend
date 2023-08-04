@@ -1,7 +1,7 @@
 package com.fiveis.andcrowd.service;
 
-import com.fiveis.andcrowd.Service.AndService;
-import com.fiveis.andcrowd.dto.AndFindByIdDTO;
+import com.fiveis.andcrowd.service.AndService;
+import com.fiveis.andcrowd.dto.AndDTO;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -30,7 +30,7 @@ public class AndServiceTest {
         String andHeaderImg = "headerimgdir";
 
         // when
-        AndFindByIdDTO andFindByIdDTO = andService.findById(andId).get();
+        AndDTO.FindById andFindByIdDTO = andService.findById(andId).get();
 
         // then
         assertEquals(andContent, andFindByIdDTO.getAndContent());

@@ -1,7 +1,6 @@
 package com.fiveis.andcrowd.service;
 
-import com.fiveis.andcrowd.dto.AndFindAllByUserIdDTO;
-import com.fiveis.andcrowd.dto.AndFindByIdDTO;
+import com.fiveis.andcrowd.dto.AndDTO;
 import com.fiveis.andcrowd.entity.And;
 import com.fiveis.andcrowd.repository.AndJPARepository;
 import org.springframework.stereotype.Service;
@@ -25,13 +24,13 @@ public class AndServiceImpl implements AndService{
 //    }
 
     @Override
-    public Optional<AndFindByIdDTO> findById(int andId) {
+    public Optional<AndDTO.FindById> findById(int andId) {
         Optional<And> andOptional = andJPARepository.findById(andId);
         return andOptional.map(this::convertToAndFindByIdDTO);
     }
 
     @Override
-    public List<AndFindAllByUserIdDTO> findAllByUserId(int userId) {
+    public List<AndDTO.FindAllByUserId> findAllByUserId(int userId) {
         return andJPARepository.findAllByUserId(userId);
     }
 
@@ -46,8 +45,8 @@ public class AndServiceImpl implements AndService{
     }
 
 
-    public AndFindByIdDTO convertToAndFindByIdDTO(And and) {
-        return AndFindByIdDTO.builder()
+    public AndDTO.FindById convertToAndFindByIdDTO(And and) {
+        return AndDTO.FindById.builder()
                 .andId(and.getAndId())
                 .userId(and.getUserId())
                 .andCategoryId(and.getAndCategoryId())
