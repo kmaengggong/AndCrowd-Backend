@@ -1,5 +1,4 @@
 package com.fiveis.andcrowd.dto;
-
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -82,43 +81,6 @@ public class AndDTO {
         private int adMembershipNum;
         private boolean isDeleted;
 
-    }
-    
-    //모임 게시판
-    @Getter @Setter @Builder @ToString
-    @AllArgsConstructor @NoArgsConstructor
-    public static class DynamicAndBoardDTO {
-        private int andBoardId;
-        private int andId;
-        private int userId;
-        private Integer andBoardTag;
-        private String andBoardTitle;
-        private String andBoardContent;
-        private String andImg;
-        private LocalDateTime publishedAt;
-        private LocalDateTime updatedAt;
-        private Integer andBoardViewCount;
-        private boolean isDeleted;
-
-    }
-
-    //모임 분야
-    @Getter @Setter @Builder @ToString
-    @AllArgsConstructor @NoArgsConstructor
-    public static class AndCategoryDTO {
-        private int andCategoryId;
-        private String andCategoryName;
-        private boolean isDeleted;
-    }
-
-    //모임 참여자
-    @Getter @Setter @Builder @ToString
-    @AllArgsConstructor @NoArgsConstructor
-    public static class DynamicAndMemberDTO {
-        private int memberId;
-        private int andId;
-        private int userId;
-        private boolean isDeleted;
     }
 
 }
