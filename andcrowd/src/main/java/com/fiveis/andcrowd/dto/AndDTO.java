@@ -105,7 +105,7 @@ public class AndDTO {
     //모임 분야
     @Getter @Setter @Builder @ToString
     @AllArgsConstructor @NoArgsConstructor
-    public class AndCategoryDTO {
+    public static class AndCategoryDTO {
         private int andCategoryId;
         private String andCategoryName;
         private boolean isDeleted;
@@ -114,7 +114,7 @@ public class AndDTO {
     //모임 참여자
     @Getter @Setter @Builder @ToString
     @AllArgsConstructor @NoArgsConstructor
-    public class DynamicAndMemberDTO {
+    public static class DynamicAndMemberDTO {
         private int memberId;
         private int andId;
         private int userId;
