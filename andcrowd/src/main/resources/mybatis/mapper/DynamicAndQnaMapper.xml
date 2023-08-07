@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fiveis.andcrowd.repository.DynamicAndQnaRepository">
+
+    <select id="findById" resultType="com.fiveis.andcrowd.dto.DynamicAndQnaDTO$FindById">
+        SELECT and_qna_id AS andQnaId,
+        and_id AS andId,
+        user_id AS userId,
+        and_category_id AS andCategoryId,
+        qna_title AS qnaTitle,
+        qna_content AS qnaContent,
+        published_at AS publishedAt,
+        updated_at AS updatedAt,
+        is_deleted AS isDeleted
+        FROM dynamic_and_qna
+        WHERE and_qna_id = #{andQnaId}
+    </select>
+
+    <insert id="save" parameterType="com.fiveis.andcrowd.dto.DynamicAndQnaDTO$Update">
+        INSERT INTO dynamic_and_qna (and_id, user_id, and_category_id, qna_title, qna_content, published_at, updated_at, is_deleted)
+        VALUES (#{andId}, #{userId}, #{andCategoryId}, #{qnaTitle}, #{qnaContent}, #{publishedAt}, #{updatedAt}, #{isDeleted})
+    </insert>
+
+    <update id="update" parameterType="com.fiveis.andcrowd.dto.DynamicAndQnaDTO$Update">
+        UPDATE dynamic_and_qna
+        SET and_id = #{andId}, user_id = #{userId}, and_category_id = #{andCategoryId}, qna_title = #{qnaTitle},
+            qna_content = #{qnaContent}, published_at = #{publishedAt}, updated_at = #{updatedAt}, is_deleted = #{isDeleted}
+        WHERE and_qna_id = #{andQnaId}
+    </update>
+
+    <delete id="deleteById" parameterType="int">
+        DELETE FROM dynamic_and_qna WHERE and_qna_id = #{andQnaId}
+    </delete>
+
+
+</mapper>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fiveis.andcrowd.repository.AndDynamicRepository">
+
+    <insert id="createDynamicAndQnaTable">
+        CREATE TABLE dynamic_and_qna_${and_id}(
+          and_qna_id INT AUTO_INCREMENT PRIMARY KEY ,
+          and_id INT NOT NULL ,
+          user_id INT NOT NULL ,
+          and_qna_title VARCHAR(200) NOT NULL ,
+          and_qna_content VARCHAR(2000) NOT NULL ,
+          published_at DATETIME DEFAULT now() ,
+          updated_at DATETIME DEFAULT now() ,
+          is_deleted BOOL default false
+        );
+    </insert>
+
+</mapper>

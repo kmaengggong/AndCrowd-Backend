@@ -102,7 +102,7 @@ public class AndDTO {
 
     }
 
-    //모임 분야
+//    모임 분야
     @Getter @Setter @Builder @ToString
     @AllArgsConstructor @NoArgsConstructor
     public class AndCategoryDTO {

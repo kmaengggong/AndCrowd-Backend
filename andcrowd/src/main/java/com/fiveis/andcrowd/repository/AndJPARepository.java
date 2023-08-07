@@ -11,6 +11,5 @@ import java.util.Optional;
 @Repository
 public interface AndJPARepository extends JpaRepository<And, Integer> {
     List<AndDTO.FindAllByUserId> findAllByUserId(int userId);
-    Optional<And> findById(int andId);
 
     }
