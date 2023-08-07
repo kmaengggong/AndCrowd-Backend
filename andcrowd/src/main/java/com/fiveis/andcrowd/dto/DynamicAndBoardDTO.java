@@ -24,7 +24,7 @@ public class DynamicAndBoardDTO {
     @Getter @Setter
     @Builder @ToString
     @AllArgsConstructor @NoArgsConstructor
-    public static class findById {
+    public static class FindById {
         private int andBoardId;
         private int andId;
         private int userId;
@@ -37,4 +37,5 @@ public class DynamicAndBoardDTO {
         private Integer andBoardViewCount;
         private boolean isDeleted;
     }
+
 }

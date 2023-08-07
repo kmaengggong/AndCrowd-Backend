@@ -16,12 +16,10 @@ public class AndCategoryDTO {
     @Getter @Setter
     @Builder @ToString
     @AllArgsConstructor @NoArgsConstructor
-    public static class findById {
+    public static class FindById {
         private int andCategoryId;
         private String andCategoryName;
         private boolean isDeleted;
     }
-
-
 
 }

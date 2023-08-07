@@ -17,10 +17,11 @@ public class DynamicAndMemberDTO {
     @Getter @Setter
     @Builder @ToString
     @AllArgsConstructor @NoArgsConstructor
-    public static class findById {
+    public static class FindById {
         private int memberId;
         private int andId;
         private int userId;
         private boolean isDeleted;
     }
+    
 }
