@@ -23,10 +23,10 @@ public class UserServiceTest {
         String userKorName = "김명호";
 
         // When
-        List<UserDTO.UserFindByIdDTO> userFindDTOList = userService.findAllByUserKorName(userKorName);
+        List<UserDTO.FindAsUser> userFindDTOList = userService.findAllByUserKorName(userKorName);
 
         // Then
-        for(UserDTO.UserFindByIdDTO userFindDTO : userFindDTOList){
+        for(UserDTO.FindAsUser userFindDTO : userFindDTOList){
             Assertions.assertEquals(userKorName, userFindDTO.getUserKorName());
         }
     }
@@ -39,7 +39,7 @@ public class UserServiceTest {
         String userEmail = "asdf@gmail.com";
 
         // When
-        UserDTO.UserFindDTO userFindDTO = userService.findByUserEmail(userEmail);
+        UserDTO.FindAsUser userFindDTO = userService.findByUserEmail(userEmail);
 
         // Then
         Assertions.assertEquals(userEmail, userFindDTO.getUserEmail());
@@ -53,7 +53,7 @@ public class UserServiceTest {
         String userNickname = "NICK";
 
         // When
-        UserDTO.UserFindDTO userFindDTO = userService.findByUserNickname(userNickname);
+        UserDTO.FindAsPublic userFindDTO = userService.findByUserNickname(userNickname);
 
         // Then
         Assertions.assertEquals(userNickname, userFindDTO.getUserNickname());
@@ -83,7 +83,7 @@ public class UserServiceTest {
         String userNickname = "changedNickname";
         String userPhone = "010-0000-0000";
         String userProfileImg = "changedProfileImg";
-        UserDTO.UserUpdateDTO userUpdateDTO = UserDTO.UserUpdateDTO.builder()
+        UserDTO.Update userUpdateDTO = UserDTO.Update.builder()
                 .userEmail(userEmail)
                 .userPassword(userPassword)
                 .userNickname(userNickname)
@@ -95,7 +95,7 @@ public class UserServiceTest {
         userService.update(userUpdateDTO);
 
         // Then
-        UserDTO.UserFindDTO userFindDTO = userService.findByUserEmail(userEmail);
+        UserDTO.FindAsUser userFindDTO = userService.findByUserEmail(userEmail);
         Assertions.assertEquals(userEmail, userFindDTO.getUserEmail());
         Assertions.assertEquals(userNickname, userFindDTO.getUserNickname());
         Assertions.assertEquals(userProfileImg, userFindDTO.getUserProfileImg());

@@ -5,17 +5,16 @@ import com.fiveis.andcrowd.entity.User;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public interface UserService {
-    List<UserDTO.UserFindDTO> findAll();
-    List<UserDTO.UserFindByIdDTO> findAllByUserKorName(String userKorName);
-    UserDTO.UserFindByIdDTO findById(String userId);
-    UserDTO.UserFindDTO findByUserEmail(String userEmail);
-    UserDTO.UserFindDTO findByUserNickname(String userNickname);
+    List<UserDTO.FindAsPublic> findAll();
+    List<UserDTO.FindAsUser> findAllByUserKorName(String userKorName);
+    UserDTO.FindAsAdmin findById(String userId);
+    UserDTO.FindAsUser findByUserEmail(String userEmail);
+    UserDTO.FindAsPublic findByUserNickname(String userNickname);
     void deleteByUserEmail(String userEmail);
     void save(User user);
-    void update(UserDTO.UserUpdateDTO user);
+    void update(UserDTO.Update user);
     User getByCredentials(String userEmail);
 }

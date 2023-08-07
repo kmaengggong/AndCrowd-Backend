@@ -8,7 +8,6 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.time.LocalDateTime;
 import java.util.Collection;
@@ -95,8 +94,29 @@ public class User implements UserDetails {
     }
 
     // Entity -> DTO Converter
-    public UserDTO.UserFindByIdDTO toFindByIdDTO(){
-        return UserDTO.UserFindByIdDTO.builder()
+    public UserDTO.FindAsPublic toFindAsPublicDTO(){
+        return UserDTO.FindAsPublic.builder()
+                .userNickname(this.userNickname)
+                .userProfileImg(this.userProfileImg)
+                .userProfileImg(this.userProfileImg)
+                .build();
+    }
+
+    public UserDTO.FindAsUser toFindAsUserDTO(){
+        return UserDTO.FindAsUser.builder()
+                .userEmail(this.userEmail)
+                .userPassword(this.userPassword)
+                .userKorName(this.userKorName)
+                .userNickname(this.userNickname)
+                .userPhone(this.userPhone)
+                .userProfileImg(this.userProfileImg)
+                .userBirth(this.userBirth)
+                .userRegister(this.userRegister)
+                .build();
+    }
+
+    public UserDTO.FindAsAdmin toFindAsAdminDTO(){
+        return UserDTO.FindAsAdmin.builder()
                 .userId(this.userId)
                 .userEmail(this.userEmail)
                 .userPassword(this.userPassword)
@@ -106,21 +126,15 @@ public class User implements UserDetails {
                 .userProfileImg(this.userProfileImg)
                 .userBirth(this.userBirth)
                 .userRegister(this.userRegister)
+                .userTos(this.userTos)
+                .userPrivacy(this.userPrivacy)
+                .userMarketing(this.userMarketing)
                 .authority(this.authority)
                 .build();
     }
 
-    public UserDTO.UserFindDTO toFindDTO(){
-        return UserDTO.UserFindDTO.builder()
-                .userEmail(this.userEmail)
-                .userNickname(this.userNickname)
-                .userProfileImg(this.userProfileImg)
-                .userRegister(this.userRegister)
-                .build();
-    }
-
-    public UserDTO.UserUpdateDTO toUpdateDTO(){
-        return UserDTO.UserUpdateDTO.builder()
+    public UserDTO.Update toUpdateDTO(){
+        return UserDTO.Update.builder()
                 .userPassword(this.userPassword)
                 .userNickname(this.userNickname)
                 .userPhone(this.userPhone)

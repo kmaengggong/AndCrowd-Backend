@@ -10,8 +10,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -25,39 +23,39 @@ public class UserServiceImpl implements UserService {
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
-    public List<UserDTO.UserFindDTO> findAll(){
+    public List<UserDTO.FindAsPublic> findAll(){
         List<User> userList = userJPARepository.findAll();
-        List<UserDTO.UserFindDTO> userFindDTOList = new ArrayList<>();
+        List<UserDTO.FindAsPublic> userFindDTOList = new ArrayList<>();
         for (User user : userList) {
-            UserDTO.UserFindDTO dto = user.toFindDTO();
+            UserDTO.FindAsPublic dto = user.toFindAsPublicDTO();
             userFindDTOList.add(dto);
         }
         return userFindDTOList;
     }
 
-    public List<UserDTO.UserFindByIdDTO> findAllByUserKorName(String userKorName){
+    public List<UserDTO.FindAsUser> findAllByUserKorName(String userKorName){
         List<User> userList = userJPARepository.findAllByUserKorName(userKorName);
-        List<UserDTO.UserFindByIdDTO> userFindDTOList = new ArrayList<>();
+        List<UserDTO.FindAsUser> userFindDTOList = new ArrayList<>();
         for (User user : userList) {
-            UserDTO.UserFindByIdDTO dto = user.toFindByIdDTO();
+            UserDTO.FindAsUser dto = user.toFindAsUserDTO();
             userFindDTOList.add(dto);
         }
         return userFindDTOList;
     }
 
-    public UserDTO.UserFindByIdDTO findById(String userId){
+    public UserDTO.FindAsAdmin findById(String userId){
         if(userJPARepository.findById(userId).isEmpty()) return null;
-        return userJPARepository.findById(userId).get().toFindByIdDTO();
+        return userJPARepository.findById(userId).get().toFindAsAdminDTO();
     }
 
-    public UserDTO.UserFindDTO findByUserEmail(String userEmail){
+    public UserDTO.FindAsUser findByUserEmail(String userEmail){
         if(userJPARepository.findByUserEmail(userEmail).isEmpty()) return null;
-        return userJPARepository.findByUserEmail(userEmail).get().toFindDTO();
+        return userJPARepository.findByUserEmail(userEmail).get().toFindAsUserDTO();
     }
 
-    public UserDTO.UserFindDTO findByUserNickname(String userNickname){
+    public UserDTO.FindAsPublic findByUserNickname(String userNickname){
         if(userJPARepository.findByUserNickname(userNickname).isEmpty()) return null;
-        return userJPARepository.findByUserNickname(userNickname).get().toFindDTO();
+        return userJPARepository.findByUserNickname(userNickname).get().toFindAsPublicDTO();
     }
 
     @Transactional
@@ -72,7 +70,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Transactional
-    public void update(UserDTO.UserUpdateDTO userUpdateDTO) {
+    public void update(UserDTO.Update userUpdateDTO) {
         User user = userJPARepository.findByUserEmail(userUpdateDTO.getUserEmail()).get();
 
         if(userUpdateDTO.getUserPassword() != null){
