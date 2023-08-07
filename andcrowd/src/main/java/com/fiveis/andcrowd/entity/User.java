@@ -1,5 +1,6 @@
 package com.fiveis.andcrowd.entity;
 
+import com.fiveis.andcrowd.dto.UserDTO;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
@@ -7,8 +8,8 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-import java.sql.Date;
 import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
@@ -21,8 +22,8 @@ import java.util.List;
 @Table(name="users")
 public class User implements UserDetails {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int userId;  // 유저 ID
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private String userId;  // 유저 ID
 
     @Column(nullable = false)  // 이메일
     private String userEmail;
@@ -57,18 +58,18 @@ public class User implements UserDetails {
     @Column(nullable = false)
     private int userMarketing;  // 마케팅 동의
 
-    @ColumnDefault("FALSE")
+    @ColumnDefault("0")
     private Authority authority;  // 관리자 권한 여부
 
     @Builder
-    public User(int userId, String userEmail, String userPassword, String userKorName, String userNickname,
+    public User(String userId, String userEmail, String userPassword, String userKorName, String userNickname,
                 String userPhone, String userProfileImg, LocalDateTime userBirth, LocalDateTime userRegister,
                 int userTos, int userPrivacy, int userMarketing, Authority authority){
         this.userId = userId;
         this.userEmail = userEmail;
         this.userPassword = userPassword;
         this.userKorName = userKorName;
-        this.userNickname = userNickname;
+        this.userNickname = userNickname;  // 중복값 있는 지는 프론트에서 확인
         this.userPhone = userPhone;
         this.userProfileImg = userProfileImg;
         this.userBirth = userBirth;
@@ -79,12 +80,55 @@ public class User implements UserDetails {
         this.authority = authority;
     }
 
-    public void updateUser(String userPassword, String userPhone, String userProfileImg){
+    // Setter for Update
+    public void setUserPassword(String userPassword){
         this.userPassword = userPassword;
+    }
+    public void setUserNickname(String userNickname){
+        this.userNickname = userNickname;
+    }
+    public void setUserPhone(String userPhone){
         this.userPhone = userPhone;
+    }
+    public void setUserProfileImg(String userProfileImg){
         this.userProfileImg = userProfileImg;
     }
 
+    // Entity -> DTO Converter
+    public UserDTO.UserFindByIdDTO toFindByIdDTO(){
+        return UserDTO.UserFindByIdDTO.builder()
+                .userId(this.userId)
+                .userEmail(this.userEmail)
+                .userPassword(this.userPassword)
+                .userKorName(this.userKorName)
+                .userNickname(this.userNickname)
+                .userPhone(this.userPhone)
+                .userProfileImg(this.userProfileImg)
+                .userBirth(this.userBirth)
+                .userRegister(this.userRegister)
+                .authority(this.authority)
+                .build();
+    }
+
+    public UserDTO.UserFindDTO toFindDTO(){
+        return UserDTO.UserFindDTO.builder()
+                .userEmail(this.userEmail)
+                .userNickname(this.userNickname)
+                .userProfileImg(this.userProfileImg)
+                .userRegister(this.userRegister)
+                .build();
+    }
+
+    public UserDTO.UserUpdateDTO toUpdateDTO(){
+        return UserDTO.UserUpdateDTO.builder()
+                .userPassword(this.userPassword)
+                .userNickname(this.userNickname)
+                .userPhone(this.userPhone)
+                .userProfileImg(this.userProfileImg)
+                .build();
+    }
+
+    // For UserDetails
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority(("user")));
