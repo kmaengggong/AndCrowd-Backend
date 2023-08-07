@@ -19,15 +19,6 @@ public class DynamicAndBoardDTO {
         private String andBoardContent;
         private String andImg;
         private boolean isDeleted;
-        public Update (DynamicAndBoard dynamicAndBoard){
-            this.andBoardId = dynamicAndBoard.getAndBoardId();
-            this.userId = dynamicAndBoard.getUserId();
-            this.andBoardTag = dynamicAndBoard.getAndBoardTag();
-            this.andBoardTitle = dynamicAndBoard.getAndBoardTitle();
-            this.andBoardContent = dynamicAndBoard.getAndBoardContent();
-            this.andImg = dynamicAndBoard.getAndImg();
-            this.isDeleted = dynamicAndBoard.isDeleted();
-        }
     }
 
     @Getter @Setter
@@ -45,19 +36,5 @@ public class DynamicAndBoardDTO {
         private LocalDateTime updatedAt;
         private Integer andBoardViewCount;
         private boolean isDeleted;
-
-        public findById (DynamicAndBoard dynamicAndBoard){
-            this.andBoardId = dynamicAndBoard.getAndBoardId();
-            this.andId = dynamicAndBoard.getAndId();
-            this.userId = dynamicAndBoard.getUserId();
-            this.andBoardTag = dynamicAndBoard.getAndBoardTag();
-            this.andBoardTitle = dynamicAndBoard.getAndBoardTitle();
-            this.andBoardContent = dynamicAndBoard.getAndBoardContent();
-            this.andImg = dynamicAndBoard.getAndImg();
-            this.publishedAt = dynamicAndBoard.getPublishedAt();
-            this.updatedAt = dynamicAndBoard.getUpdatedAt();
-            this.andBoardViewCount = dynamicAndBoard.getAndBoardViewCount();
-            this.isDeleted = dynamicAndBoard.isDeleted();
-        }
     }
 }

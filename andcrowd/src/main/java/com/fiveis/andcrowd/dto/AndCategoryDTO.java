@@ -11,11 +11,6 @@ public class AndCategoryDTO {
         private int andCategoryId;
         private String andCategoryName;
         private boolean isDeleted;
-        public Update (AndCategory andCategory){
-            this.andCategoryId = andCategory.getAndCategoryId();
-            this.andCategoryName = andCategory.getAndCategoryName();
-            this.isDeleted = andCategory.isDeleted();
-        }
     }
 
     @Getter @Setter
@@ -25,12 +20,6 @@ public class AndCategoryDTO {
         private int andCategoryId;
         private String andCategoryName;
         private boolean isDeleted;
-
-        public findById (AndCategory andCategory){
-            this.andCategoryId = andCategory.getAndCategoryId();
-            this.andCategoryName = andCategory.getAndCategoryName();
-            this.isDeleted = andCategory.isDeleted();
-        }
     }
 
 

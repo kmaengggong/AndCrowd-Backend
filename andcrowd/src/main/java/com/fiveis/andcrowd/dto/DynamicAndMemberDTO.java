@@ -12,12 +12,6 @@ public class DynamicAndMemberDTO {
         private int andId;
         private int userId;
         private boolean isDeleted;
-        public Update (DynamicAndMember dynamicAndMember){
-            this.memberId = dynamicAndMember.getMemberId();
-            this.andId = dynamicAndMember.getAndId();
-            this.userId = dynamicAndMember.getUserId();
-            this.isDeleted = dynamicAndMember.isDeleted();
-        }
     }
 
     @Getter @Setter
@@ -28,12 +22,5 @@ public class DynamicAndMemberDTO {
         private int andId;
         private int userId;
         private boolean isDeleted;
-
-        public findById(DynamicAndMember dynamicAndMember){
-            this.memberId = dynamicAndMember.getMemberId();
-            this.andId = dynamicAndMember.getAndId();
-            this.userId = dynamicAndMember.getUserId();
-            this.isDeleted = dynamicAndMember.isDeleted();
-        }
     }
 }
