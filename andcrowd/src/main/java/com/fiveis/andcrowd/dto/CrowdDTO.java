@@ -37,25 +37,6 @@ public class CrowdDTO {
     }
 
     @Getter
-    @Builder
-    @ToString
-    @AllArgsConstructor
-    @NoArgsConstructor
-    public static class Update {
-        // UpdateRequest시 필요한 멤버변수 : 크라우드Id, 본문, 마감일, 사진 1-5, 제목, 대표사진
-        private int crowdId;
-        private String crowdContent;
-        private LocalDateTime crowdEndDate;
-        private String crowdImg1;
-        private String crowdImg2;
-        private String crowdImg3;
-        private String crowdImg4;
-        private String crowdImg5;
-        private String crowdTitle;
-        private String headerImg;
-    }
-
-    @Getter
     @Setter
     @AllArgsConstructor
     @NoArgsConstructor
@@ -78,6 +59,7 @@ public class CrowdDTO {
     }
 
     @Getter
+    @Setter
     @Builder
     @ToString
     @AllArgsConstructor
