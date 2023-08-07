@@ -1,5 +1,6 @@
 package com.fiveis.andcrowd.dto;
 
+import com.fiveis.andcrowd.entity.Crowd;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -34,6 +35,29 @@ public class CrowdDTO {
         private LocalDateTime updatedAt;
         private int userId;
         private int viewCount;
+
+        public FindById(Crowd crowd){
+            this.crowdId = crowd.getCrowdId();
+            this.adNum = crowd.getAdNum();
+            this.andId = crowd.getAndId();
+            this.crowdCategoryId = crowd.getCrowdCategoryId();
+            this.crowdContent = crowd.getCrowdContent();
+            this.crowdEndDate = crowd.getCrowdEndDate();
+            this.crowdGoal = crowd.getCrowdGoal();
+            this.crowdImg2 = crowd.getCrowdImg2();
+            this.crowdImg3 = crowd.getCrowdImg3();
+            this.crowdImg4 = crowd.getCrowdImg4();
+            this.crowdImg5 = crowd.getCrowdImg5();
+            this.crowdStatus = crowd.getCrowdStatus();
+            this.crowdTitle = crowd.getCrowdTitle();
+            this.headerImg = crowd.getHeaderImg();
+            this.isDeleted = crowd.isDeleted();
+            this.likeSum = crowd.getLikeSum();
+            this.publishedAt = crowd.getPublishedAt();
+            this.updatedAt = crowd.getUpdatedAt();
+            this.userId = crowd.getUserId();
+            this.viewCount = crowd.getViewCount();
+        }
     }
 
     @Getter
@@ -56,6 +80,21 @@ public class CrowdDTO {
         private LocalDateTime updatedAt;
         private int userId;
         private boolean isDeleted;
+
+        public FindAllByUserId(Crowd crowd){
+            this.crowdId = crowd.getCrowdId();
+            this.crowdCategoryId = crowd.getCrowdCategoryId();
+            this.crowdContent = crowd.getCrowdContent();
+            this.crowdEndDate = crowd.getCrowdEndDate();
+            this.crowdGoal = crowd.getCrowdGoal();
+            this.crowdStatus = crowd.getCrowdStatus();
+            this.crowdTitle = crowd.getCrowdTitle();
+            this.headerImg = crowd.getHeaderImg();
+            this.publishedAt = crowd.getPublishedAt();
+            this.updatedAt = crowd.getUpdatedAt();
+            this.userId = crowd.getUserId();
+            this.isDeleted = crowd.isDeleted();
+        }
     }
 
     @Getter
@@ -81,6 +120,24 @@ public class CrowdDTO {
         private String crowdTitle;
         private String headerImg;
         private int userId;
+
+        public Insert(Crowd crowd){
+            this.crowdId = crowd.getCrowdId();
+            this.adNum = crowd.getAdNum();
+            this.crowdCategoryId = crowd.getCrowdCategoryId();
+            this.crowdContent = crowd.getCrowdContent();
+            this.crowdEndDate = crowd.getCrowdEndDate();
+            this.crowdGoal = crowd.getCrowdGoal();
+            this.crowdImg1 = crowd.getCrowdImg1();
+            this.crowdImg2 = crowd.getCrowdImg2();
+            this.crowdImg3 = crowd.getCrowdImg3();
+            this.crowdImg4 = crowd.getCrowdImg4();
+            this.crowdImg5 = crowd.getCrowdImg5();
+            this.crowdStatus = crowd.getCrowdStatus();
+            this.crowdTitle = crowd.getCrowdTitle();
+            this.headerImg = crowd.getHeaderImg();
+            this.userId = crowd.getUserId();
+        }
     }
 
     @Getter
@@ -94,46 +151,6 @@ public class CrowdDTO {
         public DeleteById(int crowdId) {
             this.crowdId = crowdId;
         }
-    }
-
-    @Getter @Setter
-    @Builder
-    @ToString
-    @AllArgsConstructor
-    @NoArgsConstructor
-    public static class DynamicCrowdBoard{ // 크라우드 게시판
-        private int crowdBoardId;
-        private int crowdId;
-        private int crowdBoardTag;
-        private String crowdBoardTitle;
-        private String crowdBoardContent;
-        private String crowdImg;
-        private LocalDateTime publishedAt;
-        private LocalDateTime updatedAt;
-        private int viewCount;
-        private boolean isDeleted;
-    }
-
-    @Getter @Setter
-    @Builder
-    @ToString
-    @AllArgsConstructor
-    @NoArgsConstructor
-    public static class CrowdCategory{ // 크라우드 분야
-        private int crowdCategoryId;
-        private String crowdCategoryName;
-        private boolean isDeleted;
-    }
-
-    @Getter @Setter
-    @Builder
-    @ToString
-    @AllArgsConstructor
-    @NoArgsConstructor
-    public static class DynamicSponsor{ // 크라우드 후원자
-        private int sponsorId;
-        private int crowdId;
-        private int purchaseId;
     }
 
 }
