@@ -105,13 +105,53 @@ public class CrowdDTO {
     @Setter
     @ToString
     @NoArgsConstructor
-    public static class DeleteByIdDTO {
+    public static class DeleteById {
         // DeleteRequest시 필요한 멤버변수 : 크라우드Id
         private int crowdId;
 
-        public DeleteByIdDTO(int crowdId) {
+        public DeleteById(int crowdId) {
             this.crowdId = crowdId;
         }
+    }
+
+    @Getter @Setter
+    @Builder
+    @ToString
+    @AllArgsConstructor
+    @NoArgsConstructor
+    public static class DynamicCrowdBoard{ // 크라우드 게시판
+        private int crowdBoardId;
+        private int crowdId;
+        private int crowdBoardTag;
+        private String crowdBoardTitle;
+        private String crowdBoardContent;
+        private String crowdImg;
+        private LocalDateTime publishedAt;
+        private LocalDateTime updatedAt;
+        private int viewCount;
+        private boolean isDeleted;
+    }
+
+    @Getter @Setter
+    @Builder
+    @ToString
+    @AllArgsConstructor
+    @NoArgsConstructor
+    public static class CrowdCategory{ // 크라우드 분야
+        private int crowdCategoryId;
+        private String crowdCategoryName;
+        private boolean isDeleted;
+    }
+
+    @Getter @Setter
+    @Builder
+    @ToString
+    @AllArgsConstructor
+    @NoArgsConstructor
+    public static class DynamicSponsor{ // 크라우드 후원자
+        private int sponsorId;
+        private int crowdId;
+        private int purchaseId;
     }
 
 }
