@@ -6,7 +6,7 @@ import org.hibernate.annotations.DynamicInsert;
 
 import java.time.LocalDateTime;
 
-@Getter @ToString
+@Getter @Setter @ToString
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder @Entity
