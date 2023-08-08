@@ -18,7 +18,7 @@ public class AndDynamicRepositoryTest {
     @Transactional
     public void testCreateDynamicAndQnaTable() {
         // Given
-        int andId = 1; // 원하는 and_id 값을 입력합니다.
+        int andId = 1;
         String tableName = "dynamic_and_qna_" + andId;
 
         // When

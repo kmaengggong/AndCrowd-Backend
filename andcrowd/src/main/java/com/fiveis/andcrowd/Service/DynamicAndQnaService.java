@@ -7,9 +7,6 @@ public interface DynamicAndQnaService {
     DynamicAndQnaDTO.FindById findByAndQnaId(int andId, int andQnaId);
     void save(DynamicAndQnaDTO.Update andQnaInsertDTO);
     void update(DynamicAndQnaDTO.Update andQnaUpdateDTO);
-    void deleteById(int andId, int andQnaId);
+    void deleteByAndQnaId(int andId, int andQnaId);
 
-    void createAndQnaTable ();
-    void dropAndQnaTable();
-    void insertTestData();
 }

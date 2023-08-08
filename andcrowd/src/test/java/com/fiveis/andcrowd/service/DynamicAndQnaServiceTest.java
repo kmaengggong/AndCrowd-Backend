@@ -1,53 +1,41 @@
-package com.fiveis.andcrowd.repository;
+package com.fiveis.andcrowd.service;
 
 import com.fiveis.andcrowd.dto.DynamicAndQnaDTO;
-import org.junit.jupiter.api.*;
+import jakarta.transaction.Transactional;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-
-import java.time.LocalDateTime;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SpringBootTest
-@TestInstance(TestInstance.Lifecycle.PER_METHOD)
-public class DynamicAndQnaRepositoryTest {
+public class DynamicAndQnaServiceTest {
 
     @Autowired
-    DynamicAndQnaRepository dynamicAndQnaRepository;
-
-    @BeforeEach
-    public void setAndQnaTable(){
-        dynamicAndQnaRepository.createAndQnaTable();
-        dynamicAndQnaRepository.insertTestData();
-    }
-
-    @AfterEach
-    public void dropAndQnaTable() {
-        dynamicAndQnaRepository.dropAndQnaTable();
-    }
+    DynamicAndQnaService dynamicAndQnaService;
 
     @Test
-    @DisplayName("R: findByAndQnaId를 통해 2번 질문글 조회")
-    public void findByAndQnaIdTest(){
+    @Transactional
+    public void findByIdTest() {
         //given
         int andQnaId = 2;
         int andId = 321;
 
         // when
-        DynamicAndQnaDTO.FindById andQna = dynamicAndQnaRepository.findByAndQnaId(andId, andQnaId);
+        DynamicAndQnaDTO.FindById andQna = dynamicAndQnaService.findByAndQnaId(andId, andQnaId);
 
         // then
         assertEquals(2, andQna.getAndQnaId());
         assertEquals("QnA Title 2", andQna.getAndQnaTitle());
         assertEquals("QnA Content 2", andQna.getAndQnaContent());
         assertEquals(321, andQna.getAndId());
+
     }
 
     @Test
-    @DisplayName("C: save를 통해 4번째 행 데이터 저장")
-    public void saveTest(){
+    @Transactional
+    public void saveTest() {
         // given
         int andQnaId = 4;
         int andId = 321;
@@ -64,8 +52,8 @@ public class DynamicAndQnaRepositoryTest {
                 .build();
 
         // when
-        dynamicAndQnaRepository.save(andQnaSave);
-        DynamicAndQnaDTO.FindById savedAndQna = dynamicAndQnaRepository.findByAndQnaId(andId, andQnaId);
+        dynamicAndQnaService.save(andQnaSave);
+        DynamicAndQnaDTO.FindById savedAndQna = dynamicAndQnaService.findByAndQnaId(andId, andQnaId);
 
         // then
         assertEquals(userId, savedAndQna.getUserId());
@@ -75,8 +63,8 @@ public class DynamicAndQnaRepositoryTest {
     }
 
     @Test
-    @DisplayName("U: update를 통해 1번 질문글 수정")
-    public void updateTest(){
+    @Transactional
+    public void updateTest() {
         // given
         int andQnaId = 1;
         int andId = 321;
@@ -91,8 +79,8 @@ public class DynamicAndQnaRepositoryTest {
                 .build();
 
         // when
-        dynamicAndQnaRepository.update(andQnaUpdate);
-        DynamicAndQnaDTO.FindById updatedAndQna = dynamicAndQnaRepository.findByAndQnaId(andId, andQnaId);
+        dynamicAndQnaService.update(andQnaUpdate);
+        DynamicAndQnaDTO.FindById updatedAndQna = dynamicAndQnaService.findByAndQnaId(andId, andQnaId);
 
         // then
         assertEquals(andQnaTitle, updatedAndQna.getAndQnaTitle());
@@ -101,16 +89,19 @@ public class DynamicAndQnaRepositoryTest {
     }
 
     @Test
-    @DisplayName("D: delete를 통해 3번 질문글 삭제")
-    public void deleteTest(){
+    @Transactional
+    public void deleteTest() {
         // given
         int andQnaId = 3;
         int andId = 321;
 
         // when
-        dynamicAndQnaRepository.deleteByAndQnaId(andId, andQnaId);
+        dynamicAndQnaService.deleteByAndQnaId(andId, andQnaId);
 
         // then
-        assertTrue(dynamicAndQnaRepository.findByAndQnaId(andId, andQnaId).isDeleted());
+        assertTrue(dynamicAndQnaService.findByAndQnaId(andId, andQnaId).isDeleted());
+
+
     }
+
 }

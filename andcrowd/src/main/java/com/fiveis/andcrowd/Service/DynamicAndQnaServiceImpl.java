@@ -31,22 +31,9 @@ public class DynamicAndQnaServiceImpl implements DynamicAndQnaService{
     }
 
     @Override
-    public void deleteById(int andId, int andQnaId) {
+    public void deleteByAndQnaId(int andId, int andQnaId) {
         dynamicAndQnaRepository.deleteByAndQnaId(andId, andQnaId);
     }
 
-    @Override
-    public void createAndQnaTable() {
 
-    }
-
-    @Override
-    public void dropAndQnaTable() {
-
-    }
-
-    @Override
-    public void insertTestData() {
-
-    }
 }
