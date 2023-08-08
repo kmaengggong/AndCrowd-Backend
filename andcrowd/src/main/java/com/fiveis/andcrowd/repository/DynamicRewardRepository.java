@@ -8,7 +8,7 @@ import java.util.List;
 @Mapper
 public interface DynamicRewardRepository {
 
-    List<DynamicRewardDTO> findAll();
+    List<DynamicRewardDTO> findAll(int rewardId);
 
     DynamicRewardDTO findById(int rewardId);
 

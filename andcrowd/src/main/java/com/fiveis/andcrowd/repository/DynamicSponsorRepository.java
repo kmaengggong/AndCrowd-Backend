@@ -8,7 +8,7 @@ import java.util.List;
 @Mapper
 public interface DynamicSponsorRepository {
 
-    List<DynamicSponsorDTO.findById> findAll();
+    List<DynamicSponsorDTO.findById> findAll(int sponsorId);
 
     DynamicSponsorDTO.findById findById(int sponsorId);
 

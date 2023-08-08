@@ -26,19 +26,6 @@ public class CrowdOrderDetailsDTO { // findAll, findById, update, save, delete
         private String purchaseStatus;
         private boolean isDeleted;
 
-        public findById(CrowdOrderDetails crowdOrderDetails){
-            this.purchaseId = crowdOrderDetails.getPurchaseId();
-            this.userId = crowdOrderDetails.getUserId();
-            this.crowdId = crowdOrderDetails.getCrowdId();
-            this.rewardId = crowdOrderDetails.getRewardId();
-            this.sponsorId = crowdOrderDetails.getSponsorId();
-            this.purchaseName = crowdOrderDetails.getPurchaseName();
-            this.purchasePhone = crowdOrderDetails.getPurchasePhone();
-            this.purchaseAddress = crowdOrderDetails.getPurchaseAddress();
-            this.purchaseDate = crowdOrderDetails.getPurchaseDate();
-            this.purchaseStatus = crowdOrderDetails.getPurchaseStatus();
-            this.isDeleted = crowdOrderDetails.isDeleted();
-        }
     }
 
     @Getter
@@ -60,18 +47,5 @@ public class CrowdOrderDetailsDTO { // findAll, findById, update, save, delete
         private String purchaseStatus;
         private boolean isDeleted;
 
-        public Update(CrowdOrderDetails crowdOrderDetails){
-            this.purchaseId = crowdOrderDetails.getPurchaseId();
-            this.userId = crowdOrderDetails.getUserId();
-            this.crowdId = crowdOrderDetails.getCrowdId();
-            this.rewardId = crowdOrderDetails.getRewardId();
-            this.sponsorId = crowdOrderDetails.getSponsorId();
-            this.purchaseName = crowdOrderDetails.getPurchaseName();
-            this.purchasePhone = crowdOrderDetails.getPurchasePhone();
-            this.purchaseAddress = crowdOrderDetails.getPurchaseAddress();
-            this.purchaseDate = crowdOrderDetails.getPurchaseDate();
-            this.purchaseStatus = crowdOrderDetails.getPurchaseStatus();
-            this.isDeleted = crowdOrderDetails.isDeleted();
-        }
     }
 }

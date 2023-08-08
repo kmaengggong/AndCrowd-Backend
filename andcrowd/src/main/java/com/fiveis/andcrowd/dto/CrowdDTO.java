@@ -36,28 +36,6 @@ public class CrowdDTO {
         private int userId;
         private int viewCount;
 
-        public FindById(Crowd crowd){
-            this.crowdId = crowd.getCrowdId();
-            this.adNum = crowd.getAdNum();
-            this.andId = crowd.getAndId();
-            this.crowdCategoryId = crowd.getCrowdCategoryId();
-            this.crowdContent = crowd.getCrowdContent();
-            this.crowdEndDate = crowd.getCrowdEndDate();
-            this.crowdGoal = crowd.getCrowdGoal();
-            this.crowdImg2 = crowd.getCrowdImg2();
-            this.crowdImg3 = crowd.getCrowdImg3();
-            this.crowdImg4 = crowd.getCrowdImg4();
-            this.crowdImg5 = crowd.getCrowdImg5();
-            this.crowdStatus = crowd.getCrowdStatus();
-            this.crowdTitle = crowd.getCrowdTitle();
-            this.headerImg = crowd.getHeaderImg();
-            this.isDeleted = crowd.isDeleted();
-            this.likeSum = crowd.getLikeSum();
-            this.publishedAt = crowd.getPublishedAt();
-            this.updatedAt = crowd.getUpdatedAt();
-            this.userId = crowd.getUserId();
-            this.viewCount = crowd.getViewCount();
-        }
     }
 
     @Getter
@@ -66,7 +44,7 @@ public class CrowdDTO {
     @ToString
     @AllArgsConstructor
     @NoArgsConstructor
-    public class Update {
+    public static class Update {
         // UpdateRequest시 필요한 멤버변수 : 크라우드Id, 카테고리Id, 본문, 마감일, 사진 1-5, 제목, 대표사진
         private int crowdId;
         private int crowdCategoryId;
@@ -80,19 +58,6 @@ public class CrowdDTO {
         private String crowdTitle;
         private String headerImg;
 
-        public Update(Crowd crowd) { // UpdateRequest 생성자
-            this.crowdId = crowd.getCrowdId();
-            this.crowdCategoryId = crowd.getCrowdCategoryId();
-            this.crowdContent = crowd.getCrowdContent();
-            this.crowdEndDate = crowd.getCrowdEndDate();
-            this.crowdImg1 = crowd.getCrowdImg1();
-            this.crowdImg2 = crowd.getCrowdImg2();
-            this.crowdImg3 = crowd.getCrowdImg3();
-            this.crowdImg4 = crowd.getCrowdImg4();
-            this.crowdImg5 = crowd.getCrowdImg5();
-            this.crowdTitle = crowd.getCrowdTitle();
-            this.headerImg = crowd.getHeaderImg();
-        }
     }
 
     @Getter
@@ -116,20 +81,6 @@ public class CrowdDTO {
         private int userId;
         private boolean isDeleted;
 
-        public FindAllByUserId(Crowd crowd){
-            this.crowdId = crowd.getCrowdId();
-            this.crowdCategoryId = crowd.getCrowdCategoryId();
-            this.crowdContent = crowd.getCrowdContent();
-            this.crowdEndDate = crowd.getCrowdEndDate();
-            this.crowdGoal = crowd.getCrowdGoal();
-            this.crowdStatus = crowd.getCrowdStatus();
-            this.crowdTitle = crowd.getCrowdTitle();
-            this.headerImg = crowd.getHeaderImg();
-            this.publishedAt = crowd.getPublishedAt();
-            this.updatedAt = crowd.getUpdatedAt();
-            this.userId = crowd.getUserId();
-            this.isDeleted = crowd.isDeleted();
-        }
     }
 
     @Getter
@@ -156,36 +107,6 @@ public class CrowdDTO {
         private String headerImg;
         private int userId;
 
-        public Insert(Crowd crowd){
-            this.crowdId = crowd.getCrowdId();
-            this.adNum = crowd.getAdNum();
-            this.crowdCategoryId = crowd.getCrowdCategoryId();
-            this.crowdContent = crowd.getCrowdContent();
-            this.crowdEndDate = crowd.getCrowdEndDate();
-            this.crowdGoal = crowd.getCrowdGoal();
-            this.crowdImg1 = crowd.getCrowdImg1();
-            this.crowdImg2 = crowd.getCrowdImg2();
-            this.crowdImg3 = crowd.getCrowdImg3();
-            this.crowdImg4 = crowd.getCrowdImg4();
-            this.crowdImg5 = crowd.getCrowdImg5();
-            this.crowdStatus = crowd.getCrowdStatus();
-            this.crowdTitle = crowd.getCrowdTitle();
-            this.headerImg = crowd.getHeaderImg();
-            this.userId = crowd.getUserId();
-        }
-    }
-
-    @Getter
-    @Setter
-    @ToString
-    @NoArgsConstructor
-    public static class DeleteById {
-        // DeleteRequest시 필요한 멤버변수 : 크라우드Id
-        private int crowdId;
-
-        public DeleteById(int crowdId) {
-            this.crowdId = crowdId;
-        }
     }
 
 }
