@@ -12,7 +12,7 @@
         )
     </update>
 
-    <select id="findAll" parameterType="String" resultType="com.fiveis.andcrowd.dto.DynamicUserAndDTO">
+    <select id="findAll" parameterType="String" resultType="com.fiveis.andcrowd.dto.DynamicUserAndDTO$Find">
         SELECT
             u_and_id as uAndId,
             and_id as andId

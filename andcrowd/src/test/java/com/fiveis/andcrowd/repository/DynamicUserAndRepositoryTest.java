@@ -3,13 +3,10 @@ package com.fiveis.andcrowd.repository;
 import com.fiveis.andcrowd.dto.DynamicUserAndDTO;
 import com.fiveis.andcrowd.entity.DynamicUserAnd;
 import jakarta.transaction.Transactional;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -18,8 +15,7 @@ public class DynamicUserAndRepositoryTest {
     @Autowired
     DynamicUserAndRepository dynamicUserAndRepository;
 
-    @Test
-    @DisplayName("테이블 생성")
+    @BeforeEach
     public void createDyanamicUserAndTableTest(){
         // Given
         String userEmail = "asdf@gmail.com";
