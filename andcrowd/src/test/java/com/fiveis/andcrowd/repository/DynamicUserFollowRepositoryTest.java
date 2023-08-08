@@ -32,8 +32,8 @@ public class DynamicUserFollowRepositoryTest {
 
     @Test
     @Transactional
-    @DisplayName("CR: ")
-    public void saveIdTest(){
+    @DisplayName("CR: 1번 유저 팔로우 후 조회")
+    public void saveTest(){
         // Given
         int uFollowId = 1;
         int userId = 1;
@@ -61,7 +61,7 @@ public class DynamicUserFollowRepositoryTest {
 
     @Test
     @Transactional
-    @DisplayName("R: ")
+    @DisplayName("R: 모든 팔로우 유저 조회")
     public void findAllTest(){
         // Given
         // When
@@ -73,7 +73,7 @@ public class DynamicUserFollowRepositoryTest {
 
     @Test
     @Transactional
-    @DisplayName("CRD: ")
+    @DisplayName("CRD: 1번 유저 팔로우 후 삭제 후 조회")
     public void deleteByIdTest(){
         // Given
         int uFollowId = 1;

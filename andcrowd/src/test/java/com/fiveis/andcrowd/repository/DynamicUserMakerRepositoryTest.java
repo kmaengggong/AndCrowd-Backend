@@ -1,7 +1,7 @@
 package com.fiveis.andcrowd.repository;
 
-import com.fiveis.andcrowd.dto.DynamicUserLikeDTO;
-import com.fiveis.andcrowd.entity.DynamicUserLike;
+import com.fiveis.andcrowd.dto.DynamicUserMakerDTO;
+import com.fiveis.andcrowd.entity.DynamicUserMaker;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -14,32 +14,32 @@ import java.util.List;
 import java.util.Map;
 
 @SpringBootTest
-public class DynamicUserLikeRepositoryTest {
+public class DynamicUserMakerRepositoryTest {
     @Autowired
-    DynamicUserLikeRepository dynamicUserLikeRepository;
+    DynamicUserMakerRepository dynamicUserMakerRepository;
 
     String userEmail = "asdf@gmail.com";
-    String tableName = "user_like_" + userEmail.replace('@', '_').replace('.', '_');
+    String tableName = "user_maker_" + userEmail.replace('@', '_').replace('.', '_');
 
     @BeforeEach
-    public void createDynamicUserLikeTableTest(){
+    public void createDynamicUserMakerTableTest(){
         // Given
         // When
-        dynamicUserLikeRepository.createDynamicUserLikeTable(tableName);
+        dynamicUserMakerRepository.createDynamicUserMakerTable(tableName);
 
         // Then
     }
 
     @Test
     @Transactional
-    @DisplayName("CR: 1번 모임글 좋아요 후 조회")
+    @DisplayName("CR: 1번 모임글 생성 후 조회")
     public void saveTest(){
         // Given
-        int uLikeId = 1;
+        int uMakerId = 1;
         int projectId = 1;
         int projectType = 0;
-        DynamicUserLike dynamicUserLike = DynamicUserLike.builder()
-                .uLikeId(uLikeId)
+        DynamicUserMaker dynamicUserMaker = DynamicUserMaker.builder()
+                .uMakerId(uMakerId)
                 .projectId(projectId)
                 .projectType(projectType)
                 .build();
@@ -47,27 +47,27 @@ public class DynamicUserLikeRepositoryTest {
         // When
         Map<String, ?> map = Map.of(
                 "tableName", tableName,
-                "dynamicUserLike", dynamicUserLike
+                "dynamicUserMaker", dynamicUserMaker
         );
-        dynamicUserLikeRepository.save(map);
+        dynamicUserMakerRepository.save(map);
 
         Map<String, ?> map1 = Map.of(
                 "tableName", tableName,
-                "uLikeId", uLikeId
+                "uMakerId", uMakerId
         );
-        DynamicUserLikeDTO.Find find = dynamicUserLikeRepository.findById(map1);
+        DynamicUserMakerDTO.Find find = dynamicUserMakerRepository.findById(map1);
 
         // Then
-        Assertions.assertEquals(uLikeId, find.getULikeId());
+        Assertions.assertEquals(uMakerId, find.getUMakerId());
     }
 
     @Test
     @Transactional
-    @DisplayName("R: 모든 좋아요 한 글 조회")
+    @DisplayName("R: 모든 생성글 조회")
     public void findAllTest(){
         // Given
         // When
-        List<DynamicUserLikeDTO.Find> findList = dynamicUserLikeRepository.findAll(tableName);
+        List<DynamicUserMakerDTO.Find> findList = dynamicUserMakerRepository.findAll(tableName);
 
         // Then
         Assertions.assertTrue(findList.isEmpty());
@@ -75,14 +75,14 @@ public class DynamicUserLikeRepositoryTest {
 
     @Test
     @Transactional
-    @DisplayName("CRD: 1번 모임글 좋아요 후 삭제 후 조회")
+    @DisplayName("CRD: 1번 모임글 생성 후 삭제 후 조회")
     public void deleteByIdTest(){
         // Given
-        int uLikeId = 1;
+        int uMakerId = 1;
         int projectId = 1;
         int projectType = 0;
-        DynamicUserLike dynamicUserLike = DynamicUserLike.builder()
-                .uLikeId(uLikeId)
+        DynamicUserMaker dynamicUserMaker = DynamicUserMaker.builder()
+                .uMakerId(uMakerId)
                 .projectId(projectId)
                 .projectType(projectType)
                 .build();
@@ -90,17 +90,17 @@ public class DynamicUserLikeRepositoryTest {
         // When
         Map<String, ?> map = Map.of(
                 "tableName", tableName,
-                "dynamicUserLike", dynamicUserLike
+                "dynamicUserMaker", dynamicUserMaker
         );
-        dynamicUserLikeRepository.save(map);
+        dynamicUserMakerRepository.save(map);
 
         Map<String, ?> map1 = Map.of(
                 "tableName", tableName,
-                "uLikeId", uLikeId
+                "uMakerId", uMakerId
         );
-        dynamicUserLikeRepository.deleteById(map1);
+        dynamicUserMakerRepository.deleteById(map1);
 
         // Then
-        Assertions.assertNull(dynamicUserLikeRepository.findById(map1));
+        Assertions.assertNull(dynamicUserMakerRepository.findById(map1));
     }
 }
