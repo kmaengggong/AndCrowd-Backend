@@ -2,9 +2,12 @@ package com.fiveis.andcrowd.service;
 
 import com.fiveis.andcrowd.dto.DynamicAndQnaDTO;
 import jakarta.transaction.Transactional;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -14,6 +17,20 @@ public class DynamicAndQnaServiceTest {
 
     @Autowired
     DynamicAndQnaService dynamicAndQnaService;
+
+    @Test
+    @Transactional
+    public void findAllTest(){
+        //given
+        int andId = 321;
+
+        // when
+        List<DynamicAndQnaDTO.FindById> findAllList= dynamicAndQnaService.findAll(andId);
+
+        // then
+        assertEquals(3, findAllList.size());
+
+    }
 
     @Test
     @Transactional

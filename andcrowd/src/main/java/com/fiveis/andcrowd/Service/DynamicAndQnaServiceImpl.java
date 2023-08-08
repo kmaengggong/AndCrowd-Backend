@@ -5,6 +5,8 @@ import com.fiveis.andcrowd.repository.DynamicAndQnaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class DynamicAndQnaServiceImpl implements DynamicAndQnaService{
 
@@ -13,6 +15,11 @@ public class DynamicAndQnaServiceImpl implements DynamicAndQnaService{
     @Autowired
     public DynamicAndQnaServiceImpl(DynamicAndQnaRepository dynamicAndQnaRepository){
         this.dynamicAndQnaRepository = dynamicAndQnaRepository;
+    }
+
+    @Override
+    public List<DynamicAndQnaDTO.FindById> findAll(int andId) {
+        return dynamicAndQnaRepository.findAll(andId);
     }
 
     @Override

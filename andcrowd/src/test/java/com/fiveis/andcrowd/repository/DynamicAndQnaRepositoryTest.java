@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -29,11 +30,26 @@ public class DynamicAndQnaRepositoryTest {
     }
 
     @Test
+    @DisplayName("R: findAll를 통해 전체 질문글 조회")
+    public void findAllTest(){
+        //given
+        int andId = 123;
+
+        // when
+        List<DynamicAndQnaDTO.FindById> findAllList= dynamicAndQnaRepository.findAll(andId);
+
+        // then
+        assertEquals(3, findAllList.size());
+
+    }
+
+
+    @Test
     @DisplayName("R: findByAndQnaId를 통해 2번 질문글 조회")
     public void findByAndQnaIdTest(){
         //given
         int andQnaId = 2;
-        int andId = 321;
+        int andId = 123;
 
         // when
         DynamicAndQnaDTO.FindById andQna = dynamicAndQnaRepository.findByAndQnaId(andId, andQnaId);
@@ -42,7 +58,7 @@ public class DynamicAndQnaRepositoryTest {
         assertEquals(2, andQna.getAndQnaId());
         assertEquals("QnA Title 2", andQna.getAndQnaTitle());
         assertEquals("QnA Content 2", andQna.getAndQnaContent());
-        assertEquals(321, andQna.getAndId());
+        assertEquals(123, andQna.getAndId());
     }
 
     @Test
@@ -50,7 +66,7 @@ public class DynamicAndQnaRepositoryTest {
     public void saveTest(){
         // given
         int andQnaId = 4;
-        int andId = 321;
+        int andId = 123;
         int userId = 4;
         String andQnaTitle = "추가된 4번 질문 제목";
         String andQnaContent = "추가된 4번 질문 내용";
@@ -79,7 +95,7 @@ public class DynamicAndQnaRepositoryTest {
     public void updateTest(){
         // given
         int andQnaId = 1;
-        int andId = 321;
+        int andId = 123;
         String andQnaTitle = "수정된 1번 질문 제목";
         String andQnaContent = "수정된 1번 질문 내용";
 
@@ -105,7 +121,7 @@ public class DynamicAndQnaRepositoryTest {
     public void deleteTest(){
         // given
         int andQnaId = 3;
-        int andId = 321;
+        int andId = 123;
 
         // when
         dynamicAndQnaRepository.deleteByAndQnaId(andId, andQnaId);
