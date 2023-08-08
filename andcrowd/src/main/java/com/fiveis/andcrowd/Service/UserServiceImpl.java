@@ -43,7 +43,7 @@ public class UserServiceImpl implements UserService {
         return userFindDTOList;
     }
 
-    public UserDTO.FindAsAdmin findById(String userId){
+    public UserDTO.FindAsAdmin findById(int userId){
         if(userJPARepository.findById(userId).isEmpty()) return null;
         return userJPARepository.findById(userId).get().toFindAsAdminDTO();
     }

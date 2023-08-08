@@ -1,11 +1,13 @@
 package com.fiveis.andcrowd.repository;
 
 import com.fiveis.andcrowd.entity.User;
+import com.fiveis.andcrowd.enums.Authority;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -14,42 +16,44 @@ public class UserJPARepositoryTest {
     @Autowired
     UserJPARepository userJPARepository;
 
-    // 테스트 실행 전 한 번만 실행
-//    @Test
-//    @BeforeTestClass
-//    @DisplayName("C: 테스트 유저 저장")
-//    public void saveTest(){
-//        // Given
-//        String userEmail = "asdf@gmail.com";
-//        String userPassword = "qwer";
-//        String userKorName = "김명호";
-//        String userNickname = "NICK";
-//        String userPhone = "010-1234-5678";
-//        LocalDateTime userBirth = LocalDateTime.of(1997, 2, 14, 0, 0, 0);
-//        LocalDateTime userRegister = LocalDateTime.now();
-//        int userTos = 1;
-//        int userPrivacy = 1;
-//        int userMarketing = 1;
-//        Authority authority = Authority.ROLE_ADMIN;
-//
-//        // When
-//        User user = User.builder()
-//                .userEmail(userEmail)
-//                .userPassword(userPassword)
-//                .userKorName(userKorName)
-//                .userNickname(userNickname)
-//                .userPhone(userPhone)
-//                .userBirth(userBirth)
-//                .userRegister(userRegister)
-//                .userTos(userTos)
-//                .userPrivacy(userPrivacy)
-//                .userMarketing(userMarketing)
-//                .authority(authority)
-//                .build();
-//        userJPARepository.save(user);
-//
-//        // Then
-//    }
+    @Test
+    @BeforeEach
+    @DisplayName("C: 1번 테스트 유저 저장")
+    public void saveTest(){
+        // Given
+        int userId = 1;
+        String userEmail = "asdf@gmail.com";
+        String userPassword = "qwer";
+        String userKorName = "김명호";
+        String userNickname = "NICK";
+        String userPhone = "010-1234-5678";
+        LocalDateTime userBirth = LocalDateTime.of(1997, 2, 14, 0, 0, 0);
+        LocalDateTime userRegister = LocalDateTime.now();
+        int userTos = 1;
+        int userPrivacy = 1;
+        int userMarketing = 1;
+        Authority authority = Authority.ROLE_ADMIN;
+
+        // When
+        User user = User.builder()
+                .userId(userId)
+                .userEmail(userEmail)
+                .userPassword(userPassword)
+                .userKorName(userKorName)
+                .userNickname(userNickname)
+                .userPhone(userPhone)
+                .userBirth(userBirth)
+                .userRegister(userRegister)
+                .userTos(userTos)
+                .userPrivacy(userPrivacy)
+                .userMarketing(userMarketing)
+                .authority(authority)
+                .build();
+
+        userJPARepository.save(user);
+
+        // Then
+    }
 
     @Test
     @Transactional
@@ -83,7 +87,7 @@ public class UserJPARepositoryTest {
 
     @Test
     @Transactional
-    @DisplayName("R: userEmail='asdf@gmail.com' 유저 조회")
+    @DisplayName("R: userNickname='NICK' 유저 조회")
     public void findByUserNicknameTest(){
         // Given
         String userNickname = "NICK";

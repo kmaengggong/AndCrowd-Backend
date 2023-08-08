@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 import java.util.Optional;
 
-public interface UserJPARepository extends JpaRepository<User, String> {
+public interface UserJPARepository extends JpaRepository<User, Integer> {
     List<User> findAllByUserKorName(String userKorName);
     Optional<User> findByUserEmail(String userEmail);
     Optional<User> findByUserNickname(String userNickname);

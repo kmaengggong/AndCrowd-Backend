@@ -17,7 +17,7 @@ public class UserServiceTest {
 
     @Test
     @Transactional
-    @DisplayName("")
+    @DisplayName("R: userKorName='김명호' 유저 조회")
     public void findUserKorNameTest(){
         // Given
         String userKorName = "김명호";
@@ -33,7 +33,7 @@ public class UserServiceTest {
 
     @Test
     @Transactional
-    @DisplayName("")
+    @DisplayName("R: userEmail='asdf@gmail.com' 유저 조회")
     public void findByUserEmailTest(){
         // Given
         String userEmail = "asdf@gmail.com";
@@ -47,7 +47,7 @@ public class UserServiceTest {
 
     @Test
     @Transactional
-    @DisplayName("")
+    @DisplayName("R: userNickname='NICK' 유저 조회")
     public void findByUserNicknameTest(){
         // Given
         String userNickname = "NICK";
@@ -61,7 +61,7 @@ public class UserServiceTest {
 
     @Test
     @Transactional
-    @DisplayName("")
+    @DisplayName("D: userEmail='asdf@gmail.com' 유저 삭제 후 조회")
     public void deleteByUserEmail(){
         // Given
         String userEmail = "asdf@gmail.com";
@@ -75,7 +75,7 @@ public class UserServiceTest {
 
     @Test
     @Transactional
-    @DisplayName("")
+    @DisplayName("U: userEmail='asdf@gmail.com' 유저 내용 변경 후 조회")
     public void updateTest(){
         // Given
         String userEmail = "asdf@gmail.com";

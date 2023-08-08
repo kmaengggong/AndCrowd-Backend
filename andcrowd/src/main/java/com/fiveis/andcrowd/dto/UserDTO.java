@@ -42,7 +42,7 @@ public class UserDTO {
     @AllArgsConstructor
     @NoArgsConstructor
     public static class FindAsAdmin{
-        private String userId;
+        private int userId;
         private String userEmail;
         private String userPassword;
         private String userKorName;
@@ -56,70 +56,6 @@ public class UserDTO {
         private int userMarketing;
         private Authority authority;
     }
-//    @Getter
-//    @Setter
-//    @Builder
-//    @ToString
-//    @AllArgsConstructor
-//    @NoArgsConstructor
-//    public static class FindAll{
-//        private String userEmail;
-//    }
-//
-//    @Getter
-//    @Setter
-//    @Builder
-//    @ToString
-//    @AllArgsConstructor
-//    @NoArgsConstructor
-//    public static class FindByUserKorName{
-//        private String userKorName;
-//    }
-//
-//    @Getter
-//    @Setter
-//    @Builder
-//    @ToString
-//    @AllArgsConstructor
-//    @NoArgsConstructor
-//    public static class FindByUserId{
-//        private String userId;
-//        private String userEmail;
-//        private String userPassword;
-//        private String userKorName;
-//        private String userNickname;
-//        private String userPhone;
-//        private String userProfileImg;
-//        private LocalDateTime userBirth;
-//        private LocalDateTime userRegister;
-//        private Authority authority;
-//    }
-//
-//    @Getter
-//    @Setter
-//    @Builder
-//    @ToString
-//    @AllArgsConstructor
-//    @NoArgsConstructor
-//    public static class FindByUserEmail{
-//        private String userEmail;
-//        private String userNickname;
-//        private String userProfileImg;
-//        private LocalDateTime userRegister;
-//    }
-//
-//    @Getter
-//    @Setter
-//    @Builder
-//    @ToString
-//    @AllArgsConstructor
-//    @NoArgsConstructor
-//    public static class FindByUserNickname{
-//        private String userEmail;
-//        private String userNickname;
-//        private String userProfileImg;
-//        private LocalDateTime userRegister;
-//    }
 
     @Getter
     @Setter

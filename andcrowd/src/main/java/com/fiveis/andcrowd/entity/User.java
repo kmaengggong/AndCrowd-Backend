@@ -23,8 +23,8 @@ import java.util.List;
 public class User implements UserDetails {
     // 필드
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private String userId;  // 유저 ID
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int userId;  // 유저 ID
 
     @Column(nullable = false)  // 이메일
     private String userEmail;
@@ -64,7 +64,7 @@ public class User implements UserDetails {
 
     // 생성자
     @Builder
-    public User(String userId, String userEmail, String userPassword, String userKorName, String userNickname,
+    public User(int userId, String userEmail, String userPassword, String userKorName, String userNickname,
                 String userPhone, String userProfileImg, LocalDateTime userBirth, LocalDateTime userRegister,
                 int userTos, int userPrivacy, int userMarketing, Authority authority){
         this.userId = userId;

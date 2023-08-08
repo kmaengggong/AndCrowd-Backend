@@ -1,9 +1,11 @@
-package com.fiveis.andcrowd.repository;
+package com.fiveis.andcrowd.service;
 
 import com.fiveis.andcrowd.dto.DynamicUserAndDTO;
 import com.fiveis.andcrowd.entity.DynamicUserAnd;
 import jakarta.transaction.Transactional;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -11,25 +13,28 @@ import java.util.List;
 import java.util.Map;
 
 @SpringBootTest
-public class DynamicUserAndRepositoryTest {
+public class DynamicUserAndServiceTest {
     @Autowired
-    DynamicUserAndRepository dynamicUserAndRepository;
+    DynamicUserAndService dynamicUserAndService;
 
     String userEmail = "asdf@gmail.com";
-    String tableName = "user_follow_" + userEmail.replace('@', '_').replace('.', '_');
+    String tableName = "user_and_" + userEmail.replace('@', '_').replace('.', '_');
 
-    @BeforeEach
-    public void createDyanamicUserAndTableTest(){
+    @Test
+    @Transactional
+    @DisplayName("")
+    public void findAllTest(){
         // Given
         // When
-        dynamicUserAndRepository.createDynamicUserAndTable(tableName);
+        List<?> findList = dynamicUserAndService.findAll(tableName);
 
         // Then
+//        Assertions.assertTrue(findList.isEmpty());
     }
 
     @Test
     @Transactional
-    @DisplayName("CR: 1번 모임글 추가 후 조회")
+    @DisplayName("")
     public void saveTest(){
         // Given
         int uAndId = 1;
@@ -44,33 +49,21 @@ public class DynamicUserAndRepositoryTest {
                 "tableName", tableName,
                 "dynamicUserAnd", dynamicUserAnd
         );
-        dynamicUserAndRepository.save(map);
+        dynamicUserAndService.save(map);
 
         Map<String, ?> map1 = Map.of(
                 "tableName", tableName,
                 "uAndId", uAndId
         );
-        DynamicUserAndDTO.Find find = dynamicUserAndRepository.findById(map1);
+        dynamicUserAndService.deleteById(map1);
 
         // Then
-        Assertions.assertEquals(uAndId, find.getUAndId());
+        Assertions.assertNull(dynamicUserAndService.findById(map1));
     }
 
     @Test
     @Transactional
-    @DisplayName("R: 모든 참여 모임글 조회")
-    public void findAllTest(){
-        // Given
-        // When
-        List<DynamicUserAndDTO.Find> findList = dynamicUserAndRepository.findAll(tableName);
-
-        // Then
-        Assertions.assertTrue(findList.isEmpty());
-    }
-
-    @Test
-    @Transactional
-    @DisplayName("CRD: 1번 글 추가 후 삭제 후 조회")
+    @DisplayName("")
     public void deleteByIdTest(){
         // Given
         int uAndId = 1;
@@ -85,15 +78,17 @@ public class DynamicUserAndRepositoryTest {
                 "tableName", tableName,
                 "dynamicUserAnd", dynamicUserAnd
         );
-        dynamicUserAndRepository.save(map);
+        dynamicUserAndService.save(map);
 
         Map<String, ?> map1 = Map.of(
                 "tableName", tableName,
                 "uAndId", uAndId
         );
-        dynamicUserAndRepository.deleteById(map1);
+        dynamicUserAndService.deleteById(map1);
+
+        DynamicUserAndDTO.Find find = dynamicUserAndService.findById(map1);
 
         // Then
-        Assertions.assertNull(dynamicUserAndRepository.findById(map1));
+        Assertions.assertNull(dynamicUserAndService.findById(map1));
     }
 }

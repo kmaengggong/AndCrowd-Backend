@@ -10,7 +10,7 @@ import java.util.Map;
 public interface DynamicUserFollowRepository {
     void createDynamicUserFollowTable(String tableName);
     List<DynamicUserFollowDTO.Find> findAll(String tableName);
-    DynamicUserFollowDTO.Find findById(Map<String, ?> map);
+    DynamicUserFollowDTO.Find findById(Map<String, ?> map);  // String tableName, int uFollowId
     void save(Map<String, ?> map);  // String tableName, DynamicUserFollow dynamicUserFollow
     void deleteById(Map<String, ?> map);  // String tableName, int uFollowId
 }

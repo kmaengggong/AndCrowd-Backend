@@ -30,6 +30,16 @@
             u_and_id = #{uAndId}
     </select>
 
+    <select id="findByAndId" parameterType="map" resultType="com.fiveis.andcrowd.dto.DynamicUserAndDTO$Find">
+        SELECT
+            u_and_id as uAndId,
+            and_id as andId
+        FROM
+            ${tableName}
+        WHERE
+            u_and_id = #{andId}
+    </select>
+
     <insert id="save" parameterType="map">
         INSERT
         INTO

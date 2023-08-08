@@ -10,7 +10,7 @@ import java.util.List;
 public interface UserService {
     List<UserDTO.FindAsPublic> findAll();
     List<UserDTO.FindAsUser> findAllByUserKorName(String userKorName);
-    UserDTO.FindAsAdmin findById(String userId);
+    UserDTO.FindAsAdmin findById(int userId);
     UserDTO.FindAsUser findByUserEmail(String userEmail);
     UserDTO.FindAsPublic findByUserNickname(String userNickname);
     void deleteByUserEmail(String userEmail);
