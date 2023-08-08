@@ -14,4 +14,5 @@ public interface CrowdJPARepository extends JpaRepository<Crowd, Integer> {
 
     Optional<Crowd> findById(int crowdId);
 
+    void deleteByUserId(int crowdId);
 }

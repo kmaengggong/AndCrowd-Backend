@@ -66,7 +66,7 @@ public class CrowdDTO {
     @ToString
     @AllArgsConstructor
     @NoArgsConstructor
-    public class CrowdUpdateDTO {
+    public class Update {
         // UpdateRequest시 필요한 멤버변수 : 크라우드Id, 카테고리Id, 본문, 마감일, 사진 1-5, 제목, 대표사진
         private int crowdId;
         private int crowdCategoryId;
@@ -80,7 +80,7 @@ public class CrowdDTO {
         private String crowdTitle;
         private String headerImg;
 
-        public CrowdUpdateDTO(Crowd crowd) { // UpdateRequest 생성자
+        public Update(Crowd crowd) { // UpdateRequest 생성자
             this.crowdId = crowd.getCrowdId();
             this.crowdCategoryId = crowd.getCrowdCategoryId();
             this.crowdContent = crowd.getCrowdContent();
