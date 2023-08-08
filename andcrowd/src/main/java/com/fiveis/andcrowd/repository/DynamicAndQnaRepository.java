@@ -9,7 +9,7 @@ public interface DynamicAndQnaRepository {
     DynamicAndQnaDTO.FindById findByAndQnaId(@Param("and_id") int andId, @Param("andQnaId") int andQnaId);
     void save(DynamicAndQnaDTO.Update andQnaInsertDTO);
     void update(DynamicAndQnaDTO.Update andQnaUpdateDTO);
-    void deleteByAndQnaId(@Param("and_id") int andId, @Param("andQnaId") int andQnaId);
+    void deleteByAndQnaId(@Param("andId") int andId, @Param("andQnaId") int andQnaId);
 
     void createAndQnaTable ();
     void dropAndQnaTable();
