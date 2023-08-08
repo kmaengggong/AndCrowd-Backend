@@ -1,6 +1,6 @@
 package com.fiveis.andcrowd.dto;
 
-import com.fiveis.andcrowd.entity.Authority;
+import com.fiveis.andcrowd.enums.Authority;
 import lombok.*;
 
 import java.time.LocalDateTime;

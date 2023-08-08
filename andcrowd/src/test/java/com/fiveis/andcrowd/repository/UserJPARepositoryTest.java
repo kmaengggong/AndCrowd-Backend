@@ -1,14 +1,11 @@
 package com.fiveis.andcrowd.repository;
 
-import com.fiveis.andcrowd.entity.Authority;
 import com.fiveis.andcrowd.entity.User;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.event.annotation.BeforeTestClass;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 

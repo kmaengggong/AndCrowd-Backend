@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.fiveis.andcrowd.repository.DynamicUserAndRepository">
+    <update id="createDynamicUserAndTable">
+        CREATE
+        TABLE IF NOT EXISTS ${tableName}(
+            u_and_id INT AUTO_INCREMENT PRIMARY KEY,
+            and_id INT NOT NULL
+        )
+    </update>
+
+    <select id="findAll" parameterType="String" resultType="com.fiveis.andcrowd.dto.DynamicUserAndDTO">
+        SELECT
+            u_and_id as uAndId,
+            and_id as andId
+        FROM
+            ${tableName}
+    </select>
+
+    <select id="findById" parameterType="map" resultType="com.fiveis.andcrowd.dto.DynamicUserAndDTO$Find">
+        SELECT
+            u_and_id as uAndId,
+            and_id as andId
+        FROM
+            ${tableName}
+        WHERE
+            u_and_id = #{uAndId}
+    </select>
+
+    <insert id="save" parameterType="map">
+        INSERT
+        INTO
+            ${tableName}
+            (u_and_id, and_id)
+        VALUES
+            (#{dynamicUserAnd.uAndId}, #{dynamicUserAnd.andId})
+    </insert>
+
+    <delete id="deleteById" parameterType="int">
+        DELETE
+        FROM
+            ${tableName}
+        WHERE
+            u_and_id = #{uAndId}
+    </delete>
+</mapper>

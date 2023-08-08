@@ -1,6 +1,7 @@
 package com.fiveis.andcrowd.entity;
 
 import com.fiveis.andcrowd.dto.UserDTO;
+import com.fiveis.andcrowd.enums.Authority;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
@@ -20,6 +21,7 @@ import java.util.List;
 @NoArgsConstructor
 @Table(name="users")
 public class User implements UserDetails {
+    // 필드
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private String userId;  // 유저 ID
@@ -60,6 +62,7 @@ public class User implements UserDetails {
     @ColumnDefault("0")
     private Authority authority;  // 관리자 권한 여부
 
+    // 생성자
     @Builder
     public User(String userId, String userEmail, String userPassword, String userKorName, String userNickname,
                 String userPhone, String userProfileImg, LocalDateTime userBirth, LocalDateTime userRegister,
@@ -79,7 +82,7 @@ public class User implements UserDetails {
         this.authority = authority;
     }
 
-    // Setter for Update
+    // 수정을 위한 Setter
     public void setUserPassword(String userPassword){
         this.userPassword = userPassword;
     }
