@@ -82,5 +82,5 @@ public class AndDTO {
         private boolean isDeleted;
 
     }
-    
+
 }

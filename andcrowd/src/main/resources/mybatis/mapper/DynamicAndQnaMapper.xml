@@ -4,35 +4,61 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.fiveis.andcrowd.repository.DynamicAndQnaRepository">
 
-    <select id="findById" resultType="com.fiveis.andcrowd.dto.DynamicAndQnaDTO$FindById">
+    <select id="findByAndQnaId" resultType="com.fiveis.andcrowd.dto.DynamicAndQnaDTO$FindById">
         SELECT and_qna_id AS andQnaId,
-        and_id AS andId,
-        user_id AS userId,
-        and_category_id AS andCategoryId,
-        qna_title AS qnaTitle,
-        qna_content AS qnaContent,
-        published_at AS publishedAt,
-        updated_at AS updatedAt,
-        is_deleted AS isDeleted
-        FROM dynamic_and_qna
+               and_id AS andId,
+               user_id AS userId,
+               and_qna_title AS andQnaTitle,
+               and_qna_content AS andQnaContent,
+               published_at AS publishedAt,
+               updated_at AS updatedAt,
+               is_deleted AS isDeleted
+        FROM dynamic_and_qna_${and_id}
         WHERE and_qna_id = #{andQnaId}
     </select>
 
+
     <insert id="save" parameterType="com.fiveis.andcrowd.dto.DynamicAndQnaDTO$Update">
-        INSERT INTO dynamic_and_qna (and_id, user_id, and_category_id, qna_title, qna_content, published_at, updated_at, is_deleted)
-        VALUES (#{andId}, #{userId}, #{andCategoryId}, #{qnaTitle}, #{qnaContent}, #{publishedAt}, #{updatedAt}, #{isDeleted})
+        INSERT INTO dynamic_and_qna_${and_id} (and_id, user_id, and_qna_title, and_qna_content, published_at, updated_at, is_deleted)
+        VALUES (#{andId}, #{userId},  #{andQnaTitle}, #{andQnaContent}, #{publishedAt}, #{updatedAt}, #{isDeleted})
     </insert>
 
     <update id="update" parameterType="com.fiveis.andcrowd.dto.DynamicAndQnaDTO$Update">
-        UPDATE dynamic_and_qna
-        SET and_id = #{andId}, user_id = #{userId}, and_category_id = #{andCategoryId}, qna_title = #{qnaTitle},
-            qna_content = #{qnaContent}, published_at = #{publishedAt}, updated_at = #{updatedAt}, is_deleted = #{isDeleted}
-        WHERE and_qna_id = #{andQnaId}
+        UPDATE dynamic_and_qna_${and_id}
+        SET and_id = #{andId}, user_id = #{userId}, and_qna_title = #{andQnaTitle},
+            and_qna_content = #{andQnaContent}, published_at = #{publishedAt}, updated_at = #{updatedAt}, is_deleted = #{isDeleted}
+        WHERE and_qna_id_${and_id} = #{andQnaId}
     </update>
 
-    <delete id="deleteById" parameterType="int">
-        DELETE FROM dynamic_and_qna WHERE and_qna_id = #{andQnaId}
+    <delete id="deleteByAndQnaId" parameterType="int">
+        DELETE FROM dynamic_and_qna_${and_id} WHERE and_qna_id_${and_id} = #{andQnaId}
     </delete>
+
+    <!--    테스트를 위한 쿼리문-->
+    <insert id="createAndQnaTable">
+        CREATE TABLE dynamic_and_qna_321(
+          and_qna_id INT AUTO_INCREMENT PRIMARY KEY ,
+          and_id INT NOT NULL ,
+          user_id INT NOT NULL ,
+          and_qna_title VARCHAR(200) NOT NULL ,
+          and_qna_content VARCHAR(2000) NOT NULL ,
+          published_at DATETIME DEFAULT now() ,
+          updated_at DATETIME DEFAULT now() ,
+          is_deleted BOOL default false
+        );
+    </insert>
+
+    <update id="dropAndQnaTable">
+        DROP TABLE dynamic_and_qna_321;
+    </update>
+
+    <insert id="insertTestData">
+        INSERT INTO dynamic_and_qna_321 (and_id, user_id, and_qna_title, and_qna_content)
+        VALUES
+            (321, 1, 'QnA Title 1', 'QnA Content 1'),
+            (321, 2, 'QnA Title 2', 'QnA Content 2'),
+            (321, 3, 'QnA Title 3', 'QnA Content 3');
+    </insert>
 
 
 </mapper>

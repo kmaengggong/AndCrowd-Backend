@@ -2,6 +2,7 @@ package com.fiveis.andcrowd.service;
 
 import com.fiveis.andcrowd.dto.AndDTO;
 import com.fiveis.andcrowd.entity.And;
+import com.fiveis.andcrowd.repository.AndDynamicRepository;
 import com.fiveis.andcrowd.repository.AndJPARepository;
 import org.springframework.stereotype.Service;
 
@@ -12,9 +13,11 @@ import java.util.Optional;
 public class AndServiceImpl implements AndService{
 
     AndJPARepository andJPARepository;
+    AndDynamicRepository andDynamicRepository;
 
-    public AndServiceImpl(AndJPARepository andJPARepository){
+    public AndServiceImpl(AndJPARepository andJPARepository, AndDynamicRepository andDynamicRepository){
         this.andJPARepository = andJPARepository;
+        this.andDynamicRepository = andDynamicRepository;
     }
 
 
@@ -41,7 +44,8 @@ public class AndServiceImpl implements AndService{
 
     @Override
     public void save(And and) {
-        andJPARepository.save(and);
+        And savedAnd = andJPARepository.save(and);
+        andDynamicRepository.createDynamicAndQnaTable(savedAnd.getAndId());
     }
 
     @Override
