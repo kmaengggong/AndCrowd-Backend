@@ -33,7 +33,7 @@ public class DynamicUserFollowRepositoryTest {
     @Test
     @Transactional
     @DisplayName("CR: ")
-    public void saveFindByIdTest(){
+    public void saveIdTest(){
         // Given
         int uFollowId = 1;
         int userId = 1;

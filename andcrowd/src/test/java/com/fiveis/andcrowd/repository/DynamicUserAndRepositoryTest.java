@@ -30,7 +30,7 @@ public class DynamicUserAndRepositoryTest {
     @Test
     @Transactional
     @DisplayName("CR: 1번 모임글 추가 후 조회")
-    public void saveFindByIdTest(){
+    public void saveTest(){
         // Given
         String userEmail = "asdf@gmail.com";
         String tableName = "user_and_" + userEmail.replace('@', '_').replace('.', '_');

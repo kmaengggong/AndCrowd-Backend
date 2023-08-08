@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.fiveis.andcrowd.repository.DynamicUserLikeRepository">
+    <update id="createDynamicUserLikeTable">
+        CREATE
+        TABLE IF NOT EXISTS ${tableName}(
+            u_like_id INT AUTO_INCREMENT PRIMARY KEY,
+            project_id INT NOT NULL,
+            project_type INT NOT NULL
+        )
+    </update>
+
+    <select id="findAll" parameterType="String" resultType="com.fiveis.andcrowd.dto.DynamicUserLikeDTO$Find">
+        SELECT
+            u_like_id as uLikeId,
+            project_id as projectId,
+            project_type as projectType
+        FROM
+            ${tableName}
+    </select>
+
+    <select id="findById" parameterType="map" resultType="com.fiveis.andcrowd.dto.DynamicUserLikeDTO$Find">
+        SELECT
+            u_like_id as uLikeId,
+            project_id as projectId,
+            project_type as projectType
+        FROM
+            ${tableName}
+        WHERE
+            u_like_id = #{uLikeId}
+    </select>
+
+    <insert id="save" parameterType="map">
+        INSERT
+        INTO
+            ${tableName}
+            (u_like_id, project_id, project_type)
+        VALUES
+            (#{dynamicUserLike.uLikeId}, #{dynamicUserLike.projectId}, #{dynamicUserLike.projectType})
+    </insert>
+
+    <delete id="deleteById" parameterType="int">
+        DELETE
+        FROM
+            ${tableName}
+        WHERE
+            u_like_id = #{uLikeId}
+    </delete>
+</mapper>
