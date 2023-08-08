@@ -14,7 +14,7 @@
             crowd_board_content VARCHAR(2000) NOT NULL ,
             crowd_img VARCHAR(200) ,
             publishe_at DATETIME DEFAULT now() ,
-            updataed_at DATETIME DEFAULT now() ,
+            updated_at DATETIME DEFAULT now() ,
             view_count INT DEFAULT 0 ,
             is_deleted BOOL default false
         );
@@ -29,7 +29,7 @@
             crowd_board_content AS crowdBoardContent ,
             crowd_img AS crowdImg ,
             publishe_at AS publishedAt ,
-            updataed_at AS updatedAt ,
+            updated_at AS updatedAt ,
             view_count AS viewCount ,
             is_deleted AS isDeleted
         FROM
@@ -47,7 +47,7 @@
             crowd_board_content AS crowdBoardContent ,
             crowd_img AS crowdImg ,
             publishe_at AS publishedAt ,
-            updataed_at AS updatedAt ,
+            updated_at AS updatedAt ,
             view_count AS viewCount ,
             is_deleted AS isDeleted
         FROM
@@ -63,4 +63,23 @@
             (#{crowdId}, #{crowdBoardTag}, #{crowdBoardTitle}, #{crowdBoardContent}, #{crowdImg})
     </insert>
 
+    <insert id="update" parameterType="com.fiveis.andcrowd.dto.DynamicCrowdBoardDTO$Update">
+        UPDATE
+            crowd_board_${crowdId}
+        SET
+            crowd_board_tag = #{crowdBoardTag},
+            crowd_board_title = #{crowdBoardTitle},
+            crowd_board_content = #{crowdBoardContent},
+            crowd_img = #{crowdImg},
+            updated_at = now()
+        WHERE
+            crowd_board_id = #{crowdBoardId}
+    </insert>
+
+    <delete id="deleteByCrowdBoardId" parameterType="map">
+        DELETE FROM
+            crowd_board_${crowdId}
+        WHERE
+            crowd_board_id = #{crowdBoardId}
+    </delete>
 </mapper>

@@ -23,14 +23,13 @@ public class DynamicCrowdBoardDTO {
 
         private String crowdImg;
 
-        public Find(DynamicCrowdBoard dynamicCrowdBoard) {
-            this.crowdId = dynamicCrowdBoard.getCrowdId();
-            this.crowdBoardId = dynamicCrowdBoard.getCrowdBoardId();
-            this.crowdBoardTag = dynamicCrowdBoard.getCrowdBoardTag();
-            this.crowdBoardTitle = dynamicCrowdBoard.getCrowdBoardTitle();
-            this.crowdBoardContent = dynamicCrowdBoard.getCrowdBoardContent();
-            this.crowdImg = dynamicCrowdBoard.getCrowdImg();
-        }
+        private LocalDateTime publishedAt;
+
+        private LocalDateTime updatedAt;
+
+        private int viewCount;
+
+        private boolean isDeleted;
     }
 
     @Getter @Setter @ToString @Builder
@@ -47,14 +46,6 @@ public class DynamicCrowdBoardDTO {
         private String crowdBoardContent;
 
         private String crowdImg;
-
-        public Save(DynamicCrowdBoard dynamicCrowdBoard){
-            this.crowdId = dynamicCrowdBoard.getCrowdId();
-            this.crowdBoardTag = dynamicCrowdBoard.getCrowdBoardTag();
-            this.crowdBoardTitle = dynamicCrowdBoard.getCrowdBoardTitle();
-            this.crowdBoardContent = dynamicCrowdBoard.getCrowdBoardContent();
-            this.crowdImg = dynamicCrowdBoard.getCrowdImg();
-        }
     }
 
     @Getter @Setter @ToString @Builder
@@ -73,13 +64,6 @@ public class DynamicCrowdBoardDTO {
 
         private String crowdImg;
 
-        public Update(DynamicCrowdBoard dynamicCrowdBoard){
-            this.crowdBoardId = dynamicCrowdBoard.getCrowdBoardId();
-            this.crowdBoardTag = dynamicCrowdBoard.getCrowdBoardTag();
-            this.crowdBoardTitle = dynamicCrowdBoard.getCrowdBoardTitle();
-            this.crowdBoardContent = dynamicCrowdBoard.getCrowdBoardContent();
-            this.crowdImg = dynamicCrowdBoard.getCrowdImg();
-        }
     }
 
 }

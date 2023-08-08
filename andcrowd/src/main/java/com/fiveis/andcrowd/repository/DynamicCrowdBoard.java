@@ -15,9 +15,9 @@ public interface DynamicCrowdBoard {
 
     DynamicCrowdBoardDTO.Find findById(Map<String, Integer> params);
 
-    void deleteByCrowdBoardId(int crowdBoardId);
+    void deleteByCrowdBoardId(Map<String, Integer> params);
 
-    void save(DynamicCrowdBoardDTO.Save dynamicCrowdBoardCreateRequestDTO);
+    void save(DynamicCrowdBoardDTO.Save dynamicCrowdBoardDTOSave);
 
-    void update(DynamicCrowdBoardDTO.Update dynamicCrowdBoardUpdateRequestDTO);
+    void update(DynamicCrowdBoardDTO.Update dynamicCrowdBoardDTOUpdate);
 }
