@@ -4,6 +4,7 @@ import com.fiveis.andcrowd.dto.AndDTO;
 import com.fiveis.andcrowd.entity.And;
 import com.fiveis.andcrowd.repository.AndDynamicRepository;
 import com.fiveis.andcrowd.repository.AndJPARepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -16,6 +17,7 @@ public class AndServiceImpl implements AndService{
     AndJPARepository andJPARepository;
     AndDynamicRepository andDynamicRepository;
 
+    @Autowired
     public AndServiceImpl(AndJPARepository andJPARepository, AndDynamicRepository andDynamicRepository){
         this.andJPARepository = andJPARepository;
         this.andDynamicRepository = andDynamicRepository;

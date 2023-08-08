@@ -2,7 +2,6 @@ package com.fiveis.andcrowd.service;
 
 import com.fiveis.andcrowd.dto.DynamicAndQnaDTO;
 import jakarta.transaction.Transactional;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

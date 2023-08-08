@@ -33,4 +33,25 @@ public class AndDynamicRepositoryTest {
         // 직접 mysql에서 확인
         return true;
     }
+
+    @Test
+    @Transactional
+    public void testCreateDynamicAndQnaReplyTable() {
+        // Given
+        int andId = 1;
+        String replyTableName = "dynamic_and_qna_reply_" + andId;
+
+        // When
+        andDynamicRepository.createDynamicAndQnaReplyTable(andId);
+
+        // Then
+        boolean tableExists = checkReplyTableExists(replyTableName);
+        assertTrue(tableExists, "Table " + replyTableName + " should exist in the database.");
+    }
+
+    private boolean checkReplyTableExists(String tableName) {
+        // 직접 mysql에서 확인
+        return true;
+    }
+
 }

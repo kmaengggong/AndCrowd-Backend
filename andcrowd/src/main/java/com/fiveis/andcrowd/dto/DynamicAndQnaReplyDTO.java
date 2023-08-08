@@ -14,6 +14,7 @@ public class DynamicAndQnaReplyDTO {
     public static class FindById {
         private int andReplyId;
         private int andQnaId;
+        private int andId;
         private int userId;
         private String andReplyContent;
         private LocalDateTime publishedAt;
@@ -30,6 +31,7 @@ public class DynamicAndQnaReplyDTO {
     public static class Update {
         private int andReplyId;
         private int andQnaId;
+        private int andId;
         private int userId;
         private String andReplyContent;
         private LocalDateTime publishedAt;
