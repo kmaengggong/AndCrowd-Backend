@@ -20,8 +20,8 @@ public class AndController {
     }
 
     @RequestMapping("/list")
-    public List<AndDTO.FindAllByUserId> getListByUserId(@RequestParam("userId") int userId) {
-        return andService.findAllByUserId(userId);
+    public List<AndDTO.Find> getList() {
+        return andService.findAll();
     }
 
     @RequestMapping("/create")
@@ -30,7 +30,7 @@ public class AndController {
     }
 
     @RequestMapping("/{andId}")
-    public AndDTO.FindById getItem(@PathVariable("andId") int andId) {
+    public AndDTO.Find getItem(@PathVariable("andId") int andId) {
         return andService.findById(andId).orElse(null);
     }
 

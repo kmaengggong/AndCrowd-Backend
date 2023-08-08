@@ -10,15 +10,17 @@ import java.util.Optional;
 @Service
 public interface AndService {
 
-    Optional<AndDTO.FindById> findById(int andId);
+    Optional<AndDTO.Find> findById(int andId);
 
     List<AndDTO.FindAllByUserId> findAllByUserId(int userId);
+
+    List<AndDTO.Find> findAll();
 
     void deleteById(int andId);
 
     void save(And and);
 
-    public AndDTO.FindById convertToAndFindByIdDTO(And and);
+    public AndDTO.Find convertToAndFindDTO(And and);
 
     void update(And and);
 }

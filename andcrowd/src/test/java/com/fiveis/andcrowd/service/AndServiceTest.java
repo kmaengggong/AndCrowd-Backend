@@ -34,7 +34,7 @@ public class AndServiceTest {
         String andHeaderImg = "headerimgdir";
 
         // when
-        AndDTO.FindById andFindByIdDTO = andService.findById(andId).get();
+        AndDTO.Find andFindByIdDTO = andService.findById(andId).get();
 
         // then
         assertEquals(andContent, andFindByIdDTO.getAndContent());

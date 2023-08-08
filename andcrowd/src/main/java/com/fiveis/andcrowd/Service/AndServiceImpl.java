@@ -6,6 +6,7 @@ import com.fiveis.andcrowd.repository.AndDynamicRepository;
 import com.fiveis.andcrowd.repository.AndJPARepository;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,15 +28,29 @@ public class AndServiceImpl implements AndService{
 //    }
 
     @Override
-    public Optional<AndDTO.FindById> findById(int andId) {
+    public Optional<AndDTO.Find> findById(int andId) {
         Optional<And> andOptional = andJPARepository.findById(andId);
-        return andOptional.map(this::convertToAndFindByIdDTO);
+        return andOptional.map(this::convertToAndFindDTO);
     }
 
     @Override
     public List<AndDTO.FindAllByUserId> findAllByUserId(int userId) {
         return andJPARepository.findAllByUserId(userId);
     }
+
+    @Override
+    public List<AndDTO.Find> findAll() {
+        List<And> andList = andJPARepository.findAll();
+        List<AndDTO.Find> findList = new ArrayList<>();
+
+        for (And and : andList) {
+            AndDTO.Find dto = convertToAndFindDTO(and);
+            findList.add(dto);
+        }
+
+        return findList;
+    }
+
 
     @Override
     public void deleteById(int andId) {
@@ -57,8 +72,8 @@ public class AndServiceImpl implements AndService{
     }
 
 
-    public AndDTO.FindById convertToAndFindByIdDTO(And and) {
-        return AndDTO.FindById.builder()
+    public AndDTO.Find convertToAndFindDTO(And and) {
+        return AndDTO.Find.builder()
                 .andId(and.getAndId())
                 .userId(and.getUserId())
                 .andCategoryId(and.getAndCategoryId())

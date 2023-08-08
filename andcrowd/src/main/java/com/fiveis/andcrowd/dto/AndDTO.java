@@ -10,7 +10,7 @@ public class AndDTO {
     @ToString
     @AllArgsConstructor
     @NoArgsConstructor
-    public static class FindById {
+    public static class Find {
 
         private int andId;
         private int userId;
