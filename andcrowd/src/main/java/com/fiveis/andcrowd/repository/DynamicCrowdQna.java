@@ -10,7 +10,7 @@ import java.util.Map;
 
 @Mapper
 public interface DynamicCrowdQna {
-    void createDynamicCrowdQnaTable(@Param("corwdId") int crowdId);
+    void createDynamicCrowdQnaTable(@Param("crowdId") int crowdId);
 
     List<DynamicCrowdQnaDTO.Find> findAll(int crowdId);
 
