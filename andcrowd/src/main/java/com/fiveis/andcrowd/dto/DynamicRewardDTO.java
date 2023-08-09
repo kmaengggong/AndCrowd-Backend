@@ -9,7 +9,7 @@ public class DynamicRewardDTO { // FindAllByUserId, update, save, delete
     @Builder @ToString
     @NoArgsConstructor
     @AllArgsConstructor
-    public static class FindAllByUserId { // 크라우드 리워드 조회
+    public static class FindAllById { // 크라우드 리워드 조회
         private int rewardId;
         private int crowdId;
         private String rewardTitle;

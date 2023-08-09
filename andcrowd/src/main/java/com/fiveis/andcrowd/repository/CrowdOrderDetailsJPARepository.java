@@ -9,6 +9,6 @@ import java.util.List;
 @Repository
 public interface CrowdOrderDetailsJPARepository extends JpaRepository<CrowdOrderDetails, Integer> {
 
-    List<CrowdOrderDetails> findAllByUserId(int purchaseId);
+    List<CrowdOrderDetails> findAllByUserId(int crowdId);
 
 }
