@@ -2,9 +2,11 @@ package com.fiveis.andcrowd.service;
 
 import com.fiveis.andcrowd.dto.DynamicAndQnaDTO;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public interface DynamicAndQnaService {
     List<DynamicAndQnaDTO.FindById> findAll(int andId);
     DynamicAndQnaDTO.FindById findByAndQnaId(int andId, int andQnaId);
