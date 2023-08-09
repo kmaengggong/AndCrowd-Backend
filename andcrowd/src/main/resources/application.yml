@@ -1,13 +1,13 @@
 spring:
   mvc:
     view:
-      # JSP ??
+      # JSP
       prefix: /WEB-INF/views/
       suffix: .jsp
   profiles:
-    active: db
+    active: db, jwt, cd
   datasource:
-    # DB ??
+    # DB
     url: ${url}
     username: ${username_}
     password: ${password}
@@ -21,16 +21,16 @@ spring:
         format_sql: true
     show-sql: true
 
-# JWT ??
-#jwt:
-#  issuer: ${issuer}
-#  secret_key: ${secret_key}
+# JWT
+jwt:
+  issuer: ${issuer}
+  secret_key: ${secret_key}
 
-#MyBatis mapper ??
+#MyBatis
 mybatis:
   mapper-locations: classpath:mybatis/mapper/**/**.xml
 
-# ?? ?? ???
+# Server Auto Reload
 #server:
 #  devtools:
 #    liverload:

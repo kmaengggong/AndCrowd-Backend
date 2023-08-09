@@ -15,9 +15,7 @@ public class DynamicAndApplicant {
 
     private int userId;
 
-    private int roleId;
-
-    private int andCategoryId;
+    private int andRoleId;
 
     private String applyContent;
 
