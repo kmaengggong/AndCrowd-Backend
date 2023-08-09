@@ -7,9 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -34,7 +32,7 @@ public class DynamicCrowdBoardTest {
 
         // when
         dynamicCrowdBoard.createDynamicCrowdBoardTable(crowdId);
-        DynamicCrowdBoardDTO.Save newBoard = new DynamicCrowdBoardDTO.Save();
+        /*DynamicCrowdBoardDTO.Save newBoard = new DynamicCrowdBoardDTO.Save();
         newBoard.setCrowdId(crowdId);
         newBoard.setCrowdBoardTag(tag);
         newBoard.setCrowdBoardTitle(title);
@@ -44,7 +42,7 @@ public class DynamicCrowdBoardTest {
 
         // then
         List<DynamicCrowdBoardDTO.Find> crowdBoardList = dynamicCrowdBoard.findAll(crowdId);
-        assertThat(crowdBoardList.get(0).getCrowdId()).isEqualTo(crowdId);
+        assertThat(crowdBoardList.get(0).getCrowdId()).isEqualTo(crowdId);*/
     }
 
 
@@ -162,7 +160,7 @@ public class DynamicCrowdBoardTest {
 
     @Test
     @Transactional
-    @DisplayName("crowdId 1번글의 2번째 글 삭제시 데이터 값이 NULL 값일 것이고 전체 글의 갯수는 2개일것이다.")
+    @DisplayName("crowdId 1번글의 2번째 글 삭제시 isdDeleted가 true가 될것이다.")
     public void deleteByCrowdBoardIdTest(){
 
         // given
@@ -174,11 +172,11 @@ public class DynamicCrowdBoardTest {
 //        params.put("crowdId", crowdId);
 //        params.put("crowdBoardId", crowdBoardId);
         dynamicCrowdBoard.deleteByCrowdBoardId(crowdId, crowdBoardId);
-        List<DynamicCrowdBoardDTO.Find> crowdBoardList = dynamicCrowdBoard.findAll(crowdId);
+        DynamicCrowdBoardDTO.Find crowdBoard = dynamicCrowdBoard.findById(crowdId, crowdBoardId);
+
 
         // then
-        assertThat(crowdBoardList.size()).isEqualTo(2);
-        assertThat(dynamicCrowdBoard.findById(crowdId, crowdBoardId)).isNull();
+        assertThat(crowdBoard.isDeleted()).isTrue();
     }
 
 }

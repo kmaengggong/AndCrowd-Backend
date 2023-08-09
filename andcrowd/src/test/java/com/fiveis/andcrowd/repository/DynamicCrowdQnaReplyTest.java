@@ -132,20 +132,18 @@ public class DynamicCrowdQnaReplyTest {
 
     @Test
     @Transactional
-    @DisplayName("2번댓글 삭제시 crowdQna 1번글의 전체 댓글의 갯수는 2개이고 2번 댓글은 NULL값일것이다.")
+    @DisplayName("2번댓글 삭제시 crowdQna 1번글의 2번 댓글의 isDeleted 는 true일것이다.")
     public void deleteByCrowdBoardIdTest(){
 
         // given
         int crowdId = 1;
-        int crowdQnaId = 1;
         int qnaReplyId = 2;
 
         // when
         dynamicCrowdQnaReply.deleteByQnaReplyId(crowdId, qnaReplyId);
-        List<DynamicCrowdQnaReplyDTO.Find> qnaReplyList = dynamicCrowdQnaReply.findAll(crowdId, crowdQnaId);
+        DynamicCrowdQnaReplyDTO.Find qnaReply = dynamicCrowdQnaReply.findById(crowdId, qnaReplyId);
 
         // then
-        assertThat(qnaReplyList.size()).isEqualTo(2);
-        assertThat(dynamicCrowdQnaReply.findById(crowdId, qnaReplyId)).isNull();
+        assertThat(qnaReply.isDeleted()).isTrue();
     }
 }

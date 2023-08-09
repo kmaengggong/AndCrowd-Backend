@@ -66,8 +66,10 @@
     </update>
 
     <delete id="deleteByCrowdQnaId" parameterType="int">
-        DELETE FROM
+        UPDATE
             crowd_qna_#{crowdId}
+        SET
+            is_deleted = true
         WHERE
             crowd_qna_id = #{crowdQnaId}
     </delete>

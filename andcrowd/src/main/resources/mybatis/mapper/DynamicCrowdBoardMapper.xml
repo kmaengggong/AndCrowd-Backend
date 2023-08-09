@@ -77,8 +77,10 @@
     </insert>
 
     <delete id="deleteByCrowdBoardId" parameterType="int">
-        DELETE FROM
+        UPDATE
             crowd_board_#{crowdId}
+        SET
+            is_deleted = true
         WHERE
             crowd_board_id = #{crowdBoardId}
     </delete>

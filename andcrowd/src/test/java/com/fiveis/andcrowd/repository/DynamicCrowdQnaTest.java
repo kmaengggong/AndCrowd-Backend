@@ -7,9 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -152,10 +150,9 @@ public class DynamicCrowdQnaTest {
 
         // when
         dynamicCrowdQna.deleteByCrowdQnaId(crowdId, crowdQnaId);
-        List<DynamicCrowdQnaDTO.Find> crowdQnaList = dynamicCrowdQna.findAll(crowdId);
+        DynamicCrowdQnaDTO.Find crowdQna = dynamicCrowdQna.findById(crowdId, crowdQnaId);
 
         // then
-        assertThat(crowdQnaList.size()).isEqualTo(2);
-        assertThat(dynamicCrowdQna.findById(crowdId, crowdQnaId)).isNull();
+        assertThat(crowdQna.isDeleted()).isTrue();
     }
 }
