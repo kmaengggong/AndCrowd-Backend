@@ -1,6 +1,6 @@
 package com.fiveis.andcrowd.repository;
 
-/*import com.fiveis.andcrowd.entity.Crowd;
+import com.fiveis.andcrowd.entity.Crowd;
 import com.fiveis.andcrowd.entity.DynamicUserLike;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -48,4 +48,4 @@ public class UserLikeRepositoryTest {
         Assertions.assertEquals("a", "a");
     }
 
-}*/
+}

@@ -6,7 +6,7 @@
 <mapper namespace="com.fiveis.andcrowd.repository.DynamicCrowdQna">
 
     <update id="createDynamicCrowdQnaTable">
-        CREATE TABLE crowd_qna_${crowd_id}(
+        CREATE TABLE crowd_qna_#{crowdId}(
             crowd_qna_id INT AUTO_INCREMENT PRIMARY KEY ,
             crowd_id INT NOT NULL ,
             qna_title VARCHAR(200) NOT NULL ,
@@ -32,7 +32,7 @@
             crowdQnaId DESC
     </select>
 
-    <select id="findById" parameterType="map">
+    <select id="findById" parameterType="int">
         SELECT
             crowd_qna_id AS crowdqnaId ,
             crowd_id AS crowdId ,
@@ -42,7 +42,7 @@
             updated_at AS updatedAt ,
             is_deleted AS isDeleted
         FROM
-            crowd_qna_${crowdId}
+            crowd_qna_#{crowdId}
         WHERE
             crowd_qna_id = #{crowdQnaId}
     </select>
@@ -54,20 +54,20 @@
             (#{crowdId}, #{qnaTitle}, #{qnaContent})
     </insert>
 
-    <insert id="update" parameterType="com.fiveis.andcrowd.dto.DynamicCrowdQnaDTO$Update">
+    <update id="update" parameterType="com.fiveis.andcrowd.dto.DynamicCrowdQnaDTO$Update">
         UPDATE
-            crowd_qna_${crowdId}
+            crowd_qna_#{crowdId}
         SET
             qna_title = #{qnaTitle},
             qna_content = #{qnaContent},
             updated_at = now()
         WHERE
             crowd_qna_id = #{crowdQnaId}
-    </insert>
+    </update>
 
-    <delete id="deleteByCrowdQnaId" parameterType="map">
+    <delete id="deleteByCrowdQnaId" parameterType="int">
         DELETE FROM
-            crowd_qna_${crowdId}
+            crowd_qna_#{crowdId}
         WHERE
             crowd_qna_id = #{crowdQnaId}
     </delete>

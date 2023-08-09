@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.fiveis.andcrowd.repository.DynamicCrowdQnaReply">
+
+    <update id="createDynamicCrowdQnaReplyTable" parameterType="int">
+        CREATE TABLE crowd_qna_reply_#{crowdId}(
+            qna_reply_id INT AUTO_INCREMENT PRIMARY KEY ,
+            crowd_qna_id INT NOT NULL ,
+            qna_reply_content VARCHAR(2000) NOT NULL ,
+            publishe_at DATETIME DEFAULT now() ,
+            is_deleted BOOL default false
+        );
+    </update>
+
+    <select id="findAll" parameterType="int">
+        SELECT
+            qna_reply_id AS qnaReplyId ,
+            crowd_qna_id AS crowdQnaId ,
+            qna_reply_content AS qnaReplyContent ,
+            publishe_at AS publishedAt ,
+            is_deleted AS isDeleted
+        FROM
+            crowd_qna_reply_#{crowdId}
+        WHERE
+            crowd_qna_id = #{crowdQnaId}
+        ORDER BY
+            crowd_qna_id DESC
+    </select>
+
+    <select id="findById" parameterType="int">
+        SELECT
+            qna_reply_id AS qnaReplyId ,
+            crowd_qna_id AS crowdQnaId ,
+            qna_reply_content AS qnaReplyContent ,
+            publishe_at AS publishedAt ,
+            is_deleted AS isDeleted
+        FROM
+            crowd_qna_reply_#{crowdId}
+        WHERE
+            qna_reply_id = #{qnaReplyId}
+    </select>
+
+    <insert id="save" parameterType="com.fiveis.andcrowd.dto.DynamicCrowdQnaReplyDTO$Save">
+        INSERT INTO
+            crowd_qna_reply_#{crowdId} (crowd_qna_id, qna_reply_content)
+        VALUES
+            (#{crowdQnaId}, #{qnaReplyContent})
+    </insert>
+
+    <update id="update" parameterType="com.fiveis.andcrowd.dto.DynamicCrowdQnaReplyDTO$Update">
+        UPDATE
+            crowd_qna_reply_#{crowdId}
+        SET
+            qna_reply_content = #{qnaReplyContent}
+        WHERE
+            qna_reply_id = #{qnaReplyId}
+    </update>
+
+    <delete id="deleteByQnaReplyId" parameterType="int">
+        DELETE FROM
+            crowd_qna_reply_#{crowdId}
+        WHERE
+            qna_reply_id = #{qnaReplyId}
+    </delete>
+</mapper>

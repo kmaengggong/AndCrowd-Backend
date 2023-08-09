@@ -6,7 +6,7 @@
 <mapper namespace="com.fiveis.andcrowd.repository.DynamicCrowdBoard">
 
     <update id="createDynamicCrowdBoardTable">
-        CREATE TABLE crowd_board_${crowd_id}(
+        CREATE TABLE crowd_board_#{crowdId}(
             crowd_board_id INT AUTO_INCREMENT PRIMARY KEY ,
             crowd_id INT NOT NULL ,
             crowd_board_tag INT NOT NULL ,
@@ -38,7 +38,7 @@
             crowdBoardId DESC
     </select>
 
-    <select id="findById" parameterType="map">
+    <select id="findById" parameterType="int">
         SELECT
             crowd_board_id AS crowdBoardId ,
             crowd_id AS crowdId ,
@@ -51,7 +51,7 @@
             view_count AS viewCount ,
             is_deleted AS isDeleted
         FROM
-            crowd_board_${crowdId}
+            crowd_board_#{crowdId}
         WHERE
             crowd_board_id = #{crowdBoardId}
     </select>
@@ -65,7 +65,7 @@
 
     <insert id="update" parameterType="com.fiveis.andcrowd.dto.DynamicCrowdBoardDTO$Update">
         UPDATE
-            crowd_board_${crowdId}
+            crowd_board_#{crowdId}
         SET
             crowd_board_tag = #{crowdBoardTag},
             crowd_board_title = #{crowdBoardTitle},
@@ -76,9 +76,9 @@
             crowd_board_id = #{crowdBoardId}
     </insert>
 
-    <delete id="deleteByCrowdBoardId" parameterType="map">
+    <delete id="deleteByCrowdBoardId" parameterType="int">
         DELETE FROM
-            crowd_board_${crowdId}
+            crowd_board_#{crowdId}
         WHERE
             crowd_board_id = #{crowdBoardId}
     </delete>

@@ -75,10 +75,10 @@ public class DynamicCrowdBoardTest {
         String content = "2번글본문";
 
         // when
-        Map<String, Integer> params = new HashMap<>();
-        params.put("crowdId", crowdId);
-        params.put("crowdBoardId", crowdBoardId);
-        DynamicCrowdBoardDTO.Find crowdBoard = dynamicCrowdBoard.findById(params);
+        //Map<String, Integer> params = new HashMap<>();
+        //params.put("crowdId", crowdId);
+        //params.put("crowdBoardId", crowdBoardId);
+        DynamicCrowdBoardDTO.Find crowdBoard = dynamicCrowdBoard.findById(crowdId, crowdBoardId);
 
         // then
         assertThat(crowdBoard.getCrowdId()).isEqualTo(crowdId);
@@ -170,15 +170,15 @@ public class DynamicCrowdBoardTest {
         int crowdBoardId = 2;
 
         // when
-        Map<String, Integer> params = new HashMap<>();
-        params.put("crowdId", crowdId);
-        params.put("crowdBoardId", crowdBoardId);
-        dynamicCrowdBoard.deleteByCrowdBoardId(params);
+//        Map<String, Integer> params = new HashMap<>();
+//        params.put("crowdId", crowdId);
+//        params.put("crowdBoardId", crowdBoardId);
+        dynamicCrowdBoard.deleteByCrowdBoardId(crowdId, crowdBoardId);
         List<DynamicCrowdBoardDTO.Find> crowdBoardList = dynamicCrowdBoard.findAll(crowdId);
 
         // then
         assertThat(crowdBoardList.size()).isEqualTo(2);
-        assertThat(dynamicCrowdBoard.findById(params)).isNull();
+        assertThat(dynamicCrowdBoard.findById(crowdId, crowdBoardId)).isNull();
     }
 
 }

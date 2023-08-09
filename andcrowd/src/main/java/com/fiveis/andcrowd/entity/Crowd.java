@@ -21,7 +21,7 @@ public class Crowd {
     private int crowdId;
 
     @Column(nullable = false)
-    private int adNum;
+    private int adId;
 
     @Column(nullable = false)
     private int andId;
