@@ -15,14 +15,13 @@ public class DynamicUserAndRepositoryTest {
     @Autowired
     DynamicUserAndRepository dynamicUserAndRepository;
 
-    String userEmail = "asdf@gmail.com";
-    String tableName = "user_follow_" + userEmail.replace('@', '_').replace('.', '_');
+    String userEmail = "asdf@gmail.com".replace('@', '_').replace('.', '_');
 
     @BeforeEach
     public void createDyanamicUserAndTableTest(){
         // Given
         // When
-        dynamicUserAndRepository.createDynamicUserAndTable(tableName);
+        dynamicUserAndRepository.createDynamicUserAndTable(userEmail);
 
         // Then
     }
@@ -40,17 +39,8 @@ public class DynamicUserAndRepositoryTest {
                 .build();
 
         // When
-        Map<String, ?> map = Map.of(
-                "tableName", tableName,
-                "dynamicUserAnd", dynamicUserAnd
-        );
-        dynamicUserAndRepository.save(map);
-
-        Map<String, ?> map1 = Map.of(
-                "tableName", tableName,
-                "uAndId", uAndId
-        );
-        DynamicUserAndDTO.Find find = dynamicUserAndRepository.findById(map1);
+        dynamicUserAndRepository.save(userEmail, dynamicUserAnd);
+        DynamicUserAndDTO.Find find = dynamicUserAndRepository.findById(userEmail, uAndId);
 
         // Then
         Assertions.assertEquals(uAndId, find.getUAndId());
@@ -62,7 +52,7 @@ public class DynamicUserAndRepositoryTest {
     public void findAllTest(){
         // Given
         // When
-        List<DynamicUserAndDTO.Find> findList = dynamicUserAndRepository.findAll(tableName);
+        List<DynamicUserAndDTO.Find> findList = dynamicUserAndRepository.findAll(userEmail);
 
         // Then
         Assertions.assertTrue(findList.isEmpty());
@@ -81,19 +71,10 @@ public class DynamicUserAndRepositoryTest {
                 .build();
 
         // When
-        Map<String, ?> map = Map.of(
-                "tableName", tableName,
-                "dynamicUserAnd", dynamicUserAnd
-        );
-        dynamicUserAndRepository.save(map);
-
-        Map<String, ?> map1 = Map.of(
-                "tableName", tableName,
-                "uAndId", uAndId
-        );
-        dynamicUserAndRepository.deleteById(map1);
+        dynamicUserAndRepository.save(userEmail, dynamicUserAnd);
+        dynamicUserAndRepository.deleteById(userEmail, uAndId);
 
         // Then
-        Assertions.assertNull(dynamicUserAndRepository.findById(map1));
+        Assertions.assertNull(dynamicUserAndRepository.findById(userEmail, uAndId));
     }
 }

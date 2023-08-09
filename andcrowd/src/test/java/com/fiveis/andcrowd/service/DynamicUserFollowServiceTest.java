@@ -1,6 +1,7 @@
 package com.fiveis.andcrowd.service;
 
 import com.fiveis.andcrowd.dto.DynamicUserFollowDTO;
+import com.fiveis.andcrowd.dto.UserDTO;
 import com.fiveis.andcrowd.entity.DynamicUserFollow;
 import com.fiveis.andcrowd.entity.User;
 import jakarta.transaction.Transactional;
@@ -11,19 +12,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.List;
-import java.util.Map;
 
 @SpringBootTest
 public class DynamicUserFollowServiceTest {
     @Autowired
     DynamicUserFollowService dynamicUserFollowService;
 
-    String userEmail = "asdf@gmail.com";
-    String tableName = "user_follow_" + userEmail.replace('@', '_').replace('.', '_');
+    String userEmail = "asdf@gmail.com".replace('@', '_').replace('.', '_');
 
     @Test
     @Transactional
-    @DisplayName("")
+    @DisplayName("CR")
     public void findAllTest(){
         String userNickname = "NICK";
         int uFollowId = 1;
@@ -34,23 +33,19 @@ public class DynamicUserFollowServiceTest {
                 .build();
 
         // When
-        Map<String, ?> map = Map.of(
-                "tableName", tableName,
-                "dynamicUserFollow", dynamicUserFollow
-        );
-        dynamicUserFollowService.save(map);
+        dynamicUserFollowService.save(userEmail, dynamicUserFollow);
 
-        List<User> userList = dynamicUserFollowService.findAll(tableName);
+        List<UserDTO.FindAsPublic> findList = dynamicUserFollowService.findAll(userEmail);
 
         // Then
-        for(User user : userList){
-            Assertions.assertEquals(userNickname, user.getUserNickname());
+        for(UserDTO.FindAsPublic find : findList){
+            Assertions.assertEquals(userNickname, find.getUserNickname());
         }
     }
 
     @Test
     @Transactional
-    @DisplayName("")
+    @DisplayName("CR")
     public void saveTest(){
         // Given
         int uFollowId = 1;
@@ -61,17 +56,8 @@ public class DynamicUserFollowServiceTest {
                 .build();
 
         // When
-        Map<String, ?> map = Map.of(
-                "tableName", tableName,
-                "dynamicUserFollow", dynamicUserFollow
-        );
-        dynamicUserFollowService.save(map);
-
-        Map<String, ?> map1 = Map.of(
-                "tableName", tableName,
-                "uFollowId", uFollowId
-        );
-        DynamicUserFollowDTO.Find find = dynamicUserFollowService.findById(map1);
+        dynamicUserFollowService.save(userEmail, dynamicUserFollow);
+        DynamicUserFollowDTO.Find find = dynamicUserFollowService.findById(userEmail, uFollowId);
 
         // Then
         Assertions.assertEquals(uFollowId, find.getUFollowId());
@@ -79,7 +65,7 @@ public class DynamicUserFollowServiceTest {
 
     @Test
     @Transactional
-    @DisplayName("")
+    @DisplayName("CRD")
     public void deleteByIdTest(){
         // Given
         int uFollowId = 1;
@@ -90,21 +76,10 @@ public class DynamicUserFollowServiceTest {
                 .build();
 
         // When
-        Map<String, ?> map = Map.of(
-                "tableName", tableName,
-                "dynamicUserFollow", dynamicUserFollow
-        );
-        dynamicUserFollowService.save(map);
-
-        Map<String, ?> map1 = Map.of(
-                "tableName", tableName,
-                "uFollowId", uFollowId
-        );
-        dynamicUserFollowService.deleteById(map1);
-
-        DynamicUserFollowDTO.Find find = dynamicUserFollowService.findById(map1);
+        dynamicUserFollowService.save(userEmail, dynamicUserFollow);
+        dynamicUserFollowService.deleteById(userEmail, uFollowId);
 
         // Then
-        Assertions.assertNull(dynamicUserFollowService.findById(map1));
+        Assertions.assertNull(dynamicUserFollowService.findById(userEmail, uFollowId));
     }
 }

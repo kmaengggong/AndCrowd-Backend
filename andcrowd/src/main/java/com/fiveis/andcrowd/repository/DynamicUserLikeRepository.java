@@ -1,16 +1,17 @@
 package com.fiveis.andcrowd.repository;
 
 import com.fiveis.andcrowd.dto.DynamicUserLikeDTO;
+import com.fiveis.andcrowd.entity.DynamicUserLike;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
-import java.util.Map;
 
 @Mapper
 public interface DynamicUserLikeRepository {
-    void createDynamicUserLikeTable(String tableName);
-    List<DynamicUserLikeDTO.Find> findAll(String tableName);
-    DynamicUserLikeDTO.Find findById(Map<String, ?> map);
-    void save(Map<String, ?> map);  // String tableName, DynamicUserLike dynamicUserLike
-    void deleteById(Map<String, ?> map);  // String tableName, int uLikeId
+    void createDynamicUserLikeTable(String userEmail);
+    List<DynamicUserLikeDTO.Find> findAll(String userEmail);
+    DynamicUserLikeDTO.Find findById(@Param("userEmail") String userEmail, @Param("uLikeId") int uLikeId);
+    void save(@Param("userEmail") String userEmail, @Param("dynamicUserLike") DynamicUserLike dynamicUserLike);
+    void deleteById(@Param("userEmail") String userEmail, @Param("uLikeId") int uLikeId);
 }

@@ -2,7 +2,6 @@ package com.fiveis.andcrowd.repository;
 
 import com.fiveis.andcrowd.dto.DynamicUserFollowDTO;
 import com.fiveis.andcrowd.entity.DynamicUserFollow;
-import com.fiveis.andcrowd.entity.User;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -12,22 +11,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.List;
-import java.util.Map;
 
 @SpringBootTest
 public class DynamicUserFollowRepositoryTest {
     @Autowired
     DynamicUserFollowRepository dynamicUserFollowRepository;
 
-    String userEmail = "asdf@gmail.com";
-    String tableName = "user_follow_" + userEmail.replace('@', '_').replace('.', '_');
+    String userEmail = "asdf@gmail.com".replace('@', '_').replace('.', '_');
 
     @BeforeEach
     @DisplayName("C: 테이블 생성")
     public void createDynamicUserFollowTableTest() {
         // Given
         // When
-        dynamicUserFollowRepository.createDynamicUserFollowTable(tableName);
+        dynamicUserFollowRepository.createDynamicUserFollowTable(userEmail);
 
         // Then
     }
@@ -38,7 +35,7 @@ public class DynamicUserFollowRepositoryTest {
     public void findAllTest(){
         // Given
         // When
-        List<DynamicUserFollowDTO.Find> findList = dynamicUserFollowRepository.findAll(tableName);
+        List<DynamicUserFollowDTO.Find> findList = dynamicUserFollowRepository.findAll(userEmail);
 
         // Then
         Assertions.assertTrue(findList.isEmpty());
@@ -57,17 +54,8 @@ public class DynamicUserFollowRepositoryTest {
                 .build();
 
         // When
-        Map<String, ?> map = Map.of(
-                "tableName", tableName,
-                "dynamicUserFollow", dynamicUserFollow
-        );
-        dynamicUserFollowRepository.save(map);
-
-        Map<String, ?> map1 = Map.of(
-                "tableName", tableName,
-                "uFollowId", uFollowId
-        );
-        DynamicUserFollowDTO.Find find = dynamicUserFollowRepository.findById(map1);
+        dynamicUserFollowRepository.save(userEmail, dynamicUserFollow);
+        DynamicUserFollowDTO.Find find = dynamicUserFollowRepository.findById(userEmail, uFollowId);
 
         // Then
         Assertions.assertEquals(uFollowId, find.getUFollowId());
@@ -86,19 +74,10 @@ public class DynamicUserFollowRepositoryTest {
                 .build();
 
         // When
-        Map<String, ?> map = Map.of(
-                "tableName", tableName,
-                "dynamicUserFollow", dynamicUserFollow
-        );
-        dynamicUserFollowRepository.save(map);
-
-        Map<String, ?> map1 = Map.of(
-                "tableName", tableName,
-                "uFollowId", uFollowId
-        );
-        dynamicUserFollowRepository.deleteById(map1);
+        dynamicUserFollowRepository.save(userEmail, dynamicUserFollow);
+        dynamicUserFollowRepository.deleteById(userEmail, uFollowId);
 
         // Then
-        Assertions.assertNull(dynamicUserFollowRepository.findById(map1));
+        Assertions.assertNull(dynamicUserFollowRepository.findById(userEmail, uFollowId));
     }
 }

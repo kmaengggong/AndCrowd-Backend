@@ -1,13 +1,12 @@
 package com.fiveis.andcrowd.service;
 
 import com.fiveis.andcrowd.dto.DynamicUserAndDTO;
+import com.fiveis.andcrowd.entity.DynamicUserAnd;
 import com.fiveis.andcrowd.repository.DynamicUserAndRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Map;
-
 
 @Service
 public class DynamicUserAndServiceImpl implements DynamicUserAndService{
@@ -18,18 +17,18 @@ public class DynamicUserAndServiceImpl implements DynamicUserAndService{
         this.dynamicUserAndRepository = dynamicUserAndRepository;
     }
 
-    public List<?> findAll(String tableName){
+    public List<?> findAll(String userEmail){
         return null;
     }
-    public DynamicUserAndDTO.Find findById(Map<String, ?> map){
-        return dynamicUserAndRepository.findById(map);
+    public DynamicUserAndDTO.Find findById(String userEmail, int uAndId){
+        return dynamicUserAndRepository.findById(userEmail, uAndId);
     }
 
-    public void save(Map<String, ?> map){
-        dynamicUserAndRepository.save(map);
+    public void save(String userEmail, DynamicUserAnd dynamicUserAnd){
+        dynamicUserAndRepository.save(userEmail, dynamicUserAnd);
     }
 
-    public void deleteById(Map<String, ?> map){
-        dynamicUserAndRepository.deleteById(map);
+    public void deleteById(String userEmail, int uAndId){
+        dynamicUserAndRepository.deleteById(userEmail, uAndId);
     }
 }

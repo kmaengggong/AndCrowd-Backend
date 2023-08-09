@@ -1,7 +1,8 @@
 package com.fiveis.andcrowd.service;
 
 import com.fiveis.andcrowd.dto.DynamicUserFollowDTO;
-import com.fiveis.andcrowd.entity.User;
+import com.fiveis.andcrowd.dto.UserDTO;
+import com.fiveis.andcrowd.entity.DynamicUserFollow;
 import com.fiveis.andcrowd.repository.DynamicUserFollowRepository;
 import com.fiveis.andcrowd.repository.UserJPARepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +10,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 @Service
 public class DynamicUserFollowServiceImpl implements DynamicUserFollowService{
@@ -23,24 +23,24 @@ public class DynamicUserFollowServiceImpl implements DynamicUserFollowService{
         this.userJPARepository = userJPARepository;
     }
 
-    public List<User> findAll(String tableName){
-        List<DynamicUserFollowDTO.Find> findList = dynamicUserFollowRepository.findAll(tableName);
-        List<User> userList = new ArrayList<>();
+    public List<UserDTO.FindAsPublic> findAll(String userEmail){
+        List<DynamicUserFollowDTO.Find> findList = dynamicUserFollowRepository.findAll(userEmail);
+        List<UserDTO.FindAsPublic> userList = new ArrayList<>();
         for(DynamicUserFollowDTO.Find find : findList){
-            userList.add(userJPARepository.findById(find.getUserId()).get());
+            userList.add(userJPARepository.findById(find.getUserId()).get().toFindAsPublicDTO());
         }
         return userList;
     }
 
-    public DynamicUserFollowDTO.Find findById(Map<String, ?> map){
-        return dynamicUserFollowRepository.findById(map);
+    public DynamicUserFollowDTO.Find findById(String userEmail, int uFollowId){
+        return dynamicUserFollowRepository.findById(userEmail, uFollowId);
     }
 
-    public void save(Map<String, ?> map){
-        dynamicUserFollowRepository.save(map);
+    public void save(String userEmail, DynamicUserFollow dynamicUserFollow){
+        dynamicUserFollowRepository.save(userEmail, dynamicUserFollow);
     }
 
-    public void deleteById(Map<String, ?> map){
-        dynamicUserFollowRepository.deleteById(map);
+    public void deleteById(String userEmail, int uFollowId){
+        dynamicUserFollowRepository.deleteById(userEmail, uFollowId);
     }
 }

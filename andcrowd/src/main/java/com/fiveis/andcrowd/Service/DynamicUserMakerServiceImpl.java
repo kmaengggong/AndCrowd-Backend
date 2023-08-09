@@ -1,11 +1,11 @@
 package com.fiveis.andcrowd.service;
 
-import com.fiveis.andcrowd.dto.DynamicUserLikeDTO;
+import com.fiveis.andcrowd.dto.DynamicUserMakerDTO;
 import com.fiveis.andcrowd.dto.ProjectDTO;
-import com.fiveis.andcrowd.entity.DynamicUserLike;
+import com.fiveis.andcrowd.entity.DynamicUserMaker;
 import com.fiveis.andcrowd.repository.AndJPARepository;
 import com.fiveis.andcrowd.repository.CrowdJPARepository;
-import com.fiveis.andcrowd.repository.DynamicUserLikeRepository;
+import com.fiveis.andcrowd.repository.DynamicUserMakerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,25 +13,25 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class DynamicUserLikeServiceImpl implements DynamicUserLikeService{
-    private static DynamicUserLikeRepository dynamicUserLikeRepository;
+public class DynamicUserMakerServiceImpl implements DynamicUserMakerService{
+    private static DynamicUserMakerRepository dynamicUserMakerRepository;
     private static AndJPARepository andJPARepository;
     private static CrowdJPARepository crowdJPARepository;
 
     @Autowired
-    public DynamicUserLikeServiceImpl(DynamicUserLikeRepository dynamicUserLikeRepository,
-                                      AndJPARepository andJPARepository,
-                                      CrowdJPARepository crowdJPARepository){
-        this.dynamicUserLikeRepository = dynamicUserLikeRepository;
-        this.andJPARepository = andJPARepository;
-        this.crowdJPARepository = crowdJPARepository;
+    public DynamicUserMakerServiceImpl(DynamicUserMakerRepository dynamicUserMakerRepository,
+                                       AndJPARepository andJPARepository,
+                                       CrowdJPARepository crowdJPARepository){
+            this.dynamicUserMakerRepository = dynamicUserMakerRepository;
+            this.andJPARepository = andJPARepository;
+            this.crowdJPARepository = crowdJPARepository;
     }
 
     public List<ProjectDTO.Find> findAll(String userEmail){
-        List<DynamicUserLikeDTO.Find> findList = dynamicUserLikeRepository.findAll(userEmail);
+        List<DynamicUserMakerDTO.Find> findList = dynamicUserMakerRepository.findAll(userEmail);
         List<ProjectDTO.Find> projectList = new ArrayList<>();
-//        for(DynamicUserLikeDTO.Find find : findList){
-//            // 모임
+//        for(DynamicUserMakerDTO.Find find : findList){
+//                // 모임
 //            if(find.getProjectType() == 0){
 //                AndDTO.FindById andFind = andJPARepository.findById(find.getProjectId()).get();
 //                ProjectDTO.Find projectFind = ProjectDTO.Find.builder()
@@ -56,15 +56,15 @@ public class DynamicUserLikeServiceImpl implements DynamicUserLikeService{
         return null;
     }
 
-    public DynamicUserLikeDTO.Find findById(String userEmail, int uLikeId){
-        return dynamicUserLikeRepository.findById(userEmail, uLikeId);
+    public DynamicUserMakerDTO.Find findById(String userEmail, int uMakerId){
+        return dynamicUserMakerRepository.findById(userEmail, uMakerId);
     }
 
-    public void save(String userEmail, DynamicUserLike dynamicUserLike){
-        dynamicUserLikeRepository.save(userEmail, dynamicUserLike);
+    public void save(String userEmail, DynamicUserMaker dynamicUserMaker){
+        dynamicUserMakerRepository.save(userEmail, dynamicUserMaker);
     }
 
-    public void deleteById(String userEmail, int uLikeId){
-        dynamicUserLikeRepository.deleteById(userEmail, uLikeId);
+    public void deleteById(String userEmail, int uMakerId){
+        dynamicUserMakerRepository.deleteById(userEmail, uMakerId);
     }
 }

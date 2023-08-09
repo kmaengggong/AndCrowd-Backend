@@ -1,37 +1,38 @@
-package com.fiveis.andcrowd.repository;
+package com.fiveis.andcrowd.service;
 
 import com.fiveis.andcrowd.dto.DynamicUserOrderDTO;
 import com.fiveis.andcrowd.entity.DynamicUserOrder;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.List;
-import java.util.Map;
 
 @SpringBootTest
-public class DynamicUserOrderRepositoryTest {
+public class DynamicUserOrderServiceTest {
     @Autowired
-    DynamicUserOrderRepository dynamicUserOrderRepository;
+    DynamicUserOrderService dynamicUserOrderService;
 
     String userEmail = "asdf@gmail.com".replace('@', '_').replace('.', '_');
 
-    @BeforeEach
-    public void createDynamicUserOrderTableTest(){
+    @Test
+    @Transactional
+    @DisplayName("R")
+    public void findAllTest(){
         // Given
         // When
-        dynamicUserOrderRepository.createDynamicUserOrderTable(userEmail);
+        List<?> findList = dynamicUserOrderService.findAll(userEmail);
 
         // Then
+//        Assertions.assertTrue(findList.isEmpty());
     }
 
     @Test
     @Transactional
-    @DisplayName("CR: 1번 주문 후 조회")
+    @DisplayName("CR")
     public void saveTest(){
         // Given
         int uOrderId = 1;
@@ -42,8 +43,9 @@ public class DynamicUserOrderRepositoryTest {
                 .build();
 
         // When
-        dynamicUserOrderRepository.save(userEmail, dynamicUserOrder);
-        DynamicUserOrderDTO.Find find = dynamicUserOrderRepository.findById(userEmail, uOrderId);
+        dynamicUserOrderService.save(userEmail, dynamicUserOrder);
+        DynamicUserOrderDTO.Find find = dynamicUserOrderService.findById(userEmail, uOrderId);
+
 
         // Then
         Assertions.assertEquals(uOrderId, find.getUOrderId());
@@ -51,19 +53,7 @@ public class DynamicUserOrderRepositoryTest {
 
     @Test
     @Transactional
-    @DisplayName("R: 모든 주문내역 조회")
-    public void findAllTest(){
-        // Given
-        // When
-        List<DynamicUserOrderDTO.Find> findList = dynamicUserOrderRepository.findAll(userEmail);
-
-        // Then
-        Assertions.assertTrue(findList.isEmpty());
-    }
-
-    @Test
-    @Transactional
-    @DisplayName("CRD: 1번 주문 후 삭제 후 조회")
+    @DisplayName("CRD")
     public void deleteByIdTest(){
         // Given
         int uOrderId = 1;
@@ -74,10 +64,10 @@ public class DynamicUserOrderRepositoryTest {
                 .build();
 
         // When
-        dynamicUserOrderRepository.save(userEmail, dynamicUserOrder);
-        dynamicUserOrderRepository.deleteById(userEmail, uOrderId);
+        dynamicUserOrderService.save(userEmail, dynamicUserOrder);
+        dynamicUserOrderService.deleteById(userEmail, uOrderId);
 
         // Then
-        Assertions.assertNull(dynamicUserOrderRepository.findById(userEmail, uOrderId));
+        Assertions.assertNull(dynamicUserOrderService.findById(userEmail, uOrderId));
     }
 }

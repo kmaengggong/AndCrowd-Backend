@@ -6,46 +6,46 @@
 <mapper namespace="com.fiveis.andcrowd.repository.DynamicUserLikeRepository">
     <update id="createDynamicUserLikeTable">
         CREATE
-        TABLE IF NOT EXISTS ${tableName}(
+        TABLE IF NOT EXISTS user_like_${userEmail}(
             u_like_id INT AUTO_INCREMENT PRIMARY KEY,
             project_id INT NOT NULL,
             project_type INT NOT NULL
         )
     </update>
 
-    <select id="findAll" parameterType="String" resultType="com.fiveis.andcrowd.dto.DynamicUserLikeDTO$Find">
+    <select id="findAll" resultType="com.fiveis.andcrowd.dto.DynamicUserLikeDTO$Find">
         SELECT
             u_like_id as uLikeId,
             project_id as projectId,
             project_type as projectType
         FROM
-            ${tableName}
+            user_like_${userEmail}
     </select>
 
-    <select id="findById" parameterType="map" resultType="com.fiveis.andcrowd.dto.DynamicUserLikeDTO$Find">
+    <select id="findById" resultType="com.fiveis.andcrowd.dto.DynamicUserLikeDTO$Find">
         SELECT
             u_like_id as uLikeId,
             project_id as projectId,
             project_type as projectType
         FROM
-            ${tableName}
+            user_like_${userEmail}
         WHERE
             u_like_id = #{uLikeId}
     </select>
 
-    <insert id="save" parameterType="map">
+    <insert id="save">
         INSERT
         INTO
-            ${tableName}
+            user_like_${userEmail}
             (u_like_id, project_id, project_type)
         VALUES
             (#{dynamicUserLike.uLikeId}, #{dynamicUserLike.projectId}, #{dynamicUserLike.projectType})
     </insert>
 
-    <delete id="deleteById" parameterType="int">
+    <delete id="deleteById">
         DELETE
         FROM
-            ${tableName}
+            user_like_${userEmail}
         WHERE
             u_like_id = #{uLikeId}
     </delete>

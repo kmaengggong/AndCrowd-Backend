@@ -2,8 +2,6 @@ package com.fiveis.andcrowd.dto;
 
 import lombok.*;
 
-import java.time.LocalDateTime;
-
 public class ProjectDTO {
     @Getter
     @Setter

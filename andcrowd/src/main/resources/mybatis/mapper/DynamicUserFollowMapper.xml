@@ -6,43 +6,43 @@
 <mapper namespace="com.fiveis.andcrowd.repository.DynamicUserFollowRepository">
     <update id="createDynamicUserFollowTable">
         CREATE
-        TABLE IF NOT EXISTS ${tableName}(
+        TABLE IF NOT EXISTS user_follow_${userEmail}(
             u_follow_id INT AUTO_INCREMENT PRIMARY KEY,
             user_id INT NOT NULL
         )
     </update>
 
-    <select id="findAll" parameterType="String" resultType="com.fiveis.andcrowd.dto.DynamicUserFollowDTO$Find">
+    <select id="findAll" resultType="com.fiveis.andcrowd.dto.DynamicUserFollowDTO$Find">
         SELECT
             u_follow_id as uFollowId,
             user_id as userId
         FROM
-            ${tableName}
+            user_follow_${userEmail}
     </select>
 
-    <select id="findById" parameterType="map" resultType="com.fiveis.andcrowd.dto.DynamicUserFollowDTO$Find">
+    <select id="findById" resultType="com.fiveis.andcrowd.dto.DynamicUserFollowDTO$Find">
         SELECT
             u_follow_id as uFollowId,
             user_id as userId
         FROM
-            ${tableName}
+            user_follow_${userEmail}
         WHERE
             u_follow_id = #{uFollowId}
     </select>
 
-    <insert id="save" parameterType="map">
+    <insert id="save">
         INSERT
         INTO
-            ${tableName}
+            user_follow_${userEmail}
             (u_follow_id, user_id)
         VALUES
             (#{dynamicUserFollow.uFollowId}, #{dynamicUserFollow.userId})
     </insert>
 
-    <delete id="deleteById" parameterType="int">
+    <delete id="deleteById">
         DELETE
         FROM
-            ${tableName}
+            user_follow_${userEmail}
         WHERE
             u_follow_id = #{uFollowId}
     </delete>

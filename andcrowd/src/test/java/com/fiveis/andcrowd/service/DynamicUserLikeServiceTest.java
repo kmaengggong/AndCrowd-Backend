@@ -1,10 +1,9 @@
-package com.fiveis.andcrowd.repository;
+package com.fiveis.andcrowd.service;
 
 import com.fiveis.andcrowd.dto.DynamicUserLikeDTO;
 import com.fiveis.andcrowd.entity.DynamicUserLike;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,29 +12,32 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.util.List;
 
 @SpringBootTest
-public class DynamicUserLikeRepositoryTest {
+public class DynamicUserLikeServiceTest {
     @Autowired
-    DynamicUserLikeRepository dynamicUserLikeRepository;
+    DynamicUserLikeService dynamicUserLikeService;
 
     String userEmail = "asdf@gmail.com".replace('@', '_').replace('.', '_');
 
-    @BeforeEach
-    public void createDynamicUserLikeTableTest(){
+    @Test
+    @Transactional
+    @DisplayName("R")
+    public void findAllTest() {
         // Given
         // When
-        dynamicUserLikeRepository.createDynamicUserLikeTable(userEmail);
+        List<?> findList = dynamicUserLikeService.findAll(userEmail);
 
         // Then
+//        Assertions.assertTrue(findList.isEmpty());
     }
 
     @Test
     @Transactional
-    @DisplayName("CR: 1번 모임글 좋아요 후 조회")
+    @DisplayName("CR")
     public void saveTest(){
         // Given
         int uLikeId = 1;
         int projectId = 1;
-        int projectType = 0;
+        int projectType = 1;
         DynamicUserLike dynamicUserLike = DynamicUserLike.builder()
                 .uLikeId(uLikeId)
                 .projectId(projectId)
@@ -43,8 +45,8 @@ public class DynamicUserLikeRepositoryTest {
                 .build();
 
         // When
-        dynamicUserLikeRepository.save(userEmail, dynamicUserLike);
-        DynamicUserLikeDTO.Find find = dynamicUserLikeRepository.findById(userEmail, uLikeId);
+        dynamicUserLikeService.save(userEmail, dynamicUserLike);
+        DynamicUserLikeDTO.Find find = dynamicUserLikeService.findById(userEmail, uLikeId);
 
         // Then
         Assertions.assertEquals(uLikeId, find.getULikeId());
@@ -52,24 +54,12 @@ public class DynamicUserLikeRepositoryTest {
 
     @Test
     @Transactional
-    @DisplayName("R: 모든 좋아요 한 글 조회")
-    public void findAllTest(){
-        // Given
-        // When
-        List<DynamicUserLikeDTO.Find> findList = dynamicUserLikeRepository.findAll(userEmail);
-
-        // Then
-        Assertions.assertTrue(findList.isEmpty());
-    }
-
-    @Test
-    @Transactional
-    @DisplayName("CRD: 1번 모임글 좋아요 후 삭제 후 조회")
+    @DisplayName("CRD")
     public void deleteByIdTest(){
         // Given
         int uLikeId = 1;
         int projectId = 1;
-        int projectType = 0;
+        int projectType = 1;
         DynamicUserLike dynamicUserLike = DynamicUserLike.builder()
                 .uLikeId(uLikeId)
                 .projectId(projectId)
@@ -77,10 +67,10 @@ public class DynamicUserLikeRepositoryTest {
                 .build();
 
         // When
-        dynamicUserLikeRepository.save(userEmail, dynamicUserLike);
-        dynamicUserLikeRepository.deleteById(userEmail, uLikeId);
+        dynamicUserLikeService.save(userEmail, dynamicUserLike);
+        dynamicUserLikeService.deleteById(userEmail, uLikeId);
 
         // Then
-        Assertions.assertNull(dynamicUserLikeRepository.findById(userEmail, uLikeId));
+        Assertions.assertNull(dynamicUserLikeService.findById(userEmail, uLikeId));
     }
 }

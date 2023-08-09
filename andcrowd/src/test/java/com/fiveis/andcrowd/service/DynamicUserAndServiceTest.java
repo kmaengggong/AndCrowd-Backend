@@ -10,23 +10,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.List;
-import java.util.Map;
 
 @SpringBootTest
 public class DynamicUserAndServiceTest {
     @Autowired
     DynamicUserAndService dynamicUserAndService;
 
-    String userEmail = "asdf@gmail.com";
-    String tableName = "user_and_" + userEmail.replace('@', '_').replace('.', '_');
+    String userEmail = "asdf@gmail.com".replace('@', '_').replace('.', '_');
 
     @Test
     @Transactional
-    @DisplayName("")
+    @DisplayName("R")
     public void findAllTest(){
         // Given
         // When
-        List<?> findList = dynamicUserAndService.findAll(tableName);
+        List<?> findList = dynamicUserAndService.findAll(userEmail);
 
         // Then
 //        Assertions.assertTrue(findList.isEmpty());
@@ -34,7 +32,7 @@ public class DynamicUserAndServiceTest {
 
     @Test
     @Transactional
-    @DisplayName("")
+    @DisplayName("CR")
     public void saveTest(){
         // Given
         int uAndId = 1;
@@ -45,25 +43,17 @@ public class DynamicUserAndServiceTest {
                 .build();
 
         // When
-        Map<String, ?> map = Map.of(
-                "tableName", tableName,
-                "dynamicUserAnd", dynamicUserAnd
-        );
-        dynamicUserAndService.save(map);
+        dynamicUserAndService.save(userEmail, dynamicUserAnd);
+        DynamicUserAndDTO.Find find = dynamicUserAndService.findById(userEmail, uAndId);
 
-        Map<String, ?> map1 = Map.of(
-                "tableName", tableName,
-                "uAndId", uAndId
-        );
-        dynamicUserAndService.deleteById(map1);
 
         // Then
-        Assertions.assertNull(dynamicUserAndService.findById(map1));
+        Assertions.assertEquals(uAndId, find.getUAndId());
     }
 
     @Test
     @Transactional
-    @DisplayName("")
+    @DisplayName("CRD")
     public void deleteByIdTest(){
         // Given
         int uAndId = 1;
@@ -74,21 +64,10 @@ public class DynamicUserAndServiceTest {
                 .build();
 
         // When
-        Map<String, ?> map = Map.of(
-                "tableName", tableName,
-                "dynamicUserAnd", dynamicUserAnd
-        );
-        dynamicUserAndService.save(map);
-
-        Map<String, ?> map1 = Map.of(
-                "tableName", tableName,
-                "uAndId", uAndId
-        );
-        dynamicUserAndService.deleteById(map1);
-
-        DynamicUserAndDTO.Find find = dynamicUserAndService.findById(map1);
+        dynamicUserAndService.save(userEmail, dynamicUserAnd);
+        dynamicUserAndService.deleteById(userEmail, uAndId);
 
         // Then
-        Assertions.assertNull(dynamicUserAndService.findById(map1));
+        Assertions.assertNull(dynamicUserAndService.findById(userEmail, uAndId));
     }
 }

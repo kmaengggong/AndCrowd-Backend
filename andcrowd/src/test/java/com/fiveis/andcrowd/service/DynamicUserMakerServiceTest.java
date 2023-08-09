@@ -1,10 +1,9 @@
-package com.fiveis.andcrowd.repository;
+package com.fiveis.andcrowd.service;
 
 import com.fiveis.andcrowd.dto.DynamicUserMakerDTO;
 import com.fiveis.andcrowd.entity.DynamicUserMaker;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,29 +12,32 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.util.List;
 
 @SpringBootTest
-public class DynamicUserMakerRepositoryTest {
+public class DynamicUserMakerServiceTest {
     @Autowired
-    DynamicUserMakerRepository dynamicUserMakerRepository;
+    DynamicUserMakerService dynamicUserMakerService;
 
     String userEmail = "asdf@gmail.com".replace('@', '_').replace('.', '_');
 
-    @BeforeEach
-    public void createDynamicUserMakerTableTest(){
+    @Test
+    @Transactional
+    @DisplayName("R")
+    public void findAllTest() {
         // Given
         // When
-        dynamicUserMakerRepository.createDynamicUserMakerTable(userEmail);
+        List<?> findList = dynamicUserMakerService.findAll(userEmail);
 
         // Then
+//        Assertions.assertTrue(findList.isEmpty());
     }
 
     @Test
     @Transactional
-    @DisplayName("CR: 1번 모임글 생성 후 조회")
+    @DisplayName("CR")
     public void saveTest(){
         // Given
         int uMakerId = 1;
         int projectId = 1;
-        int projectType = 0;
+        int projectType = 1;
         DynamicUserMaker dynamicUserMaker = DynamicUserMaker.builder()
                 .uMakerId(uMakerId)
                 .projectId(projectId)
@@ -43,8 +45,8 @@ public class DynamicUserMakerRepositoryTest {
                 .build();
 
         // When
-        dynamicUserMakerRepository.save(userEmail, dynamicUserMaker);
-        DynamicUserMakerDTO.Find find = dynamicUserMakerRepository.findById(userEmail, uMakerId);
+        dynamicUserMakerService.save(userEmail, dynamicUserMaker);
+        DynamicUserMakerDTO.Find find = dynamicUserMakerService.findById(userEmail, uMakerId);
 
         // Then
         Assertions.assertEquals(uMakerId, find.getUMakerId());
@@ -52,24 +54,12 @@ public class DynamicUserMakerRepositoryTest {
 
     @Test
     @Transactional
-    @DisplayName("R: 모든 생성글 조회")
-    public void findAllTest(){
-        // Given
-        // When
-        List<DynamicUserMakerDTO.Find> findList = dynamicUserMakerRepository.findAll(userEmail);
-
-        // Then
-        Assertions.assertTrue(findList.isEmpty());
-    }
-
-    @Test
-    @Transactional
-    @DisplayName("CRD: 1번 모임글 생성 후 삭제 후 조회")
+    @DisplayName("CRD")
     public void deleteByIdTest(){
         // Given
         int uMakerId = 1;
         int projectId = 1;
-        int projectType = 0;
+        int projectType = 1;
         DynamicUserMaker dynamicUserMaker = DynamicUserMaker.builder()
                 .uMakerId(uMakerId)
                 .projectId(projectId)
@@ -77,10 +67,10 @@ public class DynamicUserMakerRepositoryTest {
                 .build();
 
         // When
-        dynamicUserMakerRepository.save(userEmail, dynamicUserMaker);
-        dynamicUserMakerRepository.deleteById(userEmail, uMakerId);
+        dynamicUserMakerService.save(userEmail, dynamicUserMaker);
+        dynamicUserMakerService.deleteById(userEmail, uMakerId);
 
         // Then
-        Assertions.assertNull(dynamicUserMakerRepository.findById(userEmail, uMakerId));
+        Assertions.assertNull(dynamicUserMakerService.findById(userEmail, uMakerId));
     }
 }

@@ -1,5 +1,6 @@
 package com.fiveis.andcrowd.repository;
 
+import com.fiveis.andcrowd.dto.UserDTO;
 import com.fiveis.andcrowd.entity.User;
 import com.fiveis.andcrowd.enums.Authority;
 import jakarta.transaction.Transactional;
@@ -63,11 +64,11 @@ public class UserJPARepositoryTest {
         String userName = "김명호";
 
         // When
-        List<User> userList = userJPARepository.findAllByUserKorName(userName);
+        List<UserDTO.FindAsUser> findList = userJPARepository.findAllByUserKorName(userName);
 
         // Then
-        for(User user : userList) {
-            Assertions.assertEquals(userName, user.getUserKorName());
+        for(UserDTO.FindAsUser find : findList) {
+            Assertions.assertEquals(userName, find.getUserKorName());
         }
     }
 
@@ -93,7 +94,7 @@ public class UserJPARepositoryTest {
         String userNickname = "NICK";
 
         // When
-        User user = userJPARepository.findByUserNickname(userNickname).get();
+        UserDTO.FindAsPublic user = userJPARepository.findByUserNickname(userNickname).get();
 
         // Then
         Assertions.assertEquals(userNickname, user.getUserNickname());

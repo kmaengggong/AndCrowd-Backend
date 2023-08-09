@@ -34,13 +34,7 @@ public class UserServiceImpl implements UserService {
     }
 
     public List<UserDTO.FindAsUser> findAllByUserKorName(String userKorName){
-        List<User> userList = userJPARepository.findAllByUserKorName(userKorName);
-        List<UserDTO.FindAsUser> userFindDTOList = new ArrayList<>();
-        for (User user : userList) {
-            UserDTO.FindAsUser dto = user.toFindAsUserDTO();
-            userFindDTOList.add(dto);
-        }
-        return userFindDTOList;
+        return userJPARepository.findAllByUserKorName(userKorName);
     }
 
     public UserDTO.FindAsAdmin findById(int userId){
@@ -55,7 +49,7 @@ public class UserServiceImpl implements UserService {
 
     public UserDTO.FindAsPublic findByUserNickname(String userNickname){
         if(userJPARepository.findByUserNickname(userNickname).isEmpty()) return null;
-        return userJPARepository.findByUserNickname(userNickname).get().toFindAsPublicDTO();
+        return userJPARepository.findByUserNickname(userNickname).get();
     }
 
     @Transactional
