@@ -31,7 +31,7 @@ public class AndDTO {
         private int andLikeCount;
         private int andViewCount;
         private int andStatus;
-        private int adMembershipNum;
+        private int adId;
         private boolean isDeleted;
 
     }
@@ -59,7 +59,7 @@ public class AndDTO {
         private String andImg5;
         private LocalDateTime publishedAt;
         private LocalDateTime updatedAt;
-        private int adMembershipNum;
+        private int adId;
         private boolean isDeleted;
 
     }
@@ -78,7 +78,7 @@ public class AndDTO {
         private LocalDateTime publishedAt;
         private LocalDateTime updatedAt;
         private int andStatus;
-        private int adMembershipNum;
+        private int adId;
         private boolean isDeleted;
 
     }

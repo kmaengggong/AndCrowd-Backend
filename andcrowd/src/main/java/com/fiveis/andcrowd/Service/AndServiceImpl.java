@@ -95,7 +95,7 @@ public class AndServiceImpl implements AndService{
                 .andLikeCount(and.getAndLikeCount())
                 .andViewCount(and.getAndViewCount())
                 .andStatus(and.getAndStatus())
-                .adMembershipNum(and.getAdMembershipNum())
+                .adId(and.getAdId())
                 .isDeleted(and.isDeleted())
                 .build();
     }
