@@ -15,7 +15,7 @@ public class AndDTO {
         private int andId;
         private int userId;
         private int andCategoryId;
-        private int fundingId;
+        private int crowdId;
         private String andTitle;
         private String andHeaderImg;
         private String andContent;
@@ -46,7 +46,7 @@ public class AndDTO {
         private int andId;
         private int userId;
         private int andCategoryId;
-        private int fundingId;
+        private int crowdId;
         private String andTitle;
         private String andHeaderImg;
         private String andContent;

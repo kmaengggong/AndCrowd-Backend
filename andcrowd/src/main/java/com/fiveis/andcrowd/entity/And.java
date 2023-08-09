@@ -26,7 +26,7 @@ public class And {
     private int andCategoryId;
 
     @Column(nullable = false)
-    private int fundingId;
+    private int crowdId;
 
     @Column(nullable = false)
     private String andTitle;

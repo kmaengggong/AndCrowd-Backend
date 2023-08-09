@@ -79,7 +79,7 @@ public class AndServiceImpl implements AndService{
                 .andId(and.getAndId())
                 .userId(and.getUserId())
                 .andCategoryId(and.getAndCategoryId())
-                .fundingId(and.getFundingId())
+                .crowdId(and.getCrowdId())
                 .andTitle(and.getAndTitle())
                 .andHeaderImg(and.getAndHeaderImg())
                 .andContent(and.getAndContent())
