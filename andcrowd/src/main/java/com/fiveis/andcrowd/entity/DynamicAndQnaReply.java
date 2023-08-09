@@ -14,8 +14,6 @@ public class DynamicAndQnaReply {
 
     private int andQnaId;
 
-    private int andId;
-
     private int userId;
 
     private int andCategoryId;

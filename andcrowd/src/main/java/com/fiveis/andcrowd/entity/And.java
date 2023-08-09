@@ -6,7 +6,7 @@ import org.hibernate.annotations.DynamicInsert;
 
 import java.time.LocalDateTime;
 
-@Getter @Setter @ToString
+@Getter @ToString
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder @Entity
@@ -26,7 +26,7 @@ public class And {
     private int andCategoryId;
 
     @Column(nullable = false)
-    private int crowdId;
+    private int fundingId;
 
     @Column(nullable = false)
     private String andTitle;

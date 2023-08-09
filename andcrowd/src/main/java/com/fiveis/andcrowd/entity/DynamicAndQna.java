@@ -16,9 +16,11 @@ public class DynamicAndQna {
 
     private int userId;
 
-    private String andQnaTitle;
+    private int andCategoryId;
 
-    private String andQnaContent;
+    private String qnaTitle;
+
+    private String qnaContent;
 
     private LocalDateTime publishedAt;
 
