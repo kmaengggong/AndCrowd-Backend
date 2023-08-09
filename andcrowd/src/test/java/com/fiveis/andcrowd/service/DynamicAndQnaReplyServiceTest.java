@@ -1,6 +1,5 @@
 package com.fiveis.andcrowd.service;
 
-import com.fiveis.andcrowd.dto.DynamicAndQnaDTO;
 import com.fiveis.andcrowd.dto.DynamicAndQnaReplyDTO;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Test;
@@ -13,7 +12,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SpringBootTest
-
 public class DynamicAndQnaReplyServiceTest {
 
     @Autowired

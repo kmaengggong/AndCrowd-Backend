@@ -1,6 +1,5 @@
 package com.fiveis.andcrowd.repository;
 
-import com.fiveis.andcrowd.dto.DynamicAndQnaDTO;
 import com.fiveis.andcrowd.dto.DynamicAndQnaReplyDTO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;

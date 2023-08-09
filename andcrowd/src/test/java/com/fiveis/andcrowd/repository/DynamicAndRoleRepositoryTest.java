@@ -29,7 +29,7 @@ public class DynamicAndRoleRepositoryTest {
     }
 
     @Test
-    @DisplayName("R: findAll를 통해 전체 신청자 조회")
+    @DisplayName("R: findAll를 통해 전체 역할 리스트 조회")
     public void findAllTest(){
         //given
         int andId = 123;
@@ -76,12 +76,12 @@ public class DynamicAndRoleRepositoryTest {
 
         // when
         dynamicAndRoleRepository.save(andRoleSave);
-        DynamicAndRoleDTO.FindById savedRoleQna = dynamicAndRoleRepository.findByAndRoleId(andId, andRoleId);
+        DynamicAndRoleDTO.FindById savedRole = dynamicAndRoleRepository.findByAndRoleId(andId, andRoleId);
 
         // then
-        assertEquals(andRoleId, savedRoleQna.getAndRoleId());
-        assertEquals(andRole, savedRoleQna.getAndRole());
-        assertEquals(andRoleLimit, savedRoleQna.getAndRoleLimit());
+        assertEquals(andRoleId, savedRole.getAndRoleId());
+        assertEquals(andRole, savedRole.getAndRole());
+        assertEquals(andRoleLimit, savedRole.getAndRoleLimit());
 
     }
 

@@ -13,8 +13,8 @@ public class DynamicAndApplicantDTO {
         private int andApplyId;
         private int andId;
         private int userId;
-        private int roleId;
-        private String and_apply_content;
+        private int andRoleId;
+        private String andApplyContent;
         private boolean isDeleted;
     }
 
@@ -28,8 +28,8 @@ public class DynamicAndApplicantDTO {
         private int andApplyId;
         private int andId;
         private int userId;
-        private int roleId;
-        private String and_apply_content;
+        private int andRoleId;
+        private String andApplyContent;
         private boolean isDeleted;
     }
 }

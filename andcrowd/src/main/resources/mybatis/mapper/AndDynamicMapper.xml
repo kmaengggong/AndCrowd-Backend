@@ -45,7 +45,7 @@
            and_apply_id INT AUTO_INCREMENT PRIMARY KEY ,
            and_id INT NOT NULL ,
            user_id INT NOT NULL ,
-           role_id INT NOT NULL ,
+           and_role_id INT NOT NULL ,
            and_apply_content VARCHAR(2000) NOT NULL ,
            is_deleted BOOL default false
         );
