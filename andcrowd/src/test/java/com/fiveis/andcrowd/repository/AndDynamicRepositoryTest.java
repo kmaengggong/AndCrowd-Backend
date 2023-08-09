@@ -19,7 +19,7 @@ public class AndDynamicRepositoryTest {
     public void testCreateDynamicAndQnaTable() {
         // Given
         int andId = 1;
-        String tableName = "dynamic_and_qna_" + andId;
+        String tableName = "and_qna_" + andId;
 
         // When
         andDynamicRepository.createDynamicAndQnaTable(andId);
@@ -39,7 +39,7 @@ public class AndDynamicRepositoryTest {
     public void testCreateDynamicAndQnaReplyTable() {
         // Given
         int andId = 1;
-        String replyTableName = "dynamic_and_qna_reply_" + andId;
+        String replyTableName = "and_qna_reply_" + andId;
 
         // When
         andDynamicRepository.createDynamicAndQnaReplyTable(andId);
@@ -59,7 +59,7 @@ public class AndDynamicRepositoryTest {
     public void testcreateDynamicAndRoleTable() {
         // Given
         int andId = 1;
-        String roleTableName = "dynamic_and_role_" + andId;
+        String roleTableName = "and_role_" + andId;
 
         // When
         andDynamicRepository.createDynamicAndRoleTable(andId);
@@ -79,7 +79,7 @@ public class AndDynamicRepositoryTest {
     public void testcreateDynamicAndApplicantTable() {
         // Given
         int andId = 1;
-        String applyTableName = "dynamic_and_applicant_" + andId;
+        String applyTableName = "and_applicant_" + andId;
 
         // When
         andDynamicRepository.createDynamicAndApplicantTable(andId);
