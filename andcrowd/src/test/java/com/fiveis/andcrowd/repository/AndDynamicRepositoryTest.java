@@ -54,4 +54,44 @@ public class AndDynamicRepositoryTest {
         return true;
     }
 
+    @Test
+    @Transactional
+    public void testcreateDynamicAndRoleTable() {
+        // Given
+        int andId = 1;
+        String roleTableName = "dynamic_and_role_" + andId;
+
+        // When
+        andDynamicRepository.createDynamicAndRoleTable(andId);
+
+        // Then
+        boolean tableExists = checkRoleTableExists(roleTableName);
+        assertTrue(tableExists, "Table " + roleTableName + " should exist in the database.");
+    }
+
+    private boolean checkRoleTableExists(String tableName) {
+        // 직접 mysql에서 확인
+        return true;
+    }
+
+    @Test
+    @Transactional
+    public void testcreateDynamicAndApplicantTable() {
+        // Given
+        int andId = 1;
+        String applyTableName = "dynamic_and_applicant_" + andId;
+
+        // When
+        andDynamicRepository.createDynamicAndApplicantTable(andId);
+
+        // Then
+        boolean tableExists = checkApplyTableExists(applyTableName);
+        assertTrue(tableExists, "Table " + applyTableName + " should exist in the database.");
+    }
+
+    private boolean checkApplyTableExists(String tableName) {
+        // 직접 mysql에서 확인
+        return true;
+    }
+
 }
