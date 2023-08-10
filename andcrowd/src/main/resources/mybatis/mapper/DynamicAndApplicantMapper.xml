@@ -12,7 +12,7 @@
             and_role_id AS andRoleId,
             and_apply_content AS andApplyContent,
             is_deleted AS isDeleted
-        FROM dynamic_and_applicant_${and_id}
+        FROM and_applicant_${and_id}
     </select>
 
     <select id="findByAndApplicantId" resultType="com.fiveis.andcrowd.dto.DynamicAndApplicantDTO$FindById">
@@ -23,7 +23,7 @@
             and_role_id AS andRoleId,
             and_apply_content AS andApplyContent,
             is_deleted AS isDeleted
-        FROM dynamic_and_applicant_${and_id}
+        FROM and_applicant_${and_id}
         WHERE and_apply_id = #{andApplyId}
     </select>
 
@@ -35,7 +35,7 @@
             and_role_id AS andRoleId,
             and_apply_content AS andApplyContent,
             is_deleted AS isDeleted
-        FROM dynamic_and_applicant_${and_id}
+        FROM and_applicant_${and_id}
         WHERE user_id = #{userId}
     </select>
 
@@ -47,32 +47,32 @@
             and_role_id AS andRoleId,
             and_apply_content AS andApplyContent,
             is_deleted AS isDeleted
-        FROM dynamic_and_applicant_${and_id}
+        FROM and_applicant_${and_id}
         WHERE and_role_id = #{andRoleId}
     </select>
 
 
     <insert id="save" parameterType="com.fiveis.andcrowd.dto.DynamicAndApplicantDTO$Update">
-        INSERT INTO dynamic_and_applicant_${andId} (and_apply_id, and_id, user_id, and_role_id, and_apply_content, is_deleted)
+        INSERT INTO and_applicant_${andId} (and_apply_id, and_id, user_id, and_role_id, and_apply_content, is_deleted)
         VALUES (#{andApplyId, jdbcType=INTEGER}, #{andId, jdbcType=INTEGER}, #{userId, jdbcType=INTEGER}, #{andRoleId, jdbcType=INTEGER}, #{andApplyContent, jdbcType=VARCHAR}, #{isDeleted, jdbcType=BIT})
     </insert>
 
     <update id="update" parameterType="com.fiveis.andcrowd.dto.DynamicAndApplicantDTO$Update">
-        UPDATE dynamic_and_applicant_${andId}
+        UPDATE and_applicant_${andId}
         SET and_role_id = #{andRoleId},
             and_apply_content = #{andApplyContent}
         WHERE and_apply_id = #{andApplyId}
     </update>
 
     <delete id="deleteByAndApplicantId" parameterType="int">
-        UPDATE dynamic_and_applicant_${andId}
+        UPDATE and_applicant_${andId}
         SET is_deleted = true
         WHERE and_apply_id = #{andApplyId}
     </delete>
 
     <!--    테스트를 위한 쿼리문-->
     <insert id="createAndApplicantTable">
-        CREATE TABLE dynamic_and_applicant_123 (
+        CREATE TABLE and_applicant_123 (
             and_apply_id INT AUTO_INCREMENT PRIMARY KEY ,
             and_id INT NOT NULL ,
             user_id INT NOT NULL ,
@@ -83,11 +83,11 @@
     </insert>
 
     <update id="dropAndApplicantTable">
-        DROP TABLE dynamic_and_applicant_123;
+        DROP TABLE and_applicant_123;
     </update>
 
     <insert id="insertTestData">
-        INSERT INTO dynamic_and_applicant_123 (and_apply_id, and_id, user_id, and_role_id, and_apply_content)
+        INSERT INTO and_applicant_123 (and_apply_id, and_id, user_id, and_role_id, and_apply_content)
         VALUES
             (1, 123, 11, 3, '신청서 내용 1'),
             (2, 123, 12, 2, '신청서 내용 2'),

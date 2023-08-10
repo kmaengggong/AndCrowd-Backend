@@ -67,7 +67,7 @@ public class And {
     private int andStatus; // 0 : 모집 중, 1 : 심사 중, 2 : 반려, 3: 모집 종료
 
     @Column(nullable = false)
-    private int adMembershipNum;
+    private int adId;
 
     @Column(nullable = false)
     private boolean isDeleted;

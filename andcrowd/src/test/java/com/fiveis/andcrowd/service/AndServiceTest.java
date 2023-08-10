@@ -47,7 +47,7 @@ public class AndServiceTest {
     public void saveTest() {
         // given
         int andId = 2;
-        int adMembershipNum = 2;
+        int adId = 2;
         int andCategoryId=2;
         String andContent = "andcontent2";
         int userId = 2;
@@ -60,7 +60,7 @@ public class AndServiceTest {
                 .userId(userId)
                 .andHeaderImg(andHeaderImg)
                 .andCategoryId(andCategoryId)
-                .adMembershipNum(adMembershipNum)
+                .adId(adId)
                 .andTitle(andTitle)
                 .needNumMem(needNumMem)
                 .build();
@@ -74,13 +74,13 @@ public class AndServiceTest {
         assertEquals(2, andUpdate.getUserId());
         assertEquals("headerimgdir2", andUpdate.getAndHeaderImg());
 
-        String tableName = "dynamic_and_qna_" + andUpdate.getAndId();
+        String tableName = "and_qna_" + andUpdate.getAndId();
         boolean tableExists = checkTableExists(tableName);
         Assertions.assertTrue(tableExists, "Table " + tableName + " should exist in the database.");
     }
 
     private boolean checkTableExists(String tableName) {
-        // mysql에서 dynamic_and_qna_2 테이블 생성 여부 확인
+        // mysql에서 and_qna_2 테이블 생성 여부 확인
         return true;
     }
 

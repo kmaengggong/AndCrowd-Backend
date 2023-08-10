@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class DynamicCrowdQna {
 
-    private int crowdQnAId;
+    private int crowdQnaId;
 
     private int crowdId;
 
