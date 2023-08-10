@@ -1,7 +1,7 @@
 package com.fiveis.andcrowd.service;
 
 import com.fiveis.andcrowd.dto.DynamicAndQnaReplyDTO;
-import org.apache.ibatis.annotations.Param;
+
 import org.springframework.stereotype.Service;
 
 import java.util.List;
