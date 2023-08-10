@@ -8,4 +8,6 @@ public interface AndDynamicRepository {
     void createDynamicAndQnaReplyTable(int andId);
     void createDynamicAndRoleTable(int andId);
     void createDynamicAndApplicantTable(int andId);
+    void createDynamicAndBoardTable(int andId);
+    void createDynamicAndMemberTable(int andId);
 }

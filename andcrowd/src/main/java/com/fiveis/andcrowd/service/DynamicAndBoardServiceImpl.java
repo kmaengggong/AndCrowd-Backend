@@ -9,8 +9,12 @@ import java.util.List;
 
 @Service
 public class DynamicAndBoardServiceImpl implements DynamicAndBoardService {
+<<<<<<< Updated upstream
 
     private final DynamicAndBoardRepository dynamicAndBoardRepository;
+=======
+    DynamicAndBoardRepository dynamicAndBoardRepository;
+>>>>>>> Stashed changes
 
     @Autowired
     public DynamicAndBoardServiceImpl(DynamicAndBoardRepository dynamicAndBoardRepository) {
@@ -41,4 +45,26 @@ public class DynamicAndBoardServiceImpl implements DynamicAndBoardService {
     public void deleteByAndBoardId(int andId, int andBoardId) {
         dynamicAndBoardRepository.deleteByAndBoardId(andId, andBoardId);
     }
+<<<<<<< Updated upstream
+=======
+    @Override
+    public void deleteByAndId(int andId) {
+        dynamicAndBoardRepository.deleteByAndId(andId);
+    }
+
+    @Override
+    public void createAndBoardTable() {
+        dynamicAndBoardRepository.createAndBoardTable();
+    }
+
+    @Override
+    public void dropAndBoardTable() {
+        dynamicAndBoardRepository.dropAndBoardTable();
+    }
+
+    @Override
+    public void insertTestData() {
+        dynamicAndBoardRepository.insertTestData();
+    }
+>>>>>>> Stashed changes
 }

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.fiveis.andcrowd.repository.DynamicAndBoardRepository">
+
+    <select id="findAll" parameterType="int" resultType="com.fiveis.andcrowd.dto.DynamicAndBoardDTO.FindById">
+        SELECT * FROM dynamic_and_board WHERE and_id = #{andId}
+    </select>
+
+    <select id="findByAndBoardId" parameterType="map" resultType="com.fiveis.andcrowd.dto.DynamicAndBoardDTO.FindById">
+        SELECT * FROM dynamic_and_board WHERE and_id = #{andId} AND and_board_id = #{andBoardId}
+    </select>
+
+    <delete id="deleteByAndId" parameterType="int">
+        DELETE FROM dynamic_and_board WHERE and_id = #{andId}
+    </delete>
+
+    <delete id="deleteByAndBoardId" parameterType="map">
+        DELETE FROM dynamic_and_board WHERE and_id = #{andId} AND and_board_id = #{andBoardId}
+    </delete>
+
+    <insert id="save" parameterType="com.fiveis.andcrowd.dto.DynamicAndBoardDTO.Update">
+        INSERT INTO dynamic_and_board (
+            and_id, user_id, and_board_tag, and_board_title,
+            and_board_content, and_img, published_at, updated_at,
+            and_board_view_count, is_deleted
+        )
+        VALUES (
+                   #{andId}, #{userId}, #{andBoardTag}, #{andBoardTitle},
+                   #{andBoardContent}, #{andImg}, #{publishedAt}, #{updatedAt},
+                   #{andBoardViewCount}, #{isDeleted}
+               )
+    </insert>
+
+    <update id="update" parameterType="com.fiveis.andcrowd.dto.DynamicAndBoardDTO.Update">
+        UPDATE dynamic_and_board
+        SET
+            user_id = #{userId},
+            and_board_tag = #{andBoardTag},
+            and_board_title = #{andBoardTitle},
+            and_board_content = #{andBoardContent},
+            and_img = #{andImg},
+            updated_at = #{updatedAt},
+            and_board_view_count = #{andBoardViewCount},
+            is_deleted = #{isDeleted}
+        WHERE
+            and_id = #{andId} AND and_board_id = #{andBoardId}
+    </update>
+
+
+    <!--    테스트용 쿼리    -->
+    <insert id="createAndBoardTable">
+        CREATE TABLE and_board_1111 (
+        and_board_id INT AUTO_INCREMENT PRIMARY KEY ,
+        and_id INT NOT NULL,
+        user_id INT NOT NULL,
+        and_board_tag INT,
+        and_board_title VARCHAR(200) NOT NULL,
+        and_board_content VARCHAR(2000) NOT NULL,
+        and_img VARCHAR(255),
+        published_at DATETIME DEFAULT now(),
+        updated_at DATETIME DEFAULT now(),
+        and_board_view_count INT DEFAULT 0 ,
+        is_deleted BOOL default false
+        );
+    </insert>
+
+    <update id="dropAndBoardTable">
+        DROP TABLE and_board_1111;
+    </update>
+
+    <insert id="insertTestData">
+        INSERT INTO and_board_1 (and_id, user_id, and_board_title, and_board_content)
+        VALUES
+            (1111, 1, 'Board Title 1', 'Board Content 1'),
+            (1111, 2, 'Board Title 2', 'Board Content 2'),
+            (1111, 3, 'Board Title 3', 'Board Content 3');
+    </insert>
+
+
+</mapper>
