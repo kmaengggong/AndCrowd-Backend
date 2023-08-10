@@ -18,6 +18,20 @@
         ORDER BY and_reply_id DESC
     </select>
 
+    <select id="findAllNotDeleted" resultType="com.fiveis.andcrowd.dto.DynamicAndQnaReplyDTO$FindById">
+        SELECT
+            and_reply_id AS andReplyId,
+            and_qna_id AS andQnaId,
+            and_id AS andId,
+            user_id AS userId,
+            and_reply_content AS andReplyContent ,
+            published_at AS publishedAt,
+            updated_at AS updatedAt,
+            is_deleted AS isDeleted
+        FROM and_qna_reply_#{and_id}
+        WHERE is_deleted = false
+    </select>
+
     <select id="findAllByAndQnaId" resultType="com.fiveis.andcrowd.dto.DynamicAndQnaReplyDTO$FindById">
         SELECT
             and_reply_id AS andReplyId,

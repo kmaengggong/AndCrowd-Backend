@@ -32,6 +32,23 @@ public class DynamicAndRoleServiceTest {
 
     @Test
     @Transactional
+    public void findAllNotDeletedTest(){
+        //given
+        int andId = 321;
+        int andRoleId = 3;
+
+        // when
+        dynamicAndRoleService.deleteByAndRoleId(andId, andRoleId);
+        List<DynamicAndRoleDTO.FindById> findAllList= dynamicAndRoleService.findAllNotDeleted(andId);
+
+        // then
+        assertEquals(2, findAllList.size());
+
+    }
+
+
+    @Test
+    @Transactional
     public void findByIdTest() {
         //given
         int andRoleId = 2;

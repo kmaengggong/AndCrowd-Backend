@@ -23,6 +23,11 @@ public class DynamicAndQnaReplyServiceImpl implements DynamicAndQnaReplyService{
     }
 
     @Override
+    public List<DynamicAndQnaReplyDTO.FindById> findAllNotDeleted(int andId) {
+        return dynamicAndQnaReplyRepository.findAllNotDeleted(andId);
+    }
+
+    @Override
     public List<DynamicAndQnaReplyDTO.FindById> findAllByAndQnaId(int andId, int andQnaId) {
         return dynamicAndQnaReplyRepository.findAllByAndQnaId(andId, andQnaId);
     }

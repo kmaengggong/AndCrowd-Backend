@@ -17,6 +17,19 @@
         ORDER BY and_qna_id DESC
     </select>
 
+    <select id="findAllNotDeleted" resultType="com.fiveis.andcrowd.dto.DynamicAndQnaDTO$FindById">
+        SELECT and_qna_id AS andQnaId,
+               and_id AS andId,
+               user_id AS userId,
+               and_qna_title AS andQnaTitle,
+               and_qna_content AS andQnaContent,
+               published_at AS publishedAt,
+               updated_at AS updatedAt,
+               is_deleted AS isDeleted
+        FROM and_qna_#{and_id}
+        WHERE is_deleted = false
+    </select>
+
     <select id="findByAndQnaId" resultType="com.fiveis.andcrowd.dto.DynamicAndQnaDTO$FindById">
         SELECT and_qna_id AS andQnaId,
                and_id AS andId,

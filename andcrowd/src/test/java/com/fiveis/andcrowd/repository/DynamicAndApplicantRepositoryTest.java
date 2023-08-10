@@ -43,6 +43,22 @@ public class DynamicAndApplicantRepositoryTest {
     }
 
     @Test
+    @DisplayName("R: findAllNotDeleted를 통해 삭제되지 않은 전체 신청자 조회")
+    public void findAllNotDeletedTest(){
+        // given
+        int andApplyId = 3;
+        int andId = 123;
+
+        // when
+        dynamicAndApplicantRepository.deleteByAndApplicantId(andId, andApplyId);
+        List<DynamicAndApplicantDTO.FindById> findAllNotDeletedList= dynamicAndApplicantRepository.findAllNotDeleted(andId);
+
+        // then
+        assertEquals(2, findAllNotDeletedList.size());
+
+    }
+
+    @Test
     @DisplayName("R: findByAndApplicantId를 통해 1번 신청자 조회")
     public void findByAndApplicantIdTest(){
         //given

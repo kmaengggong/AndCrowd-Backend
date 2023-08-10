@@ -24,6 +24,11 @@ public class DynamicAndApplicantServiceImpl implements DynamicAndApplicantServic
     }
 
     @Override
+    public List<DynamicAndApplicantDTO.FindById> findAllNotDeleted(int andId) {
+        return dynamicAndApplicantRepository.findAllNotDeleted(andId);
+    }
+
+    @Override
     public DynamicAndApplicantDTO.FindById findByAndApplicantId(int andId, int andApplyId) {
         return dynamicAndApplicantRepository.findByAndApplicantId(andId, andApplyId);
     }

@@ -15,6 +15,18 @@
         FROM and_applicant_#{and_id}
     </select>
 
+    <select id="findAllNotDeleted" resultType="com.fiveis.andcrowd.dto.DynamicAndApplicantDTO$FindById">
+        SELECT
+            and_apply_id AS andApplyId,
+            and_id AS andId,
+            user_id AS userId,
+            and_role_id AS andRoleId,
+            and_apply_content AS andApplyContent,
+            is_deleted AS isDeleted
+        FROM and_applicant_#{and_id}
+        WHERE is_deleted = false
+    </select>
+
     <select id="findByAndApplicantId" resultType="com.fiveis.andcrowd.dto.DynamicAndApplicantDTO$FindById">
         SELECT
             and_apply_id AS andApplyId,

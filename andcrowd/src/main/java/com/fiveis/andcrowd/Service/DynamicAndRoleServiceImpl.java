@@ -23,6 +23,11 @@ public class DynamicAndRoleServiceImpl implements DynamicAndRoleService{
     }
 
     @Override
+    public List<DynamicAndRoleDTO.FindById> findAllNotDeleted(int andId) {
+        return dynamicAndRoleRepository.findAllNotDeleted(andId);
+    }
+
+    @Override
     public DynamicAndRoleDTO.FindById findByAndRoleId(int andId, int andRoleId) {
         return dynamicAndRoleRepository.findByAndRoleId(andId, andRoleId);
     }

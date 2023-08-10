@@ -9,6 +9,7 @@ import java.util.List;
 @Service
 public interface DynamicAndQnaReplyService {
     List<DynamicAndQnaReplyDTO.FindById> findAll(int andId);
+    List<DynamicAndQnaReplyDTO.FindById> findAllNotDeleted(int andId);
     List<DynamicAndQnaReplyDTO.FindById> findAllByAndQnaId(int andId, int andQnaId);
     DynamicAndQnaReplyDTO.FindById findByAndReplyId(int andId, int andReplyId);
     void save(DynamicAndQnaReplyDTO.Update andReplySaveDTO);

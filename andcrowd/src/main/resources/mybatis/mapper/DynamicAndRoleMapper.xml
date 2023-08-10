@@ -14,6 +14,17 @@
         FROM and_role_#{and_id}
     </select>
 
+    <select id="findAllNotDeleted" resultType="com.fiveis.andcrowd.dto.DynamicAndRoleDTO$FindById">
+        SELECT
+            and_role_id AS andRoleId,
+            and_id AS andId,
+            and_role AS andRole,
+            and_role_limit AS andRoleLimit,
+            is_deleted AS isDeleted
+        FROM and_role_#{and_id}
+        WHERE is_deleted = false
+    </select>
+
     <select id="findByAndRoleId" resultType="com.fiveis.andcrowd.dto.DynamicAndRoleDTO$FindById">
         SELECT
             and_role_id AS andRoleId,
