@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
+
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -19,10 +21,29 @@ public class AndJPARepositoryTest {
     @Transactional
     public void testSoftDeleteById() {
         // Given
-        int andIdToDelete = 1;
+        And newAnd = And.builder()
+                .andId(1)
+                .userId(1)
+                .andCategoryId(1)
+                .crowdId(1)
+                .andTitle("Test Title")
+                .andHeaderImg("header.jpg")
+                .andContent("Test Content")
+                .andEndDate(LocalDateTime.now().plusDays(7))
+                .needNumMem(5)
+                .andLikeCount(0)
+                .andViewCount(0)
+                .andStatus(0)
+                .adId(1)
+                .build();
+
+        andRepository.save(newAnd);
+        andRepository.flush();
+
+        int andIdToDelete = newAnd.getAndId();
 
         // When
-        andRepository.softDeleteById(andIdToDelete);
+        andRepository.deleteById(andIdToDelete);
         andRepository.flush();
 
         // Then
@@ -30,4 +51,4 @@ public class AndJPARepositoryTest {
         assertNotNull(deletedAnd);
         assertTrue(deletedAnd.isDeleted());
     }
-}
+    }

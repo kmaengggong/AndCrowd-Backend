@@ -15,7 +15,7 @@ import java.util.Optional;
 public interface AndJPARepository extends JpaRepository<And, Integer> {
     List<AndDTO.FindAllByUserId> findAllByUserId(int userId);
 
-    @Modifying
-    @Query("UPDATE And a SET a.isDeleted = true WHERE a.andId = :andId")
-    void softDeleteById(@Param("andId") Integer andId);
+//    @Modifying
+//    @Query("UPDATE And a SET a.isDeleted = true WHERE a.andId = :andId")
+//    void softDeleteById(@Param("andId") Integer andId);
     }
