@@ -17,6 +17,9 @@ public class AdPayment  {
     private int adPaymentId;  // 광고 결제 ID
 
     @Column(nullable = false)
+    private int adId;  // 광고 ID
+
+    @Column(nullable = false)
     private int userId;  // 결제한 유저 ID
 
     @Column(nullable = false)
@@ -33,4 +36,12 @@ public class AdPayment  {
 
     @Column(nullable = false)
     private int adPaymentStatus;   // 결제 상태(0: 결제대기, 1: 결제완료, 2: 환불)
+
+    public void setExpiredAt(LocalDateTime expiredAt) {
+        this.expiredAt = expiredAt;
+    }
+
+    public void setAdPaymentStatus(int adPaymentStatus) {
+        this.adPaymentStatus = adPaymentStatus;
+    }
 }
