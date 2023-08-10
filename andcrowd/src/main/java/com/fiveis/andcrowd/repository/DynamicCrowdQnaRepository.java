@@ -1,15 +1,13 @@
 package com.fiveis.andcrowd.repository;
 
-import com.fiveis.andcrowd.dto.DynamicCrowdBoardDTO;
 import com.fiveis.andcrowd.dto.DynamicCrowdQnaDTO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
-import java.util.Map;
 
 @Mapper
-public interface DynamicCrowdQna {
+public interface DynamicCrowdQnaRepository {
     void createDynamicCrowdQnaTable(@Param("crowdId") int crowdId);
 
     List<DynamicCrowdQnaDTO.Find> findAll(int crowdId);

@@ -1,6 +1,5 @@
 package com.fiveis.andcrowd.repository;
 
-import com.fiveis.andcrowd.dto.DynamicCrowdQnaDTO;
 import com.fiveis.andcrowd.dto.DynamicCrowdQnaReplyDTO;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.DisplayName;
@@ -13,10 +12,10 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
-public class DynamicCrowdQnaReplyTest {
+public class DynamicCrowdQnaRepositoryReplyTest {
 
     @Autowired
-    DynamicCrowdQnaReply dynamicCrowdQnaReply;
+    DynamicCrowdQnaReplyRepository dynamicCrowdQnaReplyRepository;
 
     @Test
     @Transactional
@@ -28,15 +27,15 @@ public class DynamicCrowdQnaReplyTest {
         String content = "추가된 댓글";
 
         // when
-        dynamicCrowdQnaReply.createDynamicCrowdQnaReplyTable(crowdId);
+        dynamicCrowdQnaReplyRepository.createDynamicCrowdQnaReplyTable(crowdId);
         DynamicCrowdQnaReplyDTO.Save newQnaReply = new DynamicCrowdQnaReplyDTO.Save();
         newQnaReply.setCrowdQnaId(crowdQnaId);
         newQnaReply.setQnaReplyContent(content);
         newQnaReply.setCrowdId(crowdId);
-        dynamicCrowdQnaReply.save(newQnaReply);
+        dynamicCrowdQnaReplyRepository.save(newQnaReply);
 
         // then
-        List<DynamicCrowdQnaReplyDTO.Find> crowdBoardList = dynamicCrowdQnaReply.findAll(crowdId, crowdQnaId);
+        List<DynamicCrowdQnaReplyDTO.Find> crowdBoardList = dynamicCrowdQnaReplyRepository.findAll(crowdId, crowdQnaId);
         assertThat(crowdBoardList.get(0).getCrowdId()).isEqualTo(crowdId);
     }
 
@@ -49,7 +48,7 @@ public class DynamicCrowdQnaReplyTest {
         int crowdQnaId = 1;
 
         // when
-        List<DynamicCrowdQnaReplyDTO.Find> crowdQnaReplyList = dynamicCrowdQnaReply.findAll(crowdId, crowdQnaId);
+        List<DynamicCrowdQnaReplyDTO.Find> crowdQnaReplyList = dynamicCrowdQnaReplyRepository.findAll(crowdId, crowdQnaId);
 
         // then
         assertThat(crowdQnaReplyList.size()).isEqualTo(3);
@@ -66,7 +65,7 @@ public class DynamicCrowdQnaReplyTest {
         String content = "2번댓글";
 
         // when
-        DynamicCrowdQnaReplyDTO.Find qnaReply = dynamicCrowdQnaReply.findById(crowdId, qnaReplyId);
+        DynamicCrowdQnaReplyDTO.Find qnaReply = dynamicCrowdQnaReplyRepository.findById(crowdId, qnaReplyId);
 
         // then
         assertThat(qnaReply.getQnaReplyId()).isEqualTo(qnaReplyId);
@@ -90,9 +89,9 @@ public class DynamicCrowdQnaReplyTest {
         newQnaReply.setCrowdQnaId(crowdQnaId);
         newQnaReply.setQnaReplyContent(content);
         newQnaReply.setCrowdId(crowdId);
-        dynamicCrowdQnaReply.save(newQnaReply);
+        dynamicCrowdQnaReplyRepository.save(newQnaReply);
 
-        List<DynamicCrowdQnaReplyDTO.Find> crowdQnaReplyList = dynamicCrowdQnaReply.findAll(crowdId, crowdQnaId);
+        List<DynamicCrowdQnaReplyDTO.Find> crowdQnaReplyList = dynamicCrowdQnaReplyRepository.findAll(crowdId, crowdQnaId);
 
         DynamicCrowdQnaReplyDTO.Find qnaReply = crowdQnaReplyList.get(3);
 
@@ -119,9 +118,9 @@ public class DynamicCrowdQnaReplyTest {
         updateQnaReply.setCrowdId(crowdId);
         updateQnaReply.setQnaReplyContent(content);
         updateQnaReply.setQnaReplyId(qnaReplyId);
-        dynamicCrowdQnaReply.update(updateQnaReply);
+        dynamicCrowdQnaReplyRepository.update(updateQnaReply);
 
-        List<DynamicCrowdQnaReplyDTO.Find> crowdQnaReplyList = dynamicCrowdQnaReply.findAll(crowdId, crowdQnaId);
+        List<DynamicCrowdQnaReplyDTO.Find> crowdQnaReplyList = dynamicCrowdQnaReplyRepository.findAll(crowdId, crowdQnaId);
 
         DynamicCrowdQnaReplyDTO.Find crowdQnaReply = crowdQnaReplyList.get(1);
 
@@ -140,8 +139,8 @@ public class DynamicCrowdQnaReplyTest {
         int qnaReplyId = 2;
 
         // when
-        dynamicCrowdQnaReply.deleteByQnaReplyId(crowdId, qnaReplyId);
-        DynamicCrowdQnaReplyDTO.Find qnaReply = dynamicCrowdQnaReply.findById(crowdId, qnaReplyId);
+        dynamicCrowdQnaReplyRepository.deleteByQnaReplyId(crowdId, qnaReplyId);
+        DynamicCrowdQnaReplyDTO.Find qnaReply = dynamicCrowdQnaReplyRepository.findById(crowdId, qnaReplyId);
 
         // then
         assertThat(qnaReply.isDeleted()).isTrue();

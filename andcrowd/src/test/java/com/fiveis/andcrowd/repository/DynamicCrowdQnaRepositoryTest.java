@@ -12,10 +12,10 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
-public class DynamicCrowdQnaTest {
+public class DynamicCrowdQnaRepositoryTest {
 
     @Autowired
-    DynamicCrowdQna dynamicCrowdQna;
+    DynamicCrowdQnaRepository dynamicCrowdQnaRepository;
 
     @Test
     @Transactional
@@ -27,15 +27,15 @@ public class DynamicCrowdQnaTest {
         String content = "추가된 본문";
 
         // when
-        dynamicCrowdQna.createDynamicCrowdQnaTable(crowdId);
+        dynamicCrowdQnaRepository.createDynamicCrowdQnaTable(crowdId);
         DynamicCrowdQnaDTO.Save newQna = new DynamicCrowdQnaDTO.Save();
         newQna.setCrowdId(crowdId);
         newQna.setQnaTitle(title);
         newQna.setQnaContent(content);
-        dynamicCrowdQna.save(newQna);
+        dynamicCrowdQnaRepository.save(newQna);
 
         // then
-        List<DynamicCrowdQnaDTO.Find> crowdBoardList = dynamicCrowdQna.findAll(crowdId);
+        List<DynamicCrowdQnaDTO.Find> crowdBoardList = dynamicCrowdQnaRepository.findAll(crowdId);
         assertThat(crowdBoardList.get(0).getCrowdId()).isEqualTo(crowdId);
     }
 
@@ -49,7 +49,7 @@ public class DynamicCrowdQnaTest {
         int crowdId = 1;
 
         // when
-        List<DynamicCrowdQnaDTO.Find> crowdQnaList = dynamicCrowdQna.findAll(crowdId);
+        List<DynamicCrowdQnaDTO.Find> crowdQnaList = dynamicCrowdQnaRepository.findAll(crowdId);
 
         // then
         assertThat(crowdQnaList.size()).isEqualTo(3);
@@ -67,7 +67,7 @@ public class DynamicCrowdQnaTest {
         String content = "2번글본문";
 
         // when
-        DynamicCrowdQnaDTO.Find crowdQna = dynamicCrowdQna.findById(crowdId, crowdQnaId);
+        DynamicCrowdQnaDTO.Find crowdQna = dynamicCrowdQnaRepository.findById(crowdId, crowdQnaId);
 
         // then
         assertThat(crowdQna.getCrowdId()).isEqualTo(crowdId);
@@ -94,9 +94,9 @@ public class DynamicCrowdQnaTest {
         newQna.setCrowdId(crowdId);
         newQna.setQnaTitle(title);
         newQna.setQnaContent(content);
-        dynamicCrowdQna.save(newQna);
+        dynamicCrowdQnaRepository.save(newQna);
 
-        List<DynamicCrowdQnaDTO.Find> crowdQnaList = dynamicCrowdQna.findAll(crowdId);
+        List<DynamicCrowdQnaDTO.Find> crowdQnaList = dynamicCrowdQnaRepository.findAll(crowdId);
 
         DynamicCrowdQnaDTO.Find crowdQna = crowdQnaList.get(0);
 
@@ -126,9 +126,9 @@ public class DynamicCrowdQnaTest {
         updateQna.setQnaTitle(title);
         updateQna.setQnaContent(content);
         updateQna.setCrowdQnaId(crowdQnaId);
-        dynamicCrowdQna.update(updateQna);
+        dynamicCrowdQnaRepository.update(updateQna);
 
-        List<DynamicCrowdQnaDTO.Find> crowdQnaList = dynamicCrowdQna.findAll(crowdId);
+        List<DynamicCrowdQnaDTO.Find> crowdQnaList = dynamicCrowdQnaRepository.findAll(crowdId);
 
         DynamicCrowdQnaDTO.Find crowdQna = crowdQnaList.get(1);
 
@@ -149,8 +149,8 @@ public class DynamicCrowdQnaTest {
         int crowdQnaId = 2;
 
         // when
-        dynamicCrowdQna.deleteByCrowdQnaId(crowdId, crowdQnaId);
-        DynamicCrowdQnaDTO.Find crowdQna = dynamicCrowdQna.findById(crowdId, crowdQnaId);
+        dynamicCrowdQnaRepository.deleteByCrowdQnaId(crowdId, crowdQnaId);
+        DynamicCrowdQnaDTO.Find crowdQna = dynamicCrowdQnaRepository.findById(crowdId, crowdQnaId);
 
         // then
         assertThat(crowdQna.isDeleted()).isTrue();

@@ -12,10 +12,10 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
-public class DynamicCrowdBoardTest {
+public class DynamicCrowdBoardRepositoryTest {
 
     @Autowired
-    DynamicCrowdBoard dynamicCrowdBoard;
+    DynamicCrowdBoardRepository dynamicCrowdBoardRepository;
 
 
 
@@ -31,18 +31,18 @@ public class DynamicCrowdBoardTest {
         String img = "추가된 이미지";
 
         // when
-        dynamicCrowdBoard.createDynamicCrowdBoardTable(crowdId);
-        /*DynamicCrowdBoardDTO.Save newBoard = new DynamicCrowdBoardDTO.Save();
+        dynamicCrowdBoardRepository.createDynamicCrowdBoardTable(crowdId);
+        DynamicCrowdBoardDTO.Save newBoard = new DynamicCrowdBoardDTO.Save();
         newBoard.setCrowdId(crowdId);
         newBoard.setCrowdBoardTag(tag);
         newBoard.setCrowdBoardTitle(title);
         newBoard.setCrowdBoardContent(content);
         newBoard.setCrowdImg(img);
-        dynamicCrowdBoard.save(newBoard);
+        dynamicCrowdBoardRepository.save(newBoard);
 
         // then
-        List<DynamicCrowdBoardDTO.Find> crowdBoardList = dynamicCrowdBoard.findAll(crowdId);
-        assertThat(crowdBoardList.get(0).getCrowdId()).isEqualTo(crowdId);*/
+        List<DynamicCrowdBoardDTO.Find> crowdBoardList = dynamicCrowdBoardRepository.findAll(crowdId);
+        assertThat(crowdBoardList.get(0).getCrowdId()).isEqualTo(crowdId);
     }
 
 
@@ -55,7 +55,7 @@ public class DynamicCrowdBoardTest {
         int crowdId = 1;
 
         // when
-        List<DynamicCrowdBoardDTO.Find> crowdBoardList = dynamicCrowdBoard.findAll(crowdId);
+        List<DynamicCrowdBoardDTO.Find> crowdBoardList = dynamicCrowdBoardRepository.findAll(crowdId);
 
         // then
         assertThat(crowdBoardList.size()).isEqualTo(3);
@@ -76,7 +76,7 @@ public class DynamicCrowdBoardTest {
         //Map<String, Integer> params = new HashMap<>();
         //params.put("crowdId", crowdId);
         //params.put("crowdBoardId", crowdBoardId);
-        DynamicCrowdBoardDTO.Find crowdBoard = dynamicCrowdBoard.findById(crowdId, crowdBoardId);
+        DynamicCrowdBoardDTO.Find crowdBoard = dynamicCrowdBoardRepository.findById(crowdId, crowdBoardId);
 
         // then
         assertThat(crowdBoard.getCrowdId()).isEqualTo(crowdId);
@@ -106,9 +106,9 @@ public class DynamicCrowdBoardTest {
         newBoard.setCrowdBoardTitle(title);
         newBoard.setCrowdBoardContent(content);
         newBoard.setCrowdImg(img);
-        dynamicCrowdBoard.save(newBoard);
+        dynamicCrowdBoardRepository.save(newBoard);
 
-        List<DynamicCrowdBoardDTO.Find> crowdBoardList = dynamicCrowdBoard.findAll(crowdId);
+        List<DynamicCrowdBoardDTO.Find> crowdBoardList = dynamicCrowdBoardRepository.findAll(crowdId);
 
         DynamicCrowdBoardDTO.Find crowdBoard = crowdBoardList.get(0);
 
@@ -143,9 +143,9 @@ public class DynamicCrowdBoardTest {
         newBoard.setCrowdBoardContent(content);
         newBoard.setCrowdImg(img);
         newBoard.setCrowdBoardId(crowdBoardId);
-        dynamicCrowdBoard.update(newBoard);
+        dynamicCrowdBoardRepository.update(newBoard);
 
-        List<DynamicCrowdBoardDTO.Find> crowdBoardList = dynamicCrowdBoard.findAll(crowdId);
+        List<DynamicCrowdBoardDTO.Find> crowdBoardList = dynamicCrowdBoardRepository.findAll(crowdId);
 
         DynamicCrowdBoardDTO.Find crowdBoard = crowdBoardList.get(1);
 
@@ -171,8 +171,8 @@ public class DynamicCrowdBoardTest {
 //        Map<String, Integer> params = new HashMap<>();
 //        params.put("crowdId", crowdId);
 //        params.put("crowdBoardId", crowdBoardId);
-        dynamicCrowdBoard.deleteByCrowdBoardId(crowdId, crowdBoardId);
-        DynamicCrowdBoardDTO.Find crowdBoard = dynamicCrowdBoard.findById(crowdId, crowdBoardId);
+        dynamicCrowdBoardRepository.deleteByCrowdBoardId(crowdId, crowdBoardId);
+        DynamicCrowdBoardDTO.Find crowdBoard = dynamicCrowdBoardRepository.findById(crowdId, crowdBoardId);
 
 
         // then

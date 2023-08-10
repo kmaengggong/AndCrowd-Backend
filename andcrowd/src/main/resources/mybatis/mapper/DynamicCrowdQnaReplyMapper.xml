@@ -3,7 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.fiveis.andcrowd.repository.DynamicCrowdQnaReply">
+<mapper namespace="com.fiveis.andcrowd.repository.DynamicCrowdQnaReplyRepository">
 
     <update id="createDynamicCrowdQnaReplyTable" parameterType="int">
         CREATE TABLE crowd_qna_reply_#{crowdId}(

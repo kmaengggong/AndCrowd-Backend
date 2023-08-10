@@ -7,7 +7,7 @@ import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
 @Mapper
-public interface DynamicCrowdQnaReply {
+public interface DynamicCrowdQnaReplyRepository {
     void createDynamicCrowdQnaReplyTable(@Param("crowdId") int crowdId);
 
     List<DynamicCrowdQnaReplyDTO.Find> findAll(@Param("crowdId") int crowdId, @Param("crowdQnaId") int crowdQnaId);
