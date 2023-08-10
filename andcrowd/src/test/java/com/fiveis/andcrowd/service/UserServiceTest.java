@@ -1,6 +1,7 @@
 package com.fiveis.andcrowd.service;
 
 import com.fiveis.andcrowd.dto.UserDTO;
+import com.fiveis.andcrowd.service_.UserService;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;

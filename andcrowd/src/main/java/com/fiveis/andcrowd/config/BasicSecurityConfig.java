@@ -1,7 +1,7 @@
 package com.fiveis.andcrowd.config;
 
 import com.fiveis.andcrowd.config.jwt.TokenProvider;
-import com.fiveis.andcrowd.service.UserAuthorityService;
+import com.fiveis.andcrowd.service_.UserAuthorityService;
 import jakarta.servlet.DispatcherType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;

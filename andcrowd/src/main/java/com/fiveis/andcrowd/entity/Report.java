@@ -38,4 +38,8 @@ public class Report {
     public void setDefaultValue(){
         this.reportDate = LocalDateTime.now();
     }
+
+    public void setReportStatus(int reportStatus) {
+        this.reportStatus = reportStatus;
+    }
 }

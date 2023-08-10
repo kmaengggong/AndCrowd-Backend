@@ -2,6 +2,7 @@ package com.fiveis.andcrowd.service;
 
 import com.fiveis.andcrowd.dto.DynamicUserOrderDTO;
 import com.fiveis.andcrowd.entity.DynamicUserOrder;
+import com.fiveis.andcrowd.service_.DynamicUserOrderService;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
