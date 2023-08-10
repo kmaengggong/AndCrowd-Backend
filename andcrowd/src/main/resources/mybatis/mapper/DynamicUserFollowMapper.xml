@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.fiveis.andcrowd.repository.DynamicUserFollowRepository">
+    <update id="createDynamicUserFollowTable">
+        CREATE
+        TABLE IF NOT EXISTS user_follow_${userEmail}(
+            u_follow_id INT AUTO_INCREMENT PRIMARY KEY,
+            user_id INT NOT NULL
+        )
+    </update>
+
+    <select id="findAll" resultType="com.fiveis.andcrowd.dto.DynamicUserFollowDTO$Find">
+        SELECT
+            u_follow_id as uFollowId,
+            user_id as userId
+        FROM
+            user_follow_${userEmail}
+    </select>
+
+    <select id="findById" resultType="com.fiveis.andcrowd.dto.DynamicUserFollowDTO$Find">
+        SELECT
+            u_follow_id as uFollowId,
+            user_id as userId
+        FROM
+            user_follow_${userEmail}
+        WHERE
+            u_follow_id = #{uFollowId}
+    </select>
+
+    <insert id="save">
+        INSERT
+        INTO
+            user_follow_${userEmail}
+            (u_follow_id, user_id)
+        VALUES
+            (#{dynamicUserFollow.uFollowId}, #{dynamicUserFollow.userId})
+    </insert>
+
+    <delete id="deleteById">
+        DELETE
+        FROM
+            user_follow_${userEmail}
+        WHERE
+            u_follow_id = #{uFollowId}
+    </delete>
+</mapper>
