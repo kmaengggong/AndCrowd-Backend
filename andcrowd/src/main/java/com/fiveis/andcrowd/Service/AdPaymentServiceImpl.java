@@ -45,11 +45,8 @@ public class AdPaymentServiceImpl implements AdPaymentService{
         if(update.getExpiredAt() != null){
             adPayment.setExpiredAt(update.getExpiredAt());
         }
-
-        // 변경사항이 없을 경우 -1을 넣어야 함
-        if(update.getAdPaymentStatus() != -1){
-            adPayment.setAdPaymentStatus(update.getAdPaymentStatus());
-        }
+        // 변경 사항이 없는 경우엔 원래 가지고 있던 값을 넣음
+        adPayment.setAdPaymentStatus(update.getAdPaymentStatus());
         adPaymentJPARepository.save(adPayment);
     }
 
