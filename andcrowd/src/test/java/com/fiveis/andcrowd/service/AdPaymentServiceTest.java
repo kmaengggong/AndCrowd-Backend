@@ -2,6 +2,7 @@ package com.fiveis.andcrowd.service;
 
 import com.fiveis.andcrowd.dto.AdPaymentDTO;
 import com.fiveis.andcrowd.entity.AdPayment;
+import com.fiveis.andcrowd.service_.AdPaymentService;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;

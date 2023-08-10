@@ -2,7 +2,7 @@ package com.fiveis.andcrowd.controller;
 
 import com.fiveis.andcrowd.dto.AndDTO;
 import com.fiveis.andcrowd.entity.And;
-import com.fiveis.andcrowd.service.AndService;
+import com.fiveis.andcrowd.service_.AndService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
