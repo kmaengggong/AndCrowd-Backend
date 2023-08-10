@@ -14,6 +14,7 @@ public interface AndService {
 
     List<AndDTO.FindAllByUserId> findAllByUserId(int userId);
 
+    List<AndDTO.Find> findAllByIsDeletedFalse();
     List<AndDTO.Find> findAll();
 
     void deleteById(int andId);

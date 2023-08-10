@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -41,6 +42,20 @@ public class AndServiceTest {
         assertEquals(userId, andFindByIdDTO.getUserId());
         assertEquals(andHeaderImg, andFindByIdDTO.getAndHeaderImg());
     }
+
+    @Test
+    @Transactional
+    @DisplayName("R: findAllByIsDeletedFalse 통해 전체글 조회")
+    public void findAllByIsDeletedFalse(){
+        // given
+
+        // when
+        List<AndDTO.Find> andFindAllNotDeletedList = andService.findAllByIsDeletedFalse();
+
+        // then
+        assertEquals(1, andFindAllNotDeletedList.size());
+    }
+
 
     @Test
     @DisplayName("C: save을 통해 모임글 저장 및 해당 동적 테이블 생성")

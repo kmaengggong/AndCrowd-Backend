@@ -1,5 +1,4 @@
 package com.fiveis.andcrowd.repository;
-import com.fiveis.andcrowd.dto.AndDTO;
 import com.fiveis.andcrowd.entity.And;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,11 +7,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
-public class AndJPARepositoryTest {
+public class AndJPARepositoryDeleteTest {
 
     @Autowired
     private AndJPARepository andRepository;
@@ -51,4 +49,6 @@ public class AndJPARepositoryTest {
         assertNotNull(deletedAnd);
         assertTrue(deletedAnd.isDeleted());
     }
-    }
+
+
+}
