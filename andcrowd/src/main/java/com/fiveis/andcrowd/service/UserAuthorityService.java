@@ -18,6 +18,6 @@ public class UserAuthorityService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String userEmail) throws UsernameNotFoundException{
-        return userJPARepository.findByUserEmail(userEmail);
+        return userJPARepository.findByUserEmail(userEmail).get();
     }
 }
