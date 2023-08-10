@@ -3,7 +3,6 @@ package com.fiveis.andcrowd.service;
 import com.fiveis.andcrowd.dto.DynamicUserFollowDTO;
 import com.fiveis.andcrowd.dto.UserDTO;
 import com.fiveis.andcrowd.entity.DynamicUserFollow;
-import com.fiveis.andcrowd.service_.DynamicUserFollowService;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;

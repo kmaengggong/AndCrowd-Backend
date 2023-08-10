@@ -1,4 +1,4 @@
-package com.fiveis.andcrowd.service_;
+package com.fiveis.andcrowd.service;
 
 public class UserSecurityService {
 }

@@ -1,4 +1,4 @@
-package com.fiveis.andcrowd.service_;
+package com.fiveis.andcrowd.service;
 
 import com.fiveis.andcrowd.dto.DynamicUserLikeDTO;
 import com.fiveis.andcrowd.dto.ProjectDTO;
