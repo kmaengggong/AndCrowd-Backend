@@ -1,7 +1,6 @@
 package com.fiveis.andcrowd.service;
 
 import com.fiveis.andcrowd.dto.DynamicAndApplicantDTO;
-import com.fiveis.andcrowd.service_.DynamicAndApplicantService;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

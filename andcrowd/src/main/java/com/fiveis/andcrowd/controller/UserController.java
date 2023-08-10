@@ -3,7 +3,7 @@ package com.fiveis.andcrowd.controller;
 import com.fiveis.andcrowd.config.jwt.TokenProvider;
 import com.fiveis.andcrowd.dto.AccessTokenResponseDTO;
 import com.fiveis.andcrowd.entity.User;
-import com.fiveis.andcrowd.service_.UserService;
+import com.fiveis.andcrowd.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;

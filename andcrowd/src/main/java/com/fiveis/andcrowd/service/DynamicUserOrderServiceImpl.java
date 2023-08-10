@@ -1,4 +1,4 @@
-package com.fiveis.andcrowd.service_;
+package com.fiveis.andcrowd.service;
 
 import com.fiveis.andcrowd.dto.DynamicUserOrderDTO;
 import com.fiveis.andcrowd.entity.CrowdOrderDetails;

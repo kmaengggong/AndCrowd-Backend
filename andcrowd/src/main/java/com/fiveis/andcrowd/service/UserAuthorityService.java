@@ -1,4 +1,4 @@
-package com.fiveis.andcrowd.service_;
+package com.fiveis.andcrowd.service;
 
 import com.fiveis.andcrowd.repository.UserJPARepository;
 import org.springframework.beans.factory.annotation.Autowired;
