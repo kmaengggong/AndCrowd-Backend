@@ -1,6 +1,4 @@
 package com.fiveis.andcrowd.dto;
-
-import com.fiveis.andcrowd.entity.AndCategory;
 import lombok.*;
 
 public class AndCategoryDTO {
@@ -16,7 +14,7 @@ public class AndCategoryDTO {
     @Getter @Setter
     @Builder @ToString
     @AllArgsConstructor @NoArgsConstructor
-    public static class FindById {
+    public static class FindByCategoryId {
         private int andCategoryId;
         private String andCategoryName;
         private boolean isDeleted;

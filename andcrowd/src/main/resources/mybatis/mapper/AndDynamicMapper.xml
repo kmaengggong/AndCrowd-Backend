@@ -51,6 +51,33 @@
         );
     </insert>
 
+    <insert id="createDynamicAndBoardTable">
+        CREATE TABLE and_board_#{and_id} (
+        and_board_id INT AUTO_INCREMENT PRIMARY KEY ,
+        and_id INT NOT NULL,
+        user_id INT NOT NULL,
+        and_board_tag INT,
+        and_board_title VARCHAR(200) NOT NULL,
+        and_board_content VARCHAR(2000) NOT NULL,
+        and_img VARCHAR(255),
+        published_at DATETIME DEFAULT now(),
+        updated_at DATETIME DEFAULT now(),
+        and_board_view_count INT DEFAULT 0 ,
+        is_deleted BOOL default false
+        );
+    </insert>
+
+    <insert id="createDynamicAndMemberTable">
+        CREATE TABLE dynamic_and_member (
+        member_id INT AUTO_INCREMENT PRIMARY KEY ,
+        and_id INT NOT NULL,
+        user_id INT NOT NULL,
+        is_deleted BOOL default false
+        );
+
+    </insert>
+
+
 
 
 </mapper>

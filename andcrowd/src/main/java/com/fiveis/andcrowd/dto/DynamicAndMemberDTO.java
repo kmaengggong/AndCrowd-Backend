@@ -17,7 +17,7 @@ public class DynamicAndMemberDTO {
     @Getter @Setter
     @Builder @ToString
     @AllArgsConstructor @NoArgsConstructor
-    public static class FindById {
+    public static class FindByMemberId {
         private int memberId;
         private int andId;
         private int userId;

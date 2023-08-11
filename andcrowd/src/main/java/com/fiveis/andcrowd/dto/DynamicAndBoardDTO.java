@@ -7,6 +7,31 @@ import java.time.LocalDateTime;
 
 public class DynamicAndBoardDTO {
 
+    @Getter @Setter @ToString @Builder
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class Find {
+        private int crowdId;
+
+        private int crowdBoardId;
+
+        private int crowdBoardTag;
+
+        private String crowdBoardTitle;
+
+        private String crowdBoardContent;
+
+        private String crowdImg;
+
+        private LocalDateTime publishedAt;
+
+        private LocalDateTime updatedAt;
+
+        private int viewCount;
+
+        private boolean isDeleted;
+    }
+
     //모임 게시판 업데이트
     @Getter @Setter
     @Builder @ToString
