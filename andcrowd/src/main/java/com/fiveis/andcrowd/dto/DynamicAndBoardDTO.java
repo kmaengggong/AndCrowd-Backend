@@ -5,30 +5,7 @@ import java.time.LocalDateTime;
 
 public class DynamicAndBoardDTO {
 
-    @Getter @Setter @ToString @Builder
-    @NoArgsConstructor
-    @AllArgsConstructor
-    public static class Find {
-        private int andId;
 
-        private int andBoardId;
-
-        private int andBoardTag;
-
-        private String andBoardTitle;
-
-        private String andBoardContent;
-
-        private String andImg;
-
-        private LocalDateTime publishedAt;
-
-        private LocalDateTime updatedAt;
-
-        private int viewCount;
-
-        private boolean isDeleted;
-    }
 
     //모임 게시판 업데이트
     @Getter @Setter

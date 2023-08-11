@@ -7,7 +7,7 @@
         SELECT * FROM and_board_#{andId} WHERE and_id = #{andId}
     </select>
 
-    <select id="findByAndBoardId" parameterType="map" resultType="com.fiveis.andcrowd.dto.DynamicAndBoardDTO$FindById">
+    <select id="findByAndBoardId" parameterType="int" resultType="com.fiveis.andcrowd.dto.DynamicAndBoardDTO$FindById">
         SELECT * FROM and_board_#{andId} WHERE and_id = #{andId} AND and_board_id = #{andBoardId}
     </select>
 

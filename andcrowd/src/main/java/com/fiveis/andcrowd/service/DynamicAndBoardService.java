@@ -8,7 +8,7 @@ import java.util.List;
 @Service
 public interface DynamicAndBoardService {
     List<DynamicAndBoardDTO.FindById> findAll(int andId);
-    DynamicAndBoardDTO.FindById findById(int andId, int andBoardId);
+    DynamicAndBoardDTO.FindById findByAndBoardId(int andId, int andBoardId);
     void deleteByAndId(int andId);
     void deleteByAndBoardId(int andId, int andBoardId);
     void save(DynamicAndBoardDTO.Update dynamicAndBoardUpdateDTO);
