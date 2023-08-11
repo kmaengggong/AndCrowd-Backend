@@ -13,7 +13,7 @@ public class CrowdOrderDetailsDTO { // findAll, findById, update, save, delete
     @NoArgsConstructor
     @ToString
     @Builder
-    public static class findById {
+    public static class FindById {
         private int purchaseId;
         private int userId;
         private int crowdId;
