@@ -45,7 +45,7 @@ public class DynamicAndMemberServiceImpl implements DynamicAndMemberService {
 
     @Override
     public void dropAndMemberTable() {
-        dynamicAndMemberRepository.createAndMemberTable();
+        dynamicAndMemberRepository.dropAndMemberTable();
     }
 
     @Override
