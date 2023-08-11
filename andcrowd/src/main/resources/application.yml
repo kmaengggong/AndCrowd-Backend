@@ -9,7 +9,7 @@ spring:
   datasource:
     # DB
     url: ${url}
-    username: ${usrname}
+    username: ${username_}
     password: ${password}
     driver-class-name: ${driver-class-name}
   # JPA
