@@ -43,6 +43,22 @@ public class DynamicAndQnaReplyRepositoryTest {
     }
 
     @Test
+    @DisplayName("R: findAllNotDeleted를 통해 삭제되지 않은 전체 답변 조회")
+    public void findAllNotDeletedTest(){
+        //given
+        int andId = 123;
+        int andReplyId = 1;
+
+        // when
+        dynamicAndQnaReplyRepository.deleteByAndReplyId(andId, andReplyId);
+        List<DynamicAndQnaReplyDTO.FindById> findAllList= dynamicAndQnaReplyRepository.findAllNotDeleted(andId);
+
+        // then
+        assertEquals(3, findAllList.size());
+
+    }
+
+    @Test
     @DisplayName("R: findByAndQnaId를 통해 1번 질문글의 전체 답변 리스트 조회")
     public void findByAndQnaIdTest(){
         //given

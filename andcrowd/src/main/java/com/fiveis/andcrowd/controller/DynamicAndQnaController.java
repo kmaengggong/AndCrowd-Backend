@@ -1,6 +1,5 @@
 package com.fiveis.andcrowd.controller;
 
-import com.fiveis.andcrowd.dto.AndDTO;
 import com.fiveis.andcrowd.dto.DynamicAndQnaDTO;
 import com.fiveis.andcrowd.service.DynamicAndQnaService;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -25,5 +25,5 @@ public class DynamicSponsorDTO { // find(findAll, findById), Update
         private int crowdId;
         private int purchaseId;
     }
-
+  
 }

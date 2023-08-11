@@ -9,6 +9,7 @@ import java.util.List;
 @Mapper
 public interface DynamicAndQnaReplyRepository {
     List<DynamicAndQnaReplyDTO.FindById> findAll(int andId);
+    List<DynamicAndQnaReplyDTO.FindById> findAllNotDeleted(int andId);
     List<DynamicAndQnaReplyDTO.FindById> findAllByAndQnaId(@Param("and_id") int andId, @Param("andQnaId") int andQnaId);
     DynamicAndQnaReplyDTO.FindById findByAndReplyId(@Param("and_id") int andId, @Param("andReplyId") int andReplyId);
     void save(DynamicAndQnaReplyDTO.Update andReplySaveDTO);

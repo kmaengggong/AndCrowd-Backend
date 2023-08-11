@@ -43,6 +43,22 @@ public class DynamicAndRoleRepositoryTest {
     }
 
     @Test
+    @DisplayName("R: findAllNotDeleted를 통해 전체 역할 리스트 조회")
+    public void findAllNotDeletedTest(){
+        //given
+        int andId = 123;
+        int andRoleId = 3;
+
+        // when
+        dynamicAndRoleRepository.deleteByAndRoleId(andId, andRoleId);
+        List<DynamicAndRoleDTO.FindById> findAllList= dynamicAndRoleRepository.findAllNotDeleted(andId);
+
+        // then
+        assertEquals(2, findAllList.size());
+
+    }
+
+    @Test
     @DisplayName("R: findByAndRoleId를 통해 1번 역할 조회")
     public void findByAndRoleIdTest(){
         //given

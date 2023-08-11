@@ -33,6 +33,22 @@ public class DynamicAndQnaReplyServiceTest {
 
     @Test
     @Transactional
+    public void findAllNotDeletedTest(){
+        //given
+        int andId = 321;
+        int andReplyId = 1;
+
+        // when
+        dynamicAndQnaReplyService.deleteByAndReplyId(andId, andReplyId);
+        List<DynamicAndQnaReplyDTO.FindById> findAllList= dynamicAndQnaReplyService.findAllNotDeleted(andId);
+
+        // then
+        assertEquals(3, findAllList.size());
+
+    }
+
+    @Test
+    @Transactional
     public void findAllByAndQnaIdTest(){
         // given
         int andId = 321;

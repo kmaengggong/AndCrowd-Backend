@@ -41,6 +41,20 @@ public class AndServiceImpl implements AndService{
     }
 
     @Override
+    public List<AndDTO.Find> findAllByIsDeletedFalse() {
+        List<And> andList = andJPARepository.findAllByIsDeletedFalse();
+        List<AndDTO.Find> findAllNotDeletedList = new ArrayList<>();
+
+        for (And and : andList) {
+            AndDTO.Find dto = convertToAndFindDTO(and);
+            findAllNotDeletedList.add(dto);
+        }
+
+
+        return findAllNotDeletedList;
+    }
+
+    @Override
     public List<AndDTO.Find> findAll() {
         List<And> andList = andJPARepository.findAll();
         List<AndDTO.Find> findList = new ArrayList<>();

@@ -33,6 +33,23 @@ public class DynamicAndApplicantServiceTest {
 
     @Test
     @Transactional
+    public void findAllNotDeletedTest(){
+        //given
+        int andId = 321;
+        int andApplyId = 1;
+
+        // when
+        dynamicAndApplicantService.deleteByAndApplicantId(andId, andApplyId);
+        List<DynamicAndApplicantDTO.FindById> findAllNotDeletedList= dynamicAndApplicantService.findAllNotDeleted(andId);
+
+        // then
+        assertEquals(3, findAllNotDeletedList.size());
+
+    }
+
+
+    @Test
+    @Transactional
     public void findByAndApplicantIdTest(){
         //given
         int andApplyId = 1;

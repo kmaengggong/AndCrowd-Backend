@@ -3,6 +3,8 @@ package com.fiveis.andcrowd.entity;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 
 import java.time.LocalDateTime;
 
@@ -12,6 +14,7 @@ import java.time.LocalDateTime;
 @Builder @Entity
 @DynamicInsert
 @Table(name = "and_table")
+@SQLDelete(sql = "UPDATE and_table SET is_deleted = true WHERE and_id = ?")
 public class And {
 
     @Id
@@ -70,7 +73,7 @@ public class And {
     private int adId;
 
     @Column(nullable = false)
-    private boolean isDeleted;
+    private boolean isDeleted = Boolean.FALSE;
 
     @PrePersist
     public void setDefaultValue(){
