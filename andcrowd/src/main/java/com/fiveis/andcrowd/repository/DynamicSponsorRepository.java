@@ -17,11 +17,11 @@ public interface DynamicSponsorRepository {
 
     void save(DynamicSponsorDTO.Update dynamicSponsorInsertDTO);
 
-    void update(DynamicSponsorDTO.Update dynamicSponsordUpdateDTO);
+    void update(DynamicSponsorDTO.Update dynamicSponsorUpdateDTO);
 
     void deleteBySponsorId(@Param("crowd_id") int crowdId, @Param("sponsor_id") int sponsorId);
 
-    void createRewardTable();
-    void dropRewardTable();
+    void createSponsorTable();
+    void dropSponsorTable();
     void insertTestData();
 }
