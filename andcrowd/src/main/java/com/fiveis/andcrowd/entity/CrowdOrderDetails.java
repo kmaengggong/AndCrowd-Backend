@@ -11,6 +11,7 @@ import java.time.LocalDateTime;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
+@Table(name = "crowd_order_details")
 public class CrowdOrderDetails { // 크라우드 주문내역
 
     @Id
