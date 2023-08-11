@@ -10,7 +10,7 @@ public class DynamicSponsorDTO { // find(findAll, findById), Update
     @ToString
     @NoArgsConstructor
     @AllArgsConstructor
-    public static class findById {
+    public static class FindById {
         private int sponsorId;
         private int crowdId;
         private int purchaseId;
@@ -25,5 +25,5 @@ public class DynamicSponsorDTO { // find(findAll, findById), Update
         private int crowdId;
         private int purchaseId;
     }
-
+  
 }

@@ -9,9 +9,14 @@ import java.util.List;
 @Mapper
 public interface DynamicRewardRepository {
 
-    List<DynamicRewardDTO> findAll();
+    List<DynamicRewardDTO.FindAllById> findAll(int crowdId);
 
     DynamicRewardDTO.FindAllById findByRewardId(@Param("crowd_id") int crowdId, @Param("reward_id") int rewardId);
+
+    List<DynamicRewardDTO.FindAllById> findByUserId(@Param("crowd_id") int crowdId, @Param("user_id") int userId);
+
+    DynamicRewardDTO.FindAllById findByRewardId(@Param("crowd_id") int crowdId, @Param("reward_id") int rewardId);
+
 
     void save(DynamicRewardDTO.Update dynamicRewardInsertDTO);
 
@@ -22,4 +27,5 @@ public interface DynamicRewardRepository {
     void createRewardTable();
     void dropRewardTable();
     void insertTestData();
+
 }

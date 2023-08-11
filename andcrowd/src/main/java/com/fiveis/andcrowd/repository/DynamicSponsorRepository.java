@@ -9,17 +9,19 @@ import java.util.List;
 @Mapper
 public interface DynamicSponsorRepository {
 
-    List<DynamicSponsorDTO.findById> findAll(int crowdId);
+    List<DynamicSponsorDTO.FindById> findAll(int crowdId);
 
-    DynamicSponsorDTO.findById findByRewardId(@Param("crowd_id") int crowdId, @Param("sponsor_id") int sponsorId);
+    DynamicSponsorDTO.FindById findBySponsorId(@Param("crowd_id") int crowdId, @Param("sponsor_id") int sponsorId);
+
+    List<DynamicSponsorDTO.FindById> findByUserId(@Param("crowd_id") int crowdId, @Param("user_id") int userId);
 
     void save(DynamicSponsorDTO.Update dynamicSponsorInsertDTO);
 
-    void update(DynamicSponsorDTO.Update dynamicSponsordUpdateDTO);
+    void update(DynamicSponsorDTO.Update dynamicSponsorUpdateDTO);
 
-    void deleteByRewardId(@Param("crowd_id") int crowdId, @Param("sponsor_id") int sponsorId);
+    void deleteBySponsorId(@Param("crowd_id") int crowdId, @Param("sponsor_id") int sponsorId);
 
-    void createRewardTable();
-    void dropRewardTable();
+    void createSponsorTable();
+    void dropSponsorTable();
     void insertTestData();
 }
