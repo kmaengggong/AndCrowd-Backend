@@ -11,11 +11,11 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class DynamicCrowdQnaReply {
 
-    private int crowdReplyId;
+    private int qnaReplyId;
 
-    private int crowdQnAId;
+    private int crowdQnaId;
 
-    private String crowdReplyContent;
+    private String qnaReplyContent;
 
     private LocalDateTime publishedAt;
 

@@ -14,5 +14,5 @@ public class DynamicUserOrder {
     private int uOrderId;  // 유저 주문 ID
 
     @Column(nullable = false)
-    private int orderID;  // 주문 ID
+    private int orderId;  // 주문 ID
 }

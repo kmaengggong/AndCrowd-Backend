@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.fiveis.andcrowd.repository.DynamicCrowdBoard">
+
+    <update id="createDynamicCrowdBoardTable">
+        CREATE TABLE crowd_board_#{crowdId}(
+            crowd_board_id INT AUTO_INCREMENT PRIMARY KEY ,
+            crowd_id INT NOT NULL ,
+            crowd_board_tag INT NOT NULL ,
+            crowd_board_title VARCHAR(200) NOT NULL ,
+            crowd_board_content VARCHAR(2000) NOT NULL ,
+            crowd_img VARCHAR(200) ,
+            publishe_at DATETIME DEFAULT now() ,
+            updated_at DATETIME DEFAULT now() ,
+            view_count INT DEFAULT 0 ,
+            is_deleted BOOL default false
+        );
+    </update>
+
+    <select id="findAll">
+        SELECT
+            crowd_board_id AS crowdBoardId ,
+            crowd_id AS crowdId ,
+            crowd_board_tag AS crowdBoardTag ,
+            crowd_board_title AS crowdBoardTitle ,
+            crowd_board_content AS crowdBoardContent ,
+            crowd_img AS crowdImg ,
+            publishe_at AS publishedAt ,
+            updated_at AS updatedAt ,
+            view_count AS viewCount ,
+            is_deleted AS isDeleted
+        FROM
+            crowd_board_#{crowd_id}
+        ORDER BY
+            crowdBoardId DESC
+    </select>
+
+    <select id="findById" parameterType="int">
+        SELECT
+            crowd_board_id AS crowdBoardId ,
+            crowd_id AS crowdId ,
+            crowd_board_tag AS crowdBoardTag ,
+            crowd_board_title AS crowdBoardTitle ,
+            crowd_board_content AS crowdBoardContent ,
+            crowd_img AS crowdImg ,
+            publishe_at AS publishedAt ,
+            updated_at AS updatedAt ,
+            view_count AS viewCount ,
+            is_deleted AS isDeleted
+        FROM
+            crowd_board_#{crowdId}
+        WHERE
+            crowd_board_id = #{crowdBoardId}
+    </select>
+
+    <insert id="save" parameterType="com.fiveis.andcrowd.dto.DynamicCrowdBoardDTO$Save">
+        INSERT INTO
+            crowd_board_#{crowdId} (crowd_id, crowd_board_tag, crowd_board_title, crowd_board_content, crowd_img)
+        VALUES
+            (#{crowdId}, #{crowdBoardTag}, #{crowdBoardTitle}, #{crowdBoardContent}, #{crowdImg})
+    </insert>
+
+    <insert id="update" parameterType="com.fiveis.andcrowd.dto.DynamicCrowdBoardDTO$Update">
+        UPDATE
+            crowd_board_#{crowdId}
+        SET
+            crowd_board_tag = #{crowdBoardTag},
+            crowd_board_title = #{crowdBoardTitle},
+            crowd_board_content = #{crowdBoardContent},
+            crowd_img = #{crowdImg},
+            updated_at = now()
+        WHERE
+            crowd_board_id = #{crowdBoardId}
+    </insert>
+
+    <delete id="deleteByCrowdBoardId" parameterType="int">
+        UPDATE
+            crowd_board_#{crowdId}
+        SET
+            is_deleted = true
+        WHERE
+            crowd_board_id = #{crowdBoardId}
+    </delete>
+</mapper>
