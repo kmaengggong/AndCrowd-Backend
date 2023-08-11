@@ -22,7 +22,7 @@ public class DynamicAndBoardServiceImpl implements DynamicAndBoardService {
     }
 
     @Override
-    public DynamicAndBoardDTO.FindById findByAndBoardId(int andId, int andBoardId) {
+    public DynamicAndBoardDTO.FindById findById(int andId, int andBoardId) {
         return dynamicAndBoardRepository.findByAndBoardId(andId, andBoardId);
     }
 

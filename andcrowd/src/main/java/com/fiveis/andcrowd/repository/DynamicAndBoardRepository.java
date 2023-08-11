@@ -18,4 +18,6 @@ public interface DynamicAndBoardRepository {
     void createAndBoardTable();
     void dropAndBoardTable();
     void insertTestData();
+
+    void createAndTestBoardTable();
 }

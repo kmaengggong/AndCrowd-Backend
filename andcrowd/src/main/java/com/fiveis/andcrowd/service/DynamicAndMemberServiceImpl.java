@@ -1,8 +1,7 @@
-package com.fiveis.andcrowd.service.impl;
+package com.fiveis.andcrowd.service;
 
 import com.fiveis.andcrowd.dto.DynamicAndMemberDTO;
 import com.fiveis.andcrowd.repository.DynamicAndMemberRepository;
-import com.fiveis.andcrowd.service.DynamicAndMemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

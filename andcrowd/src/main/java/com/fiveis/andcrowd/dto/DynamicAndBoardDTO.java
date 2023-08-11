@@ -1,6 +1,4 @@
 package com.fiveis.andcrowd.dto;
-
-import com.fiveis.andcrowd.entity.DynamicAndBoard;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -11,17 +9,17 @@ public class DynamicAndBoardDTO {
     @NoArgsConstructor
     @AllArgsConstructor
     public static class Find {
-        private int crowdId;
+        private int andId;
 
-        private int crowdBoardId;
+        private int andBoardId;
 
-        private int crowdBoardTag;
+        private int andBoardTag;
 
-        private String crowdBoardTitle;
+        private String andBoardTitle;
 
-        private String crowdBoardContent;
+        private String andBoardContent;
 
-        private String crowdImg;
+        private String andImg;
 
         private LocalDateTime publishedAt;
 
@@ -38,11 +36,15 @@ public class DynamicAndBoardDTO {
     @AllArgsConstructor @NoArgsConstructor
     public static class Update {
         private int andBoardId;
+        private int andId;
         private int userId;
         private Integer andBoardTag;
         private String andBoardTitle;
         private String andBoardContent;
         private String andImg;
+        private LocalDateTime publishedAt;
+        private LocalDateTime updatedAt;
+        private Integer andBoardViewCount;
         private boolean isDeleted;
     }
 

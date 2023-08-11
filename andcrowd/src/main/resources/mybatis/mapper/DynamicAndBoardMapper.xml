@@ -3,24 +3,24 @@
 
 <mapper namespace="com.fiveis.andcrowd.repository.DynamicAndBoardRepository">
 
-    <select id="findAll" parameterType="int" resultType="com.fiveis.andcrowd.dto.DynamicAndBoardDTO.FindById">
-        SELECT * FROM dynamic_and_board WHERE and_id = #{andId}
+    <select id="findAll" parameterType="int" resultType="com.fiveis.andcrowd.dto.DynamicAndBoardDTO$FindById">
+        SELECT * FROM and_board_#{andId} WHERE and_id = #{andId}
     </select>
 
-    <select id="findByAndBoardId" parameterType="map" resultType="com.fiveis.andcrowd.dto.DynamicAndBoardDTO.FindById">
-        SELECT * FROM dynamic_and_board WHERE and_id = #{andId} AND and_board_id = #{andBoardId}
+    <select id="findByAndBoardId" parameterType="map" resultType="com.fiveis.andcrowd.dto.DynamicAndBoardDTO$FindById">
+        SELECT * FROM and_board_#{andId} WHERE and_id = #{andId} AND and_board_id = #{andBoardId}
     </select>
 
     <delete id="deleteByAndId" parameterType="int">
-        DELETE FROM dynamic_and_board WHERE and_id = #{andId}
+        DELETE FROM and_board_#{andId} WHERE and_id = #{andId}
     </delete>
 
     <delete id="deleteByAndBoardId" parameterType="map">
-        DELETE FROM dynamic_and_board WHERE and_id = #{andId} AND and_board_id = #{andBoardId}
+        DELETE FROM and_board_#{andId}} WHERE and_id = #{andId} AND and_board_id = #{andBoardId}
     </delete>
 
-    <insert id="save" parameterType="com.fiveis.andcrowd.dto.DynamicAndBoardDTO.Update">
-        INSERT INTO dynamic_and_board (
+    <insert id="save" parameterType="com.fiveis.andcrowd.dto.DynamicAndBoardDTO$Update">
+        INSERT INTO and_board_#{andId} (
             and_id, user_id, and_board_tag, and_board_title,
             and_board_content, and_img, published_at, updated_at,
             and_board_view_count, is_deleted
@@ -32,8 +32,8 @@
                )
     </insert>
 
-    <update id="update" parameterType="com.fiveis.andcrowd.dto.DynamicAndBoardDTO.Update">
-        UPDATE dynamic_and_board
+    <update id="update" parameterType="com.fiveis.andcrowd.dto.DynamicAndBoardDTO$Update">
+        UPDATE and_board_#{andId}
         SET
             user_id = #{userId},
             and_board_tag = #{andBoardTag},
@@ -48,8 +48,7 @@
     </update>
 
 
-    <!--    테스트용 쿼리    -->
-    <insert id="createAndBoardTable">
+    <insert id="createAndTestBoardTable">
         CREATE TABLE and_board_1111 (
         and_board_id INT AUTO_INCREMENT PRIMARY KEY ,
         and_id INT NOT NULL,
@@ -70,7 +69,7 @@
     </update>
 
     <insert id="insertTestData">
-        INSERT INTO and_board_1 (and_id, user_id, and_board_title, and_board_content)
+        INSERT INTO and_board_1111 (and_id, user_id, and_board_title, and_board_content)
         VALUES
             (1111, 1, 'Board Title 1', 'Board Content 1'),
             (1111, 2, 'Board Title 2', 'Board Content 2'),
