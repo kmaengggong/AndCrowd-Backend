@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CrowdOrderDetailsServiceImpl implements CrowdOrderDetailsService{
@@ -23,30 +24,50 @@ public class CrowdOrderDetailsServiceImpl implements CrowdOrderDetailsService{
     public List<CrowdOrderDetailsDTO.FindById> findAll() {
         List<CrowdOrderDetails> crowdOrderDetailsList = crowdOrderDetailsJPARepository.findAll();
         List<CrowdOrderDetailsDTO.FindById> findList = new ArrayList<>();
-        for(CrowdOrderDetails crowdOrderDetails : crowdOrderDetailsList){
-            findList.add(converToCrowdOrderDetailsDTOFind(crowdOrderDetailsList));
+
+        for (CrowdOrderDetails crowdOrderDetails : crowdOrderDetailsList) {
+            CrowdOrderDetailsDTO.FindById findById = convertToFindById(crowdOrderDetails);
+            findList.add(findById);
         }
+
         return findList;
     }
 
     @Override
     public CrowdOrderDetailsDTO.FindById findById(int purchaseId) {
-
-        return null;
+//        Optional<CrowdOrderDetails> crowdOrderDetailsOptional = crowdOrderDetailsJPARepository.findById(purchaseId);
+        if(crowdOrderDetailsJPARepository.findById(purchaseId).isEmpty()) return null;
+        return convertToFindById(crowdOrderDetailsJPARepository.findById(purchaseId).get());
     }
 
     @Override
     public void save(CrowdOrderDetails crowdOrderDetails) {
-
+        CrowdOrderDetails saveCrowdOrder = crowdOrderDetailsJPARepository.save(crowdOrderDetails);
     }
 
     @Override
-    public void update(CrowdOrderDetailsDTO crowdOrderDetailsDTO) {
-
+    public void update(CrowdOrderDetails crowdOrderDetails) {
+        crowdOrderDetailsJPARepository.save(crowdOrderDetails);
     }
 
     @Override
     public void deleteById(int purchaseId) {
+        crowdOrderDetailsJPARepository.deleteById(purchaseId);
+    }
 
+    private CrowdOrderDetailsDTO.FindById convertToFindById(CrowdOrderDetails crowdOrderDetails) {
+        return CrowdOrderDetailsDTO.FindById.builder()
+                .purchaseId(crowdOrderDetails.getPurchaseId())
+                .userId(crowdOrderDetails.getUserId())
+                .crowdId(crowdOrderDetails.getCrowdId())
+                .rewardId(crowdOrderDetails.getRewardId())
+                .sponsorId(crowdOrderDetails.getSponsorId())
+                .purchaseName(crowdOrderDetails.getPurchaseName())
+                .purchasePhone(crowdOrderDetails.getPurchasePhone())
+                .purchaseAddress(crowdOrderDetails.getPurchaseAddress())
+                .purchaseDate(crowdOrderDetails.getPurchaseDate())
+                .purchaseStatus(crowdOrderDetails.getPurchaseStatus())
+                .isDeleted(crowdOrderDetails.isDeleted())
+                .build();
     }
 }

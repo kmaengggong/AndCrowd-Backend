@@ -14,6 +14,6 @@ public interface CrowdOrderDetailsService {
    List<CrowdOrderDetailsDTO.FindById> findAll();
    CrowdOrderDetailsDTO.FindById findById(int purchaseId);
    void save(CrowdOrderDetails crowdOrderDetails);
-   void update(CrowdOrderDetailsDTO crowdOrderDetailsDTO);
+   void update(CrowdOrderDetails crowdOrderDetails);
    void deleteById(int purchaseId);
 }
