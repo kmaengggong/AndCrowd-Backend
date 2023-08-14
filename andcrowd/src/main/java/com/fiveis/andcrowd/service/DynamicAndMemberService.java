@@ -9,11 +9,11 @@ import java.util.List;
 public interface DynamicAndMemberService {
     void save(DynamicAndMemberDTO.Update dynamicAndMemberDTOUpdate);
 
-    DynamicAndMemberDTO.FindByMemberId findById(int memberId);
+    DynamicAndMemberDTO.FindByAndMemberId findByAndMemberId(int andId, int memberId);
 
-    List<DynamicAndMemberDTO.FindByMemberId> findAll();
+    List<DynamicAndMemberDTO.FindByAndMemberId> findAll(int andId);
 
-    void deleteById(int memberId);
+    void deleteById(int andId, int memberId);
 
     void createAndMemberTable();
     void dropAndMemberTable();

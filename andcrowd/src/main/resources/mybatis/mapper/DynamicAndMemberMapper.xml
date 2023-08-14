@@ -4,7 +4,7 @@
 <mapper namespace="com.fiveis.andcrowd.repository.DynamicAndMemberRepository">
 
     <insert id="save" parameterType="com.fiveis.andcrowd.dto.DynamicAndMemberDTO$Update">
-        INSERT INTO and_member_#{and_id} (
+        INSERT INTO and_member_#{andId} (
             and_id, user_id, is_deleted
         )
         VALUES (
@@ -12,17 +12,22 @@
                )
     </insert>
 
-    <select id="findByAndMemberId" parameterType="int" resultType="com.fiveis.andcrowd.dto.DynamicAndMemberDTO$FindByMemberId">
-        SELECT * FROM and_member_#{and_id} WHERE member_id = #{memberId}
+    <select id="findByAndMemberId" parameterType="int" resultType="com.fiveis.andcrowd.dto.DynamicAndMemberDTO$FindByAndMemberId">
+        SELECT
+            member_id AS MemberId,
+            and_id AS andId,
+            user_id AS userId,
+            is_deleted AS isDeleted
+        FROM and_member_#{andId} WHERE member_id = #{memberId}
     </select>
 
-    <select id="findAll" resultType="com.fiveis.andcrowd.dto.DynamicAndMemberDTO$FindByMemberId">
-        SELECT * FROM and_member_#{and_id}
+    <select id="findAll" resultType="com.fiveis.andcrowd.dto.DynamicAndMemberDTO$FindByAndMemberId">
+        SELECT * FROM and_member_#{andId}
     </select>
 
     <delete id="deleteById" parameterType="int">
-        DELETE FROM and_member_#{and_id} WHERE member_id = #{memberId}
-    </delete>
+        DELETE FROM and_member_#{andId} WHERE member_id = #{memberId}
+     </delete>
 
     <insert id="createAndMemberTable">
         CREATE TABLE and_member_1111 (

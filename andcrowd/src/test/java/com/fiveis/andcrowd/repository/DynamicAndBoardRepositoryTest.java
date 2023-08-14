@@ -17,16 +17,16 @@ public class DynamicAndBoardRepositoryTest {
     @Autowired
     private DynamicAndBoardRepository dynamicAndBoardRepository;
 
-    //@BeforeEach
-    //public void setUpAndBoardTable() {
-        //dynamicAndBoardRepository.createAndTestBoardTable();
-        //dynamicAndBoardRepository.insertTestData();
-    //}
+    @BeforeEach
+    public void setUpAndBoardTable() {
+        dynamicAndBoardRepository.createAndTestBoardTable();
+        dynamicAndBoardRepository.insertTestData();
+    }
 
-    //@AfterEach
-    //public void dropAndBoardTable() {
-        //dynamicAndBoardRepository.dropAndBoardTable();
-    //}
+    @AfterEach
+    public void dropAndBoardTable() {
+        dynamicAndBoardRepository.dropAndBoardTable();
+    }
 
     @Test
     @DisplayName("R: findAll를 통해 전체 글 조회")
