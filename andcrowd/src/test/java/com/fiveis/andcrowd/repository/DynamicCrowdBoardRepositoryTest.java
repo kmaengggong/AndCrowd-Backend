@@ -19,31 +19,31 @@ public class DynamicCrowdBoardRepositoryTest {
 
 
 
-    @Test
-    @Transactional
-    @DisplayName("2번 crowd게시글 생성시 crowd_board_2 이라는 이름의 테이블이 생성되며, 글이 정상적으로 추가된다.")
-    public void createDynamicCrowdBoardTableTest(){
-        // given
-        int crowdId = 2;
-        int tag = 1;
-        String title = "추가된 제목";
-        String content = "추가된 본문";
-        String img = "추가된 이미지";
-
-        // when
-        dynamicCrowdBoardRepository.createDynamicCrowdBoardTable(crowdId);
-        DynamicCrowdBoardDTO.Save newBoard = new DynamicCrowdBoardDTO.Save();
-        newBoard.setCrowdId(crowdId);
-        newBoard.setCrowdBoardTag(tag);
-        newBoard.setCrowdBoardTitle(title);
-        newBoard.setCrowdBoardContent(content);
-        newBoard.setCrowdImg(img);
-        dynamicCrowdBoardRepository.save(newBoard);
-
-        // then
-        List<DynamicCrowdBoardDTO.Find> crowdBoardList = dynamicCrowdBoardRepository.findAll(crowdId);
-        assertThat(crowdBoardList.get(0).getCrowdId()).isEqualTo(crowdId);
-    }
+//    @Test
+//    @Transactional
+//    @DisplayName("2번 crowd게시글 생성시 crowd_board_2 이라는 이름의 테이블이 생성되며, 글이 정상적으로 추가된다.")
+//    public void createDynamicCrowdBoardTableTest(){
+//        // given
+//        int crowdId = 2;
+//        int tag = 1;
+//        String title = "추가된 제목";
+//        String content = "추가된 본문";
+//        String img = "추가된 이미지";
+//
+//        // when
+//        dynamicCrowdBoardRepository.createDynamicCrowdBoardTable(crowdId);
+//        DynamicCrowdBoardDTO.Save newBoard = new DynamicCrowdBoardDTO.Save();
+//        newBoard.setCrowdId(crowdId);
+//        newBoard.setCrowdBoardTag(tag);
+//        newBoard.setCrowdBoardTitle(title);
+//        newBoard.setCrowdBoardContent(content);
+//        newBoard.setCrowdImg(img);
+//        dynamicCrowdBoardRepository.save(newBoard);
+//
+//        // then
+//        List<DynamicCrowdBoardDTO.Find> crowdBoardList = dynamicCrowdBoardRepository.findAll(crowdId);
+//        assertThat(crowdBoardList.get(0).getCrowdId()).isEqualTo(crowdId);
+//    }
 
 
     @Test

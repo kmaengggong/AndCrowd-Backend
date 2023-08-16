@@ -14,6 +14,7 @@ public class DynamicSponsorDTO { // find(findAll, findById), Update
         private int sponsorId;
         private int crowdId;
         private int purchaseId;
+        private boolean isDeleted;
     }
 
     @Getter @Setter

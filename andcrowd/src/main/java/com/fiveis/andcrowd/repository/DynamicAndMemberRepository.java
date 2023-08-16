@@ -11,14 +11,13 @@ public interface DynamicAndMemberRepository {
 
     void save(DynamicAndMemberDTO.Update dynamicAndMemberDTOUpdate);
 
-    DynamicAndMemberDTO.FindByMemberId findById(@Param("memberId") int memberId);
+    DynamicAndMemberDTO.FindByAndMemberId findByAndMemberId(@Param("andId") int andId, @Param("memberId") int memberId);
 
-    List<DynamicAndMemberDTO.FindByMemberId> findAll();
+    List<DynamicAndMemberDTO.FindByAndMemberId> findAll(int andId);
 
-    void deleteById(@Param("memberId") int memberId);
+    void deleteById(@Param("andId") int andId, @Param("memberId") int memberId);
 
     void createAndMemberTable ();
     void dropAndMemberTable();
-
     void insertTestData();
 }
