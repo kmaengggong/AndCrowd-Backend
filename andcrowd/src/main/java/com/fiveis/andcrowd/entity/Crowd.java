@@ -45,7 +45,7 @@ public class Crowd {
     private String crowdImg5;
 
     @ColumnDefault("0")
-    private int crowdStatus;
+    private int crowdStatus; // 1:펀딩중, 2:반려, 3:종료, 0:심사중
 
     @Column(nullable = false)
     private String crowdTitle;

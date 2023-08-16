@@ -20,4 +20,6 @@ public class DynamicReward { // 리워드 카테고리
     private int rewardAmount;
 
     private int rewardLimit;
+
+    private boolean isDeleted;
 }
