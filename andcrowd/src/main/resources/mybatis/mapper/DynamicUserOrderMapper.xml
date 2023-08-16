@@ -3,7 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.fiveis.andcrowd.repository.DynamicUserOrderRepository">
+<mapper namespace="com.fiveis.andcrowd.repository.user.DynamicUserOrderRepository">
     <update id="createDynamicUserOrderTable">
         CREATE
         TABLE IF NOT EXISTS user_order_${userEmail}(

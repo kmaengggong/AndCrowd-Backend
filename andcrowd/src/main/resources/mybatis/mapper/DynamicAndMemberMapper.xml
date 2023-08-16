@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.fiveis.andcrowd.repository.DynamicAndMemberRepository">
+<mapper namespace="com.fiveis.andcrowd.repository.and.DynamicAndMemberRepository">
 
-    <insert id="save" parameterType="com.fiveis.andcrowd.dto.DynamicAndMemberDTO$Update">
+    <insert id="save" parameterType="com.fiveis.andcrowd.dto.and.DynamicAndMemberDTO$Update">
         INSERT INTO and_member_#{andId} (
             and_id, user_id, is_deleted
         )
@@ -12,7 +12,7 @@
                )
     </insert>
 
-    <select id="findByAndMemberId" parameterType="int" resultType="com.fiveis.andcrowd.dto.DynamicAndMemberDTO$FindByAndMemberId">
+    <select id="findByAndMemberId" parameterType="int" resultType="com.fiveis.andcrowd.dto.and.DynamicAndMemberDTO$FindByAndMemberId">
         SELECT
             member_id AS MemberId,
             and_id AS andId,
@@ -21,7 +21,7 @@
         FROM and_member_#{andId} WHERE member_id = #{memberId}
     </select>
 
-    <select id="findAll" resultType="com.fiveis.andcrowd.dto.DynamicAndMemberDTO$FindByAndMemberId">
+    <select id="findAll" resultType="com.fiveis.andcrowd.dto.and.DynamicAndMemberDTO$FindByAndMemberId">
         SELECT * FROM and_member_#{andId}
     </select>
 

@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.fiveis.andcrowd.repository.DynamicAndQnaRepository">
+<mapper namespace="com.fiveis.andcrowd.repository.and.DynamicAndQnaRepository">
 
     <select id="findAll" resultType="com.fiveis.andcrowd.dto.and.DynamicAndQnaDTO$FindById">
         SELECT and_qna_id AS andQnaId,
