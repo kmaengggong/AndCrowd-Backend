@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import java.util.List;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
@@ -119,8 +120,9 @@ public class DynamicAndBoardRepositoryTest {
 
         // when
         dynamicAndBoardRepository.deleteByAndBoardId(andId, andBoardId);
+        DynamicAndBoardDTO.FindById andBoard = dynamicAndBoardRepository.findByAndBoardId(andId, andBoardId);
 
         // then
-        assertNull(dynamicAndBoardRepository.findByAndBoardId(andId, andBoardId));
+        assertThat(andBoard.isDeleted()).isTrue();
     }
 }

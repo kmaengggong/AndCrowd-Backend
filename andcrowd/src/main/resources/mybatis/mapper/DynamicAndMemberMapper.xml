@@ -26,7 +26,12 @@
     </select>
 
     <delete id="deleteById" parameterType="int">
-        DELETE FROM and_member_#{andId} WHERE member_id = #{memberId}
+        UPDATE
+            and_member_#{andId}
+        SET
+            is_deleted = true
+        WHERE
+            member_id = #{memberId}
      </delete>
 
     <insert id="createAndMemberTable">

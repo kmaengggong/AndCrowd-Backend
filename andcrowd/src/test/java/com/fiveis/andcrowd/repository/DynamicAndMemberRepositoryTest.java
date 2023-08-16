@@ -9,6 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.List;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
@@ -93,8 +94,8 @@ public class DynamicAndMemberRepositoryTest {
 
         // when
         dynamicAndMemberRepository.deleteById(andId, memberId);
-
+        DynamicAndMemberDTO.FindByAndMemberId andMember = dynamicAndMemberRepository.findByAndMemberId(andId,memberId);
         // then
-        assertNull(dynamicAndMemberRepository.findByAndMemberId(andId, memberId));
+        assertThat(andMember.isDeleted()).isTrue();
     }
 }

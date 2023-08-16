@@ -20,10 +20,20 @@
         FROM and_board_#{andId} WHERE and_board_id = #{andBoardId}
     </select>
     <delete id="deleteByAndId" parameterType="int">
-        DELETE FROM and_board_#{andId} WHERE and_id = #{andId}
+        UPDATE
+            and_board_#{andId}
+        SET
+            is_deleted = true
+        WHERE
+            and_id = #{andId}
     </delete>
     <delete id="deleteByAndBoardId" parameterType="int">
-        DELETE FROM and_board_#{andId} WHERE and_board_id = #{andBoardId}
+        UPDATE
+            and_board_#{andId}
+        SET
+            is_deleted = true
+        WHERE
+            and_board_id = #{andBoardId}
     </delete>
     <insert id="save" parameterType="com.fiveis.andcrowd.dto.DynamicAndBoardDTO$Update">
         INSERT INTO and_board_#{andId} (
