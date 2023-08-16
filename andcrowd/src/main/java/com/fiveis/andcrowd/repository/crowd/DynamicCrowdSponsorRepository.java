@@ -7,7 +7,7 @@ import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
 @Mapper
-public interface DynamicSponsorRepository {
+public interface DynamicCrowdSponsorRepository {
 
     List<DynamicSponsorDTO.FindById> findAll(int crowdId);
 

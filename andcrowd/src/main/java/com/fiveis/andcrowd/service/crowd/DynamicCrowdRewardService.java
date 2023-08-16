@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public interface DynamicRewardService {
+public interface DynamicCrowdRewardService {
 
     List<DynamicRewardDTO.FindAllById> findAll(int crowdId);
 

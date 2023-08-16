@@ -7,7 +7,7 @@ import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
 @Mapper
-public interface DynamicRewardRepository {
+public interface DynamicCrowdRewardRepository {
 
     List<DynamicRewardDTO.FindAllById> findAll(int crowdId);
 

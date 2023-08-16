@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public interface DynamicSponsorService {
+public interface DynamicCrowdSponsorService {
 
     List<DynamicSponsorDTO.FindById> findAll(int crowdId);
 

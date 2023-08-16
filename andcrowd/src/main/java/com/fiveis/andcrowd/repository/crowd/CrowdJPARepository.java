@@ -3,6 +3,7 @@ package com.fiveis.andcrowd.repository.crowd;
 import com.fiveis.andcrowd.dto.crowd.CrowdDTO;
 import com.fiveis.andcrowd.entity.crowd.Crowd;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;

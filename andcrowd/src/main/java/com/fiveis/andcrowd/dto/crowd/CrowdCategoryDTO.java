@@ -15,7 +15,7 @@ public class CrowdCategoryDTO {
         private int crowdCategoryId;
         private String crowdCategoryName;
 
-        public static CrowdCategoryDTO.Find fromEntity(CrowdCategory crowdCategory) {
+        public static CrowdCategoryDTO.Find convertToCrowdCategoryFindDTO(CrowdCategory crowdCategory) {
             return CrowdCategoryDTO.Find.builder()
                     .crowdCategoryId(crowdCategory.getCrowdCategoryId())
                     .crowdCategoryName(crowdCategory.getCrowdCategoryName())
