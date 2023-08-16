@@ -73,14 +73,14 @@ public class UserDTO {
     }
 
     // Entity -> DTO Converter
-    public static UserDTO.FindAsPublic toFindAsPublicDTO(User user){
+    public static UserDTO.FindAsPublic convertToFindAsPublicDTO(User user){
         return UserDTO.FindAsPublic.builder()
                 .userNickname(user.getUserNickname())
                 .userProfileImg(user.getUserProfileImg())
                 .build();
     }
 
-    public static UserDTO.FindAsUser toFindAsUserDTO(User user){
+    public static UserDTO.FindAsUser convertToFindAsUserDTO(User user){
         return UserDTO.FindAsUser.builder()
                 .userEmail(user.getUserEmail())
                 .userPassword(user.getUserPassword())
@@ -93,7 +93,7 @@ public class UserDTO {
                 .build();
     }
 
-    public static UserDTO.FindAsAdmin toFindAsAdminDTO(User user){
+    public static UserDTO.FindAsAdmin convertToFindAsAdminDTO(User user){
         return UserDTO.FindAsAdmin.builder()
                 .userId(user.getUserId())
                 .userEmail(user.getUserEmail())
@@ -108,15 +108,6 @@ public class UserDTO {
                 .userPrivacy(user.getUserPrivacy())
                 .userMarketing(user.getUserMarketing())
                 .authority(user.getAuthority())
-                .build();
-    }
-
-    public static UserDTO.Update toUpdateDTO(User user){
-        return UserDTO.Update.builder()
-                .userPassword(user.getUserPassword())
-                .userNickname(user.getUserNickname())
-                .userPhone(user.getUserPhone())
-                .userProfileImg(user.getUserProfileImg())
                 .build();
     }
 }
