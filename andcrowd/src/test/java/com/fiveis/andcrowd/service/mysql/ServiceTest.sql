@@ -66,6 +66,7 @@ CREATE TABLE and_applicant_321 (
 	user_id INT NOT NULL ,
 	and_role_id INT NOT NULL ,
 	and_apply_content VARCHAR(2000) NOT NULL ,
+    and_apply_status INT default 0,
 	is_deleted BOOL default false
 );    
 

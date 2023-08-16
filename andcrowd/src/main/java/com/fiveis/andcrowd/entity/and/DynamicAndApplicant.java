@@ -19,5 +19,7 @@ public class DynamicAndApplicant {
 
     private String applyContent;
 
+    private int andApplyStatus;
+
     private boolean isDeleted;
 }

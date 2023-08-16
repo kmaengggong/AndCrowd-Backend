@@ -9,6 +9,7 @@ import org.hibernate.annotations.DynamicInsert;
 import java.time.LocalDateTime;
 
 @Getter
+@Setter
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
