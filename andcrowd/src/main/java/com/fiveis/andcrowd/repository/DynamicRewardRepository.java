@@ -15,7 +15,6 @@ public interface DynamicRewardRepository {
 
     List<DynamicRewardDTO.FindAllById> findByUserId(@Param("crowd_id") int crowdId, @Param("user_id") int userId);
 
-
     void save(DynamicRewardDTO.Update dynamicRewardInsertDTO);
 
     void update(DynamicRewardDTO.Update dynamicRewardUpdateDTO);

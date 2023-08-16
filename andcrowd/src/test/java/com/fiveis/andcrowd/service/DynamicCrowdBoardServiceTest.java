@@ -93,7 +93,7 @@ public class DynamicCrowdBoardServiceTest {
 
     @Test
     @Transactional
-    @DisplayName("추가된 글의 crowdBoardId는 7번일것이다. 전체 데이터의 첫번째 인덱스의 각요소들은 입력한 데이터와 일치할 것이다.")
+    @DisplayName("추가된 글의 데이터는. 전체 데이터의 첫번째 인덱스의 각요소들은 입력한 데이터와 일치할 것이다.")
     public void saveTest(){
         // given
         int crowdId = 1;

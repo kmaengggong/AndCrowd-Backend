@@ -1,8 +1,6 @@
 package com.fiveis.andcrowd.repository;
 
 import static org.junit.jupiter.api.Assertions.*;
-
-import com.fiveis.andcrowd.repository.AndDynamicRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -92,6 +90,21 @@ public class AndDynamicRepositoryTest {
     private boolean checkApplyTableExists(String tableName) {
         // 직접 mysql에서 확인
         return true;
+    }
+
+    @Test
+    @Transactional
+    public void testCreateDynamicAndBoardTable() {
+        // Given
+        int andId = 1;
+        String tableName = "and_Board_" + andId;
+
+        // When
+        andDynamicRepository.createDynamicAndBoardTable(andId);
+
+        // Then
+        boolean tableExists = checkTableExists(tableName);
+        assertTrue(tableExists, "Table " + tableName + " should exist in the database.");
     }
 
 }

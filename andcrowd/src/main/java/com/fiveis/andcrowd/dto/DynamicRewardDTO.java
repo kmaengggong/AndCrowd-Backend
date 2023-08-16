@@ -14,6 +14,7 @@ public class DynamicRewardDTO { // FindAllByUserId, update, save, delete
         private String rewardContent;
         private int rewardAmount;
         private int rewardLimit;
+        private boolean isDeleted;
     }
 
     @Getter @Setter

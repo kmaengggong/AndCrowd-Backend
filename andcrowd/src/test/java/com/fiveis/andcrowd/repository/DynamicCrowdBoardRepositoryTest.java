@@ -6,10 +6,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
@@ -33,8 +29,7 @@ public class DynamicCrowdBoardRepositoryTest {
 //        String title = "추가된 제목";
 //        String content = "추가된 본문";
 //        String img = "추가된 이미지";
-//        Integer pageNumber = 1;
-//        Pageable pageable = (Pageable) PageRequest.of((pageNumber - 1), 5, Sort.by("crowdBoardId").descending());
+//
 //        // when
 //        dynamicCrowdBoardRepository.createDynamicCrowdBoardTable(crowdId);
 //        DynamicCrowdBoardDTO.Save newBoard = new DynamicCrowdBoardDTO.Save();
@@ -46,8 +41,8 @@ public class DynamicCrowdBoardRepositoryTest {
 //        dynamicCrowdBoardRepository.save(newBoard);
 //
 //        // then
-//        Page<DynamicCrowdBoardDTO.Find> crowdBoardList = dynamicCrowdBoardRepository.findAll(crowdId, pageable);
-//        assertThat(crowdBoardList.getContent().get(0).getCrowdId()).isEqualTo(crowdId);
+//        List<DynamicCrowdBoardDTO.Find> crowdBoardList = dynamicCrowdBoardRepository.findAll(crowdId);
+//        assertThat(crowdBoardList.get(0).getCrowdId()).isEqualTo(crowdId);
 //    }
 
 
@@ -58,14 +53,12 @@ public class DynamicCrowdBoardRepositoryTest {
 
         // given
         int crowdId = 1;
-        Integer pageNumber = 1;
-        Pageable pageable = (Pageable) PageRequest.of((pageNumber - 1), 5, Sort.by("crowdBoardId").descending());
 
         // when
-        Page<DynamicCrowdBoardDTO.Find> crowdBoardList = dynamicCrowdBoardRepository.findAll(crowdId, pageable);
+        List<DynamicCrowdBoardDTO.Find> crowdBoardList = dynamicCrowdBoardRepository.findAll(crowdId);
 
         // then
-        assertThat(crowdBoardList.getContent().size()).isEqualTo(3);
+        assertThat(crowdBoardList.size()).isEqualTo(3);
     }
 
     @Test
@@ -114,12 +107,10 @@ public class DynamicCrowdBoardRepositoryTest {
         newBoard.setCrowdBoardContent(content);
         newBoard.setCrowdImg(img);
         dynamicCrowdBoardRepository.save(newBoard);
-        Integer pageNumber = 2;
-        Pageable pageable = (Pageable) PageRequest.of((pageNumber - 1), 5, Sort.by("crowdBoardId").descending());
 
-        Page<DynamicCrowdBoardDTO.Find> crowdBoardList = dynamicCrowdBoardRepository.findAll(crowdId, pageable);
+        List<DynamicCrowdBoardDTO.Find> crowdBoardList = dynamicCrowdBoardRepository.findAll(crowdId);
 
-        DynamicCrowdBoardDTO.Find crowdBoard = crowdBoardList.getContent().get(0);
+        DynamicCrowdBoardDTO.Find crowdBoard = crowdBoardList.get(0);
 
         // then
         assertThat(title).isEqualTo(crowdBoard.getCrowdBoardTitle());
@@ -153,12 +144,10 @@ public class DynamicCrowdBoardRepositoryTest {
         newBoard.setCrowdImg(img);
         newBoard.setCrowdBoardId(crowdBoardId);
         dynamicCrowdBoardRepository.update(newBoard);
-        Integer pageNumber = 2;
-        Pageable pageable = (Pageable) PageRequest.of((pageNumber - 1), 5, Sort.by("crowdBoardId").descending());
 
-        Page<DynamicCrowdBoardDTO.Find> crowdBoardList = dynamicCrowdBoardRepository.findAll(crowdId, pageable);
+        List<DynamicCrowdBoardDTO.Find> crowdBoardList = dynamicCrowdBoardRepository.findAll(crowdId);
 
-        DynamicCrowdBoardDTO.Find crowdBoard = crowdBoardList.getContent().get(1);
+        DynamicCrowdBoardDTO.Find crowdBoard = crowdBoardList.get(1);
 
         // then
         assertThat(title).isEqualTo(crowdBoard.getCrowdBoardTitle());

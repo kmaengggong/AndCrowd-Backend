@@ -14,4 +14,6 @@ public class DynamicSponsor { // 크라우드 후원자
     private int crowdId;
 
     private int purchaseId;
+
+    private boolean isDeleted;
 }

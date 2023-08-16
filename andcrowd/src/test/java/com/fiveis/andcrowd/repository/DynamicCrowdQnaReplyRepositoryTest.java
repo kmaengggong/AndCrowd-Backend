@@ -12,7 +12,7 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
-public class DynamicCrowdQnaRepositoryReplyTest {
+public class DynamicCrowdQnaReplyRepositoryTest {
 
     @Autowired
     DynamicCrowdQnaReplyRepository dynamicCrowdQnaReplyRepository;
