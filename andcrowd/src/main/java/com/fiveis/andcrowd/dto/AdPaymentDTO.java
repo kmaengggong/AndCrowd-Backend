@@ -1,5 +1,6 @@
 package com.fiveis.andcrowd.dto;
 
+import com.fiveis.andcrowd.entity.AdPayment;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -32,5 +33,17 @@ public class AdPaymentDTO {
         private int adPaymentId;
         private LocalDateTime expiredAt;
         private int adPaymentStatus;
+    }
+
+    public static AdPaymentDTO.Find converToAdPaymentDTOFind(AdPayment adPayment){
+        return AdPaymentDTO.Find.builder()
+                .adPaymentId(adPayment.getAdPaymentId())
+                .userId(adPayment.getUserId())
+                .projectId(adPayment.getProjectId())
+                .projectType(adPayment.getProjectId())
+                .purchasedAt(adPayment.getPurchasedAt())
+                .expiredAt(adPayment.getExpiredAt())
+                .adPaymentStatus(adPayment.getAdPaymentStatus())
+                .build();
     }
 }

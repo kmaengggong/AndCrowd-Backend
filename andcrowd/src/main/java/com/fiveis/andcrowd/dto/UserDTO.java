@@ -1,5 +1,6 @@
 package com.fiveis.andcrowd.dto;
 
+import com.fiveis.andcrowd.entity.User;
 import com.fiveis.andcrowd.enums.Authority;
 import lombok.*;
 
@@ -69,5 +70,53 @@ public class UserDTO {
         private String userNickname;
         private String userPhone;
         private String userProfileImg;
+    }
+
+    // Entity -> DTO Converter
+    public static UserDTO.FindAsPublic toFindAsPublicDTO(User user){
+        return UserDTO.FindAsPublic.builder()
+                .userNickname(user.getUserNickname())
+                .userProfileImg(user.getUserProfileImg())
+                .build();
+    }
+
+    public static UserDTO.FindAsUser toFindAsUserDTO(User user){
+        return UserDTO.FindAsUser.builder()
+                .userEmail(user.getUserEmail())
+                .userPassword(user.getUserPassword())
+                .userKorName(user.getUserKorName())
+                .userNickname(user.getUserNickname())
+                .userPhone(user.getUserPhone())
+                .userProfileImg(user.getUserProfileImg())
+                .userBirth(user.getUserBirth())
+                .userRegister(user.getUserRegister())
+                .build();
+    }
+
+    public static UserDTO.FindAsAdmin toFindAsAdminDTO(User user){
+        return UserDTO.FindAsAdmin.builder()
+                .userId(user.getUserId())
+                .userEmail(user.getUserEmail())
+                .userPassword(user.getUserPassword())
+                .userKorName(user.getUserKorName())
+                .userNickname(user.getUserNickname())
+                .userPhone(user.getUserPhone())
+                .userProfileImg(user.getUserProfileImg())
+                .userBirth(user.getUserBirth())
+                .userRegister(user.getUserRegister())
+                .userTos(user.getUserTos())
+                .userPrivacy(user.getUserPrivacy())
+                .userMarketing(user.getUserMarketing())
+                .authority(user.getAuthority())
+                .build();
+    }
+
+    public static UserDTO.Update toUpdateDTO(User user){
+        return UserDTO.Update.builder()
+                .userPassword(user.getUserPassword())
+                .userNickname(user.getUserNickname())
+                .userPhone(user.getUserPhone())
+                .userProfileImg(user.getUserProfileImg())
+                .build();
     }
 }

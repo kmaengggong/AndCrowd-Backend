@@ -1,5 +1,6 @@
 package com.fiveis.andcrowd.dto;
 
+import com.fiveis.andcrowd.entity.Ad;
 import lombok.*;
 
 public class AdDTO {
@@ -25,5 +26,13 @@ public class AdDTO {
         private int adId;
         private String adName;
         private int adPrice;
+    }
+
+    public static AdDTO.Find convertToAdDTOFind(Ad ad){
+        return AdDTO.Find.builder()
+                .adId(ad.getAdId())
+                .adName(ad.getAdName())
+                .adPrice(ad.getAdPrice())
+                .build();
     }
 }

@@ -1,6 +1,5 @@
 package com.fiveis.andcrowd.entity;
 
-import com.fiveis.andcrowd.dto.UserDTO;
 import com.fiveis.andcrowd.enums.Authority;
 import jakarta.persistence.*;
 import lombok.*;
@@ -94,55 +93,6 @@ public class User implements UserDetails {
     }
     public void setUserProfileImg(String userProfileImg){
         this.userProfileImg = userProfileImg;
-    }
-
-    // Entity -> DTO Converter
-    public UserDTO.FindAsPublic toFindAsPublicDTO(){
-        return UserDTO.FindAsPublic.builder()
-                .userNickname(this.userNickname)
-                .userProfileImg(this.userProfileImg)
-                .userProfileImg(this.userProfileImg)
-                .build();
-    }
-
-    public UserDTO.FindAsUser toFindAsUserDTO(){
-        return UserDTO.FindAsUser.builder()
-                .userEmail(this.userEmail)
-                .userPassword(this.userPassword)
-                .userKorName(this.userKorName)
-                .userNickname(this.userNickname)
-                .userPhone(this.userPhone)
-                .userProfileImg(this.userProfileImg)
-                .userBirth(this.userBirth)
-                .userRegister(this.userRegister)
-                .build();
-    }
-
-    public UserDTO.FindAsAdmin toFindAsAdminDTO(){
-        return UserDTO.FindAsAdmin.builder()
-                .userId(this.userId)
-                .userEmail(this.userEmail)
-                .userPassword(this.userPassword)
-                .userKorName(this.userKorName)
-                .userNickname(this.userNickname)
-                .userPhone(this.userPhone)
-                .userProfileImg(this.userProfileImg)
-                .userBirth(this.userBirth)
-                .userRegister(this.userRegister)
-                .userTos(this.userTos)
-                .userPrivacy(this.userPrivacy)
-                .userMarketing(this.userMarketing)
-                .authority(this.authority)
-                .build();
-    }
-
-    public UserDTO.Update toUpdateDTO(){
-        return UserDTO.Update.builder()
-                .userPassword(this.userPassword)
-                .userNickname(this.userNickname)
-                .userPhone(this.userPhone)
-                .userProfileImg(this.userProfileImg)
-                .build();
     }
 
     // For UserDetails

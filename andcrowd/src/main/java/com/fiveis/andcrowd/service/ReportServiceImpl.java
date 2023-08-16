@@ -23,7 +23,7 @@ public class ReportServiceImpl implements ReportService{
         List<Report> reportList = reportJPARepository.findAll();
         List<ReportDTO.Find> findList = new ArrayList<>();
         for(Report report : reportList){
-            findList.add(convertToReportDTOFind(report));
+            findList.add(ReportDTO.convertToReportDTOFind(report));
         }
         return findList;
     }
@@ -31,7 +31,7 @@ public class ReportServiceImpl implements ReportService{
     @Override
     public ReportDTO.Find findById(int reportId) {
         if(reportJPARepository.findById(reportId).isEmpty()) return null;
-        return convertToReportDTOFind(reportJPARepository.findById(reportId).get());
+        return ReportDTO.convertToReportDTOFind(reportJPARepository.findById(reportId).get());
     }
 
     @Override
@@ -49,17 +49,5 @@ public class ReportServiceImpl implements ReportService{
     @Override
     public void deleteById(int reportId) {
         reportJPARepository.deleteById(reportId);
-    }
-
-    private static ReportDTO.Find convertToReportDTOFind(Report report){
-        return ReportDTO.Find.builder()
-                .reportId(report.getReportId())
-                .userId(report.getUserId())
-                .projectId(report.getProjectId())
-                .projectType(report.getProjectType())
-                .reportContent(report.getReportContent())
-                .reportDate(report.getReportDate())
-                .reportStatus(report.getReportStatus())
-                .build();
     }
 }

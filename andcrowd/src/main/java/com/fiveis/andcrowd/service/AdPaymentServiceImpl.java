@@ -23,7 +23,7 @@ public class AdPaymentServiceImpl implements AdPaymentService{
         List<AdPayment> adPaymentList = adPaymentJPARepository.findAll();
         List<AdPaymentDTO.Find> findList = new ArrayList<>();
         for(AdPayment adPayment : adPaymentList){
-            findList.add(converToAdPaymentDTOFind(adPayment));
+            findList.add(AdPaymentDTO.converToAdPaymentDTOFind(adPayment));
         }
         return findList;
     }
@@ -31,7 +31,7 @@ public class AdPaymentServiceImpl implements AdPaymentService{
     @Override
     public AdPaymentDTO.Find findById(int adPaymentId) {
         if(adPaymentJPARepository.findById(adPaymentId).isEmpty()) return null;
-        return converToAdPaymentDTOFind(adPaymentJPARepository.findById(adPaymentId).get());
+        return AdPaymentDTO.converToAdPaymentDTOFind(adPaymentJPARepository.findById(adPaymentId).get());
     }
 
     @Override
@@ -53,17 +53,5 @@ public class AdPaymentServiceImpl implements AdPaymentService{
     @Override
     public void deleteById(int adPaymentId) {
         adPaymentJPARepository.deleteById(adPaymentId);
-    }
-
-    private static AdPaymentDTO.Find converToAdPaymentDTOFind(AdPayment adPayment){
-        return AdPaymentDTO.Find.builder()
-                .adPaymentId(adPayment.getAdPaymentId())
-                .userId(adPayment.getUserId())
-                .projectId(adPayment.getProjectId())
-                .projectType(adPayment.getProjectId())
-                .purchasedAt(adPayment.getPurchasedAt())
-                .expiredAt(adPayment.getExpiredAt())
-                .adPaymentStatus(adPayment.getAdPaymentStatus())
-                .build();
     }
 }

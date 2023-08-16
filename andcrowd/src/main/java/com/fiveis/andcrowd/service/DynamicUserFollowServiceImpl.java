@@ -27,7 +27,7 @@ public class DynamicUserFollowServiceImpl implements DynamicUserFollowService{
         List<DynamicUserFollowDTO.Find> findList = dynamicUserFollowRepository.findAll(userEmail);
         List<UserDTO.FindAsPublic> userList = new ArrayList<>();
         for(DynamicUserFollowDTO.Find find : findList){
-            userList.add(userJPARepository.findById(find.getUserId()).get().toFindAsPublicDTO());
+            userList.add(UserDTO.toFindAsPublicDTO(userJPARepository.findById(find.getUserId()).get()));
         }
         return userList;
     }

@@ -23,7 +23,7 @@ public class AdServiceImpl implements AdService{
         List<Ad> adList = adJPARepository.findAll();
         List<AdDTO.Find> findList = new ArrayList<>();
         for(Ad ad : adList){
-            findList.add(convertToAdDTOFind(ad));
+            findList.add(AdDTO.convertToAdDTOFind(ad));
         }
         return findList;
     }
@@ -31,7 +31,7 @@ public class AdServiceImpl implements AdService{
     @Override
     public AdDTO.Find findById(int adId) {
         if(adJPARepository.findById(adId).isEmpty()) return null;
-        return convertToAdDTOFind(adJPARepository.findById(adId).get());
+        return AdDTO.convertToAdDTOFind(adJPARepository.findById(adId).get());
     }
 
     @Override
@@ -54,11 +54,5 @@ public class AdServiceImpl implements AdService{
         adJPARepository.deleteById(adId);
     }
 
-    private static AdDTO.Find convertToAdDTOFind(Ad ad){
-        return AdDTO.Find.builder()
-                .adId(ad.getAdId())
-                .adName(ad.getAdName())
-                .adPrice(ad.getAdPrice())
-                .build();
-    }
+
 }
