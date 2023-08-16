@@ -2,6 +2,8 @@ package com.fiveis.andcrowd.service;
 
 import com.fiveis.andcrowd.dto.DynamicUserMakerDTO;
 import com.fiveis.andcrowd.dto.ProjectDTO;
+import com.fiveis.andcrowd.entity.And;
+import com.fiveis.andcrowd.entity.Crowd;
 import com.fiveis.andcrowd.entity.DynamicUserMaker;
 import com.fiveis.andcrowd.repository.AndJPARepository;
 import com.fiveis.andcrowd.repository.CrowdJPARepository;
@@ -30,30 +32,33 @@ public class DynamicUserMakerServiceImpl implements DynamicUserMakerService{
     public List<ProjectDTO.Find> findAll(String userEmail){
         List<DynamicUserMakerDTO.Find> findList = dynamicUserMakerRepository.findAll(userEmail);
         List<ProjectDTO.Find> projectList = new ArrayList<>();
-//        for(DynamicUserMakerDTO.Find find : findList){
-//                // 모임
-//            if(find.getProjectType() == 0){
-//                AndDTO.FindById andFind = andJPARepository.findById(find.getProjectId()).get();
-//                ProjectDTO.Find projectFind = ProjectDTO.Find.builder()
-//                        .projectId(andFind.getAndId())
-//                        .projectType(1)
-//                        .projectHeaderImg(andFind.getHeaderImg())
-//                        .projectTitle(andFind.getCrowdTitle())
-//                        .build();
-//            }
-//            // 펀딩
-//            else{
-//                CrowdDTO.FindById crowdFind = crowdJPARepository.findById(find.getProjectId()).get();
-//                ProjectDTO.Find projectFind = ProjectDTO.Find.builder()
-//                        .projectId(crowdFind.getCrowdId())
-//                        .projectType(1)
-//                        .projectHeaderImg(crowdFind.getHeaderImg())
-//                        .projectTitle(crowdFind.getCrowdTitle())
-//                        .build();
-//            }
-//        }
-//        return projectList;
-        return null;
+        for(DynamicUserMakerDTO.Find find : findList){
+            // 모임
+            if(find.getProjectType() == 0){
+                if(andJPARepository.findById(find.getProjectId()).isEmpty()) continue;
+                And and = andJPARepository.findById(find.getProjectId()).get();
+                ProjectDTO.Find projectFind = ProjectDTO.Find.builder()
+                        .projectId(and.getAndId())
+                        .projectType(1)
+                        .projectHeaderImg(and.getAndHeaderImg())
+                        .projectTitle(and.getAndTitle())
+                        .build();
+                projectList.add(projectFind);
+            }
+            // 펀딩
+            else{
+                if(crowdJPARepository.findById(find.getProjectId()).isEmpty()) continue;
+                Crowd crowd = crowdJPARepository.findById(find.getProjectId()).get();
+                ProjectDTO.Find projectFind = ProjectDTO.Find.builder()
+                        .projectId(crowd.getCrowdId())
+                        .projectType(1)
+                        .projectHeaderImg(crowd.getHeaderImg())
+                        .projectTitle(crowd.getCrowdTitle())
+                        .build();
+                projectList.add(projectFind);
+            }
+        }
+        return projectList;
     }
 
     public DynamicUserMakerDTO.Find findById(String userEmail, int uMakerId){

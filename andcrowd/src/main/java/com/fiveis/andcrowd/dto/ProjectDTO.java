@@ -12,7 +12,7 @@ public class ProjectDTO {
     public static class Find{
         private int projectId;
         private int projectType;
-        private int projectHeaderImg;
-        private int projectTitle;
+        private String projectHeaderImg;
+        private String projectTitle;
     }
 }

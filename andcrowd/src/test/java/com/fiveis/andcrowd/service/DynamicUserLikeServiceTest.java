@@ -1,6 +1,7 @@
 package com.fiveis.andcrowd.service;
 
 import com.fiveis.andcrowd.dto.DynamicUserLikeDTO;
+import com.fiveis.andcrowd.dto.ProjectDTO;
 import com.fiveis.andcrowd.entity.DynamicUserLike;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Assertions;
@@ -23,8 +24,10 @@ public class DynamicUserLikeServiceTest {
     @DisplayName("R")
     public void findAllTest() {
         // Given
+
+
         // When
-        List<?> findList = dynamicUserLikeService.findAll(userEmail);
+        List<ProjectDTO.Find> findList = dynamicUserLikeService.findAll(userEmail);
 
         // Then
 //        Assertions.assertTrue(findList.isEmpty());

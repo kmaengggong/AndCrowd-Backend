@@ -3,32 +3,33 @@ package com.fiveis.andcrowd.service;
 import com.fiveis.andcrowd.dto.DynamicUserOrderDTO;
 import com.fiveis.andcrowd.entity.CrowdOrderDetails;
 import com.fiveis.andcrowd.entity.DynamicUserOrder;
+import com.fiveis.andcrowd.repository.CrowdOrderDetailsJPARepository;
 import com.fiveis.andcrowd.repository.DynamicUserOrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class DynamicUserOrderServiceImpl implements DynamicUserOrderService{
     private static DynamicUserOrderRepository dynamicUserOrderRepository;
-//    private static CrowdOrderDetailsReposiory crowdORderDetailsReposiory;
+    private static CrowdOrderDetailsJPARepository crowdOrderDetailsJPARepository;
 
     @Autowired
-    public DynamicUserOrderServiceImpl(DynamicUserOrderRepository dynamicUserOrderRepository){//,
-//                                       CrowdOrderDetailsReposiory crowdORderDetailsReposiory){
+    public DynamicUserOrderServiceImpl(DynamicUserOrderRepository dynamicUserOrderRepository,
+                                       CrowdOrderDetailsJPARepository crowdOrderDetailsJPARepository){
         this.dynamicUserOrderRepository = dynamicUserOrderRepository;
-        //this.crowdOrderDetailsReposiory = crowdORderDetailsReposiory;
+        this.crowdOrderDetailsJPARepository = crowdOrderDetailsJPARepository;
     }
 
     public List<CrowdOrderDetails> findAll(String userEmail){
         List<DynamicUserOrderDTO.Find> findList = dynamicUserOrderRepository.findAll(userEmail);
-//        List<CrowdOrderDetails> orderList = new ArrayList<>();
-//        for(DynamicUserOrderDTO.Find find : findList){
-//            orderList.add(crowdOrderDetailsJPARepository.findById(find.getOrderId()).get());
-//        }
-//        return orderList;
-        return null;
+        List<CrowdOrderDetails> orderList = new ArrayList<>();
+        for(DynamicUserOrderDTO.Find find : findList){
+            orderList.add(crowdOrderDetailsJPARepository.findById(find.getOrderId()).get());
+        }
+        return orderList;
     }
 
     public DynamicUserOrderDTO.Find findById(String userEmail, int uOrderId){

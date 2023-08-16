@@ -1,7 +1,11 @@
 package com.fiveis.andcrowd.service;
 
+import com.fiveis.andcrowd.dto.AndDTO;
+import com.fiveis.andcrowd.dto.CrowdDTO;
 import com.fiveis.andcrowd.dto.DynamicUserLikeDTO;
 import com.fiveis.andcrowd.dto.ProjectDTO;
+import com.fiveis.andcrowd.entity.And;
+import com.fiveis.andcrowd.entity.Crowd;
 import com.fiveis.andcrowd.entity.DynamicUserLike;
 import com.fiveis.andcrowd.repository.AndJPARepository;
 import com.fiveis.andcrowd.repository.CrowdJPARepository;
@@ -30,30 +34,33 @@ public class DynamicUserLikeServiceImpl implements DynamicUserLikeService{
     public List<ProjectDTO.Find> findAll(String userEmail){
         List<DynamicUserLikeDTO.Find> findList = dynamicUserLikeRepository.findAll(userEmail);
         List<ProjectDTO.Find> projectList = new ArrayList<>();
-//        for(DynamicUserLikeDTO.Find find : findList){
-//            // 모임
-//            if(find.getProjectType() == 0){
-//                AndDTO.FindById andFind = andJPARepository.findById(find.getProjectId()).get();
-//                ProjectDTO.Find projectFind = ProjectDTO.Find.builder()
-//                        .projectId(andFind.getAndId())
-//                        .projectType(1)
-//                        .projectHeaderImg(andFind.getHeaderImg())
-//                        .projectTitle(andFind.getCrowdTitle())
-//                        .build();
-//            }
-//            // 펀딩
-//            else{
-//                CrowdDTO.FindById crowdFind = crowdJPARepository.findById(find.getProjectId()).get();
-//                ProjectDTO.Find projectFind = ProjectDTO.Find.builder()
-//                        .projectId(crowdFind.getCrowdId())
-//                        .projectType(1)
-//                        .projectHeaderImg(crowdFind.getHeaderImg())
-//                        .projectTitle(crowdFind.getCrowdTitle())
-//                        .build();
-//            }
-//        }
-//        return projectList;
-        return null;
+        for(DynamicUserLikeDTO.Find find : findList){
+            // 모임
+            if(find.getProjectType() == 0){
+                if(andJPARepository.findById(find.getProjectId()).isEmpty()) continue;
+                And and = andJPARepository.findById(find.getProjectId()).get();
+                ProjectDTO.Find projectFind = ProjectDTO.Find.builder()
+                        .projectId(and.getAndId())
+                        .projectType(1)
+                        .projectHeaderImg(and.getAndHeaderImg())
+                        .projectTitle(and.getAndTitle())
+                        .build();
+                projectList.add(projectFind);
+            }
+            // 펀딩
+            else{
+                if(crowdJPARepository.findById(find.getProjectId()).isEmpty()) continue;
+                Crowd crowd = crowdJPARepository.findById(find.getProjectId()).get();
+                ProjectDTO.Find projectFind = ProjectDTO.Find.builder()
+                        .projectId(crowd.getCrowdId())
+                        .projectType(1)
+                        .projectHeaderImg(crowd.getHeaderImg())
+                        .projectTitle(crowd.getCrowdTitle())
+                        .build();
+                projectList.add(projectFind);
+            }
+        }
+        return projectList;
     }
 
     public DynamicUserLikeDTO.Find findById(String userEmail, int uLikeId){
