@@ -1,7 +1,5 @@
 package com.fiveis.andcrowd.dto;
 
-import com.fiveis.andcrowd.entity.Crowd;
-import com.fiveis.andcrowd.entity.DynamicReward;
 import lombok.*;
 
 public class DynamicRewardDTO { // FindAllByUserId, update, save, delete

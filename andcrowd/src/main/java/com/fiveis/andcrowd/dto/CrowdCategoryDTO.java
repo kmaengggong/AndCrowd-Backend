@@ -1,7 +1,6 @@
 package com.fiveis.andcrowd.dto;
 
 import com.fiveis.andcrowd.entity.CrowdCategory;
-import jakarta.persistence.Column;
 import lombok.*;
 
 public class CrowdCategoryDTO {

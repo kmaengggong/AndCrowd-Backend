@@ -1,7 +1,6 @@
 package com.fiveis.andcrowd.repository;
 
 import com.fiveis.andcrowd.AndcrowdApplication;
-import com.fiveis.andcrowd.dto.AndDTO;
 import com.fiveis.andcrowd.entity.And;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

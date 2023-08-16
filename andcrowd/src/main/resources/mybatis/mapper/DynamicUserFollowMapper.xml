@@ -12,7 +12,7 @@
         )
     </update>
 
-    <select id="findAll" resultType="com.fiveis.andcrowd.dto.DynamicUserFollowDTO$Find">
+    <select id="findAll" resultType="com.fiveis.andcrowd.dto.user.DynamicUserFollowDTO$Find">
         SELECT
             u_follow_id as uFollowId,
             user_id as userId
@@ -20,7 +20,7 @@
             user_follow_${userEmail}
     </select>
 
-    <select id="findById" resultType="com.fiveis.andcrowd.dto.DynamicUserFollowDTO$Find">
+    <select id="findById" resultType="com.fiveis.andcrowd.dto.user.DynamicUserFollowDTO$Find">
         SELECT
             u_follow_id as uFollowId,
             user_id as userId

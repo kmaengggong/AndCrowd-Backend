@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.fiveis.andcrowd.repository.DynamicAndQnaRepository">
 
-    <select id="findAll" resultType="com.fiveis.andcrowd.dto.DynamicAndQnaDTO$FindById">
+    <select id="findAll" resultType="com.fiveis.andcrowd.dto.and.DynamicAndQnaDTO$FindById">
         SELECT and_qna_id AS andQnaId,
                and_id AS andId,
                user_id AS userId,
@@ -17,7 +17,7 @@
         ORDER BY and_qna_id DESC
     </select>
 
-    <select id="findAllNotDeleted" resultType="com.fiveis.andcrowd.dto.DynamicAndQnaDTO$FindById">
+    <select id="findAllNotDeleted" resultType="com.fiveis.andcrowd.dto.and.DynamicAndQnaDTO$FindById">
         SELECT and_qna_id AS andQnaId,
                and_id AS andId,
                user_id AS userId,
@@ -30,7 +30,7 @@
         WHERE is_deleted = false
     </select>
 
-    <select id="findByAndQnaId" resultType="com.fiveis.andcrowd.dto.DynamicAndQnaDTO$FindById">
+    <select id="findByAndQnaId" resultType="com.fiveis.andcrowd.dto.and.DynamicAndQnaDTO$FindById">
         SELECT and_qna_id AS andQnaId,
                and_id AS andId,
                user_id AS userId,
@@ -44,12 +44,12 @@
     </select>
 
 <!-- ${andId}를 사용하여 SQL 쿼리의 동적인 부분을 변수로 대체할 때 자바 변수명과 일치하도록 andId로 작성해야 함 -->
-    <insert id="save" parameterType="com.fiveis.andcrowd.dto.DynamicAndQnaDTO$Update">
+    <insert id="save" parameterType="com.fiveis.andcrowd.dto.and.DynamicAndQnaDTO$Update">
         INSERT INTO and_qna_#{andId} (and_id, user_id, and_qna_title, and_qna_content, published_at, updated_at, is_deleted)
         VALUES (#{andId, jdbcType=INTEGER}, #{userId, jdbcType=INTEGER},  #{andQnaTitle, jdbcType=VARCHAR}, #{andQnaContent, jdbcType=VARCHAR}, #{publishedAt, jdbcType=TIMESTAMP}, #{updatedAt, jdbcType=TIMESTAMP}, #{isDeleted, jdbcType=BIT})
     </insert>
 
-    <update id="update" parameterType="com.fiveis.andcrowd.dto.DynamicAndQnaDTO$Update">
+    <update id="update" parameterType="com.fiveis.andcrowd.dto.and.DynamicAndQnaDTO$Update">
         UPDATE and_qna_#{andId}
         SET and_qna_title = #{andQnaTitle},
             and_qna_content = #{andQnaContent}, updated_at = #{updatedAt}, is_deleted = #{isDeleted}

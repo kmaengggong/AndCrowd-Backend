@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.fiveis.andcrowd.repository.DynamicAndQnaReplyRepository">
 
-    <select id="findAll" resultType="com.fiveis.andcrowd.dto.DynamicAndQnaReplyDTO$FindById">
+    <select id="findAll" resultType="com.fiveis.andcrowd.dto.and.DynamicAndQnaReplyDTO$FindById">
         SELECT
             and_reply_id AS andReplyId,
             and_qna_id AS andQnaId,
@@ -18,7 +18,7 @@
         ORDER BY and_reply_id DESC
     </select>
 
-    <select id="findAllNotDeleted" resultType="com.fiveis.andcrowd.dto.DynamicAndQnaReplyDTO$FindById">
+    <select id="findAllNotDeleted" resultType="com.fiveis.andcrowd.dto.and.DynamicAndQnaReplyDTO$FindById">
         SELECT
             and_reply_id AS andReplyId,
             and_qna_id AS andQnaId,
@@ -32,7 +32,7 @@
         WHERE is_deleted = false
     </select>
 
-    <select id="findAllByAndQnaId" resultType="com.fiveis.andcrowd.dto.DynamicAndQnaReplyDTO$FindById">
+    <select id="findAllByAndQnaId" resultType="com.fiveis.andcrowd.dto.and.DynamicAndQnaReplyDTO$FindById">
         SELECT
             and_reply_id AS andReplyId,
             and_qna_id AS andQnaId,
@@ -46,7 +46,7 @@
         WHERE and_qna_id = #{andQnaId}
     </select>
 
-    <select id="findByAndReplyId" resultType="com.fiveis.andcrowd.dto.DynamicAndQnaReplyDTO$FindById">
+    <select id="findByAndReplyId" resultType="com.fiveis.andcrowd.dto.and.DynamicAndQnaReplyDTO$FindById">
         SELECT
             and_reply_id AS andReplyId,
             and_qna_id AS andQnaId,
@@ -60,12 +60,12 @@
         WHERE and_reply_id = #{andReplyId}
     </select>
 
-    <insert id="save" parameterType="com.fiveis.andcrowd.dto.DynamicAndQnaReplyDTO$Update">
+    <insert id="save" parameterType="com.fiveis.andcrowd.dto.and.DynamicAndQnaReplyDTO$Update">
         INSERT INTO and_qna_reply_#{andId} (and_reply_id, and_qna_id, and_id, user_id, and_reply_content, published_at, updated_at, is_deleted)
         VALUES (#{andReplyId, jdbcType=INTEGER}, #{andQnaId, jdbcType=INTEGER}, #{andId, jdbcType=INTEGER}, #{userId, jdbcType=INTEGER}, #{andReplyContent, jdbcType=VARCHAR}, #{publishedAt, jdbcType=TIMESTAMP}, #{updatedAt, jdbcType=TIMESTAMP}, #{isDeleted, jdbcType=BIT})
     </insert>
 
-    <update id="update" parameterType="com.fiveis.andcrowd.dto.DynamicAndQnaReplyDTO$Update">
+    <update id="update" parameterType="com.fiveis.andcrowd.dto.and.DynamicAndQnaReplyDTO$Update">
         UPDATE and_qna_reply_#{andId}
         SET
             and_reply_content = #{andReplyContent},

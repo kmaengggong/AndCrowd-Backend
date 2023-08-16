@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.fiveis.andcrowd.repository.DynamicAndApplicantRepository">
 
-    <select id="findAll" resultType="com.fiveis.andcrowd.dto.DynamicAndApplicantDTO$FindById">
+    <select id="findAll" resultType="com.fiveis.andcrowd.dto.and.DynamicAndApplicantDTO$FindById">
         SELECT
             and_apply_id AS andApplyId,
             and_id AS andId,
@@ -15,7 +15,7 @@
         FROM and_applicant_#{and_id}
     </select>
 
-    <select id="findAllNotDeleted" resultType="com.fiveis.andcrowd.dto.DynamicAndApplicantDTO$FindById">
+    <select id="findAllNotDeleted" resultType="com.fiveis.andcrowd.dto.and.DynamicAndApplicantDTO$FindById">
         SELECT
             and_apply_id AS andApplyId,
             and_id AS andId,
@@ -27,7 +27,7 @@
         WHERE is_deleted = false
     </select>
 
-    <select id="findByAndApplicantId" resultType="com.fiveis.andcrowd.dto.DynamicAndApplicantDTO$FindById">
+    <select id="findByAndApplicantId" resultType="com.fiveis.andcrowd.dto.and.DynamicAndApplicantDTO$FindById">
         SELECT
             and_apply_id AS andApplyId,
             and_id AS andId,
@@ -39,7 +39,7 @@
         WHERE and_apply_id = #{andApplyId}
     </select>
 
-    <select id="findByUserId" resultType="com.fiveis.andcrowd.dto.DynamicAndApplicantDTO$FindById">
+    <select id="findByUserId" resultType="com.fiveis.andcrowd.dto.and.DynamicAndApplicantDTO$FindById">
         SELECT
             and_apply_id AS andApplyId,
             and_id AS andId,
@@ -51,7 +51,7 @@
         WHERE user_id = #{userId}
     </select>
 
-    <select id="findByAndRoleId" resultType="com.fiveis.andcrowd.dto.DynamicAndApplicantDTO$FindById">
+    <select id="findByAndRoleId" resultType="com.fiveis.andcrowd.dto.and.DynamicAndApplicantDTO$FindById">
         SELECT
             and_apply_id AS andApplyId,
             and_id AS andId,
@@ -64,12 +64,12 @@
     </select>
 
 
-    <insert id="save" parameterType="com.fiveis.andcrowd.dto.DynamicAndApplicantDTO$Update">
+    <insert id="save" parameterType="com.fiveis.andcrowd.dto.and.DynamicAndApplicantDTO$Update">
         INSERT INTO and_applicant_#{andId} (and_apply_id, and_id, user_id, and_role_id, and_apply_content, is_deleted)
         VALUES (#{andApplyId, jdbcType=INTEGER}, #{andId, jdbcType=INTEGER}, #{userId, jdbcType=INTEGER}, #{andRoleId, jdbcType=INTEGER}, #{andApplyContent, jdbcType=VARCHAR}, #{isDeleted, jdbcType=BIT})
     </insert>
 
-    <update id="update" parameterType="com.fiveis.andcrowd.dto.DynamicAndApplicantDTO$Update">
+    <update id="update" parameterType="com.fiveis.andcrowd.dto.and.DynamicAndApplicantDTO$Update">
         UPDATE and_applicant_#{andId}
         SET and_role_id = #{andRoleId},
             and_apply_content = #{andApplyContent}

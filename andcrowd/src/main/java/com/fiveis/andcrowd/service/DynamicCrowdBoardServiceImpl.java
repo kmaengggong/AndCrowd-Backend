@@ -3,6 +3,8 @@ package com.fiveis.andcrowd.service;
 import com.fiveis.andcrowd.dto.DynamicCrowdBoardDTO;
 import com.fiveis.andcrowd.repository.DynamicCrowdBoardRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,8 +24,8 @@ public class DynamicCrowdBoardServiceImpl implements DynamicCrowdBoardService{
     }
 
     @Override
-    public List<DynamicCrowdBoardDTO.Find> findAll(int crowdId) {
-        return dynamicCrowdBoardRepository.findAll(crowdId);
+    public Page<DynamicCrowdBoardDTO.Find> findAll(int crowdId, Pageable pageable) {
+        return dynamicCrowdBoardRepository.findAll(crowdId, pageable);
     }
 
     @Override

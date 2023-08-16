@@ -3,11 +3,11 @@
 
 <mapper namespace="com.fiveis.andcrowd.repository.DynamicAndBoardRepository">
 
-    <select id="findAll" parameterType="int" resultType="com.fiveis.andcrowd.dto.DynamicAndBoardDTO.FindById">
+    <select id="findAll" parameterType="int" resultType="com.fiveis.andcrowd.dto.and.DynamicAndBoardDTO.FindById">
         SELECT * FROM dynamic_and_board WHERE and_id = #{andId}
     </select>
 
-    <select id="findByAndBoardId" parameterType="map" resultType="com.fiveis.andcrowd.dto.DynamicAndBoardDTO.FindById">
+    <select id="findByAndBoardId" parameterType="map" resultType="com.fiveis.andcrowd.dto.and.DynamicAndBoardDTO.FindById">
         SELECT * FROM dynamic_and_board WHERE and_id = #{andId} AND and_board_id = #{andBoardId}
     </select>
 
@@ -19,7 +19,7 @@
         DELETE FROM dynamic_and_board WHERE and_id = #{andId} AND and_board_id = #{andBoardId}
     </delete>
 
-    <insert id="save" parameterType="com.fiveis.andcrowd.dto.DynamicAndBoardDTO.Update">
+    <insert id="save" parameterType="com.fiveis.andcrowd.dto.and.DynamicAndBoardDTO.Update">
         INSERT INTO dynamic_and_board (
             and_id, user_id, and_board_tag, and_board_title,
             and_board_content, and_img, published_at, updated_at,
@@ -32,7 +32,7 @@
                )
     </insert>
 
-    <update id="update" parameterType="com.fiveis.andcrowd.dto.DynamicAndBoardDTO.Update">
+    <update id="update" parameterType="com.fiveis.andcrowd.dto.and.DynamicAndBoardDTO.Update">
         UPDATE dynamic_and_board
         SET
             user_id = #{userId},

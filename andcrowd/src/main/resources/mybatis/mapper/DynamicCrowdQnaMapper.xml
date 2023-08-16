@@ -47,14 +47,14 @@
             crowd_qna_id = #{crowdQnaId}
     </select>
 
-    <insert id="save" parameterType="com.fiveis.andcrowd.dto.DynamicCrowdQnaDTO$Save">
+    <insert id="save" parameterType="com.fiveis.andcrowd.dto.crowd.DynamicCrowdQnaDTO$Save">
         INSERT INTO
             crowd_qna_#{crowdId} (crowd_id, qna_title, qna_content)
         VALUES
             (#{crowdId}, #{qnaTitle}, #{qnaContent})
     </insert>
 
-    <update id="update" parameterType="com.fiveis.andcrowd.dto.DynamicCrowdQnaDTO$Update">
+    <update id="update" parameterType="com.fiveis.andcrowd.dto.crowd.DynamicCrowdQnaDTO$Update">
         UPDATE
             crowd_qna_#{crowdId}
         SET

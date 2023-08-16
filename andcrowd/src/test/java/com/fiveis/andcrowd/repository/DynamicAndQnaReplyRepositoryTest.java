@@ -1,6 +1,5 @@
 package com.fiveis.andcrowd.repository;
 
-import com.fiveis.andcrowd.dto.DynamicAndQnaDTO;
 import com.fiveis.andcrowd.dto.DynamicAndQnaReplyDTO;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;

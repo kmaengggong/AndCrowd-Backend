@@ -13,7 +13,7 @@
         )
     </update>
 
-    <select id="findAll" resultType="com.fiveis.andcrowd.dto.DynamicUserMakerDTO$Find">
+    <select id="findAll" resultType="com.fiveis.andcrowd.dto.user.DynamicUserMakerDTO$Find">
         SELECT
             u_maker_id as uMakerId,
             project_id as projectId,
@@ -22,7 +22,7 @@
             user_maker_${userEmail}
     </select>
 
-    <select id="findById" resultType="com.fiveis.andcrowd.dto.DynamicUserMakerDTO$Find">
+    <select id="findById" resultType="com.fiveis.andcrowd.dto.user.DynamicUserMakerDTO$Find">
         SELECT
             u_maker_id as uMakerId,
             project_id as projectId,

@@ -12,7 +12,7 @@
         )
     </update>
 
-    <select id="findAll" resultType="com.fiveis.andcrowd.dto.DynamicUserAndDTO$Find">
+    <select id="findAll" resultType="com.fiveis.andcrowd.dto.user.DynamicUserAndDTO$Find">
         SELECT
             u_and_id as uAndId,
             and_id as andId
@@ -20,7 +20,7 @@
             user_and_${userEmail}
     </select>
 
-    <select id="findById" resultType="com.fiveis.andcrowd.dto.DynamicUserAndDTO$Find">
+    <select id="findById" resultType="com.fiveis.andcrowd.dto.user.DynamicUserAndDTO$Find">
         SELECT
             u_and_id as uAndId,
             and_id as andId
@@ -30,7 +30,7 @@
             u_and_id = #{uAndId}
     </select>
 
-    <select id="findByAndId" resultType="com.fiveis.andcrowd.dto.DynamicUserAndDTO$Find">
+    <select id="findByAndId" resultType="com.fiveis.andcrowd.dto.user.DynamicUserAndDTO$Find">
         SELECT
             u_and_id as uAndId,
             and_id as andId

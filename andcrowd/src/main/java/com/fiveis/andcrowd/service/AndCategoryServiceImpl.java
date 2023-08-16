@@ -1,7 +1,6 @@
 package com.fiveis.andcrowd.service;
 
 import com.fiveis.andcrowd.dto.AndCategoryDTO;
-import com.fiveis.andcrowd.entity.And;
 import com.fiveis.andcrowd.entity.AndCategory;
 import com.fiveis.andcrowd.repository.AndCategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;

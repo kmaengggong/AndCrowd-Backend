@@ -1,6 +1,5 @@
 package com.fiveis.andcrowd.dto;
 
-import com.fiveis.andcrowd.entity.DynamicCrowdBoard;
 import lombok.*;
 
 import java.time.LocalDateTime;

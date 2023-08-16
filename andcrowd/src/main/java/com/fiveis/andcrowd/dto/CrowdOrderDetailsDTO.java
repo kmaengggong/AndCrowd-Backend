@@ -1,7 +1,5 @@
 package com.fiveis.andcrowd.dto;
 
-import com.fiveis.andcrowd.entity.CrowdOrderDetails;
-import jakarta.persistence.Column;
 import lombok.*;
 
 import java.time.LocalDateTime;
