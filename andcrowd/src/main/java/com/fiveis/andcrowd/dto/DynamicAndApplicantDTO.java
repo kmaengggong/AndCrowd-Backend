@@ -15,6 +15,7 @@ public class DynamicAndApplicantDTO {
         private int userId;
         private int andRoleId;
         private String andApplyContent;
+        private int andApplyStatus;
         private boolean isDeleted;
     }
 
@@ -30,6 +31,7 @@ public class DynamicAndApplicantDTO {
         private int userId;
         private int andRoleId;
         private String andApplyContent;
+        private int andApplyStatus; // 1: 합격, 2: 보류, 3: 탈락
         private boolean isDeleted;
     }
 }

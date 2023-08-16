@@ -21,7 +21,5 @@ public interface AndService {
 
     void save(And and);
 
-    public AndDTO.Find convertToAndFindDTO(And and);
-
     void update(And and);
 }

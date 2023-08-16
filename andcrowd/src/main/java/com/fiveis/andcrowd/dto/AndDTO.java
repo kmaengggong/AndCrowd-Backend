@@ -1,4 +1,5 @@
 package com.fiveis.andcrowd.dto;
+import com.fiveis.andcrowd.entity.And;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -82,5 +83,33 @@ public class AndDTO {
         private boolean isDeleted;
 
     }
+
+    public static AndDTO.Find convertToAndFindDTO(And and) {
+        AndDTO.Find convertedDTO = AndDTO.Find.builder()
+                .andId(and.getAndId())
+                .userId(and.getUserId())
+                .andCategoryId(and.getAndCategoryId())
+                .crowdId(and.getCrowdId())
+                .andTitle(and.getAndTitle())
+                .andHeaderImg(and.getAndHeaderImg())
+                .andContent(and.getAndContent())
+                .andEndDate(and.getAndEndDate())
+                .needNumMem(and.getNeedNumMem())
+                .andImg1(and.getAndImg1())
+                .andImg2(and.getAndImg2())
+                .andImg3(and.getAndImg3())
+                .andImg4(and.getAndImg4())
+                .andImg5(and.getAndImg5())
+                .publishedAt(and.getPublishedAt())
+                .updatedAt(and.getUpdatedAt())
+                .andLikeCount(and.getAndLikeCount())
+                .andViewCount(and.getAndViewCount())
+                .andStatus(and.getAndStatus())
+                .adId(and.getAdId())
+                .isDeleted(and.isDeleted())
+                .build();
+        return convertedDTO;
+    }
+
 
 }
