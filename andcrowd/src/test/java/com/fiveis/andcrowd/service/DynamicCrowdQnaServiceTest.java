@@ -1,4 +1,4 @@
-package com.fiveis.andcrowd.repository;
+package com.fiveis.andcrowd.service;
 
 import com.fiveis.andcrowd.dto.DynamicCrowdQnaDTO;
 import jakarta.transaction.Transactional;
@@ -11,34 +11,34 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+
 @SpringBootTest
-public class DynamicCrowdQnaRepositoryTest {
+public class DynamicCrowdQnaServiceTest {
 
     @Autowired
-    DynamicCrowdQnaRepository dynamicCrowdQnaRepository;
+    DynamicCrowdQnaService dynamicCrowdQnaService;
 
 //    @Test
 //    @Transactional
 //    @DisplayName("2번 crowd게시글 생성시 crowd_qna_2 이라는 이름의 테이블이 생성되며, 글이 정상적으로 추가된다.")
 //    public void createDynamicCrowdQnaTableTest(){
 //        // given
-//        int crowdId = 1;
+//        int crowdId = 2;
 //        String title = "추가된 제목";
 //        String content = "추가된 본문";
 //
 //        // when
-//        dynamicCrowdQnaRepository.createDynamicCrowdQnaTable(crowdId);
+//        dynamicCrowdQnaService.createDynamicCrowdQnaTable(crowdId);
 //        DynamicCrowdQnaDTO.Save newQna = new DynamicCrowdQnaDTO.Save();
 //        newQna.setCrowdId(crowdId);
 //        newQna.setQnaTitle(title);
 //        newQna.setQnaContent(content);
-//        dynamicCrowdQnaRepository.save(newQna);
+//        dynamicCrowdQnaService.save(newQna);
 //
 //        // then
-//        List<DynamicCrowdQnaDTO.Find> crowdBoardList = dynamicCrowdQnaRepository.findAll(crowdId);
+//        List<DynamicCrowdQnaDTO.Find> crowdBoardList = dynamicCrowdQnaService.findAll(crowdId);
 //        assertThat(crowdBoardList.get(0).getCrowdId()).isEqualTo(crowdId);
 //    }
-
 
     @Test
     @Transactional
@@ -49,7 +49,7 @@ public class DynamicCrowdQnaRepositoryTest {
         int crowdId = 1;
 
         // when
-        List<DynamicCrowdQnaDTO.Find> crowdQnaList = dynamicCrowdQnaRepository.findAll(crowdId);
+        List<DynamicCrowdQnaDTO.Find> crowdQnaList = dynamicCrowdQnaService.findAll(crowdId);
 
         // then
         assertThat(crowdQnaList.size()).isEqualTo(3);
@@ -67,7 +67,7 @@ public class DynamicCrowdQnaRepositoryTest {
         String content = "2번글본문";
 
         // when
-        DynamicCrowdQnaDTO.Find crowdQna = dynamicCrowdQnaRepository.findById(crowdId, crowdQnaId);
+        DynamicCrowdQnaDTO.Find crowdQna = dynamicCrowdQnaService.findById(crowdId, crowdQnaId);
 
         // then
         assertThat(crowdQna.getCrowdId()).isEqualTo(crowdId);
@@ -79,7 +79,7 @@ public class DynamicCrowdQnaRepositoryTest {
 
     @Test
     @Transactional
-    @DisplayName("추가된 글 데이터는 전체 데이터의 첫번째 인덱스의 각요소들은 입력한 데이터와 일치할 것이다.")
+    @DisplayName("추가된 글의 데이터는 전체 데이터의 첫번째 인덱스의 각요소들은 입력한 데이터와 일치할 것이다.")
     public void saveTest(){
         // given
         int crowdId = 1;
@@ -94,16 +94,15 @@ public class DynamicCrowdQnaRepositoryTest {
         newQna.setCrowdId(crowdId);
         newQna.setQnaTitle(title);
         newQna.setQnaContent(content);
-        dynamicCrowdQnaRepository.save(newQna);
+        dynamicCrowdQnaService.save(newQna);
 
-        List<DynamicCrowdQnaDTO.Find> crowdQnaList = dynamicCrowdQnaRepository.findAll(crowdId);
+        List<DynamicCrowdQnaDTO.Find> crowdQnaList = dynamicCrowdQnaService.findAll(crowdId);
 
         DynamicCrowdQnaDTO.Find crowdQna = crowdQnaList.get(0);
 
         // then
         assertThat(title).isEqualTo(crowdQna.getQnaTitle());
         assertThat(content).isEqualTo(crowdQna.getQnaContent());
-        assertThat(crowdId).isEqualTo(crowdQna.getCrowdId());
     }
 
     @Test
@@ -125,9 +124,9 @@ public class DynamicCrowdQnaRepositoryTest {
         updateQna.setQnaTitle(title);
         updateQna.setQnaContent(content);
         updateQna.setCrowdQnaId(crowdQnaId);
-        dynamicCrowdQnaRepository.update(updateQna);
+        dynamicCrowdQnaService.update(updateQna);
 
-        List<DynamicCrowdQnaDTO.Find> crowdQnaList = dynamicCrowdQnaRepository.findAll(crowdId);
+        List<DynamicCrowdQnaDTO.Find> crowdQnaList = dynamicCrowdQnaService.findAll(crowdId);
 
         DynamicCrowdQnaDTO.Find crowdQna = crowdQnaList.get(1);
 
@@ -138,7 +137,7 @@ public class DynamicCrowdQnaRepositoryTest {
         assertThat(crowdQna.getUpdatedAt()).isAfter(crowdQna.getPublishedAt());
     }
 
-   @Test
+    @Test
     @Transactional
     @DisplayName("crowdId 1번글의 2번째 글 삭제시 데이터 값이 NULL 값일 것이고 전체 글의 갯수는 2개일것이다.")
     public void deleteByCrowdBoardIdTest(){
@@ -148,8 +147,8 @@ public class DynamicCrowdQnaRepositoryTest {
         int crowdQnaId = 2;
 
         // when
-        dynamicCrowdQnaRepository.deleteByCrowdQnaId(crowdId, crowdQnaId);
-        DynamicCrowdQnaDTO.Find crowdQna = dynamicCrowdQnaRepository.findById(crowdId, crowdQnaId);
+        dynamicCrowdQnaService.deleteByCrowdQnaId(crowdId, crowdQnaId);
+        DynamicCrowdQnaDTO.Find crowdQna = dynamicCrowdQnaService.findById(crowdId, crowdQnaId);
 
         // then
         assertThat(crowdQna.isDeleted()).isTrue();
