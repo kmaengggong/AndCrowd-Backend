@@ -11,6 +11,7 @@
             user_id AS userId,
             and_role_id AS andRoleId,
             and_apply_content AS andApplyContent,
+            and_apply_status AS andApplyStatus,
             is_deleted AS isDeleted
         FROM and_applicant_#{and_id}
     </select>
@@ -22,6 +23,7 @@
             user_id AS userId,
             and_role_id AS andRoleId,
             and_apply_content AS andApplyContent,
+            and_apply_status AS andApplyStatus,
             is_deleted AS isDeleted
         FROM and_applicant_#{and_id}
         WHERE is_deleted = false
@@ -34,6 +36,7 @@
             user_id AS userId,
             and_role_id AS andRoleId,
             and_apply_content AS andApplyContent,
+            and_apply_status AS andApplyStatus,
             is_deleted AS isDeleted
         FROM and_applicant_#{and_id}
         WHERE and_apply_id = #{andApplyId}
@@ -46,6 +49,7 @@
             user_id AS userId,
             and_role_id AS andRoleId,
             and_apply_content AS andApplyContent,
+            and_apply_status AS andApplyStatus,
             is_deleted AS isDeleted
         FROM and_applicant_#{and_id}
         WHERE user_id = #{userId}
@@ -58,6 +62,7 @@
             user_id AS userId,
             and_role_id AS andRoleId,
             and_apply_content AS andApplyContent,
+            and_apply_status AS andApplyStatus,
             is_deleted AS isDeleted
         FROM and_applicant_#{and_id}
         WHERE and_role_id = #{andRoleId}
@@ -65,8 +70,8 @@
 
 
     <insert id="save" parameterType="com.fiveis.andcrowd.dto.and.DynamicAndApplicantDTO$Update">
-        INSERT INTO and_applicant_#{andId} (and_apply_id, and_id, user_id, and_role_id, and_apply_content, is_deleted)
-        VALUES (#{andApplyId, jdbcType=INTEGER}, #{andId, jdbcType=INTEGER}, #{userId, jdbcType=INTEGER}, #{andRoleId, jdbcType=INTEGER}, #{andApplyContent, jdbcType=VARCHAR}, #{isDeleted, jdbcType=BIT})
+        INSERT INTO and_applicant_#{andId} (and_apply_id, and_id, user_id, and_role_id, and_apply_content, and_apply_status, is_deleted)
+        VALUES (#{andApplyId, jdbcType=INTEGER}, #{andId, jdbcType=INTEGER}, #{userId, jdbcType=INTEGER}, #{andRoleId, jdbcType=INTEGER}, #{andApplyContent, jdbcType=VARCHAR}, #{andApplyStatus, jdbcType=INTEGER}, #{isDeleted, jdbcType=BIT})
     </insert>
 
     <update id="update" parameterType="com.fiveis.andcrowd.dto.and.DynamicAndApplicantDTO$Update">
@@ -90,6 +95,7 @@
             user_id INT NOT NULL ,
             and_role_id INT NOT NULL ,
             and_apply_content VARCHAR(2000) NOT NULL ,
+            and_apply_status INT default 0,
             is_deleted BOOL default false
         );
     </insert>

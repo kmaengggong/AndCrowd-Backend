@@ -44,6 +44,7 @@
             is_deleted AS isDeleted
         FROM and_qna_reply_#{and_id}
         WHERE and_qna_id = #{andQnaId}
+            AND is_deleted = false
     </select>
 
     <select id="findByAndReplyId" resultType="com.fiveis.andcrowd.dto.and.DynamicAndQnaReplyDTO$FindById">
