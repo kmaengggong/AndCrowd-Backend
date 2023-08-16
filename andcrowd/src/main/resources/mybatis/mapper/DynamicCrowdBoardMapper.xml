@@ -3,7 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.fiveis.andcrowd.repository.DynamicCrowdBoardRepository">
+<mapper namespace="com.fiveis.andcrowd.repository.crowd.DynamicCrowdBoardRepository">
 
     <update id="createDynamicCrowdBoardTable">
         CREATE TABLE crowd_board_#{crowdId}(
@@ -56,14 +56,14 @@
             crowd_board_id = #{crowdBoardId}
     </select>
 
-    <insert id="save" parameterType="com.fiveis.andcrowd.dto.DynamicCrowdBoardDTO$Save">
+    <insert id="save" parameterType="com.fiveis.andcrowd.dto.crowd.DynamicCrowdBoardDTO$Save">
         INSERT INTO
             crowd_board_#{crowdId} (crowd_id, crowd_board_tag, crowd_board_title, crowd_board_content, crowd_img)
         VALUES
             (#{crowdId}, #{crowdBoardTag}, #{crowdBoardTitle}, #{crowdBoardContent}, #{crowdImg})
     </insert>
 
-    <insert id="update" parameterType="com.fiveis.andcrowd.dto.DynamicCrowdBoardDTO$Update">
+    <insert id="update" parameterType="com.fiveis.andcrowd.dto.crowd.DynamicCrowdBoardDTO$Update">
         UPDATE
             crowd_board_#{crowdId}
         SET

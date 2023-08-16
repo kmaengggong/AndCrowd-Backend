@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.fiveis.andcrowd.repository.AndDynamicRepository">
+<mapper namespace="com.fiveis.andcrowd.repository.and.AndDynamicRepository">
 
     <insert id="createDynamicAndQnaTable">
         CREATE TABLE and_qna_#{and_id}(

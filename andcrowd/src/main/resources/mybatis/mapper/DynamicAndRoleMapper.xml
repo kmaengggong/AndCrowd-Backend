@@ -2,9 +2,9 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.fiveis.andcrowd.repository.DynamicAndRoleRepository">
+<mapper namespace="com.fiveis.andcrowd.repository.and.DynamicAndRoleRepository">
 
-    <select id="findAll" resultType="com.fiveis.andcrowd.dto.DynamicAndRoleDTO$FindById">
+    <select id="findAll" resultType="com.fiveis.andcrowd.dto.and.DynamicAndRoleDTO$FindById">
         SELECT
             and_role_id AS andRoleId,
             and_id AS andId,
@@ -14,7 +14,7 @@
         FROM and_role_#{and_id}
     </select>
 
-    <select id="findAllNotDeleted" resultType="com.fiveis.andcrowd.dto.DynamicAndRoleDTO$FindById">
+    <select id="findAllNotDeleted" resultType="com.fiveis.andcrowd.dto.and.DynamicAndRoleDTO$FindById">
         SELECT
             and_role_id AS andRoleId,
             and_id AS andId,
@@ -25,7 +25,7 @@
         WHERE is_deleted = false
     </select>
 
-    <select id="findByAndRoleId" resultType="com.fiveis.andcrowd.dto.DynamicAndRoleDTO$FindById">
+    <select id="findByAndRoleId" resultType="com.fiveis.andcrowd.dto.and.DynamicAndRoleDTO$FindById">
         SELECT
             and_role_id AS andRoleId,
             and_id AS andId,
@@ -36,12 +36,12 @@
         WHERE and_role_id = #{andRoleId}
     </select>
 
-    <insert id="save" parameterType="com.fiveis.andcrowd.dto.DynamicAndRoleDTO$Update">
+    <insert id="save" parameterType="com.fiveis.andcrowd.dto.and.DynamicAndRoleDTO$Update">
         INSERT INTO and_role_#{andId} (and_role_id, and_id, and_role, and_role_limit, is_deleted)
         VALUES (#{andRoleId, jdbcType=INTEGER}, #{andId, jdbcType=INTEGER}, #{andRole, jdbcType=VARCHAR}, #{andRoleLimit, jdbcType=INTEGER}, #{isDeleted, jdbcType=BIT})
     </insert>
 
-    <update id="update" parameterType="com.fiveis.andcrowd.dto.DynamicAndRoleDTO$Update">
+    <update id="update" parameterType="com.fiveis.andcrowd.dto.and.DynamicAndRoleDTO$Update">
         UPDATE and_role_#{andId}
         SET and_role = #{andRole},
             and_role_limit = #{andRoleLimit}

@@ -3,7 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.fiveis.andcrowd.repository.DynamicCrowdQnaReplyRepository">
+<mapper namespace="com.fiveis.andcrowd.repository.crowd.DynamicCrowdQnaReplyRepository">
 
     <update id="createDynamicCrowdQnaReplyTable" parameterType="int">
         CREATE TABLE crowd_qna_reply_#{crowdId}(
@@ -43,14 +43,14 @@
             qna_reply_id = #{qnaReplyId}
     </select>
 
-    <insert id="save" parameterType="com.fiveis.andcrowd.dto.DynamicCrowdQnaReplyDTO$Save">
+    <insert id="save" parameterType="com.fiveis.andcrowd.dto.crowd.DynamicCrowdQnaReplyDTO$Save">
         INSERT INTO
             crowd_qna_reply_#{crowdId} (crowd_qna_id, qna_reply_content)
         VALUES
             (#{crowdQnaId}, #{qnaReplyContent})
     </insert>
 
-    <update id="update" parameterType="com.fiveis.andcrowd.dto.DynamicCrowdQnaReplyDTO$Update">
+    <update id="update" parameterType="com.fiveis.andcrowd.dto.crowd.DynamicCrowdQnaReplyDTO$Update">
         UPDATE
             crowd_qna_reply_#{crowdId}
         SET
