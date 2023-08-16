@@ -2,7 +2,6 @@ package com.fiveis.andcrowd.service;
 
 import com.fiveis.andcrowd.dto.CrowdCategoryDTO;
 import com.fiveis.andcrowd.entity.CrowdCategory;
-import com.fiveis.andcrowd.exception.NotFoundCrowdCategoryException;
 import com.fiveis.andcrowd.repository.CrowdCategoryJPARepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -36,11 +35,7 @@ public class CrowdCategoryServiceImpl implements CrowdCategoryService{
     public CrowdCategoryDTO.Find findById(int crowdCategoryId) {
         Optional<CrowdCategory> optioanlCrowdCategory = crowdCategoryJPARepository.findById(crowdCategoryId);
 
-        if(optioanlCrowdCategory.isPresent()){
             CrowdCategory crowdCategory = optioanlCrowdCategory.get();
             return CrowdCategoryDTO.Find.fromEntity(crowdCategory);
-        }else{
-            throw new NotFoundCrowdCategoryException("없는 카테고리 입니다.");
-        }
     }
 }
