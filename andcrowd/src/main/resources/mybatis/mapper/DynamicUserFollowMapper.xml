@@ -3,7 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.fiveis.andcrowd.repository.DynamicUserFollowRepository">
+<mapper namespace="com.fiveis.andcrowd.repository.user.DynamicUserFollowRepository">
     <update id="createDynamicUserFollowTable">
         CREATE
         TABLE IF NOT EXISTS user_follow_${userEmail}(
@@ -12,7 +12,7 @@
         )
     </update>
 
-    <select id="findAll" resultType="com.fiveis.andcrowd.dto.DynamicUserFollowDTO$Find">
+    <select id="findAll" resultType="com.fiveis.andcrowd.dto.user.DynamicUserFollowDTO$Find">
         SELECT
             u_follow_id as uFollowId,
             user_id as userId
@@ -20,7 +20,7 @@
             user_follow_${userEmail}
     </select>
 
-    <select id="findById" resultType="com.fiveis.andcrowd.dto.DynamicUserFollowDTO$Find">
+    <select id="findById" resultType="com.fiveis.andcrowd.dto.user.DynamicUserFollowDTO$Find">
         SELECT
             u_follow_id as uFollowId,
             user_id as userId

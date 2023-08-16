@@ -3,7 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.fiveis.andcrowd.repository.DynamicUserMakerRepository">
+<mapper namespace="com.fiveis.andcrowd.repository.user.DynamicUserMakerRepository">
     <update id="createDynamicUserMakerTable">
         CREATE
         TABLE IF NOT EXISTS user_maker_${userEmail}(
@@ -13,7 +13,7 @@
         )
     </update>
 
-    <select id="findAll" resultType="com.fiveis.andcrowd.dto.DynamicUserMakerDTO$Find">
+    <select id="findAll" resultType="com.fiveis.andcrowd.dto.user.DynamicUserMakerDTO$Find">
         SELECT
             u_maker_id as uMakerId,
             project_id as projectId,
@@ -22,7 +22,7 @@
             user_maker_${userEmail}
     </select>
 
-    <select id="findById" resultType="com.fiveis.andcrowd.dto.DynamicUserMakerDTO$Find">
+    <select id="findById" resultType="com.fiveis.andcrowd.dto.user.DynamicUserMakerDTO$Find">
         SELECT
             u_maker_id as uMakerId,
             project_id as projectId,

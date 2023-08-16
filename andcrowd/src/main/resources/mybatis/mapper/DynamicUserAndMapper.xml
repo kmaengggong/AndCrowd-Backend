@@ -3,7 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.fiveis.andcrowd.repository.DynamicUserAndRepository">
+<mapper namespace="com.fiveis.andcrowd.repository.user.DynamicUserAndRepository">
     <update id="createDynamicUserAndTable">
         CREATE
         TABLE IF NOT EXISTS user_and_${userEmail}(
@@ -12,7 +12,7 @@
         )
     </update>
 
-    <select id="findAll" resultType="com.fiveis.andcrowd.dto.DynamicUserAndDTO$Find">
+    <select id="findAll" resultType="com.fiveis.andcrowd.dto.user.DynamicUserAndDTO$Find">
         SELECT
             u_and_id as uAndId,
             and_id as andId
@@ -20,7 +20,7 @@
             user_and_${userEmail}
     </select>
 
-    <select id="findById" resultType="com.fiveis.andcrowd.dto.DynamicUserAndDTO$Find">
+    <select id="findById" resultType="com.fiveis.andcrowd.dto.user.DynamicUserAndDTO$Find">
         SELECT
             u_and_id as uAndId,
             and_id as andId
@@ -30,7 +30,7 @@
             u_and_id = #{uAndId}
     </select>
 
-    <select id="findByAndId" resultType="com.fiveis.andcrowd.dto.DynamicUserAndDTO$Find">
+    <select id="findByAndId" resultType="com.fiveis.andcrowd.dto.user.DynamicUserAndDTO$Find">
         SELECT
             u_and_id as uAndId,
             and_id as andId

@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.fiveis.andcrowd.repository.DynamicAndBoardRepository">
-    <select id="findAll"  resultType="com.fiveis.andcrowd.dto.DynamicAndBoardDTO$FindById">
+<mapper namespace="com.fiveis.andcrowd.repository.and.DynamicAndBoardRepository">
+    <select id="findAll"  resultType="com.fiveis.andcrowd.dto.and.DynamicAndBoardDTO$FindById">
         SELECT * FROM and_board_#{andId}
     </select>
-    <select id="findByAndBoardId" resultType="com.fiveis.andcrowd.dto.DynamicAndBoardDTO$FindById">
+    <select id="findByAndBoardId" resultType="com.fiveis.andcrowd.dto.and.DynamicAndBoardDTO$FindById">
         SELECT
             and_board_id AS andBoardId,
             and_id AS andId,
@@ -35,7 +35,7 @@
         WHERE
             and_board_id = #{andBoardId}
     </delete>
-    <insert id="save" parameterType="com.fiveis.andcrowd.dto.DynamicAndBoardDTO$Update">
+    <insert id="save" parameterType="com.fiveis.andcrowd.dto.and.DynamicAndBoardDTO$Update">
         INSERT INTO and_board_#{andId} (
             and_id, user_id, and_board_tag, and_board_title,
             and_board_content, and_img, published_at, updated_at,
@@ -47,7 +47,7 @@
                    #{andBoardViewCount}, #{isDeleted}
                )
     </insert>
-    <update id="update" parameterType="com.fiveis.andcrowd.dto.DynamicAndBoardDTO$Update">
+    <update id="update" parameterType="com.fiveis.andcrowd.dto.and.DynamicAndBoardDTO$Update">
         UPDATE and_board_#{andId}
         SET
             user_id = #{userId},

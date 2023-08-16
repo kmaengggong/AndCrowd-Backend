@@ -1,6 +1,6 @@
 package com.fiveis.andcrowd.config.jwt;
 
-import com.fiveis.andcrowd.entity.User;
+import com.fiveis.andcrowd.entity.user.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Header;
 import io.jsonwebtoken.Jwts;

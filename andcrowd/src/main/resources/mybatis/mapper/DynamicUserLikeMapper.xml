@@ -3,7 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.fiveis.andcrowd.repository.DynamicUserLikeRepository">
+<mapper namespace="com.fiveis.andcrowd.repository.user.DynamicUserLikeRepository">
     <update id="createDynamicUserLikeTable">
         CREATE
         TABLE IF NOT EXISTS user_like_${userEmail}(
@@ -13,7 +13,7 @@
         )
     </update>
 
-    <select id="findAll" resultType="com.fiveis.andcrowd.dto.DynamicUserLikeDTO$Find">
+    <select id="findAll" resultType="com.fiveis.andcrowd.dto.user.DynamicUserLikeDTO$Find">
         SELECT
             u_like_id as uLikeId,
             project_id as projectId,
@@ -22,7 +22,7 @@
             user_like_${userEmail}
     </select>
 
-    <select id="findById" resultType="com.fiveis.andcrowd.dto.DynamicUserLikeDTO$Find">
+    <select id="findById" resultType="com.fiveis.andcrowd.dto.user.DynamicUserLikeDTO$Find">
         SELECT
             u_like_id as uLikeId,
             project_id as projectId,
