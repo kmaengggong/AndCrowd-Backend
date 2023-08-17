@@ -48,28 +48,28 @@ public class DynamicUserController {
         return ResponseEntity.ok(andDTOFindList);
     }
 
-    @RequestMapping(value="{userId}/", method=RequestMethod.GET)
+    @RequestMapping(value="{userId}/follow", method=RequestMethod.GET)
     public ResponseEntity<?> getUserFollow(@PathVariable int userId){
         String userEmail = userService.findById(userId).getUserEmail();
         List<UserDTO.FindAsPublic> userDTOFindList = dynamicUserFollowService.findAll(userService.toTableName(userEmail));
         return ResponseEntity.ok(userDTOFindList);
     }
 
-    @RequestMapping(value="{userId}/", method=RequestMethod.GET)
+    @RequestMapping(value="{userId}/like", method=RequestMethod.GET)
     public ResponseEntity<?> getUserLike(@PathVariable int userId){
         String userEmail = userService.findById(userId).getUserEmail();
         List<ProjectDTO.Find> projectDTOFindList = dynamicUserLikeService.findAll(userService.toTableName(userEmail));
         return ResponseEntity.ok(projectDTOFindList);
     }
 
-    @RequestMapping(value="{userId}/", method=RequestMethod.GET)
+    @RequestMapping(value="{userId}/maker", method=RequestMethod.GET)
     public ResponseEntity<?> getUserMaker(@PathVariable int userId){
         String userEmail = userService.findById(userId).getUserEmail();
         List<ProjectDTO.Find> projectDTOFindList = dynamicUserMakerService.findAll(userService.toTableName(userEmail));
         return ResponseEntity.ok(projectDTOFindList);
     }
 
-    @RequestMapping(value="{userId}/", method=RequestMethod.GET)
+    @RequestMapping(value="{userId}/order", method=RequestMethod.GET)
     public ResponseEntity<?> getUserOrder(@PathVariable int userId){
         String userEmail = userService.findById(userId).getUserEmail();
         List<CrowdOrderDetailsDTO.FindById> crowdOrderDetailsDTOFindList = dynamicUserOrderService.findAll(userService.toTableName(userEmail));
