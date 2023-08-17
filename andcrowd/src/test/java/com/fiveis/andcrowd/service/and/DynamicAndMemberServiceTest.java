@@ -84,4 +84,3 @@ public class DynamicAndMemberServiceTest {
         assertThat(andMember.isDeleted()).isTrue();
     }
 }
->>>>>>> 7efa613354cbdb12c8fcde35a272d40e0aa12ecc:andcrowd/src/test/java/com/fiveis/andcrowd/service/and/DynamicAndMemberServiceTest.java

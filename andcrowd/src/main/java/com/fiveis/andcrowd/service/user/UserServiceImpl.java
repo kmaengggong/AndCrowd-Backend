@@ -106,12 +106,6 @@ public class UserServiceImpl implements UserService {
         userJPARepository.save(user);
     }
 
-    public String toTableName(String userEmail){
-        return userEmail
-                .replace('@', '_')
-                .replace('.', '_');
-    }
-
     public User getByCredentials(String userEmail){
         if(userJPARepository.findByUserEmail(userEmail).isEmpty()) return null;
         return userJPARepository.findByUserEmail(userEmail).get();
