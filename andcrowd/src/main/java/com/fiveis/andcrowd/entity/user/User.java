@@ -95,6 +95,12 @@ public class User implements UserDetails {
         this.userProfileImg = userProfileImg;
     }
 
+    // userEmail replacement
+    public static String toTableName(String userEmail){
+        return userEmail.replace('@', '_')
+                .replace('.', '_');
+    }
+
     // For UserDetails
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

@@ -2,7 +2,7 @@ package com.fiveis.andcrowd.service.user;
 
 import com.fiveis.andcrowd.dto.user.UserDTO;
 import com.fiveis.andcrowd.entity.user.User;
-import com.fiveis.andcrowd.repository.user.UserJPARepository;
+import com.fiveis.andcrowd.repository.user.*;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -15,12 +15,27 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
     private final UserJPARepository userJPARepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
+    private DynamicUserAndRepository dynamicUserAndRepository;
+    private DynamicUserFollowRepository dynamicUserFollowRepository;
+    private DynamicUserLikeRepository dynamicUserLikeRepository;
+    private DynamicUserMakerRepository dynamicUserMakerRepository;
+    private DynamicUserOrderRepository dynamicUserOrderRepository;
 
     @Autowired
     public UserServiceImpl(UserJPARepository userJPARepository,
-                       BCryptPasswordEncoder bCryptPasswordEncoder){
+                           BCryptPasswordEncoder bCryptPasswordEncoder,
+                           DynamicUserAndRepository dynamicUserAndRepository,
+                           DynamicUserFollowRepository dynamicUserFollowRepository,
+                           DynamicUserLikeRepository dynamicUserLikeRepository,
+                           DynamicUserMakerRepository dynamicUserMakerRepository,
+                           DynamicUserOrderRepository dynamicUserOrderRepository){
         this.userJPARepository = userJPARepository;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+        this.dynamicUserAndRepository = dynamicUserAndRepository;
+        this.dynamicUserFollowRepository = dynamicUserFollowRepository;
+        this.dynamicUserLikeRepository = dynamicUserLikeRepository;
+        this.dynamicUserMakerRepository = dynamicUserMakerRepository;
+        this.dynamicUserOrderRepository = dynamicUserOrderRepository;
     }
 
     public List<UserDTO.FindAsPublic> findAll(){
@@ -61,6 +76,14 @@ public class UserServiceImpl implements UserService {
     public void save(User user) {
         user.setUserPassword(bCryptPasswordEncoder.encode(user.getUserPassword()));
         userJPARepository.save(user);
+
+        // User 생성 시 동적 테이블 자동 생성
+        String userEmail = user.toTableName(user.getUserEmail());
+        dynamicUserAndRepository.createDynamicUserAndTable(userEmail);
+        dynamicUserFollowRepository.createDynamicUserFollowTable(userEmail);
+        dynamicUserLikeRepository.createDynamicUserLikeTable(userEmail);
+        dynamicUserMakerRepository.createDynamicUserMakerTable(userEmail);
+        dynamicUserOrderRepository.createDynamicUserOrderTable(userEmail);
     }
 
     @Transactional

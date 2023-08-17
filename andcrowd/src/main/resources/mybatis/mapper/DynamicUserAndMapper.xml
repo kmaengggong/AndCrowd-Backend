@@ -41,7 +41,7 @@
     </select>
 
     <insert id="save">
-        INSERT
+        INSERT IGNORE
         INTO
             user_and_${userEmail}
             (u_and_id, and_id)
