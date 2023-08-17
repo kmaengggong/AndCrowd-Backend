@@ -2,6 +2,7 @@ package com.fiveis.andcrowd.entity.and;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
@@ -28,7 +29,7 @@ public class And {
     @Column(nullable = false)
     private int andCategoryId;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private int crowdId;
 
     @Column(nullable = false)
@@ -56,29 +57,35 @@ public class And {
 
     private String andImg5;
 
+    @Column(nullable = true, columnDefinition = "datetime default CURRENT_TIMESTAMP")
     private LocalDateTime publishedAt;
 
+    @Column(nullable = true, columnDefinition = "datetime default CURRENT_TIMESTAMP")
     private LocalDateTime updatedAt;
 
-    @Column(nullable = false)
+    @ColumnDefault("0")
     private int andLikeCount;
 
-    @Column(nullable = false)
+    @ColumnDefault("0")
     private int andViewCount;
 
-    @Column(nullable = false)
+    @ColumnDefault("1")
     private int andStatus; // 0 : 모집 중, 1 : 심사 중, 2 : 반려, 3: 모집 종료
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private int adId;
 
-    @Column(nullable = false)
-    private boolean isDeleted = Boolean.FALSE;
+    @ColumnDefault("false")
+    private boolean isDeleted;
 
     @PrePersist
     public void setDefaultValue(){
         this.publishedAt = LocalDateTime.now();
         this.updatedAt = LocalDateTime.now();
+        this.isDeleted = false;
+        this.andLikeCount = 0;
+        this.andViewCount = 0;
+        this.andStatus = 1; // 처음 작성시 자동으로 심사 중인 1로 표기
     }
 
     @PreUpdate

@@ -70,7 +70,7 @@
     </update>
 
     <insert id="insertTestData">
-        INSERT INTO and_role_123 (and_role_id, and_id, and_role, and_role_limit)
+        INSERT IGNORE INTO and_role_123 (and_role_id, and_id, and_role, and_role_limit)
         VALUES
             (1, 123, '역할 1', 10),
             (2, 123, '역할 2', 20),

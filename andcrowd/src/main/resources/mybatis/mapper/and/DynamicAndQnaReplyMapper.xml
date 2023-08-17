@@ -106,7 +106,7 @@
     </update>
 
     <insert id="insertTestData">
-        INSERT INTO and_qna_reply_123 (and_reply_id, and_qna_id, and_id, user_id, and_reply_content)
+        INSERT IGNORE INTO and_qna_reply_123 (and_reply_id, and_qna_id, and_id, user_id, and_reply_content)
         VALUES
             (1, 1, 123, 1, 'QnA Reply Content 1'),
             (2, 2, 123, 2, 'QnA Reply Content 2'),
