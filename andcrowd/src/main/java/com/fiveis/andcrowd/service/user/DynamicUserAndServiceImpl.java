@@ -1,5 +1,6 @@
 package com.fiveis.andcrowd.service.user;
 
+import com.fiveis.andcrowd.dto.and.AndDTO;
 import com.fiveis.andcrowd.dto.user.DynamicUserAndDTO;
 import com.fiveis.andcrowd.entity.and.And;
 import com.fiveis.andcrowd.entity.user.DynamicUserAnd;
@@ -23,11 +24,11 @@ public class DynamicUserAndServiceImpl implements DynamicUserAndService{
         this.andJPARepository = andJPARepository;
     }
 
-    public List<And> findAll(String userEmail){
+    public List<AndDTO.Find> findAll(String userEmail){
         List<DynamicUserAndDTO.Find> findList = dynamicUserAndRepository.findAll(userEmail);
-        List<And> andList = new ArrayList<>();
+        List<AndDTO.Find> andList = new ArrayList<>();
         for(DynamicUserAndDTO.Find find : findList){
-            andList.add(andJPARepository.findById(find.getAndId()).get());
+            andList.add(AndDTO.convertToAndFindDTO(andJPARepository.findById(find.getAndId()).get()));
         }
         return andList;
     }

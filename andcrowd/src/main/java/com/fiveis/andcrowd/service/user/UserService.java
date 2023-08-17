@@ -16,5 +16,6 @@ public interface UserService {
     void deleteByUserEmail(String userEmail);
     void save(User user);
     void update(UserDTO.Update user);
+    String toTableName(String userEmail);
     User getByCredentials(String userEmail);
 }

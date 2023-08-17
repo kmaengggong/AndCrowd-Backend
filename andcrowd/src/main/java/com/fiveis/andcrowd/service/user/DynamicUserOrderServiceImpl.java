@@ -1,5 +1,6 @@
 package com.fiveis.andcrowd.service.user;
 
+import com.fiveis.andcrowd.dto.crowd.CrowdOrderDetailsDTO;
 import com.fiveis.andcrowd.dto.user.DynamicUserOrderDTO;
 import com.fiveis.andcrowd.entity.crowd.CrowdOrderDetails;
 import com.fiveis.andcrowd.entity.user.DynamicUserOrder;
@@ -23,11 +24,12 @@ public class DynamicUserOrderServiceImpl implements DynamicUserOrderService{
         this.crowdOrderDetailsJPARepository = crowdOrderDetailsJPARepository;
     }
 
-    public List<CrowdOrderDetails> findAll(String userEmail){
+    public List<CrowdOrderDetailsDTO.FindById> findAll(String userEmail){
         List<DynamicUserOrderDTO.Find> findList = dynamicUserOrderRepository.findAll(userEmail);
-        List<CrowdOrderDetails> orderList = new ArrayList<>();
+        List<CrowdOrderDetailsDTO.FindById> orderList = new ArrayList<>();
         for(DynamicUserOrderDTO.Find find : findList){
-            orderList.add(crowdOrderDetailsJPARepository.findById(find.getOrderId()).get());
+            CrowdOrderDetails crowdOrderDetails = crowdOrderDetailsJPARepository.findById(find.getOrderId()).get();
+            //orderList.add(CrowdOrderDetailsDTO.convertToFindByIdDTO(crowdOrderDetails));
         }
         return orderList;
     }
