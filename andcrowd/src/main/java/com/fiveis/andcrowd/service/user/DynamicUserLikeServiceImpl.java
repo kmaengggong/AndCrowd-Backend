@@ -75,4 +75,8 @@ public class DynamicUserLikeServiceImpl implements DynamicUserLikeService{
     public void deleteById(String userEmail, int uLikeId){
         dynamicUserLikeRepository.deleteById(userEmail, uLikeId);
     }
+
+    public void deleteByProjectId(String userEmail, int projectId, int projectType){
+        dynamicUserLikeRepository.deleteByProjectId(userEmail, projectId, projectType);
+    }
 }

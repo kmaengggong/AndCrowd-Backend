@@ -56,4 +56,12 @@
         WHERE
             u_order_id = #{uOrderId}
     </delete>
+
+    <delete id="deleteByOrderId">
+        DELETE
+        FROM
+            user_order_${userEmail}
+        WHERE
+            order_id = #{orderId}
+    </delete>
 </mapper>

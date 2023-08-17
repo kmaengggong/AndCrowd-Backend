@@ -13,4 +13,5 @@ public interface DynamicUserOrderService {
     DynamicUserOrderDTO.Find findById(String userEmail, int uOrderId);
     void save(String userEmail, DynamicUserOrder dynamicUserOrder);
     void deleteById(String userEmail, int uOrderId);
+    void deleteByOrderId(String userEmail, int orderId);
 }

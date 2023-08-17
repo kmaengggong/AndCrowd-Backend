@@ -13,4 +13,5 @@ public interface DynamicUserMakerService {
     DynamicUserMakerDTO.Find findById(String userEmail, int uMakerId);
     void save(String userEmail, DynamicUserMaker dynamicUserMaker);
     void deleteById(String userEmail, int uMakerId);
+    void deleteByProjectId(String userEmail, int projectId, int projectType);
 }

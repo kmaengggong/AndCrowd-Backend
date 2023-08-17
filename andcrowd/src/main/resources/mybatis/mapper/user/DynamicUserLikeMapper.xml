@@ -62,4 +62,14 @@
         WHERE
             u_like_id = #{uLikeId}
     </delete>
+
+    <delete id="deleteByProjectId">
+        DELETE
+        FROM
+            user_like_${userEmail}
+        WHERE
+            project_id = #{projectId}
+        AND
+            project_type = #{projectType}
+    </delete>
 </mapper>

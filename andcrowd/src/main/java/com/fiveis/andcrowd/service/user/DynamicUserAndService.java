@@ -14,4 +14,5 @@ public interface DynamicUserAndService {
     DynamicUserAndDTO.Find findById(String userEmail, int uAndId);
     void save(String userEmail, DynamicUserAnd dynamicUserAnd);
     void deleteById(String userEmail, int uAndId);
+    void deleteByAndId(String userEmail, int andId);
 }

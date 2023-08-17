@@ -56,4 +56,12 @@
         WHERE
             u_follow_id = #{uFollowId}
     </delete>
+
+    <delete id="deleteByUserId">
+        DELETE
+        FROM
+            user_follow_${userEmail}
+        WHERE
+            user_id = #{userId}
+    </delete>
 </mapper>

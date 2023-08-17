@@ -45,4 +45,8 @@ public class DynamicUserAndServiceImpl implements DynamicUserAndService{
     public void deleteById(String userEmail, int uAndId){
         dynamicUserAndRepository.deleteById(userEmail, uAndId);
     }
+
+    public void deleteByAndId(String userEmail, int andId){
+        dynamicUserAndRepository.deleteByAndId(userEmail, andId);
+    }
 }

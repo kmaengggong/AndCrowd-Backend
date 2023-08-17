@@ -56,4 +56,12 @@
         WHERE
             u_and_id = #{uAndId}
     </delete>
+
+    <delete id="deleteByAndId">
+        DELETE
+        FROM
+            user_and_${userEmail}
+        WHERE
+            and_Id = #{andId}
+    </delete>
 </mapper>

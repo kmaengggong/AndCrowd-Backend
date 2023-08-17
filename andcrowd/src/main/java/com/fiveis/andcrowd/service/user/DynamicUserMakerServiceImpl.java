@@ -71,8 +71,11 @@ public class DynamicUserMakerServiceImpl implements DynamicUserMakerService{
                 dynamicUserMaker.getProjectType()) != null) return;
         dynamicUserMakerRepository.save(userEmail, dynamicUserMaker);
     }
-
     public void deleteById(String userEmail, int uMakerId){
         dynamicUserMakerRepository.deleteById(userEmail, uMakerId);
+    }
+
+    public void deleteByProjectId(String userEmail, int projectId, int projectType){
+        dynamicUserMakerRepository.deleteByProjectId(userEmail, projectId, projectType);
     }
 }

@@ -62,4 +62,14 @@
         WHERE
             u_maker_id = #{uMakerId}
     </delete>
+
+    <delete id="deleteByProjectId">
+        DELETE
+        FROM
+            user_maker_${userEmail}
+        WHERE
+            project_id = #{projectId}
+        AND
+            project_type = #{projectType}
+    </delete>
 </mapper>

@@ -17,4 +17,8 @@ public interface DynamicUserLikeRepository {
                                             @Param("projectType") int projectType);
     void save(@Param("userEmail") String userEmail, @Param("dynamicUserLike") DynamicUserLike dynamicUserLike);
     void deleteById(@Param("userEmail") String userEmail, @Param("uLikeId") int uLikeId);
+
+    void deleteByProjectId(@Param("userEmail") String userEmail,
+                           @Param("projectId") int projectId,
+                           @Param("projectType") int projectType);
 }

@@ -15,4 +15,5 @@ public interface DynamicUserAndRepository {
     DynamicUserAndDTO.Find findByAndId(@Param("userEmail") String userEmail, @Param("andId") int andId);
     void save(@Param("userEmail") String userEmail, @Param("dynamicUserAnd") DynamicUserAnd dynamicUserAnd);
     void deleteById(@Param("userEmail") String userEmail, @Param("uAndId") int uAndId);
+    void deleteByAndId(@Param("userEmail") String userEmail, @Param("andId") int andId);
 }

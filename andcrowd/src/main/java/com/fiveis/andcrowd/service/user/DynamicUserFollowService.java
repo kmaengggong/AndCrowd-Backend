@@ -13,4 +13,5 @@ public interface DynamicUserFollowService {
     DynamicUserFollowDTO.Find findById(String userEmail, int uFollowId);
     void save(String userEmail, DynamicUserFollow dynamicUserFollow);
     void deleteById(String userEmail, int uFollowId);
+    void deleteByAndId(String userEmail, int userId);
 }

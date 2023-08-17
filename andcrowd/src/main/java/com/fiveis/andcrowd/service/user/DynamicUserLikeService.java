@@ -13,4 +13,5 @@ public interface DynamicUserLikeService {
     DynamicUserLikeDTO.Find findById(String userEmail, int uLikeId);
     void save(String userEmail, DynamicUserLike dynamicUserLike);
     void deleteById(String userEmail, int uLikeId);
+    void deleteByProjectId(String userEmail, int projectId, int projectType);
 }
