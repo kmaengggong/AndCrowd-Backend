@@ -80,7 +80,7 @@
         DROP TABLE and_board_1111;
     </update>
     <insert id="insertTestData">
-        INSERT INTO and_board_1111 (and_id, user_id, and_board_title, and_board_content)
+        INSERT IGNORE INTO and_board_1111 (and_id, user_id, and_board_title, and_board_content)
         VALUES
             (1111, 1, 'Board Title 1', 'Board Content 1'),
             (1111, 2, 'Board Title 2', 'Board Content 2'),

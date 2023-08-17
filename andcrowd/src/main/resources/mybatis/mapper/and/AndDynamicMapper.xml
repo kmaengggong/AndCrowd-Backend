@@ -5,7 +5,7 @@
 <mapper namespace="com.fiveis.andcrowd.repository.and.AndDynamicRepository">
 
     <insert id="createDynamicAndQnaTable">
-        CREATE TABLE and_qna_#{and_id}(
+        CREATE TABLE IF NOT EXISTS and_qna_#{and_id}(
           and_qna_id INT AUTO_INCREMENT PRIMARY KEY ,
           and_id INT NOT NULL ,
           user_id INT NOT NULL ,
@@ -18,7 +18,7 @@
     </insert>
 
     <insert id="createDynamicAndQnaReplyTable">
-        CREATE TABLE and_qna_reply_#{and_id}(
+        CREATE TABLE IF NOT EXISTS and_qna_reply_#{and_id}(
           and_reply_id INT AUTO_INCREMENT PRIMARY KEY ,
           and_qna_id INT NOT NULL ,
           and_id INT NOT NULL,
@@ -31,7 +31,7 @@
     </insert>
 
     <insert id="createDynamicAndRoleTable">
-        CREATE TABLE and_role_#{and_id}(
+        CREATE TABLE IF NOT EXISTS and_role_#{and_id}(
             and_role_id INT AUTO_INCREMENT PRIMARY KEY ,
             and_id INT NOT NULL ,
             and_role VARCHAR(2000) NOT NULL ,
@@ -41,7 +41,7 @@
     </insert>
 
     <insert id="createDynamicAndApplicantTable">
-        CREATE TABLE and_applicant_#{and_id}(
+        CREATE TABLE IF NOT EXISTS and_applicant_#{and_id}(
            and_apply_id INT AUTO_INCREMENT PRIMARY KEY ,
            and_id INT NOT NULL ,
            user_id INT NOT NULL ,
@@ -52,7 +52,7 @@
     </insert>
 
     <insert id="createDynamicAndBoardTable">
-        CREATE TABLE and_board_#{and_id} (
+        CREATE TABLE IF NOT EXISTS and_board_#{and_id} (
         and_board_id INT AUTO_INCREMENT PRIMARY KEY ,
         and_id INT NOT NULL,
         user_id INT NOT NULL,
@@ -68,7 +68,7 @@
     </insert>
 
     <insert id="createDynamicAndMemberTable">
-        CREATE TABLE and_member_#{and_id} (
+        CREATE TABLE IF NOT EXISTS and_member_#{and_id} (
         member_id INT AUTO_INCREMENT PRIMARY KEY ,
         and_id INT NOT NULL,
         user_id INT NOT NULL,
