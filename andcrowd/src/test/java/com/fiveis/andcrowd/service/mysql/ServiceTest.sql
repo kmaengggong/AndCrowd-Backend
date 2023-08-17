@@ -79,3 +79,40 @@ VALUES
 
 DROP TABLE dynamic_and_applicant_321;
 
+CREATE TABLE and_board_1111 (
+	and_board_id INT AUTO_INCREMENT PRIMARY KEY ,
+	and_id INT NOT NULL,
+	user_id INT NOT NULL,
+	and_board_tag INT,
+	and_board_title VARCHAR(200) NOT NULL,
+	and_board_content VARCHAR(2000) NOT NULL,
+	and_img VARCHAR(255),
+	published_at DATETIME DEFAULT now(),
+	updated_at DATETIME DEFAULT now(),
+	and_board_view_count INT DEFAULT 0 ,
+	is_deleted BOOL default false
+);
+
+INSERT INTO and_board_1111 (and_id, user_id, and_board_title, and_board_content)
+VALUES
+	(1111, 1, 'Board Title 1', 'Board Content 1'),
+	(1111, 2, 'Board Title 2', 'Board Content 2'),
+	(1111, 3, 'Board Title 3', 'Board Content 3');
+
+DROP TABLE and_board_1111;
+
+CREATE TABLE and_member_1111 (
+	member_id INT AUTO_INCREMENT PRIMARY KEY,
+	and_id INT NOT NULL,
+	user_id INT NOT NULL,
+	is_deleted BOOL DEFAULT false
+);
+
+INSERT INTO and_member_1111 (and_id, user_id)
+VALUES
+	(1111, 1),
+	(1111, 2),
+	(1111, 3);
+
+DROP TABLE and_member_1111;
+
