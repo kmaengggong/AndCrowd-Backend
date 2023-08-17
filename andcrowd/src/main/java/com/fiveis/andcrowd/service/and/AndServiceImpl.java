@@ -77,6 +77,11 @@ public class AndServiceImpl implements AndService{
     public void save(And and) {
         And savedAnd = andJPARepository.save(and);
         andDynamicRepository.createDynamicAndQnaTable(savedAnd.getAndId());
+        andDynamicRepository.createDynamicAndMemberTable(savedAnd.getAndId());
+        andDynamicRepository.createDynamicAndBoardTable(savedAnd.getAndId());
+        andDynamicRepository.createDynamicAndRoleTable(savedAnd.getAndId());
+        andDynamicRepository.createDynamicAndApplicantTable(savedAnd.getAndId());
+        andDynamicRepository.createDynamicAndQnaReplyTable(savedAnd.getAndId());
     }
 
 

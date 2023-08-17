@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/andQna{andId}")
+@RequestMapping("/and/{andId}/qna")
 public class DynamicAndQnaController {
 
     private final DynamicAndQnaService dynamicAndQnaService;
