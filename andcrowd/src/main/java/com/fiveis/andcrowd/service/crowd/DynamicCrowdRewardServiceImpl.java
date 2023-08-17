@@ -1,6 +1,6 @@
 package com.fiveis.andcrowd.service.crowd;
 
-import com.fiveis.andcrowd.dto.crowd.DynamicRewardDTO;
+import com.fiveis.andcrowd.dto.crowd.DynamicCrowdRewardDTO;
 import com.fiveis.andcrowd.repository.crowd.DynamicCrowdRewardRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,27 +18,32 @@ public class DynamicCrowdRewardServiceImpl implements DynamicCrowdRewardService 
     }
 
     @Override
-    public List<DynamicRewardDTO.FindAllById> findAll(int crowdId) {
+    public void createDynamicCrowdRewardTable(int crowdId) {
+        dynamicCrowdRewardRepository.createDynamicCrowdRewardTable(crowdId);
+    }
+
+    @Override
+    public List<DynamicCrowdRewardDTO.FindAllById> findAll(int crowdId) {
         return dynamicCrowdRewardRepository.findAll(crowdId);
     }
 
     @Override
-    public DynamicRewardDTO.FindAllById findByCrowdId(int crowdId, int rewardId) {
+    public List<DynamicCrowdRewardDTO.FindAllById> findAllNotDeleted(int crowdId) {
+        return dynamicCrowdRewardRepository.findAllNotDeleted(crowdId);
+    }
+
+    @Override
+    public DynamicCrowdRewardDTO.FindAllById findByRewardId(int crowdId, int rewardId) {
         return dynamicCrowdRewardRepository.findByRewardId(crowdId, rewardId);
     }
 
     @Override
-    public List<DynamicRewardDTO.FindAllById> findByUserId(int crowdId, int userId) {
-        return dynamicCrowdRewardRepository.findByUserId(crowdId, userId);
-    }
-
-    @Override
-    public void save(DynamicRewardDTO.Update crowdRewardInsertDTO) {
+    public void save(DynamicCrowdRewardDTO.Update crowdRewardInsertDTO) {
         dynamicCrowdRewardRepository.save(crowdRewardInsertDTO);
     }
 
     @Override
-    public void update(DynamicRewardDTO.Update crowdRewardUpdateDTO) {
+    public void update(DynamicCrowdRewardDTO.Update crowdRewardUpdateDTO) {
         dynamicCrowdRewardRepository.update(crowdRewardUpdateDTO);
     }
 

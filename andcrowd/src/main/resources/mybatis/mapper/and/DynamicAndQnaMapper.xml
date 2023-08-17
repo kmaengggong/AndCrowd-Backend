@@ -81,7 +81,7 @@
     </update>
 
     <insert id="insertTestData">
-        INSERT INTO and_qna_123 (and_id, user_id, and_qna_title, and_qna_content)
+        INSERT IGNORE INTO and_qna_123 (and_id, user_id, and_qna_title, and_qna_content)
         VALUES
             (123, 1, 'QnA Title 1', 'QnA Content 1'),
             (123, 2, 'QnA Title 2', 'QnA Content 2'),

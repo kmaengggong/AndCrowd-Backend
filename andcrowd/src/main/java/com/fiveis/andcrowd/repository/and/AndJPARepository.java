@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface AndJPARepository extends JpaRepository<And, Integer> {
+public interface AndJPARepository extends JpaRepository<And, Integer>, AndQueryRepository {
     List<AndDTO.FindAllByUserId> findAllByUserId(int userId);
 //    List<AndDTO.Find> findAllByIsDeletedFalse();
     List<And> findAllByIsDeletedFalse();

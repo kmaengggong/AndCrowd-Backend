@@ -1,6 +1,6 @@
 package com.fiveis.andcrowd.repository.and;
 import com.fiveis.andcrowd.entity.and.And;
-import com.fiveis.andcrowd.repository.and.AndJPARepository;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -11,35 +11,51 @@ import java.time.LocalDateTime;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
-public class AndJPARepositoryDeleteTest {
+public class AndJPARepositoryTest {
 
     @Autowired
     private AndJPARepository andRepository;
-
     @Test
-    @Transactional
-    public void testSoftDeleteById() {
+    @BeforeEach
+    public void saveTest(){
+        // Given
+
+        // When
         // Given
         And newAnd = And.builder()
-                .andId(1)
                 .userId(1)
                 .andCategoryId(1)
-                .crowdId(1)
                 .andTitle("Test Title")
                 .andHeaderImg("header.jpg")
                 .andContent("Test Content")
                 .andEndDate(LocalDateTime.now().plusDays(7))
                 .needNumMem(5)
-                .andLikeCount(0)
-                .andViewCount(0)
-                .andStatus(0)
-                .adId(1)
                 .build();
 
         andRepository.save(newAnd);
+
+        // Then
+    }
+
+    @Test
+    @Transactional
+    public void testSoftDeleteById() {
+        // Given
+        And newAnd2 = And.builder()
+                .userId(3)
+                .andCategoryId(5)
+                .crowdId(1)
+                .andTitle("Test Title2")
+                .andHeaderImg("header.jpg2")
+                .andContent("Test Content2")
+                .andEndDate(LocalDateTime.now().plusDays(10))
+                .needNumMem(5)
+                .build();
+
+        andRepository.save(newAnd2);
         andRepository.flush();
 
-        int andIdToDelete = newAnd.getAndId();
+        int andIdToDelete = newAnd2.getAndId();
 
         // When
         andRepository.deleteById(andIdToDelete);

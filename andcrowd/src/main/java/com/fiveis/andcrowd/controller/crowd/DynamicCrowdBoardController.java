@@ -33,9 +33,21 @@ public class DynamicCrowdBoardController {
         return ResponseEntity.ok().body(board);
     }
 
-//    @RequestMapping(value = "", method = RequestMethod.POST)
-//    public ResponseEntity<String> insertCrowdBoard(@RequestBody DynamicCrowdBoardDTO.Save dynamicCrowdBoardDTOSave){
-//        dynamicCrowdBoardService.save(dynamicCrowdBoardDTOSave);
-//        return  ResponseEntity.ok("공지사항 등록 완료");
-//    }
+    @RequestMapping(value = "", method = RequestMethod.POST)
+    public ResponseEntity<String> insertCrowdBoard(@RequestBody DynamicCrowdBoardDTO.Save dynamicCrowdBoardDTOSave){
+        dynamicCrowdBoardService.save(dynamicCrowdBoardDTOSave);
+        return  ResponseEntity.ok("공지사항 등록 완료");
+    }
+
+    @RequestMapping(value = "/{crowdBoardId}", method = RequestMethod.PATCH)
+    public ResponseEntity<String> updateCrowdBoard(@RequestBody DynamicCrowdBoardDTO.Update dynamicCrowdBoardDTOupdate){
+        dynamicCrowdBoardService.update(dynamicCrowdBoardDTOupdate);
+        return ResponseEntity.ok("공지사항 수정 완료");
+    }
+
+    @RequestMapping(value = "/{crowdBoardId}/delete", method = RequestMethod.PATCH)
+    public ResponseEntity<String> deleteCrowdBoard(@PathVariable int crowdId, @PathVariable int crowdBoardId){
+        dynamicCrowdBoardService.deleteByCrowdBoardId(crowdId, crowdBoardId);
+        return ResponseEntity.ok("공지사항 삭제 완료");
+    }
 }

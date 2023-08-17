@@ -82,4 +82,47 @@ public class Crowd {
         this.updatedAt = LocalDateTime.now();
     }
 
+    public void setCrowdContent(String crowdContent) {
+        this.crowdContent = crowdContent;
+    }
+
+    public void setCrowdGoal(int crowdGoal) {
+        this.crowdGoal = crowdGoal;
+    }
+
+    public void setCrowdImg1(String crowdImg1) {
+        this.crowdImg1 = crowdImg1;
+    }
+
+    public void setCrowdImg2(String crowdImg2) {
+        this.crowdImg2 = crowdImg2;
+    }
+
+    public void setCrowdImg3(String crowdImg3) {
+        this.crowdImg3 = crowdImg3;
+    }
+
+    public void setCrowdImg4(String crowdImg4) {
+        this.crowdImg4 = crowdImg4;
+    }
+
+    public void setCrowdImg5(String crowdImg5) {
+        this.crowdImg5 = crowdImg5;
+    }
+
+    public void setCrowdStatus(int crowdStatus) {
+        this.crowdStatus = crowdStatus;
+    }
+
+    public void setCrowdTitle(String crowdTitle) {
+        this.crowdTitle = crowdTitle;
+    }
+
+    public void setHeaderImg(String headerImg) {
+        this.headerImg = headerImg;
+    }
+
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
+    }
 }

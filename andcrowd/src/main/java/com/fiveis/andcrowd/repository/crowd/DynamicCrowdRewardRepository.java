@@ -1,6 +1,6 @@
 package com.fiveis.andcrowd.repository.crowd;
 
-import com.fiveis.andcrowd.dto.crowd.DynamicRewardDTO;
+import com.fiveis.andcrowd.dto.crowd.DynamicCrowdRewardDTO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -9,23 +9,17 @@ import java.util.List;
 @Mapper
 public interface DynamicCrowdRewardRepository {
 
-    List<DynamicRewardDTO.FindAllById> findAll(int crowdId);
+    List<DynamicCrowdRewardDTO.FindAllById> findAll(@Param("crowd_id") int crowdId);
+    List<DynamicCrowdRewardDTO.FindAllById> findAllNotDeleted(@Param("crowd_id") int crowdId);
+    DynamicCrowdRewardDTO.FindAllById findByRewardId(@Param("crowd_id") int crowdId, @Param("reward_id") int rewardId);
 
-    DynamicRewardDTO.FindAllById findByRewardId(@Param("crowd_id") int crowdId, @Param("reward_id") int rewardId);
-
-    List<DynamicRewardDTO.FindAllById> findByUserId(@Param("crowd_id") int crowdId, @Param("user_id") int userId);
-
-//    DynamicRewardDTO.FindAllById findByRewardId(@Param("crowd_id") int crowdId, @Param("reward_id") int rewardId);
-
-
-    void save(DynamicRewardDTO.Update dynamicRewardInsertDTO);
-
-    void update(DynamicRewardDTO.Update dynamicRewardUpdateDTO);
-
+    void save(DynamicCrowdRewardDTO.Update dynamicRewardInsertDTO);
+    void update(DynamicCrowdRewardDTO.Update dynamicRewardUpdateDTO);
     void deleteByRewardId(@Param("crowd_id") int crowdId, @Param("reward_id") int rewardId);
 
-    void createRewardTable();
-    void dropRewardTable();
+    void createDynamicCrowdRewardTable(@Param("crowd_id") int crowdId);
+    void testCreateDynamicCrowdRewardTable();
+    void dropCrowdRewardTable();
     void insertTestData();
 
 }
