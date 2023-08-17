@@ -14,13 +14,14 @@ public interface CrowdService {
 
     List<CrowdDTO.FindAllByUserId> findAllByUserIdList(int userId);
 
+    List<CrowdDTO.FindById> findAllByIsDeletedFalse();
     List<CrowdDTO.FindById> findAll();
 
     void deleteByCrowdId(int crowdId);
 
     void save(Crowd crowd);
 
-    public CrowdDTO.FindById convertToAndFindByCrowdId(Crowd crowd);
+//    public CrowdDTO.FindById convertToAndFindByCrowdId(Crowd crowd);
 
     void update(Crowd crowd);
 }
