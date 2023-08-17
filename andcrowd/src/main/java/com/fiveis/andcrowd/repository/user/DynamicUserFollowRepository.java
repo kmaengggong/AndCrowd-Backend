@@ -12,6 +12,7 @@ public interface DynamicUserFollowRepository {
     void createDynamicUserFollowTable(String userEmail);
     List<DynamicUserFollowDTO.Find> findAll(String userEmail);
     DynamicUserFollowDTO.Find findById(@Param("userEmail") String userEmail, @Param("uFollowId") int uFollowId);
+    DynamicUserFollowDTO.Find findByUserId(@Param("userEmail") String userEmail, @Param("userId") int userId);
     void save(@Param("userEmail") String userEmail, @Param("dynamicUserFollow") DynamicUserFollow dynamicUserFollow);
     void deleteById(@Param("userEmail") String userEmail, @Param("uFollowId") int uFollowId);
 }

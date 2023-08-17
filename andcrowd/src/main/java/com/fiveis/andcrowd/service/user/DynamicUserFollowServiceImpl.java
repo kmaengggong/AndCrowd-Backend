@@ -37,6 +37,7 @@ public class DynamicUserFollowServiceImpl implements DynamicUserFollowService{
     }
 
     public void save(String userEmail, DynamicUserFollow dynamicUserFollow){
+        if(dynamicUserFollowRepository.findByUserId(userEmail, dynamicUserFollow.getUserId()) != null) return;
         dynamicUserFollowRepository.save(userEmail, dynamicUserFollow);
     }
 

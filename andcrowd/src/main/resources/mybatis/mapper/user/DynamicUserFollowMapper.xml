@@ -30,6 +30,16 @@
             u_follow_id = #{uFollowId}
     </select>
 
+    <select id="findByUserId" resultType="com.fiveis.andcrowd.dto.user.DynamicUserFollowDTO$Find">
+        SELECT
+            u_follow_id as uFollowId,
+            user_id as userId
+        FROM
+            user_follow_${userEmail}
+        WHERE
+            user_id = #{userId}
+    </select>
+
     <insert id="save">
         INSERT IGNORE
         INTO

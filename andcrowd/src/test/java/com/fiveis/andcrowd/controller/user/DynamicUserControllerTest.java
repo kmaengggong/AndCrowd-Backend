@@ -112,7 +112,6 @@ public class DynamicUserControllerTest {
         // Given
         String url = "/user/1/and";
 
-
         dynamicUserAndService.save(User.toTableName(userEmail),
                 DynamicUserAnd.builder()
                         .uAndId(1)

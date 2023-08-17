@@ -38,6 +38,7 @@ public class DynamicUserAndServiceImpl implements DynamicUserAndService{
     }
 
     public void save(String userEmail, DynamicUserAnd dynamicUserAnd){
+        if(dynamicUserAndRepository.findByAndId(userEmail, dynamicUserAnd.getAndId()) != null) return;
         dynamicUserAndRepository.save(userEmail, dynamicUserAnd);
     }
 

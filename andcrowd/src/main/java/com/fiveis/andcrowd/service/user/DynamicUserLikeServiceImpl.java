@@ -66,6 +66,9 @@ public class DynamicUserLikeServiceImpl implements DynamicUserLikeService{
     }
 
     public void save(String userEmail, DynamicUserLike dynamicUserLike){
+        if(dynamicUserLikeRepository.findByProject(userEmail,
+                dynamicUserLike.getProjectId(),
+                dynamicUserLike.getProjectType()) != null) return;
         dynamicUserLikeRepository.save(userEmail, dynamicUserLike);
     }
 

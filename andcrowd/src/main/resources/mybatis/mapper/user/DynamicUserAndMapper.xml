@@ -37,7 +37,7 @@
         FROM
             user_and_${userEmail}
         WHERE
-            u_and_id = #{andId}
+            and_id = #{andId}
     </select>
 
     <insert id="save">

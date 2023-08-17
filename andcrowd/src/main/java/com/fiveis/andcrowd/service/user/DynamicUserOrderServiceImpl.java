@@ -40,6 +40,7 @@ public class DynamicUserOrderServiceImpl implements DynamicUserOrderService{
     }
 
     public void save(String userEmail, DynamicUserOrder dynamicUserOrder){
+        if(dynamicUserOrderRepository.findByOrderId(userEmail, dynamicUserOrder.getOrderId()) != null) return;
         dynamicUserOrderRepository.save(userEmail, dynamicUserOrder);
     }
     public void deleteById(String userEmail, int uOrderId){

@@ -66,6 +66,9 @@ public class DynamicUserMakerServiceImpl implements DynamicUserMakerService{
     }
 
     public void save(String userEmail, DynamicUserMaker dynamicUserMaker){
+        if(dynamicUserMakerRepository.findByProject(userEmail,
+                dynamicUserMaker.getProjectId(),
+                dynamicUserMaker.getProjectType()) != null) return;
         dynamicUserMakerRepository.save(userEmail, dynamicUserMaker);
     }
 

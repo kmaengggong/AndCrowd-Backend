@@ -33,6 +33,19 @@
             u_maker_id = #{uMakerId}
     </select>
 
+    <select id="findByProject" resultType="com.fiveis.andcrowd.dto.user.DynamicUserMakerDTO$Find">
+        SELECT
+            u_maker_id as uMakerId,
+            project_id as projectId,
+            project_type as projectType
+        FROM
+            user_maker_${userEmail}
+        WHERE
+            project_id = #{projectId}
+        AND
+            project_type = #{projectType}
+    </select>
+
     <insert id="save">
         INSERT IGNORE
         INTO

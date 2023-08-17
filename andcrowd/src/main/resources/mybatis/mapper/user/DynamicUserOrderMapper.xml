@@ -30,6 +30,16 @@
             u_order_id = #{uOrderId}
     </select>
 
+    <select id="findByOrderId" resultType="com.fiveis.andcrowd.dto.user.DynamicUserOrderDTO$Find">
+        SELECT
+            u_order_id as uOrderId,
+            order_id as orderId
+        FROM
+            user_order_${userEmail}
+        WHERE
+            order_id = #{orderId}
+    </select>
+
     <insert id="save">
         INSERT IGNORE
         INTO
