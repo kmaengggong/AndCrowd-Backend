@@ -44,7 +44,7 @@
     </select>
 
     <insert id="save" parameterType="com.fiveis.andcrowd.dto.crowd.DynamicCrowdSponsorDTO$Update">
-        INSERT INTO crowd_sponsor_${crowdId} (sponsor_id, crowd_id, purchase_id, is_deleted)
+        INSERT IGNORE INTO crowd_sponsor_${crowdId} (sponsor_id, crowd_id, purchase_id, is_deleted)
         VALUES (#{sponsorId}, #{crowdId}, #{purchaseId},#{isDeleted})
     </insert>
 
@@ -59,7 +59,7 @@
     <update id="deleteBySponsorId" parameterType="int">
         UPDATE crowd_sponsor_#{crowdId}
         SET is_deleted = true
-        WHERE sponsor_id = #{sponsor_id}
+        WHERE sponsor_id = #{sponsorId}
     </update>
 
 <!--  테스트용 쿼리문  -->
@@ -77,7 +77,7 @@
     </update>
 
     <insert id="insertTestData">
-        INSERT INTO crowd_sponsor_456 (sponsor_id, crowd_id, purchase_id)
+        INSERT IGNORE INTO crowd_sponsor_456 (sponsor_id, crowd_id, purchase_id)
         VALUES
             (1, 456, 100),
             (2, 456, 200),

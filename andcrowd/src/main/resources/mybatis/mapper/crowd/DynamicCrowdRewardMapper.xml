@@ -17,7 +17,7 @@
         )
     </update>
 
-    <select id="findAll" parameterType="int">
+    <select id="findAll" resultType="com.fiveis.andcrowd.dto.crowd.DynamicCrowdRewardDTO$FindAllById">
         SELECT
             reward_id AS rewardId,
             crowd_id AS crowdId,
@@ -56,7 +56,7 @@
     </select>
 
     <insert id="save" parameterType="com.fiveis.andcrowd.dto.crowd.DynamicCrowdRewardDTO$Update">
-        INSERT INTO crowd_reward_${crowdId} (reward_id, crowd_id, reward_title, reward_content, reward_amount, reward_limit, is_deleted)
+        INSERT IGNORE INTO crowd_reward_${crowdId} (reward_id, crowd_id, reward_title, reward_content, reward_amount, reward_limit, is_deleted)
         VALUES (#{rewardId},#{crowdId},#{rewardTitle},#{rewardContent},#{rewardAmount},#{rewardLimit},#{isDeleted})
 <!--        VALUES (#{rewardId, jdbcType=INTEGER}, #{crowdId, jdbcType=INTEGER}, #{rewardTitle, jdbcType=VARCHAR},-->
 <!--        #{rewardContent, jdbcType=VARCHAR}, #{rewardAmount, jdbcType=INTEGER}, #{rewardLimit, jdbcType=INTEGER},-->
@@ -74,9 +74,9 @@
     </update>
 
     <update id="deleteByRewardId" parameterType="int">
-        UPDATE crowd_reward_#{crowdId}
+        UPDATE crowd_reward_${crowdId}
         SET is_deleted = true
-        WHERE reward_id = #{reward_id}
+        WHERE reward_id = #{rewardId}
     </update>
 
 <!--  테스트용 쿼리문  -->
@@ -98,7 +98,7 @@
     </update>
 
     <insert id="insertTestData">
-        INSERT INTO crowd_reward_123 (reward_id, crowd_id, reward_title, reward_content, reward_amount, reward_limit)
+        INSERT IGNORE INTO crowd_reward_123 (reward_id, crowd_id, reward_title, reward_content, reward_amount, reward_limit)
         VALUES
         (1, 123, '슈퍼얼리버드1', '기본후원1', 1000, 5),
         (2, 123, '슈퍼얼리버드2', '기본후원2', 10000, 5),

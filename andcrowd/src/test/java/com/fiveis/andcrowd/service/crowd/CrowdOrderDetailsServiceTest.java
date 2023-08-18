@@ -10,7 +10,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -74,13 +76,23 @@ public class CrowdOrderDetailsServiceTest {
 
         // when
         crowdOrderDetailsService.save(saveList);
-        System.out.println(saveList);
+//        System.out.println(saveList);
 //        CrowdOrderDetailsDTO.FindById findById = crowdOrderDetailsService.findById(crowdId);
 //        System.out.println(findById);
-        List<CrowdOrderDetailsDTO.FindById> crowdOrders = crowdOrderDetailsService.findById();
-        System.out.println(crowdOrders);
+        List<CrowdOrderDetailsDTO.FindById> crowdOrders = crowdOrderDetailsService.findAll();
+        List<CrowdOrderDetailsDTO.FindById> filteredOrders = crowdOrders.stream()
+                .filter(order -> order.getCrowdId() == crowdId)
+                .collect(Collectors.toList());
+
+//        List<CrowdOrderDetailsDTO.FindById> filteredOrders = new ArrayList<>();
+//        for (CrowdOrderDetailsDTO.FindById order : crowdOrders) {
+//            if (order.getCrowdId() == 3) {
+//                filteredOrders.add(order);
+//            }
+//        }
+        System.out.println(filteredOrders);
 
         // then
-        Assertions.assertEquals(2, crowdOrders.size());
+        assertEquals(2, filteredOrders.size());
     }
 }

@@ -23,4 +23,5 @@ public class CrowdOrderDetailsRepositoryTest {
 
         assertEquals(3, crowdOrderDetailsList.size());
     }
+
 }

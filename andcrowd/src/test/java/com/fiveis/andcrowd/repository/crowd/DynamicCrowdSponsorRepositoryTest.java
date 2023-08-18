@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SpringBootTest
 @TestInstance(TestInstance.Lifecycle.PER_METHOD)
@@ -78,5 +79,22 @@ public class DynamicCrowdSponsorRepositoryTest {
         assertEquals(sponsorId, saveSponsor.getSponsorId());
         assertEquals(purchaseId, saveSponsor.getPurchaseId());
         assertEquals(false, saveSponsor.isDeleted());
+    }
+
+    @Test
+    @Transactional
+    @DisplayName("특정 SponsorId를 소프트딜리트 후 조회되지 않는지 확인")
+    public void deleteSponsorTest() {
+        // given
+        int crowdId = 456;
+        int sponsorId = 3;
+
+        // when
+        dynamicCrowdSponsorRepository.deleteBySponsorId(crowdId, sponsorId);
+
+        // then
+        DynamicCrowdSponsorDTO.FindById deletedSponsor = dynamicCrowdSponsorRepository.findBySponsorId(crowdId, sponsorId);
+        System.out.println(deletedSponsor);
+        assertTrue(deletedSponsor.isDeleted());
     }
 }

@@ -1,14 +1,18 @@
 package com.fiveis.andcrowd.repository.crowd;
 
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fiveis.andcrowd.entity.crowd.Crowd;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -47,8 +51,6 @@ public class CrowdJPARepositoryTest {
         String headerImg = "헤더이미지1";
         int userId = 1000;
         LocalDateTime publishedAt = LocalDateTime.now();
-
-        //when
         Crowd newCrowd = Crowd.builder()
                 .crowdId(crowdId)
                 .adId(adId)
@@ -69,6 +71,7 @@ public class CrowdJPARepositoryTest {
                 .publishedAt(publishedAt)
                 .build();
 
+        //when
         crowdJPARepository.save(newCrowd);
         System.out.println(newCrowd);
         //then
@@ -76,11 +79,48 @@ public class CrowdJPARepositoryTest {
 
     @Test
     @Transactional
-    @DisplayName("crowd글 삭제시 softdelte기능 정상 작동 확인")
-    public void softDeleteTest(){
-        // given
-        // when
+    @DisplayName("crowd 2번글 삭제후 crowd 전체 글 조회시 2개만 조회된다.")
+    public void deleteCrowdIdTest(){
+        //given
+        int crowdId = 2;
+        //when
+        crowdJPARepository.deleteById(crowdId);
+        List<Crowd> find = crowdJPARepository.findAll();
+        System.out.println(find);
         // then
+        Assertions.assertEquals(2, find.size());
+    }
+
+    @Test
+    @Transactional
+    @DisplayName("crowd 2번글 소프트 삭제 후 crowd 전체 글 조회시 2개만 조회된다.")
+    public void softDeleteTest() {
+        // given
+        List<Crowd> crowdList = crowdJPARepository.findAll();
+        System.out.println(crowdList);
+
+        int crowdIdToDel = 2;
+
+        // when
+        crowdJPARepository.deleteById(crowdIdToDel);
+        crowdJPARepository.flush();
+
+        // then
+        List<Crowd> crowdListAfterDelete = crowdJPARepository.findAll();
+        System.out.println(crowdListAfterDelete);
+
+        Crowd deletedCrowd = crowdJPARepository.findById(crowdIdToDel).orElse(null);
+        assertNull(deletedCrowd); // 삭제된 엔터티는 더 이상 조회되지 않아야 한다.
+
+        for (Crowd crowd : crowdListAfterDelete) {
+            if (crowd.getCrowdId() == crowdIdToDel) {
+                assertTrue(crowd.isDeleted());
+            } else {
+                assertFalse(crowd.isDeleted());
+            }
+        }
+
+        assertEquals(2, crowdListAfterDelete.size());
     }
 
 }

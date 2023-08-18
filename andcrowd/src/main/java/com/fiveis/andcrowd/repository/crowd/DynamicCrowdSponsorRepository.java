@@ -15,7 +15,7 @@ public interface DynamicCrowdSponsorRepository {
 
     void save(DynamicCrowdSponsorDTO.Update dynamicSponsorInsertDTO);
     void update(DynamicCrowdSponsorDTO.Update dynamicSponsorUpdateDTO);
-    void deleteBySponsorId(@Param("crowd_id") int crowdId, @Param("sponsor_id") int sponsorId);
+    void deleteBySponsorId(@Param("crowdId") int crowdId, @Param("sponsorId") int sponsorId);
 
     void createDynamicCrowdSponsorTable(@Param("crowd_id") int crowdId);
     void testCreateDynamicCrowdSponsorTable();
