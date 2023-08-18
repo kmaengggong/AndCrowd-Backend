@@ -1,5 +1,6 @@
 package com.fiveis.andcrowd.controller.user;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fiveis.andcrowd.entity.and.And;
 import com.fiveis.andcrowd.entity.user.*;
@@ -20,10 +21,10 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
+import javax.xml.transform.Result;
 import java.time.LocalDateTime;
 
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -88,33 +89,32 @@ public class DynamicUserControllerTest {
                 .build());
 
         // And 테이블 중복 생성 및 중복 데이터 추가 시 오류
-//        andService.save(And.builder()
-//                        .andId(andId)
-//                        .userId(userId)
-//                        .andCategoryId(0)
-//                        .crowdId(0)
-//                        .andTitle("andTitle")
-//                        .andHeaderImg("andHeaderImg")
-//                        .andContent("andContent")
-//                        .andEndDate(LocalDateTime.now())
-//                        .needNumMem(0)
-//                        .andLikeCount(0)
-//                        .andViewCount(0)
-//                        .andStatus(0)
-//                        .adId(0)
-//                        .build());
+        andService.save(And.builder()
+                        .andId(andId)
+                        .userId(userId)
+                        .andCategoryId(0)
+                        .crowdId(0)
+                        .andTitle("andTitle")
+                        .andHeaderImg("andHeaderImg")
+                        .andContent("andContent")
+                        .andEndDate(LocalDateTime.now())
+                        .needNumMem(0)
+                        .andLikeCount(0)
+                        .andViewCount(0)
+                        .andStatus(0)
+                        .adId(0)
+                        .build());
     }
 
     @Test
     @Transactional
     @DisplayName("1번 유저가 참가한 모임(1번 모임 추가 후) 목록 조회")
-    public void getUserAndTest() throws Exception{
+    public void findUserAndTest() throws Exception{
         // Given
         String url = "/user/1/and";
 
         dynamicUserAndService.save(User.toTableName(userEmail),
                 DynamicUserAnd.builder()
-                        .uAndId(1)
                         .andId(andId)
                         .build());
         // When
@@ -129,8 +129,30 @@ public class DynamicUserControllerTest {
 
     @Test
     @Transactional
+    @DisplayName("")
+    public void saveUserAndTest() throws Exception{
+        // Given
+        String url = "/user/1/and";
+        DynamicUserAnd dynamicUserAnd = DynamicUserAnd.builder()
+                .andId(andId)
+                .build();
+
+        // When
+        final ResultActions result = mockMvc.perform(MockMvcRequestBuilders
+                .post(url)
+                .content(toJson(dynamicUserAnd))
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON));
+
+        // Then
+        result.andExpect(status().isOk())
+                .andExpect(content().string("UserAnd Saved!"));
+    }
+
+    @Test
+    @Transactional
     @DisplayName("1번 유저가 팔로우한 유저 목록(2번 유저 추가 후) 조회")
-    public void getUserFollowTest() throws Exception{
+    public void findUserFollowTest() throws Exception{
         // Given
         String url = "/user/1/follow";
         int newUserId = 2;
@@ -169,6 +191,28 @@ public class DynamicUserControllerTest {
 
     @Test
     @Transactional
+    @DisplayName("")
+    public void saveUserFollowTest() throws Exception{
+        // Given
+        String url = "/user/1/and";
+        DynamicUserFollow dynamicUserFollow = DynamicUserFollow.builder()
+                .userId(userId)
+                .build();
+
+        // When
+        final ResultActions result = mockMvc.perform(MockMvcRequestBuilders
+                .post(url)
+                .content(toJson(dynamicUserFollow))
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON));
+
+        // Then
+        result.andExpect(status().isOk())
+                .andExpect(content().string("UserFollow Saved!"));
+    }
+
+    @Test
+    @Transactional
     @DisplayName("1번 유저가 참가한 모임 목록 조회")
     public void getUserLikeTest() throws Exception{
         // Given
@@ -189,6 +233,28 @@ public class DynamicUserControllerTest {
         // Then
         result.andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].projectId").value(andId));
+    }
+
+    @Test
+    @Transactional
+    @DisplayName("")
+    public void saveUserLikeTest() throws Exception{
+        // Given
+        String url = "/user/1/and";
+        DynamicUserFollow dynamicUserFollow = DynamicUserFollow.builder()
+                .userId(userId)
+                .build();
+
+        // When
+        final ResultActions result = mockMvc.perform(MockMvcRequestBuilders
+                .post(url)
+                .content(toJson(dynamicUserFollow))
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON));
+
+        // Then
+        result.andExpect(status().isOk())
+                .andExpect(content().string("UserFollow Saved!"));
     }
 
     @Test
@@ -237,5 +303,9 @@ public class DynamicUserControllerTest {
         // Then
         result.andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].orderId").value(1));
+    }
+
+    private <T> String toJson(T data) throws JsonProcessingException{
+        return objectMapper.writeValueAsString(data);
     }
 }

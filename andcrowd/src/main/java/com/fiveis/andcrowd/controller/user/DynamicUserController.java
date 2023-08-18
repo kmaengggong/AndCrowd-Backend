@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -39,7 +38,7 @@ public class DynamicUserController {
     }
 
     @RequestMapping(value="{userId}/and", method=RequestMethod.GET)
-    public ResponseEntity<?> getUserAnd(@PathVariable int userId){//,
+    public ResponseEntity<?> findUserAnd(@PathVariable int userId){//,
                                         //Principal principal){
         String userEmail = User.toTableName(userService.findById(userId).getUserEmail());
         List<AndDTO.Find> andDTOFindList = dynamicUserAndService.findAll(userEmail);
@@ -64,7 +63,7 @@ public class DynamicUserController {
     }
 
     @RequestMapping(value="{userId}/follow", method=RequestMethod.GET)
-    public ResponseEntity<?> getUserFollow(@PathVariable int userId){//,
+    public ResponseEntity<?> findUserFollow(@PathVariable int userId){//,
                                             //Principal principal){
         String userEmail = User.toTableName(userService.findById(userId).getUserEmail());
         List<UserDTO.FindAsPublic> userDTOFindList = dynamicUserFollowService.findAll(userEmail);
@@ -89,7 +88,7 @@ public class DynamicUserController {
     }
 
     @RequestMapping(value="{userId}/like", method=RequestMethod.GET)
-    public ResponseEntity<?> getUserLike(@PathVariable int userId){//,
+    public ResponseEntity<?> findUserLike(@PathVariable int userId){//,
                                         //Principal principal){
         String userEmail = User.toTableName(userService.findById(userId).getUserEmail());
         List<ProjectDTO.Find> projectDTOFindList = dynamicUserLikeService.findAll(userEmail);
@@ -116,7 +115,7 @@ public class DynamicUserController {
     }
 
     @RequestMapping(value="{userId}/maker", method=RequestMethod.GET)
-    public ResponseEntity<?> getUserMaker(@PathVariable int userId){//,
+    public ResponseEntity<?> findUserMaker(@PathVariable int userId){//,
                                             //Principal principal){
         String userEmail = User.toTableName(userService.findById(userId).getUserEmail());
         List<ProjectDTO.Find> projectDTOFindList = dynamicUserMakerService.findAll(userEmail);
@@ -143,7 +142,7 @@ public class DynamicUserController {
     }
 
     @RequestMapping(value="{userId}/order", method=RequestMethod.GET)
-    public ResponseEntity<?> getUserOrder(@PathVariable int userId){//,
+    public ResponseEntity<?> findUserOrder(@PathVariable int userId){//,
                                             //Principal principal){
         String userEmail = User.toTableName(userService.findById(userId).getUserEmail());
         List<CrowdOrderDetailsDTO.FindById> crowdOrderDetailsDTOFindList = dynamicUserOrderService.findAll(userEmail);

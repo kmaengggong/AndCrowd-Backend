@@ -30,7 +30,7 @@ public class DynamicUserOrderServiceImpl implements DynamicUserOrderService{
         for(DynamicUserOrderDTO.Find find : findList){
             if(crowdOrderDetailsJPARepository.findById(find.getOrderId()).isEmpty()) continue;
             CrowdOrderDetails crowdOrderDetails = crowdOrderDetailsJPARepository.findById(find.getOrderId()).get();
-            //orderList.add(CrowdOrderDetailsDTO.convertToFindByIdDTO(crowdOrderDetails));
+            orderList.add(CrowdOrderDetailsDTO.convertToFindByIdDTO(crowdOrderDetails));
         }
         return orderList;
     }
