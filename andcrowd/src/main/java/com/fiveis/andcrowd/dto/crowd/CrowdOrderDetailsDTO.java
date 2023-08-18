@@ -1,5 +1,7 @@
 package com.fiveis.andcrowd.dto.crowd;
 
+import com.fiveis.andcrowd.entity.crowd.Crowd;
+import com.fiveis.andcrowd.entity.crowd.CrowdOrderDetails;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -24,6 +26,21 @@ public class CrowdOrderDetailsDTO { // findAll, findById, update, save, delete
         private String purchaseStatus;
         private boolean isDeleted;
 
+        public static CrowdOrderDetailsDTO.FindById convertToFindByIdDTO(CrowdOrderDetails crowdOrderDetails){
+            return FindById.builder()
+                    .purchaseId(crowdOrderDetails.getPurchaseId())
+                    .userId(crowdOrderDetails.getUserId())
+                    .crowdId(crowdOrderDetails.getCrowdId())
+                    .rewardId(crowdOrderDetails.getRewardId())
+                    .sponsorId(crowdOrderDetails.getSponsorId())
+                    .purchaseName(crowdOrderDetails.getPurchaseName())
+                    .purchasePhone(crowdOrderDetails.getPurchasePhone())
+                    .purchaseAddress(crowdOrderDetails.getPurchaseAddress())
+                    .purchaseDate(crowdOrderDetails.getPurchaseDate())
+                    .purchaseStatus(crowdOrderDetails.getPurchaseStatus())
+                    .isDeleted(crowdOrderDetails.isDeleted())
+                    .build();
+        }
     }
 
     @Getter

@@ -2,7 +2,7 @@ package com.fiveis.andcrowd.dto.crowd;
 
 import lombok.*;
 
-public class DynamicRewardDTO { // FindAllByUserId, update, save, delete
+public class DynamicCrowdRewardDTO { // FindAllByUserId, update, save, delete
     @Getter @Setter
     @Builder @ToString
     @NoArgsConstructor
@@ -23,10 +23,12 @@ public class DynamicRewardDTO { // FindAllByUserId, update, save, delete
     @AllArgsConstructor
     public static class Update{ // 크라우드 리워드 업데이트
         private int rewardId;
+        private int crowdId;
         private String rewardTitle;
         private String rewardContent;
         private int rewardAmount;
         private int rewardLimit;
+        private boolean isDeleted;
     }
 
 }

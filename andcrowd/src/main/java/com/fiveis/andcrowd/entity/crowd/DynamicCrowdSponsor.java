@@ -7,7 +7,7 @@ import lombok.*;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
-public class DynamicSponsor { // 크라우드 후원자
+public class DynamicCrowdSponsor { // 크라우드 후원자
 
     private int sponsorId;
 
