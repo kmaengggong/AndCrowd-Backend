@@ -7,6 +7,10 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 
 import java.util.List;
 
@@ -145,7 +149,7 @@ public class DynamicCrowdBoardServiceTest {
 
         List<DynamicCrowdBoardDTO.Find> crowdBoardList = dynamicCrowdBoardService.findAll(crowdId);
 
-        DynamicCrowdBoardDTO.Find crowdBoard = crowdBoardList.get(1);
+        DynamicCrowdBoardDTO.Find crowdBoard = crowdBoardList.get(0);
 
         // then
         assertThat(title).isEqualTo(crowdBoard.getCrowdBoardTitle());

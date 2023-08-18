@@ -1,5 +1,6 @@
 package com.fiveis.andcrowd.dto.crowd;
 
+import com.fiveis.andcrowd.entity.crowd.CrowdCategory;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -45,6 +46,7 @@ public class DynamicCrowdBoardDTO {
         private String crowdBoardContent;
 
         private String crowdImg;
+
     }
 
     @Getter @Setter @ToString @Builder
