@@ -65,11 +65,21 @@ public class DynamicUserLikeServiceImpl implements DynamicUserLikeService{
         return dynamicUserLikeRepository.findById(userEmail, uLikeId);
     }
 
-    public void save(String userEmail, DynamicUserLike dynamicUserLike){
+    public boolean save(String userEmail, DynamicUserLike dynamicUserLike){
+        // 존재하지 않는 projectId
+        if(dynamicUserLike.getProjectType() == 0){
+            if(andJPARepository.findById(dynamicUserLike.getProjectId()).isEmpty()) return false;
+        }
+        else{
+            if(crowdJPARepository.findById(dynamicUserLike.getProjectId()).isEmpty()) return false;
+        }
+        // user_like에 이미 존재
         if(dynamicUserLikeRepository.findByProject(userEmail,
                 dynamicUserLike.getProjectId(),
-                dynamicUserLike.getProjectType()) != null) return;
+                dynamicUserLike.getProjectType()) != null) return false;
+        // 그 외에는 저장 성공
         dynamicUserLikeRepository.save(userEmail, dynamicUserLike);
+        return true;
     }
 
     public void deleteById(String userEmail, int uLikeId){

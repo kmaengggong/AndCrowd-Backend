@@ -65,11 +65,21 @@ public class DynamicUserMakerServiceImpl implements DynamicUserMakerService{
         return dynamicUserMakerRepository.findById(userEmail, uMakerId);
     }
 
-    public void save(String userEmail, DynamicUserMaker dynamicUserMaker){
+    public boolean save(String userEmail, DynamicUserMaker dynamicUserMaker){
+        // 존재하지 않는 projectId
+        if(dynamicUserMaker.getProjectType() == 0){
+            if(andJPARepository.findById(dynamicUserMaker.getProjectId()).isEmpty()) return false;
+        }
+        else{
+            if(crowdJPARepository.findById(dynamicUserMaker.getProjectId()).isEmpty()) return false;
+        }
+        // user_maker에 이미 존재
         if(dynamicUserMakerRepository.findByProject(userEmail,
                 dynamicUserMaker.getProjectId(),
-                dynamicUserMaker.getProjectType()) != null) return;
+                dynamicUserMaker.getProjectType()) != null) return false;
+        // 그 외에는 저장 성공
         dynamicUserMakerRepository.save(userEmail, dynamicUserMaker);
+        return true;
     }
     public void deleteById(String userEmail, int uMakerId){
         dynamicUserMakerRepository.deleteById(userEmail, uMakerId);

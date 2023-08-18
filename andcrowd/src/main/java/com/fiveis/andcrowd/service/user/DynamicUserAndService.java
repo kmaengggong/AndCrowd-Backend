@@ -12,7 +12,7 @@ import java.util.List;
 public interface DynamicUserAndService {
     List<AndDTO.Find> findAll(String userEmail);  // 모임의 헤더 이미지, 제목, 내용 가져옴
     DynamicUserAndDTO.Find findById(String userEmail, int uAndId);
-    void save(String userEmail, DynamicUserAnd dynamicUserAnd);
+    boolean save(String userEmail, DynamicUserAnd dynamicUserAnd);
     void deleteById(String userEmail, int uAndId);
     void deleteByAndId(String userEmail, int andId);
 }

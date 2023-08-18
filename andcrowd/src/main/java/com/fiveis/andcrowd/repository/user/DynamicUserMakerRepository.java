@@ -16,7 +16,7 @@ public interface DynamicUserMakerRepository {
                                            @Param("projectId") int projectId,
                                            @Param("projectType") int projectType);
 
-    void save(@Param("userEmail") String userEmail, DynamicUserMaker dynamicUserMaker);
+    void save(@Param("userEmail") String userEmail, @Param("dynamicUserMaker") DynamicUserMaker dynamicUserMaker);
     void deleteById(@Param("userEmail") String userEmail, @Param("uMakerId") int uMakerId);
     void deleteByProjectId(@Param("userEmail") String userEmail,
                            @Param("projectId") int projectId,

@@ -49,8 +49,7 @@ public class DynamicUserController {
     public ResponseEntity<?> saveUserAnd(@PathVariable int userId, @RequestBody DynamicUserAnd dynamicUserAnd){//,
                                         //Principal principal){
         String userEmail = User.toTableName(userService.findById(userId).getUserEmail());
-        if(dynamicUserAnd.getAndId() == 0) return ResponseEntity.badRequest().body("Value Missing");
-        dynamicUserAndService.save(userEmail, dynamicUserAnd);
+        if(!dynamicUserAndService.save(userEmail, dynamicUserAnd)) return ResponseEntity.badRequest().body("Save Failed!");
         return ResponseEntity.ok("UserAnd Saved!");
     }
 
@@ -74,8 +73,7 @@ public class DynamicUserController {
     public ResponseEntity<?> saveUserFollow(@PathVariable int userId, @RequestBody DynamicUserFollow dynamicUserFollow){//,
                                             //Principal principal){
         String userEmail = User.toTableName(userService.findById(userId).getUserEmail());
-        if(dynamicUserFollow.getUserId() == 0) return ResponseEntity.badRequest().body("Value Missing");
-        dynamicUserFollowService.save(userEmail, dynamicUserFollow);
+        if(!dynamicUserFollowService.save(userEmail, dynamicUserFollow)) return ResponseEntity.badRequest().body("Save Failed!");
         return ResponseEntity.ok("UserFollow Saved!");
     }
 
@@ -99,8 +97,9 @@ public class DynamicUserController {
     public ResponseEntity<?> saveUserLike(@PathVariable int userId, @RequestBody DynamicUserLike dynamicUserLike){//,
                                             //Principal principal){
         String userEmail = User.toTableName(userService.findById(userId).getUserEmail());
-        if(dynamicUserLike.getProjectId() == 0) return ResponseEntity.badRequest().body("Value Missing");
-        dynamicUserLikeService.save(userEmail, dynamicUserLike);
+        if(dynamicUserLike.getProjectType() != 0 && dynamicUserLike.getProjectType() != 1)
+            return ResponseEntity.badRequest().body("Wrong Value!");
+        if(!dynamicUserLikeService.save(userEmail, dynamicUserLike)) return ResponseEntity.badRequest().body("Save Failed!");
         return ResponseEntity.ok("UserLike Saved!");
     }
 
@@ -126,8 +125,9 @@ public class DynamicUserController {
     public ResponseEntity<?> saveUserMaker(@PathVariable int userId, @RequestBody DynamicUserMaker dynamicUserMaker){//,
                                             //Principal principal){
         String userEmail = User.toTableName(userService.findById(userId).getUserEmail());
-        if(dynamicUserMaker.getProjectId() == 0) return ResponseEntity.badRequest().body("Value Missing");
-        dynamicUserMakerService.save(userEmail, dynamicUserMaker);
+        if(dynamicUserMaker.getProjectType() != 0 && dynamicUserMaker.getProjectType() != 1)
+            return ResponseEntity.badRequest().body("Wrong Value!");
+        if(!dynamicUserMakerService.save(userEmail, dynamicUserMaker)) return ResponseEntity.badRequest().body("Save Failed!");
         return ResponseEntity.ok("UserMaker Saved!");
     }
 
@@ -153,8 +153,7 @@ public class DynamicUserController {
     public ResponseEntity<?> saveUserOrder(@PathVariable int userId, @RequestBody DynamicUserOrder dynamicUserOrder){//,
                                             //Principal principal){
         String userEmail = User.toTableName(userService.findById(userId).getUserEmail());
-        if(dynamicUserOrder.getOrderId() == 0) return ResponseEntity.badRequest().body("Value Missing");
-        dynamicUserOrderService.save(userEmail, dynamicUserOrder);
+        if(!dynamicUserOrderService.save(userEmail, dynamicUserOrder)) return ResponseEntity.badRequest().body("Save Failed!");
         return ResponseEntity.ok("UserOrder Saved!");
     }
 

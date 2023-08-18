@@ -30,7 +30,7 @@ public class DynamicUserOrderServiceImpl implements DynamicUserOrderService{
         for(DynamicUserOrderDTO.Find find : findList){
             if(crowdOrderDetailsJPARepository.findById(find.getOrderId()).isEmpty()) continue;
             CrowdOrderDetails crowdOrderDetails = crowdOrderDetailsJPARepository.findById(find.getOrderId()).get();
-            orderList.add(CrowdOrderDetailsDTO.convertToFindByIdDTO(crowdOrderDetails));
+            orderList.add(CrowdOrderDetailsDTO.FindById.convertToFindByIdDTO(crowdOrderDetails));
         }
         return orderList;
     }
@@ -39,9 +39,14 @@ public class DynamicUserOrderServiceImpl implements DynamicUserOrderService{
         return dynamicUserOrderRepository.findById(userEmail, uOrderId);
     }
 
-    public void save(String userEmail, DynamicUserOrder dynamicUserOrder){
-        if(dynamicUserOrderRepository.findByOrderId(userEmail, dynamicUserOrder.getOrderId()) != null) return;
+    public boolean save(String userEmail, DynamicUserOrder dynamicUserOrder){
+        // 존재하지 않는 projectId
+        if(crowdOrderDetailsJPARepository.findById(dynamicUserOrder.getOrderId()).isEmpty()) return false;
+        // user_like에 이미 존재
+        if(dynamicUserOrderRepository.findByOrderId(userEmail, dynamicUserOrder.getOrderId()) != null) return false;
+        // 그 외에는 저장 성공
         dynamicUserOrderRepository.save(userEmail, dynamicUserOrder);
+        return true;
     }
     public void deleteById(String userEmail, int uOrderId){
         dynamicUserOrderRepository.deleteById(userEmail, uOrderId);

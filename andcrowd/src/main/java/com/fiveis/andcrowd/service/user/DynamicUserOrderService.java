@@ -11,7 +11,7 @@ import java.util.List;
 public interface DynamicUserOrderService {
     List<CrowdOrderDetailsDTO.FindById> findAll(String userEmail);  // CrowdOrderDetails 가져와야 함
     DynamicUserOrderDTO.Find findById(String userEmail, int uOrderId);
-    void save(String userEmail, DynamicUserOrder dynamicUserOrder);
+    boolean save(String userEmail, DynamicUserOrder dynamicUserOrder);
     void deleteById(String userEmail, int uOrderId);
     void deleteByOrderId(String userEmail, int orderId);
 }

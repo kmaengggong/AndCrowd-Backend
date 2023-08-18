@@ -11,7 +11,7 @@ import java.util.List;
 public interface DynamicUserLikeService {
     List<ProjectDTO.Find> findAll(String userEmail);  // 글의 이미지, 제목, 내용을 ProjectDTO를 통해 가져옴
     DynamicUserLikeDTO.Find findById(String userEmail, int uLikeId);
-    void save(String userEmail, DynamicUserLike dynamicUserLike);
+    boolean save(String userEmail, DynamicUserLike dynamicUserLike);
     void deleteById(String userEmail, int uLikeId);
     void deleteByProjectId(String userEmail, int projectId, int projectType);
 }

@@ -28,6 +28,7 @@ public class DynamicUserAndServiceImpl implements DynamicUserAndService{
         List<DynamicUserAndDTO.Find> findList = dynamicUserAndRepository.findAll(userEmail);
         List<AndDTO.Find> andList = new ArrayList<>();
         for(DynamicUserAndDTO.Find find : findList){
+            if(andJPARepository.findById(find.getAndId()).isEmpty()) continue;
             andList.add(AndDTO.convertToAndFindDTO(andJPARepository.findById(find.getAndId()).get()));
         }
         return andList;
@@ -37,9 +38,14 @@ public class DynamicUserAndServiceImpl implements DynamicUserAndService{
         return dynamicUserAndRepository.findById(userEmail, uAndId);
     }
 
-    public void save(String userEmail, DynamicUserAnd dynamicUserAnd){
-        if(dynamicUserAndRepository.findByAndId(userEmail, dynamicUserAnd.getAndId()) != null) return;
+    public boolean save(String userEmail, DynamicUserAnd dynamicUserAnd){
+        // 존재하지 않는 andId
+        if(andJPARepository.findById(dynamicUserAnd.getAndId()).isEmpty()) return false;
+        // user_and에 이미 존재
+        if(dynamicUserAndRepository.findByAndId(userEmail, dynamicUserAnd.getAndId()) != null) return false;
+        // 그 외에는 저장 성공
         dynamicUserAndRepository.save(userEmail, dynamicUserAnd);
+        return true;
     }
 
     public void deleteById(String userEmail, int uAndId){

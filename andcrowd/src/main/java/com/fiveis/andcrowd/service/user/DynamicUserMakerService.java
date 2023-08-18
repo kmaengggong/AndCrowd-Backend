@@ -11,7 +11,7 @@ import java.util.List;
 public interface DynamicUserMakerService {
     List<ProjectDTO.Find> findAll(String userEmail);  // 글의 이미지, 제목, 내용을 ProjectDTO를 통해 가져옴
     DynamicUserMakerDTO.Find findById(String userEmail, int uMakerId);
-    void save(String userEmail, DynamicUserMaker dynamicUserMaker);
+    boolean save(String userEmail, DynamicUserMaker dynamicUserMaker);
     void deleteById(String userEmail, int uMakerId);
     void deleteByProjectId(String userEmail, int projectId, int projectType);
 }

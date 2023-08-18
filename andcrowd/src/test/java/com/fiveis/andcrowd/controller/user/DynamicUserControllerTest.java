@@ -2,10 +2,13 @@ package com.fiveis.andcrowd.controller.user;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fiveis.andcrowd.dto.crowd.CrowdOrderDetailsDTO;
 import com.fiveis.andcrowd.entity.and.And;
+import com.fiveis.andcrowd.entity.crowd.CrowdOrderDetails;
 import com.fiveis.andcrowd.entity.user.*;
 import com.fiveis.andcrowd.enums.Authority;
 import com.fiveis.andcrowd.service.and.AndService;
+import com.fiveis.andcrowd.service.crowd.CrowdOrderDetailsService;
 import com.fiveis.andcrowd.service.user.*;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.BeforeEach;
@@ -23,6 +26,8 @@ import org.springframework.web.context.WebApplicationContext;
 
 import javax.xml.transform.Result;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -51,6 +56,8 @@ public class DynamicUserControllerTest {
     DynamicUserMakerService dynamicUserMakerService;
     @Autowired
     DynamicUserOrderService dynamicUserOrderService;
+    @Autowired
+    CrowdOrderDetailsService crowdOrderDetailsService;
 
     // User 테스트 데이터
     int userId = 1;
@@ -66,8 +73,9 @@ public class DynamicUserControllerTest {
     int userMarketing = 1;
     Authority authority = Authority.ROLE_ADMIN;
 
-    // And 테스트 데이터
+    // 그 외 테스트 데이터
     int andId = 1;
+    int projectId = 5000;
 
     @BeforeEach
     public void setMockMvcAndSaveUser(){
@@ -108,7 +116,6 @@ public class DynamicUserControllerTest {
 
     @Test
     @Transactional
-    @DisplayName("1번 유저가 참가한 모임(1번 모임 추가 후) 목록 조회")
     public void findUserAndTest() throws Exception{
         // Given
         String url = "/user/1/and";
@@ -129,7 +136,6 @@ public class DynamicUserControllerTest {
 
     @Test
     @Transactional
-    @DisplayName("")
     public void saveUserAndTest() throws Exception{
         // Given
         String url = "/user/1/and";
@@ -151,7 +157,6 @@ public class DynamicUserControllerTest {
 
     @Test
     @Transactional
-    @DisplayName("1번 유저가 팔로우한 유저 목록(2번 유저 추가 후) 조회")
     public void findUserFollowTest() throws Exception{
         // Given
         String url = "/user/1/follow";
@@ -175,7 +180,6 @@ public class DynamicUserControllerTest {
 
         dynamicUserFollowService.save(User.toTableName(userEmail),
                 DynamicUserFollow.builder()
-                        .uFollowId(1)
                         .userId(newUserId)
                         .build());
 
@@ -191,10 +195,9 @@ public class DynamicUserControllerTest {
 
     @Test
     @Transactional
-    @DisplayName("")
     public void saveUserFollowTest() throws Exception{
         // Given
-        String url = "/user/1/and";
+        String url = "/user/1/follow";
         DynamicUserFollow dynamicUserFollow = DynamicUserFollow.builder()
                 .userId(userId)
                 .build();
@@ -213,14 +216,12 @@ public class DynamicUserControllerTest {
 
     @Test
     @Transactional
-    @DisplayName("1번 유저가 참가한 모임 목록 조회")
-    public void getUserLikeTest() throws Exception{
+    public void findUserLikeTest() throws Exception{
         // Given
         String url = "/user/1/like";
 
         dynamicUserLikeService.save(User.toTableName(userEmail),
                 DynamicUserLike.builder()
-                        .uLikeId(1)
                         .projectId(andId)
                         .projectType(0)
                         .build());
@@ -237,37 +238,34 @@ public class DynamicUserControllerTest {
 
     @Test
     @Transactional
-    @DisplayName("")
     public void saveUserLikeTest() throws Exception{
         // Given
-        String url = "/user/1/and";
-        DynamicUserFollow dynamicUserFollow = DynamicUserFollow.builder()
-                .userId(userId)
+        String url = "/user/1/like";
+        DynamicUserLike dynamicUserLike = DynamicUserLike.builder()
+                .projectId(projectId)
                 .build();
 
         // When
         final ResultActions result = mockMvc.perform(MockMvcRequestBuilders
                 .post(url)
-                .content(toJson(dynamicUserFollow))
+                .content(toJson(dynamicUserLike))
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON));
 
         // Then
         result.andExpect(status().isOk())
-                .andExpect(content().string("UserFollow Saved!"));
+                .andExpect(content().string("UserLike Saved!"));
     }
 
     @Test
     @Transactional
-    @DisplayName("1번 유저가 만든 프로젝트(추가 후) 목록 조회")
-    public void getUserMakerTest() throws Exception{
+    public void findUserMakerTest() throws Exception{
         // Given
         String url = "/user/1/maker";
 
         // 원래는 Project 생성 시 자동으로 userMaker에 추가되어야 함.
         dynamicUserMakerService.save(User.toTableName(userEmail),
                 DynamicUserMaker.builder()
-                        .uMakerId(1)
                         .projectId(andId)
                         .projectType(0)
                         .build());
@@ -284,16 +282,56 @@ public class DynamicUserControllerTest {
 
     @Test
     @Transactional
-    @DisplayName("1번 유저의 펀딩 주문 목록 조회")
-    public void getUserOrderTest() throws Exception{
+    public void saveUserMakerTest() throws Exception{
+        // Given
+        String url = "/user/1/maker";
+        DynamicUserMaker dynamicUserMaker = DynamicUserMaker.builder()
+                .projectId(projectId)
+                .build();
+
+        // When
+        final ResultActions result = mockMvc.perform(MockMvcRequestBuilders
+                .post(url)
+                .content(toJson(dynamicUserMaker))
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON));
+
+        // Then
+        result.andExpect(status().isOk())
+                .andExpect(content().string("UserMaker Saved!"));
+    }
+
+    @Test
+    @Transactional
+    public void findUserOrderTest() throws Exception{
         // Given
         String url = "/user/1/order";
 
-        dynamicUserOrderService.save(User.toTableName(userEmail),
-                DynamicUserOrder.builder()
-                        .uOrderId(1)
-                        .orderId(1)
+        crowdOrderDetailsService.save(CrowdOrderDetails.builder()
+                        .userId(userId)
+                        .crowdId(99)
+                        .rewardId(1)
+                        .sponsorId(1)
+                        .purchaseName("김명호")
+                        .purchasePhone("010-1234-5678")
+                        .purchaseAddress("강남구")
+                        .purchaseDate(LocalDateTime.now())
+                        .purchaseStatus("결제완료")
+                        .isDeleted(false)
                         .build());
+
+        List<CrowdOrderDetailsDTO.FindById> orderFindByIdList = crowdOrderDetailsService.findAll();
+        List<Integer> orderIdList = new ArrayList<>();
+        for(CrowdOrderDetailsDTO.FindById orderFindById : orderFindByIdList){
+            if(orderFindById.getUserId() == userId) orderIdList.add(orderFindById.getPurchaseId());
+        }
+
+        for(int orderId : orderIdList){
+            dynamicUserOrderService.save(User.toTableName(userEmail),
+                    DynamicUserOrder.builder()
+                            .orderId(orderId)
+                            .build());
+        }
 
         // When
         final ResultActions result = mockMvc.perform(MockMvcRequestBuilders
@@ -302,7 +340,28 @@ public class DynamicUserControllerTest {
 
         // Then
         result.andExpect(status().isOk())
-                .andExpect(jsonPath("$[0].orderId").value(1));
+                .andExpect(jsonPath("$[0].purchaseId").value(orderIdList.get(0)));
+    }
+
+    @Test
+    @Transactional
+    public void saveUserOrderTest() throws Exception{
+        // Given
+        String url = "/user/1/order";
+        DynamicUserOrder dynamicUserOrder = DynamicUserOrder.builder()
+                .orderId(15)
+                .build();
+
+        // When
+        final ResultActions result = mockMvc.perform(MockMvcRequestBuilders
+                .post(url)
+                .content(toJson(dynamicUserOrder))
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON));
+
+        // Then
+        result.andExpect(status().isOk())
+                .andExpect(content().string("UserOrder Saved!"));
     }
 
     private <T> String toJson(T data) throws JsonProcessingException{
