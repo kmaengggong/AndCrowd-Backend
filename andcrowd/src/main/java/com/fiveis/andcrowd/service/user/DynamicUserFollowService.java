@@ -11,6 +11,7 @@ import java.util.List;
 public interface DynamicUserFollowService {
     List<UserDTO.FindAsPublic> findAll(String userEmail);  // 유저의 프로필 이미지, 닉네임 가져옴
     DynamicUserFollowDTO.Find findById(String userEmail, int uFollowId);
-    void save(String userEmail, DynamicUserFollow dynamicUserFollow);
+    boolean save(String userEmail, DynamicUserFollow dynamicUserFollow);
     void deleteById(String userEmail, int uFollowId);
+    void deleteByAndId(String userEmail, int userId);
 }
