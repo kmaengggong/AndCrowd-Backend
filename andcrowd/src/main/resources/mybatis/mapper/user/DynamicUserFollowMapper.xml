@@ -30,8 +30,18 @@
             u_follow_id = #{uFollowId}
     </select>
 
+    <select id="findByUserId" resultType="com.fiveis.andcrowd.dto.user.DynamicUserFollowDTO$Find">
+        SELECT
+            u_follow_id as uFollowId,
+            user_id as userId
+        FROM
+            user_follow_${userEmail}
+        WHERE
+            user_id = #{userId}
+    </select>
+
     <insert id="save">
-        INSERT
+        INSERT IGNORE
         INTO
             user_follow_${userEmail}
             (u_follow_id, user_id)
@@ -45,5 +55,13 @@
             user_follow_${userEmail}
         WHERE
             u_follow_id = #{uFollowId}
+    </delete>
+
+    <delete id="deleteByUserId">
+        DELETE
+        FROM
+            user_follow_${userEmail}
+        WHERE
+            user_id = #{userId}
     </delete>
 </mapper>

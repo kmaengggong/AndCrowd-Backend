@@ -12,6 +12,8 @@ public interface DynamicUserAndRepository {
     void createDynamicUserAndTable(String userEmail);
     List<DynamicUserAndDTO.Find> findAll(String userEmail);
     DynamicUserAndDTO.Find findById(@Param("userEmail") String userEmail, @Param("uAndId") int uAndId);
+    DynamicUserAndDTO.Find findByAndId(@Param("userEmail") String userEmail, @Param("andId") int andId);
     void save(@Param("userEmail") String userEmail, @Param("dynamicUserAnd") DynamicUserAnd dynamicUserAnd);
     void deleteById(@Param("userEmail") String userEmail, @Param("uAndId") int uAndId);
+    void deleteByAndId(@Param("userEmail") String userEmail, @Param("andId") int andId);
 }

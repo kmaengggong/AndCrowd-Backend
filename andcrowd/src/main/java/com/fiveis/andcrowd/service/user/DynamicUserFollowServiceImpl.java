@@ -27,6 +27,7 @@ public class DynamicUserFollowServiceImpl implements DynamicUserFollowService{
         List<DynamicUserFollowDTO.Find> findList = dynamicUserFollowRepository.findAll(userEmail);
         List<UserDTO.FindAsPublic> userList = new ArrayList<>();
         for(DynamicUserFollowDTO.Find find : findList){
+            if(userJPARepository.findById(find.getUserId()).isEmpty()) continue;
             userList.add(UserDTO.convertToFindAsPublicDTO(userJPARepository.findById(find.getUserId()).get()));
         }
         return userList;
@@ -36,11 +37,21 @@ public class DynamicUserFollowServiceImpl implements DynamicUserFollowService{
         return dynamicUserFollowRepository.findById(userEmail, uFollowId);
     }
 
-    public void save(String userEmail, DynamicUserFollow dynamicUserFollow){
+    public boolean save(String userEmail, DynamicUserFollow dynamicUserFollow){
+        // 존재하지 않는 userId
+        if(userJPARepository.findByUserId(dynamicUserFollow.getUserId()).isEmpty()) {System.out.println("먼데씨발"); return false;}
+        // user_follow에 이미 존재
+        if(dynamicUserFollowRepository.findByUserId(userEmail, dynamicUserFollow.getUserId()) != null) return false;
+        // 그 외에는 저장 성공
         dynamicUserFollowRepository.save(userEmail, dynamicUserFollow);
+        return true;
     }
 
     public void deleteById(String userEmail, int uFollowId){
         dynamicUserFollowRepository.deleteById(userEmail, uFollowId);
+    }
+
+    public void deleteByAndId(String userEmail, int userId){
+        dynamicUserFollowRepository.deleteByUserId(userEmail, userId);
     }
 }

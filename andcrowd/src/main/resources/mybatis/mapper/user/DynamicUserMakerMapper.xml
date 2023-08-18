@@ -33,8 +33,21 @@
             u_maker_id = #{uMakerId}
     </select>
 
+    <select id="findByProject" resultType="com.fiveis.andcrowd.dto.user.DynamicUserMakerDTO$Find">
+        SELECT
+            u_maker_id as uMakerId,
+            project_id as projectId,
+            project_type as projectType
+        FROM
+            user_maker_${userEmail}
+        WHERE
+            project_id = #{projectId}
+        AND
+            project_type = #{projectType}
+    </select>
+
     <insert id="save">
-        INSERT
+        INSERT IGNORE
         INTO
             user_maker_${userEmail}
             (u_maker_id, project_id, project_type)
@@ -48,5 +61,15 @@
             user_maker_${userEmail}
         WHERE
             u_maker_id = #{uMakerId}
+    </delete>
+
+    <delete id="deleteByProjectId">
+        DELETE
+        FROM
+            user_maker_${userEmail}
+        WHERE
+            project_id = #{projectId}
+        AND
+            project_type = #{projectType}
     </delete>
 </mapper>

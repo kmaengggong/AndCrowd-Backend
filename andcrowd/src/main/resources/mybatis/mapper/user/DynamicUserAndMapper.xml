@@ -37,11 +37,11 @@
         FROM
             user_and_${userEmail}
         WHERE
-            u_and_id = #{andId}
+            and_id = #{andId}
     </select>
 
     <insert id="save">
-        INSERT
+        INSERT IGNORE
         INTO
             user_and_${userEmail}
             (u_and_id, and_id)
@@ -55,5 +55,13 @@
             user_and_${userEmail}
         WHERE
             u_and_id = #{uAndId}
+    </delete>
+
+    <delete id="deleteByAndId">
+        DELETE
+        FROM
+            user_and_${userEmail}
+        WHERE
+            and_Id = #{andId}
     </delete>
 </mapper>
