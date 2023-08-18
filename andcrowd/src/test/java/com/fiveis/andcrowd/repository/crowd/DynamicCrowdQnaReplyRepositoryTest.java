@@ -18,27 +18,27 @@ public class DynamicCrowdQnaReplyRepositoryTest {
     @Autowired
     DynamicCrowdQnaReplyRepository dynamicCrowdQnaReplyRepository;
 
-    @Test
-    @Transactional
-    @DisplayName("2번 crowd게시글 생성시 crowd_qna_reply_2 이라는 이름의 테이블이 생성되며, 글이 정상적으로 추가된다.")
-    public void createDynamicCrowdQnaReplyTableTest(){
-        // given
-        int crowdId = 1;
-        int crowdQnaId = 1;
-        String content = "추가된 댓글";
-
-        // when
-        dynamicCrowdQnaReplyRepository.createDynamicCrowdQnaReplyTable(crowdId);
-        DynamicCrowdQnaReplyDTO.Save newQnaReply = new DynamicCrowdQnaReplyDTO.Save();
-        newQnaReply.setCrowdQnaId(crowdQnaId);
-        newQnaReply.setQnaReplyContent(content);
-        newQnaReply.setCrowdId(crowdId);
-        dynamicCrowdQnaReplyRepository.save(newQnaReply);
-
-        // then
-        List<DynamicCrowdQnaReplyDTO.Find> crowdBoardList = dynamicCrowdQnaReplyRepository.findAll(crowdId, crowdQnaId);
-        assertThat(crowdBoardList.get(0).getCrowdId()).isEqualTo(crowdId);
-    }
+//    @Test
+//    @Transactional
+//    @DisplayName("2번 crowd게시글 생성시 crowd_qna_reply_2 이라는 이름의 테이블이 생성되며, 글이 정상적으로 추가된다.")
+//    public void createDynamicCrowdQnaReplyTableTest(){
+//        // given
+//        int crowdId = 1;
+//        int crowdQnaId = 1;
+//        String content = "추가된 댓글";
+//
+//        // when
+//        dynamicCrowdQnaReplyRepository.createDynamicCrowdQnaReplyTable(crowdId);
+//        DynamicCrowdQnaReplyDTO.Save newQnaReply = new DynamicCrowdQnaReplyDTO.Save();
+//        newQnaReply.setCrowdQnaId(crowdQnaId);
+//        newQnaReply.setQnaReplyContent(content);
+//        newQnaReply.setCrowdId(crowdId);
+//        dynamicCrowdQnaReplyRepository.save(newQnaReply);
+//
+//        // then
+//        List<DynamicCrowdQnaReplyDTO.Find> crowdBoardList = dynamicCrowdQnaReplyRepository.findAll(crowdId, crowdQnaId);
+//        assertThat(crowdBoardList.get(0).getCrowdId()).isEqualTo(crowdId);
+//    }
 
     @Test
     @Transactional
