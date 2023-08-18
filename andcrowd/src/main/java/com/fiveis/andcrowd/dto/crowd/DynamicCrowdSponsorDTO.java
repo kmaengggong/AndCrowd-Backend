@@ -24,6 +24,7 @@ public class DynamicCrowdSponsorDTO { // find(findAll, findById), Update
         private int sponsorId;
         private int crowdId;
         private int purchaseId;
+        private boolean isDeleted;
     }
   
 }

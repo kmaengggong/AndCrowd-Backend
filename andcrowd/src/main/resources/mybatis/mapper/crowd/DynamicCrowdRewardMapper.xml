@@ -7,12 +7,12 @@
 
     <update id="createDynamicCrowdRewardTable">
         CREATE TABLE IF NOT EXISTS crowd_reward_#{crowd_id} (
-        reward_id int auto_increment primary key,
-        crowd_id int not null,
-        reward_title varchar(255) not null,
-        reward_content varchar(255) not null,
-        reward_amount int not null,
-        reward_limit int not null,
+        reward_id INT AUTO_INCREMENT PRIMARY KEY,
+        crowd_id INT NOT NULL,
+        reward_title VARCHAR(255) NOT NULL,
+        reward_content VARCHAR(255) NOT NULL,
+        reward_amount INT NOT NULL,
+        reward_limit INT NOT NULL,
         is_deleted BOOL default false
         )
     </update>
@@ -82,8 +82,8 @@
 <!--  테스트용 쿼리문  -->
     <update id="testCreateDynamicCrowdRewardTable">
         CREATE TABLE crowd_reward_123 (
-            reward_id int auto_increment primary key,
-            crowd_id int not null,
+            reward_id INT AUTO_INCREMENT PRIMARY KEY,
+            crowd_id INT NOT NULL,
             reward_title varchar(255) not null,
             reward_content varchar(255) not null,
             reward_amount int not null,

@@ -125,4 +125,8 @@ public class Crowd {
     public void setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
     }
+
+    public void setCrowdEndDate(LocalDateTime crowdEndDate) {
+        this.crowdEndDate = crowdEndDate;
+    }
 }
