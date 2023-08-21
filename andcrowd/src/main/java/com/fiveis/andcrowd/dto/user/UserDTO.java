@@ -72,6 +72,17 @@ public class UserDTO {
         private String userProfileImg;
     }
 
+    @Getter
+    @Setter
+    @Builder
+    @ToString
+    @AllArgsConstructor
+    @NoArgsConstructor
+    public static class Login{
+        private String userEmail;
+        private String userPassword;
+    }
+
     // Entity -> DTO Converter
     public static UserDTO.FindAsPublic convertToFindAsPublicDTO(User user){
         return UserDTO.FindAsPublic.builder()
