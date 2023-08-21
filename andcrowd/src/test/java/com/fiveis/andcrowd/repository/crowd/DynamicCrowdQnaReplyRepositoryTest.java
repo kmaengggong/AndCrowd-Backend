@@ -18,6 +18,7 @@ public class DynamicCrowdQnaReplyRepositoryTest {
     @Autowired
     DynamicCrowdQnaReplyRepository dynamicCrowdQnaReplyRepository;
 
+    // createTable의 경우 @Transactional을 사용하여도 생성된 테이블이 롤백되지 않아 정상작동 확인후 주석처리
 //    @Test
 //    @Transactional
 //    @DisplayName("2번 crowd게시글 생성시 crowd_qna_reply_2 이라는 이름의 테이블이 생성되며, 글이 정상적으로 추가된다.")
