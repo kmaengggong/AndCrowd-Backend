@@ -45,8 +45,6 @@ public class BasicSecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http
-//                .cors()
-//                .and()
                 .authorizeHttpRequests(authorizationConfig -> {
                     authorizationConfig
 //                            .requestMatchers("/login", "/signup", "/user")
@@ -77,16 +75,6 @@ public class BasicSecurityConfig {
                 .build();
     }
 
-//    @Bean
-//    public CorsConfigurationSource corsConfigurationSource() {
-//        CorsConfiguration configuration = new CorsConfiguration();
-//        configuration.addAllowedOrigin("http://localhost:3000"); // 프론트엔드 도메인 추가
-//        configuration.addAllowedMethod("*"); // 모든 HTTP 메서드 허용
-//        configuration.addAllowedHeader("*"); // 모든 헤더 허용
-//        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-//        source.registerCorsConfiguration("/**", configuration);
-//        return source;
-//    }
 
 
     @Bean
