@@ -1,8 +1,8 @@
 package com.fiveis.andcrowd.controller.crowd;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fiveis.andcrowd.dto.crowd.DynamicCrowdQnaDTO;
-import com.fiveis.andcrowd.repository.crowd.DynamicCrowdQnaRepository;
+import com.fiveis.andcrowd.dto.crowd.DynamicCrowdQnaReplyDTO;
+import com.fiveis.andcrowd.repository.crowd.DynamicCrowdQnaReplyRepository;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -16,7 +16,6 @@ import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -24,7 +23,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
-public class DynamicCrowdQnaControllerTest {
+public class DynamicCrowdQnaReplyControllerTest {
     @Autowired
     private MockMvc mockMvc;
     @Autowired
@@ -34,7 +33,7 @@ public class DynamicCrowdQnaControllerTest {
 
     // 원래는 service 레이어를 호출해야하나, 추후 service레이어 에서 기능추가 될 경우를 대비하여 Repository 호출
     @Autowired
-    private DynamicCrowdQnaRepository dynamicCrowdQnaRepository;
+    private DynamicCrowdQnaReplyRepository dynamicCrowdQnaReplyRepository;
 
     @BeforeEach
     public void setMockMvc(){
@@ -43,127 +42,125 @@ public class DynamicCrowdQnaControllerTest {
 
     @Test
     @Transactional
-    @DisplayName("crowd 1번글의 Qna 전체글 조회시 2번째 요소의 title은 1번글제목, content는 1번글본문 이다.")
+    @DisplayName("crowd 1번글의 Qna 1번글의 전체 reply 조회시 2번요소의 데이터와 given의 데이터가 일치할것이다.")
     void findAll() throws Exception {
         // given
         int crowdId = 1;
-        String title = "1번글제목";
-        String content = "1번글본문";
-        String url = "/crowd/1/qna/all";
+        int crowdQnaId = 1;
+        String content = "3번댓글";
+        String url = "/crowd/1/qna/1/qnareply/all";
 
         // when
         final ResultActions result = mockMvc.perform(get(url).accept(MediaType.APPLICATION_JSON));
 
         result
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$[2].qnaTitle").value(title))
-                .andExpect(jsonPath("$[2].qnaContent").value(content));
+                .andExpect(jsonPath("$[2].crowdQnaId").value(crowdQnaId))
+                .andExpect(jsonPath("$[2].qnaReplyContent").value(content));
     }
 
     @Test
     @Transactional
-    @DisplayName("crowd 1번글의 crowd_qna_id가 2번인글 조회시 title은 2번글제목, content는 2번글본문 이다.")
+    @DisplayName("crowd 1번글의 qna_reply_id 1번글을 조회시 given의 데이터와 일치할 것이다.")
     void findByIdTest() throws Exception {
         // given
         int crowdId = 1;
-        int crowdBoardId = 2;
-        String title = "2번글제목";
-        String content = "2번글본문";
-        String url = "/crowd/1/qna/2";
+        int qnaReplyId = 1;
+        int crowdQnaId = 1;
+        String content = "1번댓글";
+        String url = "/crowd/1/qna/1/qnareply/1";
 
         // when
         final ResultActions result = mockMvc.perform(get(url).accept(MediaType.APPLICATION_JSON));
 
         result
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("qnaTitle").value(title))
-                .andExpect(jsonPath("qnaContent").value(content));
+                .andExpect(jsonPath("crowdQnaId").value(crowdQnaId))
+                .andExpect(jsonPath("qnaReplyContent").value(content));
     }
 
     @Test
     @Transactional
-    @DisplayName("crowdId 1번글에 새글 insert시 crowdQnaId 4번이며, 입력한 데이터와 일치할것이다.")
+    @DisplayName("crowdId 1번글의 1번 Qna에 새댓글 insert시 qna_reply_id 4번이며, 입력한 데이터와 일치할것이다.")
     void insertTest() throws Exception {
         // given
         int crowdId = 1;
-        String title = "새로입력한제목";
-        String content = "새로입력한본문";
-        String url = "/crowd/1/qna";
-        String url2 = "/crowd/1/qna/all";
+        int crowdQnaId = 1;
+        String content = "새로입력한댓글";
+        String url = "/crowd/1/qna/1/qnareply";
+        String url2 = "/crowd/1/qna/1/qnareply/all";
 
-        DynamicCrowdQnaDTO.Save newQna = DynamicCrowdQnaDTO.Save.builder()
+        DynamicCrowdQnaReplyDTO.Save newReply = DynamicCrowdQnaReplyDTO.Save.builder()
                 .crowdId(crowdId)
-                .qnaTitle(title)
-                .qnaContent(content)
+                .crowdQnaId(crowdQnaId)
+                .qnaReplyContent(content)
                 .build();
 
-        final String jsonQna = objectMapper.writeValueAsString(newQna);
+        final String jsonQnaReply = objectMapper.writeValueAsString(newReply);
 
         // when
         mockMvc.perform(post(url)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(jsonQna));
+                .content(jsonQnaReply));
 
         final ResultActions result = mockMvc.perform(get(url2)
                 .accept(MediaType.APPLICATION_JSON));
 
         result
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$[0].qnaTitle").value(title))
-                .andExpect(jsonPath("$[0].qnaContent").value(content));
+                .andExpect(jsonPath("$[3].crowdQnaId").value(crowdQnaId))
+                .andExpect(jsonPath("$[3].qnaReplyContent").value(content));
 
     }
 
     @Test
     @Transactional
-    @DisplayName("crowdId 1번글의 crowdQnaId 2번글에 업데이트시 입력한 데이터와 일치할것이다.")
+    @DisplayName("crowdId 1번글의 crowdQnaId 1번글의 1번 댓글 업데이트시 입력한 데이터와 일치할것이다.")
     void updateTest() throws Exception {
         // given
         int crowdId = 1;
-        int crowdQnaId = 2;
-        String title = "수정한제목";
-        String content = "수정한본문";
-        String url = "/crowd/1/qna/2";
+        int crowdQnaId = 1;
+        int qnaReplyId = 1;
+        String content = "수정한댓글";
+        String url = "/crowd/1/qna/1/qnareply/1";
 
-        DynamicCrowdQnaDTO.Update updateQna = DynamicCrowdQnaDTO.Update.builder()
+        DynamicCrowdQnaReplyDTO.Update updateQnaReply = DynamicCrowdQnaReplyDTO.Update.builder()
                 .crowdId(crowdId)
                 .crowdQnaId(crowdQnaId)
-                .qnaTitle(title)
-                .qnaContent(content)
+                .qnaReplyId(qnaReplyId)
+                .qnaReplyContent(content)
                 .build();
 
-        final String jsonQna = objectMapper.writeValueAsString(updateQna);
+        final String jsonQnaReply = objectMapper.writeValueAsString(updateQnaReply);
 
         // when
         mockMvc.perform(patch(url)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(jsonQna));
+                .content(jsonQnaReply));
 
         final ResultActions result = mockMvc.perform(get(url)
                 .accept(MediaType.APPLICATION_JSON));
 
         result
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("qnaTitle").value(title))
-                .andExpect(jsonPath("qnaContent").value(content));
+                .andExpect(jsonPath("qnaReplyContent").value(content));
 
     }
 
     @Test
     @Transactional
-    @DisplayName("crowdId 1번글의 crowdQnaId 2번글 삭제시 idDeleted가 true가 될것이다.")
+    @DisplayName("crowdId 1번글의 crowdQnaId 1번글의 2번 댓글 삭제시 idDeleted가 true가 될것이다.")
     void deletedTest() throws Exception {
         // given
         int crowdId = 1;
-        int crowdQnaId = 2;
-        String url = "/crowd/1/qna/2/delete";
+        int qnaReplyId = 1;
+        String url = "/crowd/1/qna/1/qnareply/1/delete";
 
         // when
         mockMvc.perform(patch(url).accept(MediaType.TEXT_PLAIN));
 
         // then
-        assertThat(dynamicCrowdQnaRepository.findById(crowdId, crowdQnaId).isDeleted()).isTrue();
+        assertThat(dynamicCrowdQnaReplyRepository.findById(crowdId, qnaReplyId).isDeleted()).isTrue();
     }
-
 
 }

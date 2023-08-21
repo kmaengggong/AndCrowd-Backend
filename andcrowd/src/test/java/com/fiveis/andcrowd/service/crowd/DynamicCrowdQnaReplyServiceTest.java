@@ -133,11 +133,11 @@ public class DynamicCrowdQnaReplyServiceTest {
     @Test
     @Transactional
     @DisplayName("2번댓글 삭제시 crowdQna 1번글의 2번 댓글의 isDeleted 는 true일것이다.")
-    public void deleteByCrowdBoardIdTest(){
+    public void deleteByQnaReplyIdTest(){
 
         // given
         int crowdId = 1;
-        int qnaReplyId = 2;
+        int qnaReplyId = 1;
 
         // when
         dynamicCrowdQnaReplyService.deleteByQnaReplyId(crowdId, qnaReplyId);

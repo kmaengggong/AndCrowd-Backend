@@ -7,6 +7,7 @@ import com.fiveis.andcrowd.repository.and.AndJPARepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -71,12 +72,18 @@ public class AndServiceImpl implements AndService{
     @Override
     public void deleteById(int andId) {
         andJPARepository.deleteById(andId);
+
     }
 
     @Override
     public void save(And and) {
         And savedAnd = andJPARepository.save(and);
         andDynamicRepository.createDynamicAndQnaTable(savedAnd.getAndId());
+        andDynamicRepository.createDynamicAndMemberTable(savedAnd.getAndId());
+        andDynamicRepository.createDynamicAndBoardTable(savedAnd.getAndId());
+        andDynamicRepository.createDynamicAndRoleTable(savedAnd.getAndId());
+        andDynamicRepository.createDynamicAndApplicantTable(savedAnd.getAndId());
+        andDynamicRepository.createDynamicAndQnaReplyTable(savedAnd.getAndId());
     }
 
 
@@ -86,6 +93,10 @@ public class AndServiceImpl implements AndService{
         And updatedAnd = andJPARepository.findById(and.getAndId()).get();
         updatedAnd.setAndTitle(and.getAndTitle());
         updatedAnd.setAndContent(and.getAndContent());
+        updatedAnd.setAndEndDate(and.getAndEndDate());
+        updatedAnd.setAndCategoryId(and.getAndCategoryId());
+        updatedAnd.setNeedNumMem(and.getNeedNumMem());
+        updatedAnd.setUpdatedAt(LocalDateTime.now());
         andJPARepository.save(updatedAnd);
     }
 
