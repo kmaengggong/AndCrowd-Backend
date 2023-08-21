@@ -7,7 +7,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class DynamicReward { // 리워드 카테고리
+public class DynamicCrowdReward { // 리워드 카테고리
 
     private int rewardId;
 

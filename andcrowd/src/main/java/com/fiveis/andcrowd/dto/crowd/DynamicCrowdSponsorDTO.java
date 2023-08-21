@@ -2,7 +2,7 @@ package com.fiveis.andcrowd.dto.crowd;
 
 import lombok.*;
 
-public class DynamicSponsorDTO { // find(findAll, findById), Update
+public class DynamicCrowdSponsorDTO { // find(findAll, findById), Update
     @Getter
     @Setter
     @Builder

@@ -1,5 +1,6 @@
 package com.fiveis.andcrowd.service.user;
 
+import com.fiveis.andcrowd.dto.and.AndDTO;
 import com.fiveis.andcrowd.dto.user.DynamicUserAndDTO;
 import com.fiveis.andcrowd.entity.and.And;
 import com.fiveis.andcrowd.entity.user.DynamicUserAnd;
@@ -23,11 +24,12 @@ public class DynamicUserAndServiceImpl implements DynamicUserAndService{
         this.andJPARepository = andJPARepository;
     }
 
-    public List<And> findAll(String userEmail){
+    public List<AndDTO.Find> findAll(String userEmail){
         List<DynamicUserAndDTO.Find> findList = dynamicUserAndRepository.findAll(userEmail);
-        List<And> andList = new ArrayList<>();
+        List<AndDTO.Find> andList = new ArrayList<>();
         for(DynamicUserAndDTO.Find find : findList){
-            andList.add(andJPARepository.findById(find.getAndId()).get());
+            if(andJPARepository.findById(find.getAndId()).isEmpty()) continue;
+            andList.add(AndDTO.convertToAndFindDTO(andJPARepository.findById(find.getAndId()).get()));
         }
         return andList;
     }
@@ -36,11 +38,21 @@ public class DynamicUserAndServiceImpl implements DynamicUserAndService{
         return dynamicUserAndRepository.findById(userEmail, uAndId);
     }
 
-    public void save(String userEmail, DynamicUserAnd dynamicUserAnd){
+    public boolean save(String userEmail, DynamicUserAnd dynamicUserAnd){
+        // 존재하지 않는 andId
+        if(andJPARepository.findById(dynamicUserAnd.getAndId()).isEmpty()) return false;
+        // user_and에 이미 존재
+        if(dynamicUserAndRepository.findByAndId(userEmail, dynamicUserAnd.getAndId()) != null) return false;
+        // 그 외에는 저장 성공
         dynamicUserAndRepository.save(userEmail, dynamicUserAnd);
+        return true;
     }
 
     public void deleteById(String userEmail, int uAndId){
         dynamicUserAndRepository.deleteById(userEmail, uAndId);
+    }
+
+    public void deleteByAndId(String userEmail, int andId){
+        dynamicUserAndRepository.deleteByAndId(userEmail, andId);
     }
 }

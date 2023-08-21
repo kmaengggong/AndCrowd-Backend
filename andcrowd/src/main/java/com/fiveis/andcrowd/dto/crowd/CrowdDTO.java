@@ -1,5 +1,6 @@
 package com.fiveis.andcrowd.dto.crowd;
 
+import com.fiveis.andcrowd.entity.crowd.Crowd;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -80,6 +81,33 @@ public class CrowdDTO {
         private int userId;
         private boolean isDeleted;
 
+    }
+
+    public static CrowdDTO.FindById convertToCrowdFindDTO(Crowd crowd) {
+        CrowdDTO.FindById convertedDTO = FindById.builder()
+                .crowdId(crowd.getCrowdId())
+                .adId(crowd.getAdId())
+                .andId(crowd.getAndId())
+                .crowdCategoryId(crowd.getCrowdCategoryId())
+                .crowdContent(crowd.getCrowdContent())
+                .crowdEndDate(crowd.getCrowdEndDate())
+                .crowdGoal(crowd.getCrowdGoal())
+                .crowdImg1(crowd.getCrowdImg1())
+                .crowdImg2(crowd.getCrowdImg2())
+                .crowdImg3(crowd.getCrowdImg3())
+                .crowdImg4(crowd.getCrowdImg4())
+                .crowdImg5(crowd.getCrowdImg5())
+                .crowdStatus(crowd.getCrowdStatus())
+                .crowdTitle(crowd.getCrowdTitle())
+                .headerImg(crowd.getHeaderImg())
+                .isDeleted(crowd.isDeleted())
+                .likeSum(crowd.getLikeSum())
+                .publishedAt(crowd.getPublishedAt())
+                .updatedAt(crowd.getUpdatedAt())
+                .userId(crowd.getUserId())
+                .viewCount(crowd.getViewCount())
+                .build();
+        return convertedDTO;
     }
 
 }

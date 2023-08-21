@@ -13,6 +13,9 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
+import static com.fiveis.andcrowd.dto.crowd.CrowdDTO.convertToCrowdFindDTO;
+
 @Service
 public class CrowdServiceImpl implements CrowdService {
 
@@ -35,7 +38,7 @@ public class CrowdServiceImpl implements CrowdService {
     @Override
     public Optional<CrowdDTO.FindById> findByCrowdId(int crowdId) {
         Optional<Crowd> crowdOptional = crowdJPARepository.findById(crowdId);
-        return crowdOptional.map(this::convertToAndFindByCrowdId);
+        return crowdOptional.map(CrowdDTO::convertToCrowdFindDTO);
     }
 
     @Override
@@ -44,12 +47,24 @@ public class CrowdServiceImpl implements CrowdService {
     }
 
     @Override
+    public List<CrowdDTO.FindById> findAllByIsDeletedFalse() {
+        List<Crowd> crowdList = crowdJPARepository.findAllByIsDeletedFalse();
+        List<CrowdDTO.FindById> findAllNotDeletedList = new ArrayList<>();
+
+        for(Crowd crowd : crowdList){
+            CrowdDTO.FindById result = convertToCrowdFindDTO(crowd);
+            findAllNotDeletedList.add(result);
+        }
+        return findAllNotDeletedList;
+    }
+
+    @Override
     public List<CrowdDTO.FindById> findAll() {
         List<Crowd> crowdList = crowdJPARepository.findAll();
         List<CrowdDTO.FindById> findByIdList = new ArrayList<>();
 
         for(Crowd crowd : crowdList){
-            CrowdDTO.FindById result = convertToAndFindByCrowdId(crowd);
+            CrowdDTO.FindById result = convertToCrowdFindDTO(crowd);
             findByIdList.add(result);
         }
         return findByIdList;
@@ -65,32 +80,32 @@ public class CrowdServiceImpl implements CrowdService {
         crowdJPARepository.save(crowd);
     }
 
-    @Override
-    public CrowdDTO.FindById convertToAndFindByCrowdId(Crowd crowd) {
-        return CrowdDTO.FindById.builder()
-                .crowdId(crowd.getCrowdId())
-                .adId(crowd.getAdId())
-                .andId(crowd.getAndId())
-                .crowdCategoryId(crowd.getCrowdCategoryId())
-                .crowdContent(crowd.getCrowdContent())
-                .crowdEndDate(crowd.getCrowdEndDate())
-                .crowdGoal(crowd.getCrowdGoal())
-                .crowdImg1(crowd.getCrowdImg1())
-                .crowdImg2(crowd.getCrowdImg2())
-                .crowdImg3(crowd.getCrowdImg3())
-                .crowdImg4(crowd.getCrowdImg4())
-                .crowdImg5(crowd.getCrowdImg5())
-                .crowdStatus(crowd.getCrowdStatus())
-                .crowdTitle(crowd.getCrowdTitle())
-                .headerImg(crowd.getHeaderImg())
-                .isDeleted(crowd.isDeleted())
-                .likeSum(crowd.getLikeSum())
-                .publishedAt(crowd.getPublishedAt())
-                .updatedAt(crowd.getUpdatedAt())
-                .userId(crowd.getUserId())
-                .viewCount(crowd.getViewCount())
-                .build();
-    }
+//    @Override
+//    public CrowdDTO.FindById convertToAndFindByCrowdId(Crowd crowd) {
+//        return CrowdDTO.FindById.builder()
+//                .crowdId(crowd.getCrowdId())
+//                .adId(crowd.getAdId())
+//                .andId(crowd.getAndId())
+//                .crowdCategoryId(crowd.getCrowdCategoryId())
+//                .crowdContent(crowd.getCrowdContent())
+//                .crowdEndDate(crowd.getCrowdEndDate())
+//                .crowdGoal(crowd.getCrowdGoal())
+//                .crowdImg1(crowd.getCrowdImg1())
+//                .crowdImg2(crowd.getCrowdImg2())
+//                .crowdImg3(crowd.getCrowdImg3())
+//                .crowdImg4(crowd.getCrowdImg4())
+//                .crowdImg5(crowd.getCrowdImg5())
+//                .crowdStatus(crowd.getCrowdStatus())
+//                .crowdTitle(crowd.getCrowdTitle())
+//                .headerImg(crowd.getHeaderImg())
+//                .isDeleted(crowd.isDeleted())
+//                .likeSum(crowd.getLikeSum())
+//                .publishedAt(crowd.getPublishedAt())
+//                .updatedAt(crowd.getUpdatedAt())
+//                .userId(crowd.getUserId())
+//                .viewCount(crowd.getViewCount())
+//                .build();
+//    }
 
     @Override
     public void update(Crowd crowd) {
