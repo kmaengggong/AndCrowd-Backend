@@ -21,10 +21,10 @@ public class AndController {
 
     @RequestMapping("/list")
     public List<AndDTO.Find> getList() {
-        return andService.findAll();
+        return andService.findAllByIsDeletedFalse();
     }
 
-    @RequestMapping("/create")
+    @RequestMapping(value="/create", method = RequestMethod.POST)
     public void createItem(@RequestBody And and) {
         andService.save(and);
     }

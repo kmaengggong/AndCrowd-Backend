@@ -54,6 +54,14 @@ public class AndServiceTest {
         assertEquals(5, andFindAllNotDeletedList.size());
     }
 
+    @Test
+    @Transactional
+    @DisplayName("U: update를 통해 1번글 업데이트")
+    public void updateTest() {
+        // given
+        int andId =1;
+    }
+
 
     @Test
     @DisplayName("C: save을 통해 모임글 저장 및 해당 동적 테이블 생성")

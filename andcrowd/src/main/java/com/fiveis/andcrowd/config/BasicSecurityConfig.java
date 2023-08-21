@@ -15,6 +15,9 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 
 @Configuration
@@ -42,9 +45,12 @@ public class BasicSecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http
+//                .cors()
+//                .and()
                 .authorizeHttpRequests(authorizationConfig -> {
                     authorizationConfig
-                            .requestMatchers("/login", "/signup", "/user")
+//                            .requestMatchers("/login", "/signup", "/user")
+                            .requestMatchers("/**")
                             .permitAll()
                             .anyRequest()
                             .authenticated();
@@ -70,6 +76,18 @@ public class BasicSecurityConfig {
                 .addFilterBefore(tokenAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
                 .build();
     }
+
+//    @Bean
+//    public CorsConfigurationSource corsConfigurationSource() {
+//        CorsConfiguration configuration = new CorsConfiguration();
+//        configuration.addAllowedOrigin("http://localhost:3000"); // 프론트엔드 도메인 추가
+//        configuration.addAllowedMethod("*"); // 모든 HTTP 메서드 허용
+//        configuration.addAllowedHeader("*"); // 모든 헤더 허용
+//        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+//        source.registerCorsConfiguration("/**", configuration);
+//        return source;
+//    }
+
 
     @Bean
     public AuthenticationManager authenticationManager(HttpSecurity http,

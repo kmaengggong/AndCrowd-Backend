@@ -18,28 +18,38 @@ public class DynamicAndQnaController {
         this.dynamicAndQnaService = dynamicAndQnaService;
     }
 
-    @RequestMapping("/list")
+    @RequestMapping(value="/list", method = RequestMethod.GET)
     public List<DynamicAndQnaDTO.FindById> getList(@PathVariable("andId") int andId){
-        return dynamicAndQnaService.findAll(andId);
+        return dynamicAndQnaService.findAllNotDeleted(andId);
     }
 
-    @RequestMapping("/{andQnaId}")
+    @RequestMapping(value = "/{andQnaId}", method = RequestMethod.GET)
     public DynamicAndQnaDTO.FindById getItem(@PathVariable("andId") int andId, @PathVariable("andQnaId") int andQnaId) {
         return dynamicAndQnaService.findByAndQnaId(andId,andQnaId);
     }
 
-    @RequestMapping("/create")
+    @RequestMapping(value="/create", method = RequestMethod.POST)
     public void createQna(@RequestBody DynamicAndQnaDTO.Update createQna){
         dynamicAndQnaService.save(createQna);
     }
 
-    @RequestMapping(value = "/{andQnaId}/update", method = RequestMethod.POST)
-    public String update(DynamicAndQnaDTO.Update updateQna){
+    @PutMapping(value = "/{andQnaId}/update")
+    public String update(
+            @PathVariable("andId") int andId,
+            @PathVariable("andQnaId") int andQnaId,
+            @RequestBody DynamicAndQnaDTO.Update updateQna) {
         dynamicAndQnaService.update(updateQna);
-        return "redirect:/andQna{andId}/" + updateQna.getAndQnaId();
+        return "redirect:/and/" + andId + "/qna/" + andQnaId;
     }
 
-    @RequestMapping("/{andQnaId}/delete")
+
+//    @RequestMapping(value = "/{andQnaId}/update", method = {RequestMethod.PUT, RequestMethod.PATCH})
+//    public String update(DynamicAndQnaDTO.Update updateQna){
+//        dynamicAndQnaService.update(updateQna);
+//        return "redirect:/andQna{andId}/" + updateQna.getAndQnaId();
+//    }
+
+    @RequestMapping(value="/{andQnaId}/delete", method = RequestMethod.DELETE)
     public void deleteItem(@PathVariable("andId") int andId, @PathVariable("andQnaId") int andQnaId) {
         dynamicAndQnaService.deleteByAndQnaId(andId, andQnaId);
     }
