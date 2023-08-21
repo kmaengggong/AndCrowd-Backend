@@ -146,4 +146,23 @@ public class DynamicCrowdQnaReplyRepositoryTest {
         // then
         assertThat(qnaReply.isDeleted()).isTrue();
     }
+
+    @Test
+    @Transactional
+    @DisplayName("crowdQnaId 1번글의 reply의 is_deleted 가 전부 true가 된다")
+    public void deleteAllByQnaIdTest(){
+        // given
+        int crowdId = 1;
+        int crowdQnaId = 1;
+
+        // when
+        dynamicCrowdQnaReplyRepository.deleteAllByQnaId(crowdId, crowdQnaId);
+        List<DynamicCrowdQnaReplyDTO.Find> replies = dynamicCrowdQnaReplyRepository.findAll(crowdId, crowdQnaId);
+
+        // then
+        assertThat(replies.get(0).isDeleted()).isTrue();
+        assertThat(replies.get(1).isDeleted()).isTrue();
+        assertThat(replies.get(2).isDeleted()).isTrue();
+
+    }
 }

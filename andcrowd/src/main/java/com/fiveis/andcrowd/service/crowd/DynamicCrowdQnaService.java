@@ -19,4 +19,5 @@ public interface DynamicCrowdQnaService {
     void save(DynamicCrowdQnaDTO.Save dynamicCrowdQnaDTOSave);
 
     void update(DynamicCrowdQnaDTO.Update dynamicCrowdBoardDTOUpdate);
+
 }

@@ -1,7 +1,8 @@
 package com.fiveis.andcrowd.service.crowd;
 
 import com.fiveis.andcrowd.dto.crowd.DynamicCrowdQnaDTO;
-import com.fiveis.andcrowd.service.crowd.DynamicCrowdQnaService;
+import com.fiveis.andcrowd.dto.crowd.DynamicCrowdQnaReplyDTO;
+import com.fiveis.andcrowd.repository.crowd.DynamicCrowdQnaReplyRepository;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -18,6 +19,9 @@ public class DynamicCrowdQnaServiceTest {
 
     @Autowired
     DynamicCrowdQnaService dynamicCrowdQnaService;
+
+    @Autowired
+    DynamicCrowdQnaReplyRepository dynamicCrowdQnaReplyRepository;
 
 //    @Test
 //    @Transactional
@@ -140,18 +144,22 @@ public class DynamicCrowdQnaServiceTest {
 
     @Test
     @Transactional
-    @DisplayName("crowdId 1번글의 2번째 글 삭제시 데이터 값이 NULL 값일 것이고 전체 글의 갯수는 2개일것이다.")
+    @DisplayName("crowdId 1번글의 1번째 Qna 삭제시 연관된 reply의 is_deleted가 전부 true가 될것이며, 2번째글 또한 is_deleted가 true 가 될것이다.")
     public void deleteByCrowdBoardIdTest(){
 
         // given
         int crowdId = 1;
-        int crowdQnaId = 2;
+        int crowdQnaId = 1;
 
         // when
         dynamicCrowdQnaService.deleteByCrowdQnaId(crowdId, crowdQnaId);
+        List<DynamicCrowdQnaReplyDTO.Find> replies = dynamicCrowdQnaReplyRepository.findAll(crowdId, crowdQnaId);
         DynamicCrowdQnaDTO.Find crowdQna = dynamicCrowdQnaService.findById(crowdId, crowdQnaId);
 
         // then
+        assertThat(replies.get(0).isDeleted()).isTrue();
+        assertThat(replies.get(1).isDeleted()).isTrue();
+        assertThat(replies.get(2).isDeleted()).isTrue();
         assertThat(crowdQna.isDeleted()).isTrue();
     }
 }

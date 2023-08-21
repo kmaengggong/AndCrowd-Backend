@@ -67,4 +67,13 @@
         WHERE
             qna_reply_id = #{qnaReplyId}
     </delete>
+
+    <delete id="deleteAllByQnaId" parameterType="int">
+        UPDATE
+            crowd_qna_reply_#{crowdId}
+        SET
+            is_deleted = true
+        WHERE
+            crowd_qna_id = #{crowdQnaId}
+    </delete>
 </mapper>

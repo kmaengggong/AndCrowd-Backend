@@ -1,6 +1,7 @@
 package com.fiveis.andcrowd.service.crowd;
 
 import com.fiveis.andcrowd.dto.crowd.DynamicCrowdQnaDTO;
+import com.fiveis.andcrowd.repository.crowd.DynamicCrowdQnaReplyRepository;
 import com.fiveis.andcrowd.repository.crowd.DynamicCrowdQnaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,10 +12,13 @@ import java.util.List;
 public class DynamicCrowdQnaServiceImpl implements DynamicCrowdQnaService {
 
     DynamicCrowdQnaRepository dynamicCrowdQnaRepository;
+    DynamicCrowdQnaReplyRepository dynamicCrowdQnaReplyRepository;
 
     @Autowired
-    public DynamicCrowdQnaServiceImpl(DynamicCrowdQnaRepository dynamicCrowdQnaRepository){
+    public DynamicCrowdQnaServiceImpl(DynamicCrowdQnaRepository dynamicCrowdQnaRepository,
+                                      DynamicCrowdQnaReplyRepository dynamicCrowdQnaReplyRepository){
         this.dynamicCrowdQnaRepository = dynamicCrowdQnaRepository;
+        this.dynamicCrowdQnaReplyRepository = dynamicCrowdQnaReplyRepository;
     }
 
 
@@ -33,8 +37,10 @@ public class DynamicCrowdQnaServiceImpl implements DynamicCrowdQnaService {
         return dynamicCrowdQnaRepository.findById(crowdId, crowdQnaId);
     }
 
+    // crowdQna 삭제전 연관된 Reply 삭제 로직 추가
     @Override
     public void deleteByCrowdQnaId(int crowdId, int crowdQnaId) {
+        dynamicCrowdQnaReplyRepository.deleteAllByQnaId(crowdId, crowdQnaId);
         dynamicCrowdQnaRepository.deleteByCrowdQnaId(crowdId, crowdQnaId);
     }
 
