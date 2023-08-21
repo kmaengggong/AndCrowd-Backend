@@ -20,4 +20,6 @@ public interface DynamicCrowdQnaService {
 
     void update(DynamicCrowdQnaDTO.Update dynamicCrowdBoardDTOUpdate);
 
+    void deleteAllByCrowdId(@Param("crowdId") int crowdId);
+
 }

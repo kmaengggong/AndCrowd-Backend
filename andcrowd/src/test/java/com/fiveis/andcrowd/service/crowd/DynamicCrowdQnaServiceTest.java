@@ -162,4 +162,33 @@ public class DynamicCrowdQnaServiceTest {
         assertThat(replies.get(2).isDeleted()).isTrue();
         assertThat(crowdQna.isDeleted()).isTrue();
     }
+
+    @Test
+    @Transactional
+    @DisplayName("crowd 1번글이 삭제될경우 관련된 crowdQna, crowdQnaReply의 is_deleted가 전부 true가 된다")
+    public void deleteAllTest(){
+        // given
+        int crowdId = 1;
+        int crowdQnaId1 = 1;
+        int crowdQnaId2 = 2;
+        int crowdQnaId3 = 3;
+
+        // when
+        dynamicCrowdQnaService.deleteAll(crowdId);
+        List<DynamicCrowdQnaDTO.Find> qnaList = dynamicCrowdQnaService.findAll(crowdId);
+        List<DynamicCrowdQnaReplyDTO.Find> replies = dynamicCrowdQnaReplyRepository.findAll(crowdId, crowdQnaId1);
+        replies.addAll(dynamicCrowdQnaReplyRepository.findAll(crowdId,crowdQnaId2));
+        replies.addAll(dynamicCrowdQnaReplyRepository.findAll(crowdId, crowdQnaId3));
+
+        // then
+        int qnaListSize = qnaList.size();
+        for(int indexNum = 0; indexNum < qnaListSize; indexNum++){
+            assertThat(qnaList.get(indexNum).isDeleted()).isTrue();
+        }
+
+        int repliesSize = replies.size();
+        for(int indexNum = 0; indexNum < repliesSize; indexNum++){
+            assertThat(replies.get(indexNum).isDeleted()).isTrue();
+        }
+    }
 }

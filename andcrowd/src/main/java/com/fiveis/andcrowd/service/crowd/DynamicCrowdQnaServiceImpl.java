@@ -53,4 +53,11 @@ public class DynamicCrowdQnaServiceImpl implements DynamicCrowdQnaService {
     public void update(DynamicCrowdQnaDTO.Update dynamicCrowdBoardDTOUpdate) {
         dynamicCrowdQnaRepository.update(dynamicCrowdBoardDTOUpdate);
     }
+
+    // crowd글이 삭제될경우 연관된 Qna와 QnaReply가 전부 삭제되는 기능
+    @Override
+    public void deleteAllByCrowdId(int crowdId){
+        dynamicCrowdQnaReplyRepository.deleteAll(crowdId);
+        dynamicCrowdQnaRepository.deleteAll(crowdId);
+    }
 }
