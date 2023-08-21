@@ -34,10 +34,9 @@ public class AndController {
         return andService.findById(andId).orElse(null);
     }
 
-    @RequestMapping(value="/{andId}/update", method=RequestMethod.POST)
-    public String update(And and){
+    @RequestMapping(value="/{andId}/update" , method=RequestMethod.POST)
+    public void updateAnd( @RequestBody And and) {
         andService.update(and);
-        return "redirect:/and" + and.getAndId();
     }
 
     @RequestMapping("/{andId}/delete")
