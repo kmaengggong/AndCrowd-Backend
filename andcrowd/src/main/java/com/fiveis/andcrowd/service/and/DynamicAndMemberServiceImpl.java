@@ -1,6 +1,7 @@
 package com.fiveis.andcrowd.service.and;
 
 import com.fiveis.andcrowd.dto.and.DynamicAndMemberDTO;
+import com.fiveis.andcrowd.dto.and.DynamicAndQnaReplyDTO;
 import com.fiveis.andcrowd.repository.and.DynamicAndMemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -38,17 +39,7 @@ public class DynamicAndMemberServiceImpl implements DynamicAndMemberService {
     }
 
     @Override
-    public void createAndMemberTable() {
-        dynamicAndMemberRepository.createAndMemberTable();
-    }
-
-    @Override
-    public void dropAndMemberTable() {
-        dynamicAndMemberRepository.dropAndMemberTable();
-    }
-
-    @Override
-    public void insertTestData() {
-        dynamicAndMemberRepository.insertTestData();
+    public void update(DynamicAndMemberDTO.Update andMemberDTO) {
+        dynamicAndMemberRepository.update(andMemberDTO);
     }
 }
