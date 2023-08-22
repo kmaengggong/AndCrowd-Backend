@@ -41,7 +41,7 @@ public class DynamicAndBoardController {
         dynamicAndBoardService.update(dynamicAndBoardUpdateDTO);
     }
 
-    @RequestMapping(value = "/{andBoardId}/delete", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/delete", method = RequestMethod.DELETE)
     public void deleteByAndId(@PathVariable("andId") int andId) {
         dynamicAndBoardService.deleteByAndId(andId);
     }
