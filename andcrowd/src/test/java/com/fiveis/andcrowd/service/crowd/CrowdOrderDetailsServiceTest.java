@@ -2,7 +2,6 @@ package com.fiveis.andcrowd.service.crowd;
 
 import com.fiveis.andcrowd.dto.crowd.CrowdOrderDetailsDTO;
 import com.fiveis.andcrowd.entity.crowd.CrowdOrderDetails;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +9,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -95,4 +93,9 @@ public class CrowdOrderDetailsServiceTest {
         // then
         assertEquals(2, filteredOrders.size());
     }
+
+//    private boolean checkTableExists(String tableName) {
+//        // mysql에서 테이블 생성 여부 확인
+//        return true;
+//    }
 }

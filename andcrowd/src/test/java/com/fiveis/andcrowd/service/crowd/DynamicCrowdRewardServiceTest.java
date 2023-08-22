@@ -53,6 +53,7 @@ public class DynamicCrowdRewardServiceTest {
     public void findAllRewardTest() {
         // given
         int crowdId = 123;
+        int rewardId = 1;
         // when
         List<DynamicCrowdRewardDTO.FindAllById> findAllByIdList = dynamicCrowdRewardService.findAll(crowdId);
         System.out.println(findAllByIdList);
@@ -63,6 +64,14 @@ public class DynamicCrowdRewardServiceTest {
     @Test
     @Transactional
     public void findByRewardIdTest() {
+        // given
+        int rewardId = 1;
+        int crowdId = 123;
+        // when
 
+        DynamicCrowdRewardDTO.FindAllById crowdReward = dynamicCrowdRewardService.findByRewardId(crowdId, rewardId);
+        // then
+        assertEquals(1, crowdReward.getRewardId());
+        assertEquals(123, crowdReward.getCrowdId());
     }
 }

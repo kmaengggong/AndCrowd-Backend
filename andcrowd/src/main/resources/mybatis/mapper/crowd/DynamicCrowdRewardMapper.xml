@@ -1,20 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper
-        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.fiveis.andcrowd.repository.crowd.DynamicCrowdRewardRepository">
 
     <update id="createDynamicCrowdRewardTable">
-        CREATE TABLE IF NOT EXISTS crowd_reward_#{crowd_id} (
-        reward_id INT AUTO_INCREMENT PRIMARY KEY,
-        crowd_id INT NOT NULL,
-        reward_title VARCHAR(255) NOT NULL,
-        reward_content VARCHAR(255) NOT NULL,
-        reward_amount INT NOT NULL,
-        reward_limit INT NOT NULL,
-        is_deleted BOOL default false
-        )
+        CREATE TABLE IF NOT EXISTS
+            crowd_reward_#{crowdId} (
+                reward_id INT AUTO_INCREMENT PRIMARY KEY,
+                crowd_id INT NOT NULL,
+                reward_title VARCHAR(255) NOT NULL,
+                reward_content VARCHAR(255) NOT NULL,
+                reward_amount INT NOT NULL,
+                reward_limit INT NOT NULL,
+                is_deleted BOOL default false
+                )
     </update>
 
     <select id="findAll" resultType="com.fiveis.andcrowd.dto.crowd.DynamicCrowdRewardDTO$FindAllById">
@@ -26,7 +24,7 @@
             reward_amount AS rewardAmount,
             reward_limit AS rewardLimit,
             is_deleted AS isDeleted
-        FROM crowd_reward_#{crowd_id}
+        FROM crowd_reward_#{crowdId}
     </select>
 
     <select id="findAllNotDeleted" resultType="com.fiveis.andcrowd.dto.crowd.DynamicCrowdRewardDTO$FindAllById">
@@ -38,7 +36,7 @@
             reward_amount AS rewardAmount,
             reward_limit AS rewardLimit,
             is_deleted AS isDeleted
-        FROM crowd_reward_#{crowd_id}
+        FROM crowd_reward_#{crowdId}
         WHERE is_deleted = false
     </select>
 
@@ -51,8 +49,8 @@
             reward_amount AS rewardAmount,
             reward_limit AS rewardLimit,
             is_deleted AS isDeleted
-        FROM crowd_reward_#{crowd_id}
-        WHERE reward_id = #{reward_id}
+        FROM crowd_reward_#{crowdId}
+        WHERE reward_id = #{rewardId}
     </select>
 
     <insert id="save" parameterType="com.fiveis.andcrowd.dto.crowd.DynamicCrowdRewardDTO$Update">
@@ -70,7 +68,7 @@
             reward_content = #{rewardContent},
             reward_amount = #{rewardAmount},
             reward_limit = #{rewardLimit}
-        WHERE reward_id = #{rewardId}
+        WHERE crowd_id = #{crowdId} AND reward_id = #{rewardId}
     </update>
 
     <update id="deleteByRewardId" parameterType="int">
