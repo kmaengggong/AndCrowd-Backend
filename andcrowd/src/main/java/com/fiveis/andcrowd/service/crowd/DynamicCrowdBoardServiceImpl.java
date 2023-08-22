@@ -43,6 +43,8 @@ public class DynamicCrowdBoardServiceImpl implements DynamicCrowdBoardService{
 
     @Override
     public void update(DynamicCrowdBoardDTO.Update dynamicCrowdBoardDTOUpdate) {
+
+
         dynamicCrowdBoardRepository.update(dynamicCrowdBoardDTOUpdate);
     }
 }
