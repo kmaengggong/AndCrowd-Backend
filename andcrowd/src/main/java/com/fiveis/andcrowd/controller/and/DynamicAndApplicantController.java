@@ -33,6 +33,11 @@ public class DynamicAndApplicantController {
         return dynamicAndApplicantService.findByAndRoleId(andId, andRoleId);
     }
 
+    @RequestMapping(value = "/{andApplyId}", method = RequestMethod.GET)
+    public DynamicAndApplicantDTO.FindById apply(@PathVariable("andId") int andId, @PathVariable("andApplyId") int andApplyId){
+        return dynamicAndApplicantService.findByAndApplicantId(andId, andApplyId);
+    }
+
 
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     public void createApplicant(@RequestBody DynamicAndApplicantDTO.Update createApplicant){
