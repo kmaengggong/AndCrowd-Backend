@@ -36,24 +36,28 @@ public class DynamicAndQnaReplyController {
         return reply;
     }
 
-    @RequestMapping(value = "/create", method = RequestMethod.POST)
-    public void createReply(@RequestBody DynamicAndQnaReplyDTO.Update andReplySaveDTO){
+    @RequestMapping(value = "/{andQnaId}/create", method = RequestMethod.POST)
+    public void createReply(
+            @PathVariable("andId") int andId,
+            @PathVariable("andQnaId") int andQnaId,
+            @RequestBody DynamicAndQnaReplyDTO.Update andReplySaveDTO){
         dynamicAndQnaReplyService.save(andReplySaveDTO);
     }
 
-    @RequestMapping(value = "/{andQnaReplyId}/update", method = RequestMethod.PUT)
+    @RequestMapping(value = "/{andQnaId}/{andQnaReplyId}/update", method = RequestMethod.PUT)
     public String updateReply(
             @PathVariable("andId") int andId,
+            @PathVariable("andQnaId") int andQnaId,
             @PathVariable("andQnaReplyId") int andQnaReplyId,
             @RequestBody DynamicAndQnaReplyDTO.Update andReplyUpdateDTO){
         dynamicAndQnaReplyService.update(andReplyUpdateDTO);
-        return "redirect:/and/" + andId + "/qna/reply/" + andQnaReplyId + "/all";
+        return "redirect:/and/" + andId + "/qna/" + andQnaId;
     }
 
-    @RequestMapping(value = "/{andQnaReplyId}/delete", method = RequestMethod.DELETE)
-    public String deleteReply(@PathVariable("andId") int andId, @PathVariable("andQnaReplyId") int andQnaReplyId){
+    @RequestMapping(value = "/{andQnaId}/{andQnaReplyId}/delete", method = RequestMethod.DELETE)
+    public String deleteReply(@PathVariable("andId") int andId, @PathVariable("andQnaId") int andQnaId, @PathVariable("andQnaReplyId") int andQnaReplyId){
         dynamicAndQnaReplyService.deleteByAndReplyId(andId, andQnaReplyId);
-        return "redirect:/and/" + andId + "/qna/reply/" + andQnaReplyId + "/all";
+        return "redirect:/and/" + andId + "/qna/" + andQnaId;
     }
 
     @RequestMapping(value = "/{andQnaId}/all/delete", method = RequestMethod.DELETE)
