@@ -44,7 +44,7 @@ public class DynamicAndApplicantController {
         dynamicAndApplicantService.save(createApplicant);
     }
 
-    @RequestMapping(value = "/{andApplyId}/update", method = RequestMethod.PUT)
+    @RequestMapping(value = "/{andApplyId}/update", method = RequestMethod.PATCH)
     public void update(
             @PathVariable("andId") int andId,
             @RequestBody DynamicAndApplicantDTO.Update updatedApply){
