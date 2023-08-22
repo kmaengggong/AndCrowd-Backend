@@ -44,7 +44,7 @@ public class DynamicAndQnaReplyController {
         dynamicAndQnaReplyService.save(andReplySaveDTO);
     }
 
-    @RequestMapping(value = "/{andQnaId}/{andQnaReplyId}/update", method = RequestMethod.PUT)
+    @RequestMapping(value = "/{andQnaId}/{andQnaReplyId}/update", method = RequestMethod.PATCH)
     public String updateReply(
             @PathVariable("andId") int andId,
             @PathVariable("andQnaId") int andQnaId,
