@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/andRole")
+@RequestMapping("/andRole/{andId}")
 public class DynamicAndRoleController {
 
     private final DynamicAndRoleService dynamicAndRoleService;
@@ -35,12 +35,12 @@ public class DynamicAndRoleController {
         dynamicAndRoleService.save(andRoleInsertDTO);
     }
 
-    @RequestMapping(value = "/update", method = RequestMethod.PUT)
+    @RequestMapping(value = "/{andRoleId}/update", method = RequestMethod.PUT)
     public void updateDynamicAndRole(@RequestBody DynamicAndRoleDTO.Update andRoleUpdateDTO) {
         dynamicAndRoleService.update(andRoleUpdateDTO);
     }
 
-    @RequestMapping(value = "/delete", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/{andRoleId}/delete", method = RequestMethod.DELETE)
     public void deleteDynamicAndRole(@PathVariable int andRoleId,
                                      @RequestParam("andId") int andId) {
         dynamicAndRoleService.deleteByAndRoleId(andId, andRoleId);
