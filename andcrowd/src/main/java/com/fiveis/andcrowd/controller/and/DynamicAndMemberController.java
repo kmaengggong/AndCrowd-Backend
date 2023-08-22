@@ -46,7 +46,7 @@ public class DynamicAndMemberController {
         dynamicAndMemberService.deleteById(andId, memberId);
     }
 
-    @RequestMapping("/{memberId}/update")
+    @RequestMapping(value = "/{memberId}/update", method = RequestMethod.PATCH)
     public void updateDynamicAndMember(@RequestBody DynamicAndMemberDTO.Update dynamicAndMemberDTOUpdate) {
         dynamicAndMemberService.update(dynamicAndMemberDTOUpdate);
     }

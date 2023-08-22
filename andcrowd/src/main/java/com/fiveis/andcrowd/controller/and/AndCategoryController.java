@@ -34,7 +34,7 @@ public class AndCategoryController {
         andCategoryService.save(andCategory);
     }
 
-    @RequestMapping(value = "/{andCategoryId}/update", method = RequestMethod.PUT)
+    @RequestMapping(value = "/{andCategoryId}/update", method = RequestMethod.PATCH)
     public void updateAndCategory(@RequestBody AndCategory andCategory) {
         andCategoryService.update(andCategory);
     }

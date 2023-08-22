@@ -34,7 +34,7 @@ public class DynamicAndBoardController {
         dynamicAndBoardService.save(dynamicAndBoardUpdateDTO);
     }
 
-    @RequestMapping(value = "/{andBoardId}/update", method = RequestMethod.POST)
+    @RequestMapping(value = "/{andBoardId}/update", method = RequestMethod.PATCH)
     public void updateAndBoard(@PathVariable("andId") int andId,
                                @PathVariable("andBoardId") int andBoardId,
                                @RequestBody DynamicAndBoardDTO.Update dynamicAndBoardUpdateDTO) {

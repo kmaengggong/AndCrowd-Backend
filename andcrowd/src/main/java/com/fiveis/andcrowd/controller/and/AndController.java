@@ -34,7 +34,7 @@ public class AndController {
         return andService.findById(andId).orElse(null);
     }
 
-    @RequestMapping(value="/{andId}/update" , method=RequestMethod.POST)
+    @RequestMapping(value="/{andId}/update" , method=RequestMethod.PATCH)
     public void updateAnd( @RequestBody And and) {
         andService.update(and);
     }
