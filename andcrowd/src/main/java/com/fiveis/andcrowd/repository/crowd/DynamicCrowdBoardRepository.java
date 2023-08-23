@@ -20,4 +20,7 @@ public interface DynamicCrowdBoardRepository {
     void save(DynamicCrowdBoardDTO.Save dynamicCrowdBoardDTOSave);
 
     void update(DynamicCrowdBoardDTO.Update dynamicCrowdBoardDTOUpdate);
+
+    //CrowdService의 delete메서드에서 사용할 전체삭제기능 추가
+    void deleteByCrowdId(@Param("crowdId") int crowdId);
 }

@@ -18,27 +18,28 @@ public class DynamicCrowdQnaRepositoryTest {
     @Autowired
     DynamicCrowdQnaRepository dynamicCrowdQnaRepository;
 
-    @Test
-    @Transactional
-    @DisplayName("2번 crowd게시글 생성시 crowd_qna_2 이라는 이름의 테이블이 생성되며, 글이 정상적으로 추가된다.")
-    public void createDynamicCrowdQnaTableTest(){
-        // given
-        int crowdId = 2;
-        String title = "추가된 제목";
-        String content = "추가된 본문";
-
-        // when
-        dynamicCrowdQnaRepository.createDynamicCrowdQnaTable(crowdId);
-        DynamicCrowdQnaDTO.Save newQna = new DynamicCrowdQnaDTO.Save();
-        newQna.setCrowdId(crowdId);
-        newQna.setQnaTitle(title);
-        newQna.setQnaContent(content);
-        dynamicCrowdQnaRepository.save(newQna);
-
-        // then
-        List<DynamicCrowdQnaDTO.Find> crowdBoardList = dynamicCrowdQnaRepository.findAll(crowdId);
-        assertThat(crowdBoardList.get(0).getCrowdId()).isEqualTo(crowdId);
-    }
+    // createTable의 경우 @Transactional을 사용하여도 생성된 테이블이 롤백되지 않아 정상작동 확인후 주석처리
+//    @Test
+//    @Transactional
+//    @DisplayName("2번 crowd게시글 생성시 crowd_qna_2 이라는 이름의 테이블이 생성되며, 글이 정상적으로 추가된다.")
+//    public void createDynamicCrowdQnaTableTest(){
+//        // given
+//        int crowdId = 2;
+//        String title = "추가된 제목";
+//        String content = "추가된 본문";
+//
+//        // when
+//        dynamicCrowdQnaRepository.createDynamicCrowdQnaTable(crowdId);
+//        DynamicCrowdQnaDTO.Save newQna = new DynamicCrowdQnaDTO.Save();
+//        newQna.setCrowdId(crowdId);
+//        newQna.setQnaTitle(title);
+//        newQna.setQnaContent(content);
+//        dynamicCrowdQnaRepository.save(newQna);
+//
+//        // then
+//        List<DynamicCrowdQnaDTO.Find> crowdBoardList = dynamicCrowdQnaRepository.findAll(crowdId);
+//        assertThat(crowdBoardList.get(0).getCrowdId()).isEqualTo(crowdId);
+//    }
 
 
     @Test
@@ -155,4 +156,23 @@ public class DynamicCrowdQnaRepositoryTest {
         // then
         assertThat(crowdQna.isDeleted()).isTrue();
     }
+
+    @Test
+    @Transactional
+    @DisplayName("crowd 1번글이 삭제될경우 관련된 crowdQna글의 is_deleted가 전부 true가 된다")
+    public void deleteAllTest(){
+        // given
+        int crowdId = 1;
+
+        // when
+        dynamicCrowdQnaRepository.deleteAll(crowdId);
+        List<DynamicCrowdQnaDTO.Find> qnaList = dynamicCrowdQnaRepository.findAll(crowdId);
+
+        // then
+        int qnaListSize = qnaList.size();
+        for(int indexNum = 0; indexNum < qnaListSize; indexNum++){
+            assertThat(qnaList.get(indexNum).isDeleted()).isTrue();
+        }
+    }
+
 }
