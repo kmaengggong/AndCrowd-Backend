@@ -64,7 +64,7 @@ public class UserServiceImpl implements UserService {
 
     public UserDTO.FindAsPublic findByUserNickname(String userNickname){
         if(userJPARepository.findByUserNickname(userNickname).isEmpty()) return null;
-        return userJPARepository.findByUserNickname(userNickname).get();
+        return UserDTO.convertToFindAsPublicDTO(userJPARepository.findByUserNickname(userNickname).get());
     }
 
     @Transactional

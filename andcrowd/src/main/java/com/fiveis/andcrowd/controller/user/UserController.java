@@ -13,47 +13,17 @@ import org.springframework.web.bind.annotation.*;
 import java.time.Duration;
 
 @RestController
+@RequestMapping(value="/user")
+
 public class UserController {
     private final UserService userService;
-    private final BCryptPasswordEncoder bCryptPasswordEncoder;
-    private final TokenProvider tokenProvider;
 
     @Autowired
-    public UserController(UserService userService,
-                          BCryptPasswordEncoder bCryptPasswordEncoder,
-                          TokenProvider tokenProvider){
+    public UserController(UserService userService){
         this.userService = userService;
-        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
-        this.tokenProvider = tokenProvider;
     }
 
-    @RequestMapping(value="/login", method=RequestMethod.POST)
-    public ResponseEntity<?> authenticate(@RequestBody UserDTO.Login userLogin) {
-        System.out.println("!!!!! " + userLogin);
-        User userInfo = userService.getByCredentials(userLogin.getUserEmail());
-        if(userInfo == null) return ResponseEntity.badRequest().body("Log In Failed");
-
-        if(bCryptPasswordEncoder.matches(userLogin.getUserPassword(), userInfo.getUserPassword())){
-            String token = tokenProvider.generateToken(userInfo, Duration.ofHours(2));
-            AccessTokenResponseDTO tokenResponseDTO = new AccessTokenResponseDTO(token);
-            return ResponseEntity.ok(tokenResponseDTO);
-        }
-        else{
-            return ResponseEntity.badRequest().body("Log In Failed");
-        }
-    }
-
-    @RequestMapping(value="/signup", method=RequestMethod.POST)
-    public ResponseEntity<?> signup(@RequestBody User user){
-        try{
-            userService.save(user);
-            return ResponseEntity.ok("Sign Up Success!");
-        } catch(Exception e){
-            return ResponseEntity.badRequest().body("Sign Up Failed");
-        }
-    }
-
-    @RequestMapping(value="/user/list", method=RequestMethod.GET)
+    @RequestMapping(value="/list", method=RequestMethod.GET)
     public ResponseEntity<?> findAllUser(){
         try{
             return ResponseEntity.ok(userService.findAll());
@@ -63,7 +33,7 @@ public class UserController {
     }
 
     // 유저가 자기 자신 조회할 떄
-    @RequestMapping(value="/user/{userId}", method=RequestMethod.GET)
+    @RequestMapping(value="/{userId}", method=RequestMethod.GET)
     public ResponseEntity<?> findUserAsUser(@PathVariable int userId){//,
                                             //Principal principal){
         try{
@@ -78,7 +48,7 @@ public class UserController {
     }
 
     // 다른 유저가 조회할 때
-//    @RequestMapping(value="/user/{userId}", method=RequestMethod.GET)
+//    @RequestMapping(value="/{userId}", method=RequestMethod.GET)
 //    public ResponseEntity<?> findUserAsPublic(@PathVariable int userId){
 //        try{
 //            String userNickname = User.toTableName(userService.findById(userId).getUserNickname());
@@ -90,7 +60,7 @@ public class UserController {
 //        }
 //    }
 
-    @RequestMapping(value="/user/{userId}", method=RequestMethod.PATCH)
+    @RequestMapping(value="/{userId}", method=RequestMethod.PATCH)
     public ResponseEntity<?> updateUser(@PathVariable int userId,
                                         @RequestBody UserDTO.Update update){
         try{
@@ -104,7 +74,7 @@ public class UserController {
         }
     }
 
-    @RequestMapping(value="/user/{userId}", method=RequestMethod.DELETE)
+    @RequestMapping(value="/{userId}", method=RequestMethod.DELETE)
     public ResponseEntity<?> deleteUser(@PathVariable int userId){
         try{
             String userEmail = userService.findById(userId).getUserEmail();

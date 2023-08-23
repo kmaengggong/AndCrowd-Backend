@@ -11,6 +11,6 @@ public interface UserJPARepository extends JpaRepository<User, Integer> {
     List<UserDTO.FindAsUser> findAllByUserKorName(String userKorName);
     Optional<User> findByUserEmail(String userEmail);
     Optional<User> findByUserId(int userId);
-    Optional<UserDTO.FindAsPublic> findByUserNickname(String userNickname);
+    Optional<User> findByUserNickname(String userNickname);
     void deleteByUserEmail(String userEmail);
 }

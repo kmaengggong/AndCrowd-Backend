@@ -37,7 +37,7 @@ public class User implements UserDetails {
     @Column(nullable = false)
     private String userNickname;  // 닉네임
 
-    @Column(nullable = false)
+    //@Column(nullable = false)
     private String userPhone;  // 전화번호
 
     private String userProfileImg;  // 프로필 이미지 경로
