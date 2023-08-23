@@ -12,11 +12,15 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SpringBootTest
 public class DynamicCrowdRewardServiceTest {
     @Autowired
     DynamicCrowdRewardService dynamicCrowdRewardService;
+
+    @Autowired
+    CrowdService crowdService;
 
     @Test
     @Transactional
@@ -31,7 +35,7 @@ public class DynamicCrowdRewardServiceTest {
         int rewardLimit = 5;
 
         // when
-        dynamicCrowdRewardService.createDynamicCrowdRewardTable(crowdId);
+        dynamicCrowdRewardService.createDynamicCrowdRewardTable();
         DynamicCrowdRewardDTO.Update newReward = new DynamicCrowdRewardDTO.Update();
         newReward.setCrowdId(crowdId);
         newReward.setRewardId(rewardId);
@@ -49,11 +53,10 @@ public class DynamicCrowdRewardServiceTest {
 
     @Test
     @Transactional
-    @DisplayName("crowdId 123번의 reward 전체 조회시 3개일 것이다.") // 테스트 실패 원인 찾기
-    public void findAllRewardTest() {
+    @DisplayName("crowdId 123번의 reward 전체 조회시 3개일 것이다.")
+    public void findAllTest() {
         // given
         int crowdId = 123;
-        int rewardId = 1;
         // when
         List<DynamicCrowdRewardDTO.FindAllById> findAllByIdList = dynamicCrowdRewardService.findAll(crowdId);
         System.out.println(findAllByIdList);
@@ -73,5 +76,17 @@ public class DynamicCrowdRewardServiceTest {
         // then
         assertEquals(1, crowdReward.getRewardId());
         assertEquals(123, crowdReward.getCrowdId());
+    }
+
+    @Test
+    @Transactional
+    public void deleteRewardTest() {
+        // given
+        int rewardId = 3;
+        int crowdId = 123;
+        // when
+        dynamicCrowdRewardService.deleteByCrowdRewardId(crowdId, rewardId);
+        // then
+        assertTrue(dynamicCrowdRewardService.findByRewardId(crowdId, rewardId).isDeleted());
     }
 }

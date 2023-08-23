@@ -9,15 +9,15 @@ import java.util.List;
 @Mapper
 public interface DynamicCrowdRewardRepository {
 
-    List<DynamicCrowdRewardDTO.FindAllById> findAll(@Param("crowd_id") int crowdId);
-    List<DynamicCrowdRewardDTO.FindAllById> findAllNotDeleted(@Param("crowd_id") int crowdId);
-    DynamicCrowdRewardDTO.FindAllById findByRewardId(@Param("crowd_id") int crowdId, @Param("reward_id") int rewardId);
+    List<DynamicCrowdRewardDTO.FindAllById> findAll(int crowdId);
+    List<DynamicCrowdRewardDTO.FindAllById> findAllNotDeleted(@Param("crowdId") int crowdId);
+    DynamicCrowdRewardDTO.FindAllById findByRewardId(@Param("crowdId") int crowdId, @Param("rewardId") int rewardId);
 
     void save(DynamicCrowdRewardDTO.Update dynamicRewardInsertDTO);
     void update(DynamicCrowdRewardDTO.Update dynamicRewardUpdateDTO);
     void deleteByRewardId(@Param("crowdId") int crowdId, @Param("rewardId") int rewardId);
 
-    void createDynamicCrowdRewardTable(@Param("crowd_id") int crowdId);
+    void createDynamicCrowdRewardTable();
     void testCreateDynamicCrowdRewardTable();
     void dropCrowdRewardTable();
     void insertTestData();

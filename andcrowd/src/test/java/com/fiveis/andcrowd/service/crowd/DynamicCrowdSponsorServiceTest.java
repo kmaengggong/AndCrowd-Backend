@@ -55,9 +55,11 @@ public class DynamicCrowdSponsorServiceTest {
                 .crowdId(crowdId)
                 .purchaseId(purchaseId)
                 .build();
+
         // when
         dynamicCrowdSponsorService.save(crowdSponsorSave);
-        DynamicCrowdSponsorDTO.FindById saveSponsor = dynamicCrowdSponsorService.findBySponsorId(crowdId, sponsorId);
+        List<DynamicCrowdSponsorDTO.FindById> sponsorList = dynamicCrowdSponsorService.findAll(crowdId);
+        DynamicCrowdSponsorDTO.FindById saveSponsor = sponsorList.get(0);
 
         // then
         assertEquals(sponsorId, saveSponsor.getSponsorId());

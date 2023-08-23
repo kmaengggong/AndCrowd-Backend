@@ -10,7 +10,7 @@ import java.util.List;
 @Service
 public class DynamicCrowdRewardServiceImpl implements DynamicCrowdRewardService {
 
-    DynamicCrowdRewardRepository dynamicCrowdRewardRepository;
+    private final DynamicCrowdRewardRepository dynamicCrowdRewardRepository;
 
     @Autowired
     public DynamicCrowdRewardServiceImpl(DynamicCrowdRewardRepository dynamicCrowdRewardRepository){
@@ -18,8 +18,8 @@ public class DynamicCrowdRewardServiceImpl implements DynamicCrowdRewardService 
     }
 
     @Override
-    public void createDynamicCrowdRewardTable(int crowdId) {
-        dynamicCrowdRewardRepository.createDynamicCrowdRewardTable(crowdId);
+    public void createDynamicCrowdRewardTable() {
+        dynamicCrowdRewardRepository.createDynamicCrowdRewardTable();
     }
 
     @Override

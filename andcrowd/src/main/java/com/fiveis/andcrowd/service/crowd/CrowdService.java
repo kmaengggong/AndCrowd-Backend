@@ -12,16 +12,17 @@ public interface CrowdService {
 
     Optional<CrowdDTO.FindById> findByCrowdId(int crowdId);
 
-    List<CrowdDTO.FindAllByUserId> findAllByUserIdList(int userId);
+    List<CrowdDTO.FindAllByUserId> findAllByUserIdList(int userId); // userId가 이용한 crowd글 조회
 
-    List<CrowdDTO.FindById> findAllByIsDeletedFalse();
-    List<CrowdDTO.FindById> findAll();
+    List<CrowdDTO.FindById> findAllByIsDeletedFalse(); // crowd글 전체조회
 
-    void deleteByCrowdId(int crowdId);
+    List<CrowdDTO.FindById> findAll(); // crowd글 선택시 전체조회
 
-    void save(Crowd crowd);
+    void deleteByCrowdId(int crowdId); // 삭제
+
+    void save(Crowd crowd); // 생성
 
 //    public CrowdDTO.FindById convertToAndFindByCrowdId(Crowd crowd);
 
-    void update(Crowd crowd);
+    void update(Crowd crowd); // 수정
 }

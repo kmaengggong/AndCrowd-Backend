@@ -76,11 +76,12 @@ public class CrowdDTO {
         private int crowdStatus; // 1:펀딩중, 2:반려, 3:종료, 0:심사중
         private String crowdTitle;
         private String headerImg;
+        private int likeSum;
         private LocalDateTime publishedAt;
         private LocalDateTime updatedAt;
         private int userId;
         private boolean isDeleted;
-
+        private int viewCount;
     }
 
     public static CrowdDTO.FindById convertToCrowdFindDTO(Crowd crowd) {

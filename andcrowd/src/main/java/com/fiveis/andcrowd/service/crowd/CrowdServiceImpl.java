@@ -2,13 +2,11 @@ package com.fiveis.andcrowd.service.crowd;
 
 import com.fiveis.andcrowd.dto.crowd.CrowdDTO;
 import com.fiveis.andcrowd.entity.crowd.Crowd;
-import com.fiveis.andcrowd.repository.crowd.CrowdJPARepository;
-import com.fiveis.andcrowd.repository.crowd.DynamicCrowdBoardRepository;
-import com.fiveis.andcrowd.repository.crowd.DynamicCrowdQnaReplyRepository;
-import com.fiveis.andcrowd.repository.crowd.DynamicCrowdQnaRepository;
+import com.fiveis.andcrowd.repository.crowd.*;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,19 +18,25 @@ import static com.fiveis.andcrowd.dto.crowd.CrowdDTO.convertToCrowdFindDTO;
 public class CrowdServiceImpl implements CrowdService {
 
     CrowdJPARepository crowdJPARepository;
+    CrowdCategoryJPARepository crowdCategoryJPARepository;
     DynamicCrowdBoardRepository dynamicCrowdBoardRepository;
     DynamicCrowdQnaRepository dynamicCrowdQnaRepository;
     DynamicCrowdQnaReplyRepository dynamicCrowdQnaReplyRepository;
+    DynamicCrowdRewardRepository dynamicCrowdRewardRepository;
 
     @Autowired
     public CrowdServiceImpl(CrowdJPARepository crowdJPARepository,
+                            CrowdCategoryJPARepository crowdCategoryJPARepository,
                             DynamicCrowdBoardRepository dynamicCrowdBoardRepository,
                             DynamicCrowdQnaRepository dynamicCrowdQnaRepository,
-                            DynamicCrowdQnaReplyRepository dynamicCrowdQnaReplyRepository){
+                            DynamicCrowdQnaReplyRepository dynamicCrowdQnaReplyRepository,
+                            DynamicCrowdRewardRepository dynamicCrowdRewardRepository){
         this.crowdJPARepository = crowdJPARepository;
+        this.crowdCategoryJPARepository = crowdCategoryJPARepository;
         this.dynamicCrowdBoardRepository = dynamicCrowdBoardRepository;
         this.dynamicCrowdQnaRepository = dynamicCrowdQnaRepository;
         this.dynamicCrowdQnaReplyRepository = dynamicCrowdQnaReplyRepository;
+        this.dynamicCrowdRewardRepository = dynamicCrowdRewardRepository;
     }
 
     @Override
@@ -70,8 +74,13 @@ public class CrowdServiceImpl implements CrowdService {
         return findByIdList;
     }
 
+    @Transactional // 둘다 실행되던지 둘 다 실행 안되던지(갑작스런 서버 다운이 되었을 경우를 대비해)
     @Override
     public void deleteByCrowdId(int crowdId) {
+        crowdCategoryJPARepository.deleteById(crowdId);
+//        dynamicCrowdBoardRepository.deleteByCrowdBoardId(crowdId);
+//        dynamicCrowdQnaRepository.deleteByCrowdQnaId(crowdId);
+//        dynamicCrowdRewardRepository.deleteByRewardId(crowdId);
         crowdJPARepository.deleteById(crowdId);
     }
 
@@ -121,5 +130,19 @@ public class CrowdServiceImpl implements CrowdService {
             // 예: throw new EntityNotFoundException("Entity with ID " + crowd.getCrowdId() + " not found");
             throw new EntityNotFoundException("Entity with ID " + crowd.getCrowdId() + " not found");
         }
+    }
+
+    // 보정된 pageNum으로 가공해주는 메서드 (pageNum을 정확한 숫자로 교정해주는 역할)
+    public int getCalibratedPageNum(Long pageNum){
+        // 사용자가 페이지입력시 음수를 넘겼거나 아무것도 안 넣은 경우
+        if(pageNum == null || pageNum <= 0L){
+            pageNum = 1L; // 첫번째 페이지로 가도록 하는 구문
+        }else {
+            // 총 페이지 개수를 구하는 로직
+            int totalPagesCount = (int) Math.ceil(crowdJPARepository.count() / 10.0);
+
+            pageNum = pageNum > totalPagesCount ? totalPagesCount : pageNum;
+        }
+        return pageNum.intValue();
     }
 }

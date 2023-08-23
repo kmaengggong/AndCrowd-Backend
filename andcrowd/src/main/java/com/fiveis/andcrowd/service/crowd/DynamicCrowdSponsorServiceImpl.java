@@ -10,7 +10,7 @@ import java.util.List;
 @Service
 public class DynamicCrowdSponsorServiceImpl implements DynamicCrowdSponsorService {
 
-    DynamicCrowdSponsorRepository dynamicCrowdSponsorRepository;
+    private final DynamicCrowdSponsorRepository dynamicCrowdSponsorRepository;
 
     @Autowired
     public DynamicCrowdSponsorServiceImpl(DynamicCrowdSponsorRepository dynamicCrowdSponsorRepository){
@@ -18,8 +18,8 @@ public class DynamicCrowdSponsorServiceImpl implements DynamicCrowdSponsorServic
     }
 
     @Override
-    public void createDynamicCrowdSponsorTable(int crowdId) {
-        dynamicCrowdSponsorRepository.createDynamicCrowdSponsorTable(crowdId);
+    public void createDynamicCrowdSponsorTable() {
+        dynamicCrowdSponsorRepository.createDynamicCrowdSponsorTable();
     }
 
     @Override
