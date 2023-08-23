@@ -6,7 +6,7 @@
         CREATE TABLE IF NOT EXISTS
             crowd_reward_#{crowdId} (
                 reward_id INT AUTO_INCREMENT PRIMARY KEY,
-                crowd_id INT NOT NULL,
+                crowd_id INT default #{crowdId},
                 reward_title VARCHAR(255) NOT NULL,
                 reward_content VARCHAR(255) NOT NULL,
                 reward_amount INT NOT NULL,
@@ -55,7 +55,7 @@
 
     <insert id="save" parameterType="com.fiveis.andcrowd.dto.crowd.DynamicCrowdRewardDTO$Update">
         INSERT IGNORE INTO crowd_reward_#{crowdId} (reward_id, crowd_id, reward_title, reward_content, reward_amount, reward_limit, is_deleted)
-        VALUES (#{rewardId},#{crowdId},#{rewardTitle},#{rewardContent},#{rewardAmount},#{rewardLimit},#{isDeleted})
+        VALUES (#{rewardId}, #{crowdId}, #{rewardTitle}, #{rewardContent}, #{rewardAmount}, #{rewardLimit}, #{isDeleted})
 <!--        VALUES (#{rewardId, jdbcType=INTEGER}, #{crowdId, jdbcType=INTEGER}, #{rewardTitle, jdbcType=VARCHAR},-->
 <!--        #{rewardContent, jdbcType=VARCHAR}, #{rewardAmount, jdbcType=INTEGER}, #{rewardLimit, jdbcType=INTEGER},-->
 <!--        #{isDeleted, jdbcType=BIT})-->

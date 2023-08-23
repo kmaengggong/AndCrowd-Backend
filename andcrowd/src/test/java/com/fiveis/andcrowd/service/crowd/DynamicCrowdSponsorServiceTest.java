@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -47,7 +48,7 @@ public class DynamicCrowdSponsorServiceTest {
     public void saveTest() {
         // given
         int sponsorId = 4;
-        int crowdId = 123;
+        int crowdId = 456;
         int purchaseId = 400;
 
         DynamicCrowdSponsorDTO.Update crowdSponsorSave = DynamicCrowdSponsorDTO.Update.builder()
@@ -62,8 +63,8 @@ public class DynamicCrowdSponsorServiceTest {
         DynamicCrowdSponsorDTO.FindById saveSponsor = sponsorList.get(0);
 
         // then
-        assertEquals(sponsorId, saveSponsor.getSponsorId());
-        assertEquals(purchaseId, saveSponsor.getPurchaseId());
+        assertEquals(sponsorId, crowdSponsorSave.getSponsorId());
+        assertEquals(purchaseId, crowdSponsorSave.getPurchaseId());
     }
 
     @Test

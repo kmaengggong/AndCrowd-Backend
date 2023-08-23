@@ -27,7 +27,7 @@ public class DynamicCrowdRewardServiceTest {
     @DisplayName("Reward글 정상등록 확인")
     public void createDynamicCrowdRewardTable(){
         // given
-        int crowdId = 456;
+        int crowdId = 123;
         int rewardId = 4;
         String rewardTitle = "추가제목";
         String rewardContent = "추가본문";

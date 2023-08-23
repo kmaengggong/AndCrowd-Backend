@@ -8,7 +8,7 @@
     <update id="createDynamicCrowdSponsorTable" parameterType="int">
         CREATE TABLE IF NOT EXISTS crowd_sponsor_#{crowdId} (
             sponsor_id INT AUTO_INCREMENT PRIMARY KEY,
-            crowd_id INT NOT NULL,
+            crowd_id INT default #{crowdId},
             purchase_id INT NOT NULL,
             is_deleted BOOL default false
         )
@@ -45,7 +45,7 @@
 
     <insert id="save" parameterType="com.fiveis.andcrowd.dto.crowd.DynamicCrowdSponsorDTO$Update">
         INSERT IGNORE INTO crowd_sponsor_#{crowdId} (sponsor_id, crowd_id, purchase_id, is_deleted)
-        VALUES (#{sponsorId}, #{crowdId}, #{purchaseId},#{isDeleted})
+        VALUES (#{sponsorId}, #{crowdId}, #{purchaseId}, #{isDeleted})
     </insert>
 
     <update id="update" parameterType="com.fiveis.andcrowd.dto.crowd.DynamicCrowdSponsorDTO$Update">
