@@ -1,6 +1,7 @@
 package com.fiveis.andcrowd.controller.crowd;
 
 import com.fiveis.andcrowd.dto.crowd.DynamicCrowdQnaDTO;
+import com.fiveis.andcrowd.service.crowd.DynamicCrowdQnaReplyService;
 import com.fiveis.andcrowd.service.crowd.DynamicCrowdQnaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

@@ -47,4 +47,6 @@ public class DynamicCrowdQnaReplyServiceImpl implements DynamicCrowdQnaReplyServ
     public void update(DynamicCrowdQnaReplyDTO.Update dynamicCrowdBoardReplyDTOUpdate) {
         dynamicCrowdQnaReplyRepository.update(dynamicCrowdBoardReplyDTOUpdate);
     }
+
+
 }

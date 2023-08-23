@@ -35,7 +35,7 @@ public class DynamicAndRoleController {
         dynamicAndRoleService.save(andRoleInsertDTO);
     }
 
-    @RequestMapping(value = "/{andRoleId}/update", method = RequestMethod.PUT)
+    @RequestMapping(value = "/{andRoleId}/update", method = RequestMethod.PATCH)
     public void updateDynamicAndRole(@RequestBody DynamicAndRoleDTO.Update andRoleUpdateDTO) {
         dynamicAndRoleService.update(andRoleUpdateDTO);
     }
