@@ -30,17 +30,14 @@ public class AndServiceTest {
     public void findById(){
         // given
         int andId = 1;
-        String andContent = "andcontent";
-        int userId = 1;
-        String andHeaderImg = "headerimgdir";
 
         // when
         AndDTO.Find andFindByIdDTO = andService.findById(andId).get();
 
         // then
-        assertEquals(andContent, andFindByIdDTO.getAndContent());
-        assertEquals(userId, andFindByIdDTO.getUserId());
-        assertEquals(andHeaderImg, andFindByIdDTO.getAndHeaderImg());
+        assertEquals("Test Content", andFindByIdDTO.getAndContent());
+        assertEquals(1, andFindByIdDTO.getUserId());
+        assertEquals("header.jpg", andFindByIdDTO.getAndHeaderImg());
     }
 
     @Test
@@ -50,10 +47,19 @@ public class AndServiceTest {
         // given
 
         // when
+        andService.deleteById(1);
         List<AndDTO.Find> andFindAllNotDeletedList = andService.findAllByIsDeletedFalse();
 
         // then
-        assertEquals(1, andFindAllNotDeletedList.size());
+        assertEquals(5, andFindAllNotDeletedList.size());
+    }
+
+    @Test
+    @Transactional
+    @DisplayName("U: update를 통해 1번글 업데이트")
+    public void updateTest() {
+        // given
+        int andId =1;
     }
 
 
@@ -61,21 +67,17 @@ public class AndServiceTest {
     @DisplayName("C: save을 통해 모임글 저장 및 해당 동적 테이블 생성")
     public void saveTest() {
         // given
-        int andId = 2;
-        int adId = 2;
-        int andCategoryId=2;
-        String andContent = "andcontent2";
-        int userId = 2;
-        String andTitle = "andtitle2";
-        int needNumMem = 2;
-        String andHeaderImg = "headerimgdir2";
+        int andCategoryId=3;
+        String andContent = "andcontent3";
+        int userId = 1;
+        String andTitle = "andtitle3";
+        int needNumMem = 5;
+        String andHeaderImg = "headerimgdir3";
         And andUpdate = And.builder()
-                .andId(andId)
                 .andContent(andContent)
                 .userId(userId)
                 .andHeaderImg(andHeaderImg)
                 .andCategoryId(andCategoryId)
-                .adId(adId)
                 .andTitle(andTitle)
                 .needNumMem(needNumMem)
                 .build();
@@ -85,9 +87,9 @@ public class AndServiceTest {
         andService.save(andUpdate);
 
         // then
-        assertEquals("andcontent2", andUpdate.getAndContent());
-        assertEquals(2, andUpdate.getUserId());
-        assertEquals("headerimgdir2", andUpdate.getAndHeaderImg());
+        assertEquals("andcontent3", andUpdate.getAndContent());
+        assertEquals(1, andUpdate.getUserId());
+        assertEquals("headerimgdir3", andUpdate.getAndHeaderImg());
 
         String tableName = "and_qna_" + andUpdate.getAndId();
         boolean tableExists = checkTableExists(tableName);

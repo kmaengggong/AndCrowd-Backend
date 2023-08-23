@@ -21,10 +21,10 @@ public class AndController {
 
     @RequestMapping("/list")
     public List<AndDTO.Find> getList() {
-        return andService.findAll();
+        return andService.findAllByIsDeletedFalse();
     }
 
-    @RequestMapping("/create")
+    @RequestMapping(value="/create", method = RequestMethod.POST)
     public void createItem(@RequestBody And and) {
         andService.save(and);
     }
@@ -34,10 +34,9 @@ public class AndController {
         return andService.findById(andId).orElse(null);
     }
 
-    @RequestMapping(value="/{andId}/update", method=RequestMethod.POST)
-    public String update(And and){
+    @RequestMapping(value="/{andId}/update" , method=RequestMethod.PATCH)
+    public void updateAnd( @RequestBody And and) {
         andService.update(and);
-        return "redirect:/and" + and.getAndId();
     }
 
     @RequestMapping("/{andId}/delete")

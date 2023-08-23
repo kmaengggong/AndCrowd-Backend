@@ -53,7 +53,7 @@ public class Crowd {
     @Column(nullable = false)
     private String headerImg;
 
-    @ColumnDefault("true")
+    @ColumnDefault("false")
     private boolean isDeleted;
 
     @ColumnDefault("0")
@@ -124,5 +124,9 @@ public class Crowd {
 
     public void setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    public void setCrowdEndDate(LocalDateTime crowdEndDate) {
+        this.crowdEndDate = crowdEndDate;
     }
 }

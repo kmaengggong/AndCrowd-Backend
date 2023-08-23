@@ -5,6 +5,7 @@ import com.fiveis.andcrowd.repository.and.DynamicAndQnaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -34,11 +35,14 @@ public class DynamicAndQnaServiceImpl implements DynamicAndQnaService{
 
     @Override
     public void save(DynamicAndQnaDTO.Update andQnaInsertDTO) {
+        andQnaInsertDTO.setPublishedAt(LocalDateTime.now());
+        andQnaInsertDTO.setUpdatedAt(LocalDateTime.now());
         dynamicAndQnaRepository.save(andQnaInsertDTO);
     }
 
     @Override
     public void update(DynamicAndQnaDTO.Update andQnaUpdateDTO) {
+        andQnaUpdateDTO.setUpdatedAt(LocalDateTime.now());
         dynamicAndQnaRepository.update(andQnaUpdateDTO);
     }
 

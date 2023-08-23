@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @TestInstance(TestInstance.Lifecycle.PER_METHOD)
@@ -109,6 +109,23 @@ public class DynamicCrowdRewardRepositoryTest {
         // then
         assertEquals(rewardTitle, updatedCrowdReward.getRewardTitle());
         assertEquals(rewardContent, updatedCrowdReward.getRewardContent());
+    }
+
+    @Test
+    @Transactional
+    @DisplayName("특정 RewardId를 소프트딜리트 후 조회되지 않는지 확인")
+    public void deleteRewardTest() {
+        // given
+        int crowdId = 123;
+        int rewardId = 1;
+
+        // when
+        dynamicCrowdRewardRepository.deleteByRewardId(crowdId, rewardId);
+
+        // then
+        DynamicCrowdRewardDTO.FindAllById deletedReward = dynamicCrowdRewardRepository.findByRewardId(crowdId, rewardId);
+        System.out.println(deletedReward);
+        assertTrue(deletedReward.isDeleted());
     }
 
 

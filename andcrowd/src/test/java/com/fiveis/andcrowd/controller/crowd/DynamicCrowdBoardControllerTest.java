@@ -32,7 +32,7 @@ public class DynamicCrowdBoardControllerTest {
 
     @Autowired
     private ObjectMapper objectMapper;
-
+    // 원래는 service 레이어를 호출해야하나, 추후 service레이어 에서 기능추가 될 경우를 대비하여 Repository 호출
     @Autowired
     private DynamicCrowdBoardRepository dynamicCrowdBoardRepository;
 

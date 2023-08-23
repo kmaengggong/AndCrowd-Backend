@@ -1,23 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper
-        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.fiveis.andcrowd.repository.crowd.DynamicCrowdRewardRepository">
 
     <update id="createDynamicCrowdRewardTable">
-        CREATE TABLE IF NOT EXISTS crowd_reward_#{crowd_id} (
-        reward_id int auto_increment primary key,
-        crowd_id int not null,
-        reward_title varchar(255) not null,
-        reward_content varchar(255) not null,
-        reward_amount int not null,
-        reward_limit int not null,
-        is_deleted BOOL default false
-        )
+        CREATE TABLE IF NOT EXISTS
+            crowd_reward_#{crowdId} (
+                reward_id INT AUTO_INCREMENT PRIMARY KEY,
+                crowd_id INT NOT NULL,
+                reward_title VARCHAR(255) NOT NULL,
+                reward_content VARCHAR(255) NOT NULL,
+                reward_amount INT NOT NULL,
+                reward_limit INT NOT NULL,
+                is_deleted BOOL default false
+                )
     </update>
 
-    <select id="findAll" parameterType="int">
+    <select id="findAll" resultType="com.fiveis.andcrowd.dto.crowd.DynamicCrowdRewardDTO$FindAllById">
         SELECT
             reward_id AS rewardId,
             crowd_id AS crowdId,
@@ -26,7 +24,7 @@
             reward_amount AS rewardAmount,
             reward_limit AS rewardLimit,
             is_deleted AS isDeleted
-        FROM crowd_reward_#{crowd_id}
+        FROM crowd_reward_#{crowdId}
     </select>
 
     <select id="findAllNotDeleted" resultType="com.fiveis.andcrowd.dto.crowd.DynamicCrowdRewardDTO$FindAllById">
@@ -38,7 +36,7 @@
             reward_amount AS rewardAmount,
             reward_limit AS rewardLimit,
             is_deleted AS isDeleted
-        FROM crowd_reward_#{crowd_id}
+        FROM crowd_reward_#{crowdId}
         WHERE is_deleted = false
     </select>
 
@@ -51,12 +49,12 @@
             reward_amount AS rewardAmount,
             reward_limit AS rewardLimit,
             is_deleted AS isDeleted
-        FROM crowd_reward_#{crowd_id}
-        WHERE reward_id = #{reward_id}
+        FROM crowd_reward_#{crowdId}
+        WHERE reward_id = #{rewardId}
     </select>
 
     <insert id="save" parameterType="com.fiveis.andcrowd.dto.crowd.DynamicCrowdRewardDTO$Update">
-        INSERT INTO crowd_reward_${crowdId} (reward_id, crowd_id, reward_title, reward_content, reward_amount, reward_limit, is_deleted)
+        INSERT IGNORE INTO crowd_reward_${crowdId} (reward_id, crowd_id, reward_title, reward_content, reward_amount, reward_limit, is_deleted)
         VALUES (#{rewardId},#{crowdId},#{rewardTitle},#{rewardContent},#{rewardAmount},#{rewardLimit},#{isDeleted})
 <!--        VALUES (#{rewardId, jdbcType=INTEGER}, #{crowdId, jdbcType=INTEGER}, #{rewardTitle, jdbcType=VARCHAR},-->
 <!--        #{rewardContent, jdbcType=VARCHAR}, #{rewardAmount, jdbcType=INTEGER}, #{rewardLimit, jdbcType=INTEGER},-->
@@ -70,20 +68,20 @@
             reward_content = #{rewardContent},
             reward_amount = #{rewardAmount},
             reward_limit = #{rewardLimit}
-        WHERE reward_id = #{rewardId}
+        WHERE crowd_id = #{crowdId} AND reward_id = #{rewardId}
     </update>
 
     <update id="deleteByRewardId" parameterType="int">
-        UPDATE crowd_reward_#{crowdId}
+        UPDATE crowd_reward_${crowdId}
         SET is_deleted = true
-        WHERE reward_id = #{reward_id}
+        WHERE reward_id = #{rewardId}
     </update>
 
 <!--  테스트용 쿼리문  -->
     <update id="testCreateDynamicCrowdRewardTable">
         CREATE TABLE crowd_reward_123 (
-            reward_id int auto_increment primary key,
-            crowd_id int not null,
+            reward_id INT AUTO_INCREMENT PRIMARY KEY,
+            crowd_id INT NOT NULL,
             reward_title varchar(255) not null,
             reward_content varchar(255) not null,
             reward_amount int not null,
@@ -98,7 +96,7 @@
     </update>
 
     <insert id="insertTestData">
-        INSERT INTO crowd_reward_123 (reward_id, crowd_id, reward_title, reward_content, reward_amount, reward_limit)
+        INSERT IGNORE INTO crowd_reward_123 (reward_id, crowd_id, reward_title, reward_content, reward_amount, reward_limit)
         VALUES
         (1, 123, '슈퍼얼리버드1', '기본후원1', 1000, 5),
         (2, 123, '슈퍼얼리버드2', '기본후원2', 10000, 5),
