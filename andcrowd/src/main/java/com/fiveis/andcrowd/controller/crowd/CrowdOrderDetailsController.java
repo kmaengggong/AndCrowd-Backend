@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import java.util.List;
 
 @Controller
-@RequestMapping("/crowd_orderdetails")
+@RequestMapping("/crowd_orderdetails{crowdId}")
 public class CrowdOrderDetailsController {
 
     private final CrowdOrderDetailsService crowdOrderDetailsService;
@@ -35,7 +35,7 @@ public class CrowdOrderDetailsController {
     @RequestMapping(value = "/{purchaseId}/update", method = RequestMethod.PATCH)
     public String updateOrder(CrowdOrderDetails crowdOrderDetails) {
         crowdOrderDetailsService.update(crowdOrderDetails);
-        return "redirect:/crowd_orderdetails/" + crowdOrderDetails.getPurchaseId();
+        return "redirect:/crowd_orderdetails{crowdId}/" + crowdOrderDetails.getPurchaseId();
     }
 
     @RequestMapping(value = "/{purchaseId}/delete", method = RequestMethod.DELETE)

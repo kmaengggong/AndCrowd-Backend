@@ -62,30 +62,30 @@
     </insert>
 
     <update id="update" parameterType="com.fiveis.andcrowd.dto.crowd.DynamicCrowdRewardDTO$Update">
-        UPDATE crowd_reward_#{crowdId}
+        UPDATE crowd_reward_${crowdId}
         SET
             reward_title = #{rewardTitle},
             reward_content = #{rewardContent},
             reward_amount = #{rewardAmount},
             reward_limit = #{rewardLimit}
-        WHERE crowd_id = #{crowdId} AND reward_id = #{rewardId}
-    </update>
-
-    <update id="deleteByRewardId" parameterType="int">
-        UPDATE crowd_reward_#{crowdId}
-        SET is_deleted = true
         WHERE reward_id = #{rewardId}
     </update>
 
+    <delete id="deleteByRewardId" parameterType="int">
+        UPDATE crowd_reward_${crowdId}
+        SET is_deleted = true
+        WHERE reward_id = #{rewardId}
+    </delete>
+
 <!--  테스트용 쿼리문  -->
     <update id="testCreateDynamicCrowdRewardTable">
-        CREATE TABLE IF NOT EXISTS crowd_reward_123 (
+        CREATE TABLE crowd_reward_123(
             reward_id INT AUTO_INCREMENT PRIMARY KEY,
             crowd_id INT NOT NULL,
-            reward_title varchar(255) not null,
-            reward_content varchar(255) not null,
-            reward_amount int not null,
-            reward_limit int not null,
+            reward_title varchar(255) NOT NULL,
+            reward_content varchar(255) NOT NULL,
+            reward_amount INT NOT NULL,
+            reward_limit INT NOT NULL,
             is_deleted BOOL default false
         )
     </update>
@@ -95,12 +95,12 @@
         DROP TABLE crowd_reward_123;
     </update>
 
-<!--    <insert id="insertTestData">-->
-<!--        INSERT IGNORE INTO crowd_reward (reward_id, crowd_id, reward_title, reward_content, reward_amount, reward_limit)-->
-<!--        VALUES-->
-<!--        (1, 123, '슈퍼얼리버드1', '기본후원1', 1000, 5),-->
-<!--        (2, 123, '슈퍼얼리버드2', '기본후원2', 10000, 5),-->
-<!--        (3, 123, '슈퍼얼리버드3', '기본후원3', 50000, 5);-->
-<!--    </insert>-->
+    <insert id="insertTestData">
+        INSERT IGNORE INTO crowd_reward_123 (crowd_id, reward_title, reward_content, reward_amount, reward_limit)
+        VALUES
+        (123, '슈퍼얼리버드1', '기본후원1', 1000, 5),
+        (123, '슈퍼얼리버드2', '기본후원2', 10000, 5),
+        (123, '슈퍼얼리버드3', '기본후원3', 50000, 5);
+    </insert>
 
 </mapper>

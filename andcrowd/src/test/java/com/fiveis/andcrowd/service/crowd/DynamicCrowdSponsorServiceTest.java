@@ -67,6 +67,26 @@ public class DynamicCrowdSponsorServiceTest {
         assertEquals(purchaseId, crowdSponsorSave.getPurchaseId());
     }
 
+//    @Test
+//    @Transactional
+//    public void updateTest() {
+//        // given
+//        int sponsorId = 3;
+//        int crowdId = 456;
+//        int purchaseId = 250;
+//
+//        DynamicCrowdSponsorDTO.Update updateSponsor = DynamicCrowdSponsorDTO.Update.builder()
+//                .sponsorId(sponsorId)
+//                .crowdId(crowdId)
+//                .purchaseId(purchaseId)
+//                .build();
+//        // when
+//        dynamicCrowdSponsorService.update(updateSponsor);
+//        DynamicCrowdSponsorDTO.Update savedSponsor = dynamicCrowdSponsorService.findBySponsorId(crowdId, sponsorId);
+//        // then
+//        assertEquals(purchaseId, savedSponsor.getPurchaseId());
+//    }
+
     @Test
     @Transactional
     public void deleteSponsorTest() {

@@ -21,7 +21,7 @@ public class DynamicCrowdSponsorController {
     }
 
     @RequestMapping(value = "/list", method = RequestMethod.GET)
-    public ResponseEntity<List<DynamicCrowdSponsorDTO.FindById>> findAll(@RequestParam int crowdId) {
+    public ResponseEntity<List<DynamicCrowdSponsorDTO.FindById>> findAll(@PathVariable int crowdId) {
         // crowd글 클릭 하면 후원자 리스트 조회
         List<DynamicCrowdSponsorDTO.FindById> sponsorList = dynamicCrowdSponsorService.findAll(crowdId);
         return ResponseEntity.ok()
@@ -40,7 +40,7 @@ public class DynamicCrowdSponsorController {
         }
     }
 
-    @RequestMapping(value = "/sponsorby", method = RequestMethod.POST)
+    @RequestMapping(value = "", method = RequestMethod.POST)
     public ResponseEntity<String> insertCrowdSponsor(@RequestBody DynamicCrowdSponsorDTO.Update crowdSponsorAddDTO) {
         dynamicCrowdSponsorService.save(crowdSponsorAddDTO);
         return ResponseEntity.ok("프로젝트 펀딩 후원이 정상적으로 진행되었습니다.");

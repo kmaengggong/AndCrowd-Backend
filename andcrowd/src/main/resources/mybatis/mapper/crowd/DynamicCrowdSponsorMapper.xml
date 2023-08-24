@@ -14,7 +14,7 @@
         )
     </update>
 
-    <select id="findAll" parameterType="int" resultType="com.fiveis.andcrowd.dto.crowd.DynamicCrowdSponsorDTO$FindById">
+    <select id="findAll" resultType="com.fiveis.andcrowd.dto.crowd.DynamicCrowdSponsorDTO$FindById">
         SELECT
             sponsor_id AS sponsorId,
             crowd_id AS crowdId,
@@ -56,11 +56,11 @@
         WHERE crowd_id = #{crowdId} AND sponsor_id = #{sponsorId}
     </update>
 
-    <update id="deleteBySponsorId" parameterType="int">
+    <delete id="deleteBySponsorId" parameterType="int">
         UPDATE crowd_sponsor_#{crowdId}
         SET is_deleted = true
         WHERE sponsor_id = #{sponsorId}
-    </update>
+    </delete>
 
 <!--  테스트용 쿼리문  -->
     <update id="testCreateDynamicCrowdSponsorTable">
@@ -76,12 +76,12 @@
         DROP TABLE crowd_sponsor_456;
     </update>
 
-<!--    <insert id="insertTestData">-->
-<!--        INSERT IGNORE INTO crowd_sponsor (sponsor_id, crowd_id, purchase_id)-->
-<!--        VALUES-->
-<!--            (1, 456, 100),-->
-<!--            (2, 456, 200),-->
-<!--            (3, 456, 300);-->
-<!--    </insert>-->
+    <insert id="insertTestData">
+        INSERT IGNORE INTO crowd_sponsor_456 (sponsor_id, crowd_id, purchase_id)
+        VALUES
+            (1, 456, 100),
+            (2, 456, 200),
+            (3, 456, 300);
+    </insert>
 
 </mapper>

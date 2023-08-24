@@ -69,13 +69,15 @@ public class DynamicCrowdRewardRepositoryTest {
         int rewardLimit = 5;
 
         // when
-        DynamicCrowdRewardDTO.Update newReward = new DynamicCrowdRewardDTO.Update();
-        newReward.setRewardId(rewardId);
-        newReward.setCrowdId(crowdId);
-        newReward.setRewardTitle(rewardTitle);
-        newReward.setRewardContent(rewardContent);
-        newReward.setRewardAmount(rewardAmount);
-        newReward.setRewardLimit(rewardLimit);
+        DynamicCrowdRewardDTO.Update newReward = DynamicCrowdRewardDTO.Update.builder()
+                    .rewardId(rewardId)
+                    .crowdId(crowdId)
+                    .rewardTitle(rewardTitle)
+                    .rewardContent(rewardContent)
+                    .rewardAmount(rewardAmount)
+                    .rewardLimit(rewardLimit)
+                    .build();
+
         dynamicCrowdRewardRepository.save(newReward);
 
         // then
@@ -83,7 +85,8 @@ public class DynamicCrowdRewardRepositoryTest {
         assertThat(crowdReward.getCrowdId()).isEqualTo(crowdId);
         assertThat(crowdReward.getRewardId()).isEqualTo(rewardId);
         assertThat(crowdReward.getRewardTitle()).isEqualTo(rewardTitle);
-        assertEquals(4, dynamicCrowdRewardRepository.findAll(crowdId).size());
+        List<DynamicCrowdRewardDTO.FindAllById> rewardList = dynamicCrowdRewardRepository.findAll(crowdId);
+        assertEquals(4, rewardList.size());
     }
 
     @Test

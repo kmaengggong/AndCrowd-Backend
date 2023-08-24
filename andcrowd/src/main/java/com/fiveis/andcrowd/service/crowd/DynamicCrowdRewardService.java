@@ -17,5 +17,5 @@ public interface DynamicCrowdRewardService {
 
     void save(DynamicCrowdRewardDTO.Update crowdRewardInsertDTO);
     void update(DynamicCrowdRewardDTO.Update crowdRewardUpdateDTO);
-    void deleteByCrowdRewardId(int crowdId, int rewardId);
+    void deleteByCrowdRewardId(@Param("crowdId")int crowdId, @Param("rewardId") int rewardId);
 }

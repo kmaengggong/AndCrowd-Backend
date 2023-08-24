@@ -4,10 +4,12 @@ import com.fiveis.andcrowd.dto.crowd.CrowdDTO;
 import com.fiveis.andcrowd.entity.crowd.Crowd;
 import com.fiveis.andcrowd.service.crowd.CrowdService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.ui.Model;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/crowd")
@@ -21,27 +23,37 @@ public class CrowdController {
     }
 
     @GetMapping(value = "/list")
-    public List<CrowdDTO.FindById> getlist(@PathVariable int userId) {
+    public List<CrowdDTO.FindById> getlist() {
         return crowdService.findAllByIsDeletedFalse();
     }
 
     @PostMapping(value = "/create")
-    public void createCrowd(@RequestBody Crowd crowd) {
+    public ResponseEntity<String> createCrowd(@RequestBody Crowd crowd) {
         crowdService.save(crowd);
+        return ResponseEntity.ok("펀딩글이 등록되었습니다. 심사는 5-7일 정도 소요됩니다.");
     }
 
-    @RequestMapping(value = "/{crowdId}", method = RequestMethod.GET)
-    public CrowdDTO.FindById getCrowd(@PathVariable int crowdId) {
-        return crowdService.findByCrowdId(crowdId).orElse(null);
+    @GetMapping(value = "/detail/{crowdId}")
+    public ResponseEntity<?> getCrowd(@PathVariable("crowdId") int crowdId) {
+        // 특정번호의 펀딩글 조회
+        Optional<CrowdDTO.FindById> findCrowd = crowdService.findByCrowdId(crowdId);
+
+        if (!findCrowd.isPresent()) {
+            return new ResponseEntity<>("이 펀딩글은 마감되거나 등록되지 않은 펀딩 글번호입니다.", HttpStatus.NOT_FOUND);
+        } else {
+            return ResponseEntity.ok(findCrowd.get());
+        }
     }
 
-    @PatchMapping(value = "/{crowdId}/update")
-    public void updateCrowd(@RequestBody Crowd crowd) {
+    @RequestMapping(value = "/{crowdId}/update", method = {RequestMethod.PUT, RequestMethod.PATCH})
+    public ResponseEntity<String> updateCrowd(@RequestBody Crowd crowd) {
         crowdService.update(crowd);
+        return ResponseEntity.ok("펀딩글이 수정되었습니다.");
     }
 
     @DeleteMapping(value = "/{crowdId}/delete")
-    public void deleteCrowd(@PathVariable int crowdId) {
+    public ResponseEntity<String> deleteCrowd(@PathVariable("crowdId") int crowdId) {
         crowdService.deleteByCrowdId(crowdId);
+        return ResponseEntity.ok("펀딩글이 삭제되었습니다.");
     }
 }

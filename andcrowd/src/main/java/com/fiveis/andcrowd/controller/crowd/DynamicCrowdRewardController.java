@@ -46,7 +46,7 @@ public class DynamicCrowdRewardController {
         return ResponseEntity.ok("리워드가 등록되었습니다.");
     }
 
-    @RequestMapping(value = "/{rewardId}", method = {RequestMethod.PUT, RequestMethod.PATCH})
+    @RequestMapping(value = "/{rewardId}/update", method = {RequestMethod.PUT, RequestMethod.PATCH})
     public ResponseEntity<String> updateCrowdReward(@PathVariable int rewardId,
                                                     @RequestBody DynamicCrowdRewardDTO.Update crowdRewardUpdateDTO) {
         crowdRewardUpdateDTO.setRewardId(rewardId);
@@ -55,9 +55,9 @@ public class DynamicCrowdRewardController {
         return ResponseEntity.ok("리워드가 수정되었습니다.");
     }
 
-    @RequestMapping(value = "/{rewardId}/delete", method = RequestMethod.DELETE)
-    public ResponseEntity<String> deleteCrowdReward(@PathVariable int rewardId,
-                                                    @PathVariable int crowdId) {
+    @RequestMapping(value = {"/{rewardId}/","/{rewardId}"}, method = RequestMethod.DELETE)
+    public ResponseEntity<String> deleteCrowdReward(@PathVariable("rewardId") int rewardId,
+                                                    @PathVariable("crowdId") int crowdId) {
         dynamicCrowdRewardService.deleteByCrowdRewardId(rewardId, crowdId);
         return ResponseEntity.ok("리워드가 삭제되었습니다.");
     }

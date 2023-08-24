@@ -80,6 +80,33 @@ public class DynamicCrowdRewardServiceTest {
 
     @Test
     @Transactional
+    public void updateTest() {
+        // given
+        int rewardId = 1;
+        int crowdId = 123;
+        String rewardTitle = "수정된얼리버드1";
+        String rewardContent = "수정된후원1";
+        int rewardAmount = 100000;
+        int rewardLimit = 4;
+
+        DynamicCrowdRewardDTO.Update updateReward = DynamicCrowdRewardDTO.Update.builder()
+                .rewardId(rewardId)
+                .crowdId(crowdId)
+                .rewardTitle(rewardTitle)
+                .rewardContent(rewardContent)
+                .rewardAmount(rewardAmount)
+                .rewardLimit(rewardLimit)
+                .build();
+        // when
+        dynamicCrowdRewardService.update(updateReward);
+        DynamicCrowdRewardDTO.FindAllById savedReward = dynamicCrowdRewardService.findByRewardId(crowdId, rewardId);
+        // then
+        assertEquals(rewardTitle, savedReward.getRewardTitle());
+        assertEquals(rewardContent, savedReward.getRewardContent());
+    }
+
+    @Test
+    @Transactional
     public void deleteRewardTest() {
         // given
         int rewardId = 3;
