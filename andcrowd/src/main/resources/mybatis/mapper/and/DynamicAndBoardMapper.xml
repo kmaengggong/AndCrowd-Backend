@@ -2,7 +2,20 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.fiveis.andcrowd.repository.and.DynamicAndBoardRepository">
     <select id="findAll"  resultType="com.fiveis.andcrowd.dto.and.DynamicAndBoardDTO$FindById">
-        SELECT * FROM and_board_#{andId}
+        SELECT
+
+            and_board_id AS andBoardId,
+            and_id AS andId,
+            user_id AS userId,
+            and_board_tag AS andBoardTag,
+            and_board_title AS andBoardTitle,
+            and_board_content AS andBoardContent,
+            and_img AS andImg,
+            published_at AS publishedAt,
+            updated_at AS updatedAt,
+            and_board_view_count AS andBoardViewCount,
+            is_deleted AS isDeleted
+        FROM and_board_#{andId}
     </select>
     <select id="findByAndBoardId" resultType="com.fiveis.andcrowd.dto.and.DynamicAndBoardDTO$FindById">
         SELECT

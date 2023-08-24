@@ -13,8 +13,4 @@ public interface DynamicAndBoardService {
     void deleteByAndBoardId(int andId, int andBoardId);
     void save(DynamicAndBoardDTO.Update dynamicAndBoardUpdateDTO);
     void update(DynamicAndBoardDTO.Update dynamicAndBoardUpdateDTO);
-
-    void createAndBoardTable();
-    void dropAndBoardTable();
-    void insertTestData();
 }

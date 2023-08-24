@@ -20,13 +20,13 @@ public class DynamicAndBoardServiceTest {
     @Transactional
     public void findAllTest() {
         // given
-        int andId = 1111;
+        int andId = 1;
 
         // when
         List<DynamicAndBoardDTO.FindById> findAllList = dynamicAndBoardService.findAll(andId);
 
         // then
-        assertEquals(3, findAllList.size());
+        assertEquals(1, findAllList.size());
     }
 
     @Test
