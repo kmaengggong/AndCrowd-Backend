@@ -33,7 +33,7 @@ public class DynamicAndQnaController {
         dynamicAndQnaService.save(createQna);
     }
 
-    @PutMapping(value = "/{andQnaId}/update")
+    @RequestMapping(value = "/{andQnaId}/update", method = RequestMethod.PATCH)
     public String update(
             @PathVariable("andId") int andId,
             @PathVariable("andQnaId") int andQnaId,
