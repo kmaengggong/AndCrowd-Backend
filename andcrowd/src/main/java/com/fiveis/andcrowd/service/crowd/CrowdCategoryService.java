@@ -6,5 +6,12 @@ import java.util.List;
 
 public interface CrowdCategoryService {
     List<CrowdCategoryDTO.Find> findAll();
+
     CrowdCategoryDTO.Find findById(int crowdCategoryId);
+
+    public void save(CrowdCategoryDTO.Save crowdCategoryDTOSave);
+
+    public void update(CrowdCategoryDTO.Update crowdCategoryDTOUpdate);
+
+    public void deleteById(int crowdCategoryId);
 }

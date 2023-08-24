@@ -19,4 +19,9 @@ public class CrowdCategory {
 
     @Column(nullable = false)
     private String crowdCategoryName;
+
+    //SaveDTO를 통해 Entity를 초기화 하기 위한 생성자
+    public CrowdCategory(String crowdCategoryName){
+        this.crowdCategoryName = crowdCategoryName;
+    }
 }
