@@ -21,7 +21,7 @@ public class DynamicAndRoleController {
 
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public List<DynamicAndRoleDTO.FindById> findAll(@PathVariable("andId") int andId) {
-        return dynamicAndRoleService.findAll(andId);
+        return dynamicAndRoleService.findAllNotDeleted(andId);
     }
 
     @RequestMapping(value = "/{andRoleId}", method = RequestMethod.GET)
