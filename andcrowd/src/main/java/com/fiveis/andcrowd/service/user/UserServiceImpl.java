@@ -64,7 +64,7 @@ public class UserServiceImpl implements UserService {
 
     public UserDTO.FindAsPublic findByUserNickname(String userNickname){
         if(userJPARepository.findByUserNickname(userNickname).isEmpty()) return null;
-        return userJPARepository.findByUserNickname(userNickname).get();
+        return UserDTO.convertToFindAsPublicDTO(userJPARepository.findByUserNickname(userNickname).get());
     }
 
     @Transactional
@@ -78,7 +78,7 @@ public class UserServiceImpl implements UserService {
         userJPARepository.save(user);
 
         // User 생성 시 동적 테이블 자동 생성
-        String userEmail = user.toTableName(user.getUserEmail());
+        String userEmail = User.toTableName(user.getUserEmail());
         dynamicUserAndRepository.createDynamicUserAndTable(userEmail);
         dynamicUserFollowRepository.createDynamicUserFollowTable(userEmail);
         dynamicUserLikeRepository.createDynamicUserLikeTable(userEmail);

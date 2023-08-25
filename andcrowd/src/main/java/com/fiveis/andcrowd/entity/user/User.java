@@ -31,18 +31,18 @@ public class User implements UserDetails {
     @Column(nullable = false)  // 비밀번호
     private String userPassword;
 
-    @Column(nullable = false)
+    //@Column(nullable = false)
     private String userKorName;  // 이름
 
     @Column(nullable = false)
     private String userNickname;  // 닉네임
 
-    @Column(nullable = false)
+    //@Column(nullable = false)
     private String userPhone;  // 전화번호
 
     private String userProfileImg;  // 프로필 이미지 경로
 
-    @Column(nullable = false)
+    //@Column(nullable = false)
     private LocalDateTime userBirth;  // 생년월일
 
     @Column(nullable = false)
