@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/andRole/{andId}")
+@RequestMapping("/and/{andId}/role")
 public class DynamicAndRoleController {
 
     private final DynamicAndRoleService dynamicAndRoleService;
@@ -20,13 +20,13 @@ public class DynamicAndRoleController {
     }
 
     @RequestMapping(value = "/list", method = RequestMethod.GET)
-    public List<DynamicAndRoleDTO.FindById> findAll(@RequestParam("andId") int andId) {
-        return dynamicAndRoleService.findAll(andId);
+    public List<DynamicAndRoleDTO.FindById> findAll(@PathVariable("andId") int andId) {
+        return dynamicAndRoleService.findAllNotDeleted(andId);
     }
 
     @RequestMapping(value = "/{andRoleId}", method = RequestMethod.GET)
-    public DynamicAndRoleDTO.FindById findByAndRoleId(@PathVariable int andRoleId,
-                                                      @RequestParam("andId") int andId) {
+    public DynamicAndRoleDTO.FindById findByAndRoleId(@PathVariable("andId") int andId,
+                                                      @PathVariable ("andRoleId") int andRoleId) {
         return dynamicAndRoleService.findByAndRoleId(andId, andRoleId);
     }
 
@@ -41,8 +41,8 @@ public class DynamicAndRoleController {
     }
 
     @RequestMapping(value = "/{andRoleId}/delete", method = RequestMethod.DELETE)
-    public void deleteDynamicAndRole(@PathVariable int andRoleId,
-                                     @RequestParam("andId") int andId) {
+    public void deleteDynamicAndRole(@PathVariable("andId") int andId,
+                                     @PathVariable ("andRoleId") int andRoleId) {
         dynamicAndRoleService.deleteByAndRoleId(andId, andRoleId);
     }
 
