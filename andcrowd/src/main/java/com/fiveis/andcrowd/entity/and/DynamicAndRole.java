@@ -9,13 +9,13 @@ import lombok.*;
 @NoArgsConstructor
 public class DynamicAndRole {
 
-    private int roleId;
+    private int andRoleId;
 
     private int andId;
 
-    private String role;
+    private String andRole;
 
-    private int roleLimit;
+    private int andRoleLimit;
 
     private boolean isDeleted;
 
