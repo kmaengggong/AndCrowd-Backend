@@ -4,6 +4,7 @@ import com.fiveis.andcrowd.dto.and.AndDTO;
 import com.fiveis.andcrowd.entity.and.And;
 import com.fiveis.andcrowd.service.and.AndService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -25,8 +26,10 @@ public class AndController {
     }
 
     @RequestMapping(value="/create", method = RequestMethod.POST)
-    public void createItem(@RequestBody And and) {
+    public ResponseEntity<Integer> createItem(@RequestBody And and) {
         andService.save(and);
+        // 생성된 andId 값을 응답 Body에 포함하여 클라이언트에게 전달
+        return ResponseEntity.ok(and.getAndId());
     }
 
     @RequestMapping("/{andId}")
