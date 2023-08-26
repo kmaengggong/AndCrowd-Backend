@@ -58,6 +58,21 @@ public class DynamicCrowdQnaServiceTest {
 
     @Test
     @Transactional
+    @DisplayName("crowdId 1번글의 전체 crowd_Qna 조회시 데이터가 2개일 것이다.")
+    public void findAllByIsDeletedFalseTest(){
+
+        // given
+        int crowdId = 1;
+
+        // when
+        List<DynamicCrowdQnaDTO.Find> crowdQnaList = dynamicCrowdQnaService.findAllByIsDeletedFalse(crowdId);
+
+        // then
+        assertThat(crowdQnaList.size()).isEqualTo(2);
+    }
+
+    @Test
+    @Transactional
     @DisplayName("crowdId 1번글의 2번째 글의 제목은 '2번글제목', 본문은 '2번글본문' 일것이다.")
     public void findByIdTest(){
 

@@ -32,6 +32,23 @@
             crowdQnaId DESC
     </select>
 
+    <select id="findAllByIsDeletedFalse">
+        SELECT
+            crowd_qna_id AS crowdQnaId ,
+            crowd_id AS crowdId ,
+            qna_title AS qnaTitle ,
+            qna_content AS qnaContent ,
+            publishe_at AS publishedAt ,
+            updated_at AS updatedAt ,
+            is_deleted AS isDeleted
+        FROM
+            crowd_qna_#{crowd_id}
+        WHERE
+            is_deleted = false
+        ORDER BY
+            crowdQnaId DESC
+    </select>
+
     <select id="findById" parameterType="int">
         SELECT
             crowd_qna_id AS crowdqnaId ,
