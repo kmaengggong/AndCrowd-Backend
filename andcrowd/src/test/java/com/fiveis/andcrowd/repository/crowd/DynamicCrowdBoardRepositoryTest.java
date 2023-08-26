@@ -61,6 +61,20 @@ public class DynamicCrowdBoardRepositoryTest {
         // then
         assertThat(crowdBoardList.size()).isEqualTo(3);
     }
+    @Test
+    @Transactional
+    @DisplayName("crowdId 1번글의 전체글 조회시 2개일 것이며")
+    public void findAllByIsDeletedFalseTest(){
+
+        // given
+        int crowdId = 1;
+
+        // when
+        List<DynamicCrowdBoardDTO.Find> crowdBoardList = dynamicCrowdBoardRepository.findAllByIsDeletedFalse(crowdId);
+
+        // then
+        assertThat(crowdBoardList.size()).isEqualTo(2);
+    }
 
     @Test
     @Transactional

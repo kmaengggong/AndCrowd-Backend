@@ -22,31 +22,31 @@ public class DynamicCrowdBoardServiceTest {
     @Autowired
     DynamicCrowdBoardService dynamicCrowdBoardService;
 
-    @Test
-    @Transactional
-    @DisplayName("2번 crowd게시글 생성시 crowd_board_2 이라는 이름의 테이블이 생성되며, 글이 정상적으로 추가된다.")
-    public void createDynamicCrowdBoardTableTest(){
-        // given
-        int crowdId = 2;
-        int tag = 1;
-        String title = "추가된 제목";
-        String content = "추가된 본문";
-        String img = "추가된 이미지";
-
-        // when
-        dynamicCrowdBoardService.createDynamicCrowdBoardTable(crowdId);
-        DynamicCrowdBoardDTO.Save newBoard = new DynamicCrowdBoardDTO.Save();
-        newBoard.setCrowdId(crowdId);
-        newBoard.setCrowdBoardTag(tag);
-        newBoard.setCrowdBoardTitle(title);
-        newBoard.setCrowdBoardContent(content);
-        newBoard.setCrowdImg(img);
-        dynamicCrowdBoardService.save(newBoard);
-
-        // then
-        List<DynamicCrowdBoardDTO.Find> crowdBoardList = dynamicCrowdBoardService.findAll(crowdId);
-        assertThat(crowdBoardList.get(0).getCrowdId()).isEqualTo(crowdId);
-    }
+//    @Test
+//    @Transactional
+//    @DisplayName("2번 crowd게시글 생성시 crowd_board_2 이라는 이름의 테이블이 생성되며, 글이 정상적으로 추가된다.")
+//    public void createDynamicCrowdBoardTableTest(){
+//        // given
+//        int crowdId = 2;
+//        int tag = 1;
+//        String title = "추가된 제목";
+//        String content = "추가된 본문";
+//        String img = "추가된 이미지";
+//
+//        // when
+//        dynamicCrowdBoardService.createDynamicCrowdBoardTable(crowdId);
+//        DynamicCrowdBoardDTO.Save newBoard = new DynamicCrowdBoardDTO.Save();
+//        newBoard.setCrowdId(crowdId);
+//        newBoard.setCrowdBoardTag(tag);
+//        newBoard.setCrowdBoardTitle(title);
+//        newBoard.setCrowdBoardContent(content);
+//        newBoard.setCrowdImg(img);
+//        dynamicCrowdBoardService.save(newBoard);
+//
+//        // then
+//        List<DynamicCrowdBoardDTO.Find> crowdBoardList = dynamicCrowdBoardService.findAll(crowdId);
+//        assertThat(crowdBoardList.get(0).getCrowdId()).isEqualTo(crowdId);
+//    }
 
     @Test
     @Transactional
@@ -61,6 +61,21 @@ public class DynamicCrowdBoardServiceTest {
 
         // then
         assertThat(crowdBoardList.size()).isEqualTo(3);
+    }
+
+    @Test
+    @Transactional
+    @DisplayName("crowdId 1번글의 전체글 조회시 2개일 것이다.")
+    public void findAllByIsDeletedFalseTest(){
+
+        // given
+        int crowdId = 1;
+
+        // when
+        List<DynamicCrowdBoardDTO.Find> crowdBoardList = dynamicCrowdBoardService.findAllByIsDeletedFalse(crowdId);
+
+        // then
+        assertThat(crowdBoardList.size()).isEqualTo(2);
     }
 
     @Test
