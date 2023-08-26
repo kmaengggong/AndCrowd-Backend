@@ -22,7 +22,6 @@ public class DynamicCrowdBoardServiceTest {
     @Autowired
     DynamicCrowdBoardService dynamicCrowdBoardService;
 
-    // createTable의 경우 @Transactional을 사용하여도 생성된 테이블이 롤백되지 않아 정상작동 확인후 주석처리
 //    @Test
 //    @Transactional
 //    @DisplayName("2번 crowd게시글 생성시 crowd_board_2 이라는 이름의 테이블이 생성되며, 글이 정상적으로 추가된다.")
@@ -62,6 +61,21 @@ public class DynamicCrowdBoardServiceTest {
 
         // then
         assertThat(crowdBoardList.size()).isEqualTo(3);
+    }
+
+    @Test
+    @Transactional
+    @DisplayName("crowdId 1번글의 전체글 조회시 2개일 것이다.")
+    public void findAllByIsDeletedFalseTest(){
+
+        // given
+        int crowdId = 1;
+
+        // when
+        List<DynamicCrowdBoardDTO.Find> crowdBoardList = dynamicCrowdBoardService.findAllByIsDeletedFalse(crowdId);
+
+        // then
+        assertThat(crowdBoardList.size()).isEqualTo(2);
     }
 
     @Test

@@ -62,6 +62,25 @@ public class DynamicCrowdBoardControllerTest {
 
     @Test
     @Transactional
+    @DisplayName("crowd 1번글의 board 전체글 조회시 2번째 요소의 title은 1번글제목, content는 1번글본문 이다.")
+    void findAllByIsDeletedFalseTest() throws Exception {
+        // given
+        int crowdId = 1;
+        String title = "1번글제목";
+        String content = "1번글본문";
+        String url = "/crowd/1/board/all";
+
+        // when
+        final ResultActions result = mockMvc.perform(get(url).accept(MediaType.APPLICATION_JSON));
+
+        result
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[1].crowdBoardTitle").value(title))
+                .andExpect(jsonPath("$[1].crowdBoardContent").value(content));
+    }
+
+    @Test
+    @Transactional
     @DisplayName("crowd 1번글의 crowd_board_id가 2번인글 조회시 title은 2번글제목, content는 2번글본문 이다.")
     void findByIdTest() throws Exception {
         // given
