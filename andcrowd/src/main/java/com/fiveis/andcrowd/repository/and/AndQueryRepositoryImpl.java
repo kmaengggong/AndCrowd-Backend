@@ -30,7 +30,13 @@ public class AndQueryRepositoryImpl implements AndQueryRepository{
     }
 
     public Slice<AndDTO.Find> findAllByCategoryAndStatusAndSort(
-            Integer categoryId, Integer andStatus, String sortField, String sortOrder, Pageable pageable) {
+            Integer andCategoryId, Integer andStatus, String sortField, String sortOrder, Pageable pageable) {
+
+        BooleanExpression categoryExpression = eqCategory(andCategoryId);
+        if (andCategoryId != null && andCategoryId == 0) {
+            // andCategoryId가 0인 경우, 조건식을 null로 변경하여 전체 데이터를 조회하도록 처리
+            categoryExpression = null;
+        }
 
         List<AndDTO.Find> results = query
                 .select(Projections.fields(AndDTO.Find.class,
@@ -58,7 +64,7 @@ public class AndQueryRepositoryImpl implements AndQueryRepository{
                 ))
                 .from(and)
                 .where(
-                        eqCategory(categoryId),
+                        categoryExpression,
                         eqAndStatus(andStatus)
                 )
                 .orderBy(buildOrderSpecifier(sortField, sortOrder))
@@ -74,8 +80,8 @@ public class AndQueryRepositoryImpl implements AndQueryRepository{
         return new SliceImpl<>(results, pageable, hasNext);
     }
 
-    private BooleanExpression eqCategory(Integer categoryId) {
-        return categoryId != null ? and.andCategoryId.eq(categoryId) : null;
+    private BooleanExpression eqCategory(Integer andCategoryId) {
+        return andCategoryId != null ? and.andCategoryId.eq(andCategoryId) : null;
     }
 
     private BooleanExpression eqAndStatus(Integer andStatus) {

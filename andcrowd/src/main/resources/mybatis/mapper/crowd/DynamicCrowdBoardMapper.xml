@@ -104,4 +104,11 @@
         WHERE
             crowd_board_id = #{crowdBoardId}
     </delete>
+
+    <delete id="deleteByCrowdId" parameterType="int">
+        UPDATE
+            crowd_board_#{crowdId}
+        SET
+            is_deleted = true
+    </delete>
 </mapper>

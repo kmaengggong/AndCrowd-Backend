@@ -37,6 +37,7 @@ public class DynamicUserController {
         this.dynamicUserOrderService = dynamicUserOrderService;
     }
 
+    // 유저가 참여한 모임
     @RequestMapping(value="{userId}/and", method=RequestMethod.GET)
     public ResponseEntity<?> findUserAnd(@PathVariable int userId){//,
                                         //Principal principal){
@@ -61,6 +62,7 @@ public class DynamicUserController {
         return ResponseEntity.ok("UserAnd Deleted!");
     }
 
+    // 유저가 팔로우한 유저
     @RequestMapping(value="{userId}/follow", method=RequestMethod.GET)
     public ResponseEntity<?> findUserFollow(@PathVariable int userId){//,
                                             //Principal principal){
@@ -85,6 +87,7 @@ public class DynamicUserController {
         return ResponseEntity.ok("UserFollow Deleted!");
     }
 
+    // 유저가 좋아요 누른 프로젝트
     @RequestMapping(value="{userId}/like", method=RequestMethod.GET)
     public ResponseEntity<?> findUserLike(@PathVariable int userId){//,
                                         //Principal principal){
@@ -113,6 +116,7 @@ public class DynamicUserController {
         return ResponseEntity.ok("UserLike Deleted!");
     }
 
+    // 유저가 만든 프로젝트
     @RequestMapping(value="{userId}/maker", method=RequestMethod.GET)
     public ResponseEntity<?> findUserMaker(@PathVariable int userId){//,
                                             //Principal principal){
@@ -141,6 +145,7 @@ public class DynamicUserController {
         return ResponseEntity.ok("UserMaker Deleted!");
     }
 
+    // 유저의 펀딩 주문 내역
     @RequestMapping(value="{userId}/order", method=RequestMethod.GET)
     public ResponseEntity<?> findUserOrder(@PathVariable int userId){//,
                                             //Principal principal){

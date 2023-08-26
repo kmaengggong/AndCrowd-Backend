@@ -19,7 +19,7 @@ public class DynamicCrowdBoardRepositoryTest {
     DynamicCrowdBoardRepository dynamicCrowdBoardRepository;
 
 
-
+    // createTable의 경우 @Transactional을 사용하여도 생성된 테이블이 롤백되지 않아 정상작동 확인후 주석처리
 //    @Test
 //    @Transactional
 //    @DisplayName("2번 crowd게시글 생성시 crowd_board_2 이라는 이름의 테이블이 생성되며, 글이 정상적으로 추가된다.")
@@ -192,6 +192,26 @@ public class DynamicCrowdBoardRepositoryTest {
 
         // then
         assertThat(crowdBoard.isDeleted()).isTrue();
+    }
+
+    @Test
+    @Transactional
+    @DisplayName("crowdId 1번글 삭제시 연관된 board의 모든 글의 isdDeleted가 true가 될것이다.")
+    public void deleteByCrowdIdTest(){
+
+        // given
+        int crowdId = 1;
+
+        // when
+        dynamicCrowdBoardRepository.deleteByCrowdId(crowdId);
+        List<DynamicCrowdBoardDTO.Find> boardList = dynamicCrowdBoardRepository.findAll(crowdId);
+
+
+        // then
+        int boardListSize = boardList.size();
+        for(int indexNum = 0; indexNum < boardListSize; indexNum++){
+            assertThat(boardList.get(indexNum).isDeleted()).isTrue();
+        }
     }
 
 }

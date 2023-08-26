@@ -21,4 +21,6 @@ public interface DynamicCrowdQnaRepository {
     void save(DynamicCrowdQnaDTO.Save dynamicCrowdQnaDTOSave);
 
     void update(DynamicCrowdQnaDTO.Update dynamicCrowdBoardDTOUpdate);
+
+    void deleteAll(@Param("crowdId") int crowdId);
 }

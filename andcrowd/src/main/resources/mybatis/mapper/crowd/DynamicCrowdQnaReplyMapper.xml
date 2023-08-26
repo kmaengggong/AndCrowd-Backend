@@ -59,12 +59,28 @@
             qna_reply_id = #{qnaReplyId}
     </update>
 
-    <update id="deleteByQnaReplyId" parameterType="int">
+    <delete id="deleteByQnaReplyId" parameterType="int">
         UPDATE
             crowd_qna_reply_#{crowdId}
         SET
             is_deleted = true
         WHERE
             qna_reply_id = #{qnaReplyId}
-    </update>
+    </delete>
+
+    <delete id="deleteAllByQnaId" parameterType="int">
+        UPDATE
+            crowd_qna_reply_#{crowdId}
+        SET
+            is_deleted = true
+        WHERE
+            crowd_qna_id = #{crowdQnaId}
+    </delete>
+
+    <delete id="deleteAll" parameterType="int">
+        UPDATE
+            crowd_qna_reply_#{crowdId}
+        SET
+            is_deleted = true
+    </delete>
 </mapper>
