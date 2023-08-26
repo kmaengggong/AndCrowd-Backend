@@ -129,4 +129,8 @@ public class Crowd {
     public void setCrowdEndDate(LocalDateTime crowdEndDate) {
         this.crowdEndDate = crowdEndDate;
     }
+
+    public void setDeleted(boolean deleted) {
+        isDeleted = deleted;
+    }
 }

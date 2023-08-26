@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -28,9 +29,9 @@ public class CrowdOrderDetailsServiceTest {
         // given
         int purchaseId = 3;
         // when
-        CrowdOrderDetailsDTO.FindById result = crowdOrderDetailsService.findById(purchaseId);
+        Optional<CrowdOrderDetailsDTO.FindById> result = crowdOrderDetailsService.findById(purchaseId);
         // then
-        assertEquals(purchaseId, result.getCrowdId());
+        assertEquals(purchaseId, result.get().getPurchaseId());
     }
 
     @Test
@@ -39,7 +40,7 @@ public class CrowdOrderDetailsServiceTest {
     public void findAllTest() {
         // given
         // when
-        List<?> findAllList = crowdOrderDetailsService.findAll();
+        List<CrowdOrderDetailsDTO.FindById> findAllList = crowdOrderDetailsService.findAll();
         // then
         assertEquals(3, findAllList.size());
     }

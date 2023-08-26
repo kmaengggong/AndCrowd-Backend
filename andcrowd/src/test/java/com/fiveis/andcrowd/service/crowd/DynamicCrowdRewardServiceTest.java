@@ -31,7 +31,7 @@ public class DynamicCrowdRewardServiceTest {
         int rewardLimit = 5;
 
         // when
-        dynamicCrowdRewardService.createDynamicCrowdRewardTable(crowdId);
+        dynamicCrowdRewardService.createDynamicCrowdRewardTable();
         DynamicCrowdRewardDTO.Update newReward = new DynamicCrowdRewardDTO.Update();
         newReward.setCrowdId(crowdId);
         newReward.setRewardId(rewardId);

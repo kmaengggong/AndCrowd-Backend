@@ -2,6 +2,7 @@ package com.fiveis.andcrowd.entity.crowd;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
 
 import java.time.LocalDateTime;
 
@@ -45,7 +46,7 @@ public class CrowdOrderDetails { // 크라우드 주문내역
     @Column(nullable = false)
     private String purchaseStatus; // 결제상태 (결제대기, 결제완료, 계좌, 카드, 환불)
 
-    @Column(nullable = false)
+    @ColumnDefault("false")
     private boolean isDeleted; // 삭제여부
 
     public void setPurchaseDate(LocalDateTime purchaseDate){

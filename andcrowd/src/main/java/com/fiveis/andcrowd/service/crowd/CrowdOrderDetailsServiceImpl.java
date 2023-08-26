@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class CrowdOrderDetailsServiceImpl implements CrowdOrderDetailsService{
@@ -20,23 +22,17 @@ public class CrowdOrderDetailsServiceImpl implements CrowdOrderDetailsService{
     }
 
     @Override
-    public List<CrowdOrderDetailsDTO.FindById> findAll() {
-        List<CrowdOrderDetails> crowdOrderDetailsList = crowdOrderDetailsJPARepository.findAll();
-        List<CrowdOrderDetailsDTO.FindById> findList = new ArrayList<>();
-
-        for (CrowdOrderDetails crowdOrderDetails : crowdOrderDetailsList) {
-            CrowdOrderDetailsDTO.FindById findById = convertToFindById(crowdOrderDetails);
-            findList.add(findById);
-        }
-
-        return findList;
+    public List<CrowdOrderDetailsDTO.FindById> findAll() {//int crowdId) {
+        List<CrowdOrderDetails> orderList = crowdOrderDetailsJPARepository.findAll();
+        return orderList.stream()
+                .map(this::convertToFindByIdDTO)
+                .collect(Collectors.toList());
     }
 
     @Override
-    public CrowdOrderDetailsDTO.FindById findById(int purchaseId) {
-//        Optional<CrowdOrderDetails> crowdOrderDetailsOptional = crowdOrderDetailsJPARepository.findById(purchaseId);
-        if(crowdOrderDetailsJPARepository.findById(purchaseId).isEmpty()) return null;
-        return convertToFindById(crowdOrderDetailsJPARepository.findById(purchaseId).get());
+    public Optional<CrowdOrderDetailsDTO.FindById> findById(int purchaseId) {
+        Optional<CrowdOrderDetails> crowdOrderDetailsOptional = crowdOrderDetailsJPARepository.findById(purchaseId);
+        return crowdOrderDetailsOptional.map(this::convertToFindByIdDTO);
     }
 
     @Override
@@ -54,7 +50,8 @@ public class CrowdOrderDetailsServiceImpl implements CrowdOrderDetailsService{
         crowdOrderDetailsJPARepository.deleteById(purchaseId);
     }
 
-    private CrowdOrderDetailsDTO.FindById convertToFindById(CrowdOrderDetails crowdOrderDetails) {
+    @Override
+    public CrowdOrderDetailsDTO.FindById convertToFindByIdDTO(CrowdOrderDetails crowdOrderDetails) {
         return CrowdOrderDetailsDTO.FindById.builder()
                 .purchaseId(crowdOrderDetails.getPurchaseId())
                 .userId(crowdOrderDetails.getUserId())
