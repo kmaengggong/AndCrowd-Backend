@@ -22,7 +22,7 @@ public class DynamicCrowdQnaReplyController {
     @RequestMapping(value = "/all", method = RequestMethod.GET)
     public ResponseEntity<List<DynamicCrowdQnaReplyDTO.Find>> findAllQnaReplies(@PathVariable int crowdId,
                                                                                @PathVariable int crowdQnaId){
-        List<DynamicCrowdQnaReplyDTO.Find> replies = dynamicCrowdQnaReplyService.findAll(crowdId, crowdQnaId);
+        List<DynamicCrowdQnaReplyDTO.Find> replies = dynamicCrowdQnaReplyService.findAllByIsDeletedFalse(crowdId, crowdQnaId);
         return ResponseEntity.ok().body(replies);
     }
 
