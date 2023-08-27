@@ -19,8 +19,7 @@ import org.springframework.web.context.WebApplicationContext;
 import java.time.LocalDateTime;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -60,38 +59,48 @@ class CrowdOrderDetailsControllerTest {
         System.out.println(resultActions);
     }
 
-    @Test
-    @Transactional(rollbackFor = Exception.class)
-    void insertOrderTest() throws Exception {
-        // given
-        int crowdId = 4;
-        int purchaseId = 4;
-        int userId = 4;
-        int rewardId = 4;
-        int sponsorId = 4;
-        String purchaseName = "임토비";
-        String purchasePhone = "01012345678";
-        String purchaseAddress = "광주 광산구";
-        String purchaseStatus = "계좌송금";
-        LocalDateTime purchaseDate = LocalDateTime.now();
-
-        CrowdOrderDetails newOrder = CrowdOrderDetails.builder().build();
-
-        System.out.println(newOrder);
-
-        String url = "/crowd_order/successorder/4";
-        String url2 = "/crowd_order/list";
-        // when
-        final String jsonOrder = objectMapper.writeValueAsString(newOrder);
-        mockMvc.perform(post(url)
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(jsonOrder));
-        // then
-        final ResultActions result = mockMvc.perform(get(url2)
-                .accept(MediaType.APPLICATION_JSON));
-        result.andExpect(jsonPath("$[3].crowdId").value(crowdId))
-                .andExpect(jsonPath("$[3].purchaseId").value(purchaseId));
-    }
+//    @Test
+//    @Transactional
+//    void insertOrderTest() throws Exception {
+//        // given
+//        int crowdId = 4;
+//        int purchaseId = 4;
+//        int userId = 4;
+//        int rewardId = 4;
+//        int sponsorId = 4;
+//        String purchaseName = "임토비";
+//        String purchasePhone = "01012345678";
+//        String purchaseAddress = "광주 광산구";
+//        String purchaseStatus = "계좌송금";
+//
+//        CrowdOrderDetails newOrder = CrowdOrderDetails.builder()
+//                .crowdId(crowdId)
+//                .purchaseId(purchaseId)
+//                .userId(userId)
+//                .rewardId(rewardId)
+//                .sponsorId(sponsorId)
+//                .purchaseName(purchaseName)
+//                .purchasePhone(purchasePhone)
+//                .purchaseAddress(purchaseAddress)
+//                .purchaseStatus(purchaseStatus)
+//                .build();
+//        newOrder.setPurchaseDate(LocalDateTime.now());
+//
+//        System.out.println(newOrder);
+//
+//        String url = "/crowd_order/successorder";
+//        String url2 = "/crowd_order/list";
+//        // when
+//        final String jsonOrder = objectMapper.writeValueAsString(newOrder);
+//        mockMvc.perform(post(url)
+//                .contentType(MediaType.APPLICATION_JSON)
+//                .content(jsonOrder));
+//        // then
+//        final ResultActions result = mockMvc.perform(get(url2)
+//                .accept(MediaType.APPLICATION_JSON));
+//        result.andExpect(jsonPath("$[3].crowdId").value(crowdId))
+//                .andExpect(jsonPath("$[3].purchaseId").value(purchaseId));
+//    } 테스트는 통과했으나 DB무한 증식으로 주석 처리
 
     @Test
     @Transactional
@@ -111,15 +120,53 @@ class CrowdOrderDetailsControllerTest {
     @Transactional
     void updateOrder() throws Exception {
         // given
+        int purchaseId = 2;
+        int userId = 2;
+        int crowdId = 2;
+        int rewardId = 2;
+        int sponsorId = 2;
+        String purchaseName = "김동동";
+        String purchaseAddress = "경기도 남양주시";
+        String purchasePhone = "01078903456";
+        CrowdOrderDetailsDTO.Update updateOrder = CrowdOrderDetailsDTO.Update.builder()
+                .purchaseId(purchaseId)
+                .userId(userId)
+                .crowdId(crowdId)
+                .rewardId(rewardId)
+                .sponsorId(sponsorId)
+                .purchaseName(purchaseName)
+                .purchaseAddress(purchaseAddress)
+                .purchasePhone(purchasePhone)
+                .build();
+        updateOrder.setPurchaseDate(LocalDateTime.now());
+
+        System.out.println(updateOrder);
+
+        String url = "/crowd_order/2/update";
+        String url2 = "/crowd_order/2";
+        final String requestBody = objectMapper.writeValueAsString(updateOrder);
         // when
+        mockMvc.perform(patch(url)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(requestBody));
         // then
+        final ResultActions result = mockMvc.perform(get(url2)
+                .accept(MediaType.APPLICATION_JSON));
+
+        result.andExpect(status().isOk())
+                .andExpect(jsonPath("$[1].purchaseName").value(purchaseName))
+                .andExpect(jsonPath("$[1].purchaseAddress").value(purchaseAddress));
     }
 
     @Test
     @Transactional
     void deleteOrder() throws Exception {
         // given
+        int purchaseId = 1;
+        String url = "/crowd_order/1";
         // when
+        mockMvc.perform(patch(url).accept(MediaType.TEXT_PLAIN));
         // then
+        assertTrue(crowdOrderDetailsJPARepository.findById(purchaseId).get().isDeleted());
     }
 }

@@ -73,6 +73,7 @@ public class Crowd {
 
     @PrePersist
     public void setDefaultValue(){
+        this.crowdStatus = 0; // 펀딩글 첫 업로드시 자동으로 심사중 표기
         this.publishedAt = LocalDateTime.now();
         this.updatedAt = LocalDateTime.now();
     }

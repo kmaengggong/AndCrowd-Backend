@@ -37,12 +37,13 @@ public class CrowdOrderDetailsServiceImpl implements CrowdOrderDetailsService{
 
     @Override
     public void save(CrowdOrderDetails crowdOrderDetails) {
-        CrowdOrderDetails saveCrowdOrder = crowdOrderDetailsJPARepository.save(crowdOrderDetails);
+        CrowdOrderDetails insertOrder = crowdOrderDetailsJPARepository.save(crowdOrderDetails);
     }
 
     @Override
     public void update(CrowdOrderDetails crowdOrderDetails) {
-        crowdOrderDetailsJPARepository.save(crowdOrderDetails);
+        CrowdOrderDetails updateOrder = crowdOrderDetailsJPARepository.findById(crowdOrderDetails.getPurchaseId()).get();
+        crowdOrderDetailsJPARepository.save(updateOrder);
     }
 
     @Override
