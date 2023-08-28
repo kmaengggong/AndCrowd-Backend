@@ -163,7 +163,7 @@ class CrowdOrderDetailsControllerTest {
     void deleteOrder() throws Exception {
         // given
         int purchaseId = 1;
-        String url = "/crowd_order/1";
+        String url = "/crowd_order/" + purchaseId;
         // when
         mockMvc.perform(patch(url).accept(MediaType.TEXT_PLAIN));
         // then

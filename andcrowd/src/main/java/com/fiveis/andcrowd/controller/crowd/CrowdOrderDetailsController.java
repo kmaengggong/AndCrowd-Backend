@@ -57,7 +57,7 @@ public class CrowdOrderDetailsController {
         return ResponseEntity.ok("주문 정보가 정상적으로 수정되었습니다.");
     }
 
-    @RequestMapping(value = "/{purchaseId}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/{purchaseId}")//, method = RequestMethod.DELETE)
     public String deleteOrder(@PathVariable("purchaseId") int purchaseId) {
 //        Optional<CrowdOrderDetailsDTO.FindById> findById = crowdOrderDetailsService.findById(purchaseId);
 //
