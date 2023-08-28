@@ -5,6 +5,7 @@ import com.fiveis.andcrowd.entity.crowd.CrowdOrderDetails;
 import com.fiveis.andcrowd.repository.crowd.CrowdOrderDetailsJPARepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,29 +28,36 @@ public class CrowdOrderDetailsServiceImpl implements CrowdOrderDetailsService{
         return orderList.stream()
                 .map(this::convertToFindByIdDTO)
                 .collect(Collectors.toList());
-    }
+    } // 모든 결제내역을 조회하는 메서드
 
     @Override
     public Optional<CrowdOrderDetailsDTO.FindById> findById(int purchaseId) {
         Optional<CrowdOrderDetails> crowdOrderDetailsOptional = crowdOrderDetailsJPARepository.findById(purchaseId);
         return crowdOrderDetailsOptional.map(this::convertToFindByIdDTO);
-    }
+    } // 특정 주문을 ID로 조회하는 메서드
 
     @Override
     public void save(CrowdOrderDetails crowdOrderDetails) {
         CrowdOrderDetails insertOrder = crowdOrderDetailsJPARepository.save(crowdOrderDetails);
-    }
+    } // 주문내역 저장 메서드
 
     @Override
     public void update(CrowdOrderDetails crowdOrderDetails) {
         CrowdOrderDetails updateOrder = crowdOrderDetailsJPARepository.findById(crowdOrderDetails.getPurchaseId()).get();
         crowdOrderDetailsJPARepository.save(updateOrder);
-    }
+    } // 주문내역 수정 메서드
 
     @Override
+    @Transactional
     public void deleteById(int purchaseId) {
-        crowdOrderDetailsJPARepository.deleteById(purchaseId);
-    }
+        Optional<CrowdOrderDetails> orderOptional = crowdOrderDetailsJPARepository.findById(purchaseId);
+
+        if(orderOptional.isPresent()) {
+            CrowdOrderDetails crowdOrderDetails = orderOptional.get();
+            crowdOrderDetails.setDeleted(true);
+            crowdOrderDetailsJPARepository.save(crowdOrderDetails);
+        }
+    } // 주문내역 삭제 메서드
 
     @Override
     public CrowdOrderDetailsDTO.FindById convertToFindByIdDTO(CrowdOrderDetails crowdOrderDetails) {

@@ -58,15 +58,18 @@ public class CrowdOrderDetailsController {
     }
 
     @RequestMapping(value = "/{purchaseId}", method = RequestMethod.DELETE)
-    public ResponseEntity<String> deleteOrder(@PathVariable("purchaseId") int purchaseId) {
-        Optional<CrowdOrderDetailsDTO.FindById> findById = crowdOrderDetailsService.findById(purchaseId);
-
-        if (findById.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        } else {
-            crowdOrderDetailsService.deleteById(purchaseId);
-            return ResponseEntity.ok("주문이 삭제되었습니다.");
-        }
+    public String deleteOrder(@PathVariable("purchaseId") int purchaseId) {
+//        Optional<CrowdOrderDetailsDTO.FindById> findById = crowdOrderDetailsService.findById(purchaseId);
+//
+//        if (findById.isEmpty()) {
+//            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+//        } else {
+//            crowdOrderDetailsService.deleteById(purchaseId);
+//            return ResponseEntity.ok("주문이 삭제되었습니다.");
+//        }
+        crowdOrderDetailsService.deleteById(purchaseId);
+        ResponseEntity.ok("결제내역이 삭제되었습니다.");
+        return "redirect:/crowd_order/list";
     }
 
 }
