@@ -14,6 +14,7 @@ public interface DynamicAndQnaRepository {
     void save(DynamicAndQnaDTO.Update andQnaInsertDTO);
     void update(DynamicAndQnaDTO.Update andQnaUpdateDTO);
     void deleteByAndQnaId(@Param("andId") int andId, @Param("andQnaId") int andQnaId);
+    void deleteAll(@Param("andId") int andId);
 
     void createAndQnaTable ();
     void dropAndQnaTable();

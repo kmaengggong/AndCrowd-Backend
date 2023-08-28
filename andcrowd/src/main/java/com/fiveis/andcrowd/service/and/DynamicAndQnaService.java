@@ -15,6 +15,7 @@ public interface DynamicAndQnaService {
     void save(DynamicAndQnaDTO.Update andQnaInsertDTO);
     void update(DynamicAndQnaDTO.Update andQnaUpdateDTO);
     void deleteByAndQnaId(int andId, int andQnaId);
+    void deleteAll(@Param("andId") int andId);
 
     int countAll(int andId);
 }

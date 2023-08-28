@@ -37,6 +37,11 @@ public class DynamicAndBoardServiceImpl implements DynamicAndBoardService {
     }
 
     @Override
+    public void deleteAll(int andId) {
+        dynamicAndBoardRepository.deleteAll(andId);
+    }
+
+    @Override
     public void deleteByAndBoardId(int andId, int andBoardId) {
         dynamicAndBoardRepository.deleteByAndBoardId(andId, andBoardId);
     }

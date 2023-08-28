@@ -87,6 +87,12 @@
         WHERE and_qna_id = #{andQnaId}
     </delete>
 
+    <delete id="deleteAll" parameterType="int">
+        UPDATE and_qna_reply_#{andId}
+        SET is_deleted = true
+        WHERE and_id = #{andId}
+    </delete>
+
     <!--    테스트를 위한 쿼리문-->
     <insert id="createAndQnaReplyTable">
         CREATE TABLE and_qna_reply_123(

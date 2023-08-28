@@ -1,6 +1,7 @@
 package com.fiveis.andcrowd.service.and;
 
 import com.fiveis.andcrowd.dto.and.DynamicAndQnaDTO;
+import com.fiveis.andcrowd.repository.and.DynamicAndQnaReplyRepository;
 import com.fiveis.andcrowd.repository.and.DynamicAndQnaRepository;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import java.util.List;
 public class DynamicAndQnaServiceImpl implements DynamicAndQnaService{
 
     DynamicAndQnaRepository dynamicAndQnaRepository;
+    DynamicAndQnaReplyRepository dynamicAndQnaReplyRepository;
 
     @Autowired
     public DynamicAndQnaServiceImpl(DynamicAndQnaRepository dynamicAndQnaRepository){
@@ -49,7 +51,13 @@ public class DynamicAndQnaServiceImpl implements DynamicAndQnaService{
 
     @Override
     public void deleteByAndQnaId(int andId, int andQnaId) {
+        dynamicAndQnaReplyRepository.deleteByAndQnaId(andId, andQnaId);
         dynamicAndQnaRepository.deleteByAndQnaId(andId, andQnaId);
+    }
+
+    @Override
+    public void deleteAll(int andId) {
+        dynamicAndQnaRepository.deleteAll(andId);
     }
 
     @Override
