@@ -26,8 +26,15 @@
                published_at AS publishedAt,
                updated_at AS updatedAt,
                is_deleted AS isDeleted
-        FROM and_qna_#{and_id}
+        FROM and_qna_#{andId}
         WHERE is_deleted = false
+        ORDER BY and_qna_id DESC
+            LIMIT #{limit} OFFSET #{offset}
+    </select>
+
+
+    <select id="countNotDeleted" resultType="int">
+        SELECT COUNT(*) FROM and_qna_#{andId} WHERE is_deleted = false
     </select>
 
     <select id="findByAndQnaId" resultType="com.fiveis.andcrowd.dto.and.DynamicAndQnaDTO$FindById">

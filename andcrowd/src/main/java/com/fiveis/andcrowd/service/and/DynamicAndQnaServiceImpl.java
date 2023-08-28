@@ -2,6 +2,7 @@ package com.fiveis.andcrowd.service.and;
 
 import com.fiveis.andcrowd.dto.and.DynamicAndQnaDTO;
 import com.fiveis.andcrowd.repository.and.DynamicAndQnaRepository;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,8 +25,8 @@ public class DynamicAndQnaServiceImpl implements DynamicAndQnaService{
     }
 
     @Override
-    public List<DynamicAndQnaDTO.FindById> findAllNotDeleted(int andId) {
-        return dynamicAndQnaRepository.findAllNotDeleted(andId);
+    public List<DynamicAndQnaDTO.FindById> findAllNotDeleted(@Param("offset") int offset, @Param("limit") int limit, int andId) {
+        return dynamicAndQnaRepository.findAllNotDeleted(offset, limit, andId);
     }
 
     @Override
@@ -50,6 +51,12 @@ public class DynamicAndQnaServiceImpl implements DynamicAndQnaService{
     public void deleteByAndQnaId(int andId, int andQnaId) {
         dynamicAndQnaRepository.deleteByAndQnaId(andId, andQnaId);
     }
+
+    @Override
+    public int countAll(int andId) {
+        return dynamicAndQnaRepository.countNotDeleted(andId);
+    }
+
 
 
 }
