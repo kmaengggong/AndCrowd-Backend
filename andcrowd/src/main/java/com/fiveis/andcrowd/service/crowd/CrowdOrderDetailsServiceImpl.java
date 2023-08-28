@@ -42,9 +42,17 @@ public class CrowdOrderDetailsServiceImpl implements CrowdOrderDetailsService{
     } // 주문내역 저장 메서드
 
     @Override
-    public void update(CrowdOrderDetails crowdOrderDetails) {
-        CrowdOrderDetails updateOrder = crowdOrderDetailsJPARepository.findById(crowdOrderDetails.getPurchaseId()).get();
-        crowdOrderDetailsJPARepository.save(updateOrder);
+    public void update(CrowdOrderDetailsDTO.Update updateDTO) { //CrowdOrderDetails crowdOrderDetails) {
+        Optional<CrowdOrderDetails> orderOptional = crowdOrderDetailsJPARepository.findById(updateDTO.getPurchaseId());
+        orderOptional.ifPresent(updateOrder -> {
+            // 필요한 필드 업데이트
+            updateOrder.setPurchaseName(updateDTO.getPurchaseName());
+            updateOrder.setPurchaseAddress(updateDTO.getPurchaseAddress());
+            updateOrder.setPurchasePhone(updateDTO.getPurchasePhone());
+            crowdOrderDetailsJPARepository.save(updateOrder);
+        });
+//        CrowdOrderDetails updateOrder = crowdOrderDetailsJPARepository.findById(crowdOrderDetails.getPurchaseId()).get();
+//        crowdOrderDetailsJPARepository.save(crowdOrderDetails);
     } // 주문내역 수정 메서드
 
     @Override

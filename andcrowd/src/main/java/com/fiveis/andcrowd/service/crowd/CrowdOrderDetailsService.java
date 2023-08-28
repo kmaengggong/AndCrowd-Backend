@@ -13,7 +13,7 @@ public interface CrowdOrderDetailsService {
    List<CrowdOrderDetailsDTO.FindById> findAll();//int crowdId);
    Optional<CrowdOrderDetailsDTO.FindById> findById(int crowdId);
    void save(CrowdOrderDetails crowdOrderDetails);
-   void update(CrowdOrderDetails crowdOrderDetails);
+   void update(CrowdOrderDetailsDTO.Update updateDTO);
    void deleteById(int purchaseId);
    public CrowdOrderDetailsDTO.FindById convertToFindByIdDTO(CrowdOrderDetails crowdOrderDetails);
 }

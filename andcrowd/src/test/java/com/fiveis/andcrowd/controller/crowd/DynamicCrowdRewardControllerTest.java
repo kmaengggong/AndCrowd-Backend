@@ -46,7 +46,7 @@ class DynamicCrowdRewardControllerTest {
     void findAllTest() throws Exception {
         // given
         int crowdId = 123;
-        String url = "/123/reward/list";
+        String url = "/crowd/123/reward/list";
         // when
         final ResultActions resultList = mockMvc.perform(get(url).accept(MediaType.APPLICATION_JSON));
         // then
@@ -64,7 +64,7 @@ class DynamicCrowdRewardControllerTest {
         int rewardId = 1;
         String rewardTitle = "슈퍼얼리버드1";
         String rewardContent = "기본후원1";
-        String url = "/123/reward/1";
+        String url = "/crowd/123/reward/1";
         // when
         final ResultActions resultRewardId = mockMvc.perform(get(url).accept(MediaType.APPLICATION_JSON));
         // then
@@ -82,8 +82,8 @@ class DynamicCrowdRewardControllerTest {
         String rewardContent = "슈퍼후원4";
         int rewardAmount = 100000;
         int rewardLimit = 5;
-        String url = "/123/reward";
-        String url2 = "/123/reward/list";
+        String url = "/crowd/123/reward";
+        String url2 = "/crowd/123/reward/list";
 
         DynamicCrowdRewardDTO.Update newReward = DynamicCrowdRewardDTO.Update.builder()
                 .crowdId(crowdId)
@@ -122,8 +122,8 @@ class DynamicCrowdRewardControllerTest {
                 .rewardContent(rewardContent)
                 .build();
 
-        String url = "/123/reward/3/update"; //update";
-        String url2 = "/123/reward/3";
+        String url = "/crowd/123/reward/3/update";
+        String url2 = "/crowd/123/reward/3";
         // when
         final String requestReward = objectMapper.writeValueAsString(updateReward);
         mockMvc.perform(patch(url)
@@ -144,7 +144,7 @@ class DynamicCrowdRewardControllerTest {
         // given
         int crowdId = 123;
         int rewardId = 1;
-        String url = "/123/reward/1";
+        String url = "/crowd/123/reward/1";
         // when
         mockMvc.perform(patch(url).accept(MediaType.TEXT_PLAIN));
         // then

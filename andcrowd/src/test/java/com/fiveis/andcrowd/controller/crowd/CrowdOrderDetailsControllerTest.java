@@ -2,7 +2,6 @@ package com.fiveis.andcrowd.controller.crowd;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fiveis.andcrowd.dto.crowd.CrowdOrderDetailsDTO;
-import com.fiveis.andcrowd.entity.crowd.CrowdOrderDetails;
 import com.fiveis.andcrowd.repository.crowd.CrowdOrderDetailsJPARepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -154,8 +153,8 @@ class CrowdOrderDetailsControllerTest {
                 .accept(MediaType.APPLICATION_JSON));
 
         result.andExpect(status().isOk())
-                .andExpect(jsonPath("$[1].purchaseName").value(purchaseName))
-                .andExpect(jsonPath("$[1].purchaseAddress").value(purchaseAddress));
+                .andExpect(jsonPath("purchaseName").value(purchaseName))
+                .andExpect(jsonPath("purchaseAddress").value(purchaseAddress));
     }
 
     @Test

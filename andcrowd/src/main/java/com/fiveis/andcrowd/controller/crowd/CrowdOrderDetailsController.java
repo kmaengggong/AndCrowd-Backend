@@ -51,22 +51,15 @@ public class CrowdOrderDetailsController {
     }
 
     @RequestMapping(value = "/{purchaseId}/update", method = {RequestMethod.PUT, RequestMethod.PATCH})
-    public ResponseEntity<String> updateOrder(@RequestBody CrowdOrderDetails updateOrder) {
+    public ResponseEntity<String> updateOrder(@RequestBody CrowdOrderDetailsDTO.Update updateDTO) {
         // 수정 작업 수행
-        crowdOrderDetailsService.update(updateOrder);
+        crowdOrderDetailsService.update(updateDTO);
         return ResponseEntity.ok("주문 정보가 정상적으로 수정되었습니다.");
     }
 
     @RequestMapping(value = "/{purchaseId}")//, method = RequestMethod.DELETE)
     public String deleteOrder(@PathVariable("purchaseId") int purchaseId) {
-//        Optional<CrowdOrderDetailsDTO.FindById> findById = crowdOrderDetailsService.findById(purchaseId);
-//
-//        if (findById.isEmpty()) {
-//            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-//        } else {
-//            crowdOrderDetailsService.deleteById(purchaseId);
-//            return ResponseEntity.ok("주문이 삭제되었습니다.");
-//        }
+        // 소프트 딜리트 구현
         crowdOrderDetailsService.deleteById(purchaseId);
         ResponseEntity.ok("결제내역이 삭제되었습니다.");
         return "redirect:/crowd_order/list";

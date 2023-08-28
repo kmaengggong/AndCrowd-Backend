@@ -46,7 +46,7 @@ class DynamicCrowdSponsorControllerTest {
     void findAllTest() throws Exception {
         // given
         int crowdId = 456;
-        String url = "/456/sponsor/list";
+        String url = "/crowd/456/sponsor/list";
         // when
         final ResultActions resultActions = mockMvc.perform(get(url).accept(MediaType.APPLICATION_JSON));
         // then
@@ -63,7 +63,7 @@ class DynamicCrowdSponsorControllerTest {
         int crowdId = 456;
         int sponsorId = 1;
         int purchaseId = 100;
-        String url = "/456/sponsor/1";
+        String url = "/crowd/456/sponsor/1";
         // when
         final ResultActions resultActions = mockMvc.perform(get(url).accept(MediaType.APPLICATION_JSON));
         // then
@@ -78,8 +78,8 @@ class DynamicCrowdSponsorControllerTest {
         int crowdId = 456;
         int sponsorId = 4;
         int purchaseId = 500;
-        String url = "/456/sponsor";
-        String url2 = "/456/sponsor/list";
+        String url = "/crowd/456/sponsor";
+        String url2 = "/crowd/456/sponsor/list";
 
         DynamicCrowdSponsorDTO.Update newSponsor = DynamicCrowdSponsorDTO.Update.builder()
                 .crowdId(crowdId)
@@ -105,7 +105,7 @@ class DynamicCrowdSponsorControllerTest {
         // given
         int crowdId = 456;
         int sponsorId = 3;
-        String url = "/456/sponsor/3";
+        String url = "/crowd/456/sponsor/3";
         // when
         mockMvc.perform(patch(url).accept(MediaType.TEXT_PLAIN));
         // then

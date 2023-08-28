@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/{crowdId}/reward")
+@RequestMapping("/crowd/{crowdId}/reward")
 public class DynamicCrowdRewardController {
 
     private final DynamicCrowdRewardService dynamicCrowdRewardService;
