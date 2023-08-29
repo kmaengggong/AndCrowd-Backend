@@ -1,16 +1,18 @@
 package com.fiveis.andcrowd.service.crowd;
 
 import com.fiveis.andcrowd.dto.crowd.DynamicCrowdSponsorDTO;
+import com.fiveis.andcrowd.entity.crowd.DynamicCrowdSponsor;
 import com.fiveis.andcrowd.repository.crowd.DynamicCrowdSponsorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class DynamicCrowdSponsorServiceImpl implements DynamicCrowdSponsorService {
 
-    DynamicCrowdSponsorRepository dynamicCrowdSponsorRepository;
+    private final DynamicCrowdSponsorRepository dynamicCrowdSponsorRepository;
 
     @Autowired
     public DynamicCrowdSponsorServiceImpl(DynamicCrowdSponsorRepository dynamicCrowdSponsorRepository){
@@ -18,8 +20,8 @@ public class DynamicCrowdSponsorServiceImpl implements DynamicCrowdSponsorServic
     }
 
     @Override
-    public void createDynamicCrowdSponsorTable(int crowdId) {
-        dynamicCrowdSponsorRepository.createDynamicCrowdSponsorTable(crowdId);
+    public void createDynamicCrowdSponsorTable() {
+        dynamicCrowdSponsorRepository.createDynamicCrowdSponsorTable();
     }
 
     @Override
@@ -49,6 +51,17 @@ public class DynamicCrowdSponsorServiceImpl implements DynamicCrowdSponsorServic
 
     @Override
     public void deleteByCrowdSponsorId(int crowdId, int sponsorId) {
-        dynamicCrowdSponsorRepository.deleteBySponsorId(crowdId, sponsorId);
+        dynamicCrowdSponsorRepository.deleteByCrowdSponsorId(crowdId, sponsorId);
+        DynamicCrowdSponsorDTO.FindById crowdSponsorDTO = dynamicCrowdSponsorRepository.findBySponsorId(crowdId, sponsorId);
+        if (crowdSponsorDTO != null && !crowdSponsorDTO.isDeleted()) {
+            DynamicCrowdSponsorDTO.Update updateDTO = DynamicCrowdSponsorDTO.Update.builder()
+                    .sponsorId(sponsorId)
+                    .crowdId(crowdId)
+                    .isDeleted(true)
+                    .build();
+
+            // Update 메서드를 사용하여 업데이트 수행
+            dynamicCrowdSponsorRepository.update(updateDTO);
+        }
     }
 }

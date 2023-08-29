@@ -90,7 +90,7 @@ public class DynamicCrowdSponsorRepositoryTest {
         int sponsorId = 3;
 
         // when
-        dynamicCrowdSponsorRepository.deleteBySponsorId(crowdId, sponsorId);
+        dynamicCrowdSponsorRepository.deleteByCrowdSponsorId(crowdId, sponsorId);
 
         // then
         DynamicCrowdSponsorDTO.FindById deletedSponsor = dynamicCrowdSponsorRepository.findBySponsorId(crowdId, sponsorId);

@@ -9,15 +9,15 @@ import java.util.List;
 @Mapper
 public interface DynamicCrowdSponsorRepository {
 
-    List<DynamicCrowdSponsorDTO.FindById> findAll(@Param("crowd_id") int crowdId);
-    List<DynamicCrowdSponsorDTO.FindById> findAllNotDeleted(@Param("crowd_id") int crowdId);
-    DynamicCrowdSponsorDTO.FindById findBySponsorId(@Param("crowd_id") int crowdId, @Param("sponsor_id") int sponsorId);
+    List<DynamicCrowdSponsorDTO.FindById> findAll(int crowdId);
+//    List<DynamicCrowdSponsorDTO.FindById> findAllNotDeleted(@Param("crowd_id") int crowdId);
+    DynamicCrowdSponsorDTO.FindById findBySponsorId(@Param("crowdId") int crowdId, @Param("sponsorId") int sponsorId);
 
     void save(DynamicCrowdSponsorDTO.Update dynamicSponsorInsertDTO);
     void update(DynamicCrowdSponsorDTO.Update dynamicSponsorUpdateDTO);
-    void deleteBySponsorId(@Param("crowdId") int crowdId, @Param("sponsorId") int sponsorId);
+    void deleteByCrowdSponsorId(@Param("crowdId") int crowdId, @Param("sponsorId") int sponsorId);
 
-    void createDynamicCrowdSponsorTable(@Param("crowd_id") int crowdId);
+    void createDynamicCrowdSponsorTable();
     void testCreateDynamicCrowdSponsorTable();
     void dropCrowdSponsorTable();
     void insertTestData();
