@@ -13,6 +13,8 @@ public interface DynamicCrowdBoardRepository {
 
     List<DynamicCrowdBoardDTO.Find> findAll(int crowdId);
 
+    List<DynamicCrowdBoardDTO.Find> findAllByIsDeletedFalse(int crowdId);
+
     DynamicCrowdBoardDTO.Find findById(@Param("crowdId") int crowdId, @Param("crowdBoardId") int crowdBoardId);
 
     void deleteByCrowdBoardId(/*Map<String, Integer> params*/@Param("crowdId") int crowdId, @Param("crowdBoardId") int crowdBoardId);

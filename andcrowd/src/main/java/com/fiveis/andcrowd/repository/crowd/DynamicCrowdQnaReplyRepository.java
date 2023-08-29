@@ -3,6 +3,7 @@ package com.fiveis.andcrowd.repository.crowd;
 import com.fiveis.andcrowd.dto.crowd.DynamicCrowdQnaReplyDTO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.security.core.parameters.P;
 
 import java.util.List;
 
@@ -11,6 +12,8 @@ public interface DynamicCrowdQnaReplyRepository {
     void createDynamicCrowdQnaReplyTable(@Param("crowdId") int crowdId);
 
     List<DynamicCrowdQnaReplyDTO.Find> findAll(@Param("crowdId") int crowdId, @Param("crowdQnaId") int crowdQnaId);
+
+    List<DynamicCrowdQnaReplyDTO.Find> findAllByIsDeletedFalse(@Param("crowdId") int crowdId, @Param("crowdQnaId") int crowdQnaId);
 
     DynamicCrowdQnaReplyDTO.Find findById(@Param("crowdId") int crowdId, @Param("qnaReplyId") int qnaReplyId);
 

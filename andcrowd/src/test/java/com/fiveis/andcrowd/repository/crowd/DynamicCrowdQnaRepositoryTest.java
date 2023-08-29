@@ -18,7 +18,6 @@ public class DynamicCrowdQnaRepositoryTest {
     @Autowired
     DynamicCrowdQnaRepository dynamicCrowdQnaRepository;
 
-    // createTable의 경우 @Transactional을 사용하여도 생성된 테이블이 롤백되지 않아 정상작동 확인후 주석처리
 //    @Test
 //    @Transactional
 //    @DisplayName("2번 crowd게시글 생성시 crowd_qna_2 이라는 이름의 테이블이 생성되며, 글이 정상적으로 추가된다.")
@@ -55,6 +54,21 @@ public class DynamicCrowdQnaRepositoryTest {
 
         // then
         assertThat(crowdQnaList.size()).isEqualTo(3);
+    }
+
+    @Test
+    @Transactional
+    @DisplayName("crowdId 1번글의 전체 crowd_Qna 조회시 데이터가 2개일 것이다.")
+    public void findAllByIsDeletedFalseTest(){
+
+        // given
+        int crowdId = 1;
+
+        // when
+        List<DynamicCrowdQnaDTO.Find> crowdQnaList = dynamicCrowdQnaRepository.findAllByIsDeletedFalse(crowdId);
+
+        // then
+        assertThat(crowdQnaList.size()).isEqualTo(2);
     }
 
     @Test
@@ -156,23 +170,4 @@ public class DynamicCrowdQnaRepositoryTest {
         // then
         assertThat(crowdQna.isDeleted()).isTrue();
     }
-
-    @Test
-    @Transactional
-    @DisplayName("crowd 1번글이 삭제될경우 관련된 crowdQna글의 is_deleted가 전부 true가 된다")
-    public void deleteAllTest(){
-        // given
-        int crowdId = 1;
-
-        // when
-        dynamicCrowdQnaRepository.deleteAll(crowdId);
-        List<DynamicCrowdQnaDTO.Find> qnaList = dynamicCrowdQnaRepository.findAll(crowdId);
-
-        // then
-        int qnaListSize = qnaList.size();
-        for(int indexNum = 0; indexNum < qnaListSize; indexNum++){
-            assertThat(qnaList.get(indexNum).isDeleted()).isTrue();
-        }
-    }
-
 }

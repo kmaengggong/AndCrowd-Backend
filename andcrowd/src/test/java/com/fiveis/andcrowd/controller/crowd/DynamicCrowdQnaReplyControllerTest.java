@@ -40,10 +40,31 @@ public class DynamicCrowdQnaReplyControllerTest {
         this.mockMvc = MockMvcBuilders.webAppContextSetup(context).build();
     }
 
+
+//    findAll 기능 제외로 인한 주석처리
+//    @Test
+//    @Transactional
+//    @DisplayName("crowd 1번글의 Qna 1번글의 전체 reply 조회시 2번요소의 데이터와 given의 데이터가 일치할것이다.")
+//    void findAll() throws Exception {
+//        // given
+//        int crowdId = 1;
+//        int crowdQnaId = 1;
+//        String content = "3번댓글";
+//        String url = "/crowd/1/qna/1/qnareply/all";
+//
+//        // when
+//        final ResultActions result = mockMvc.perform(get(url).accept(MediaType.APPLICATION_JSON));
+//
+//        result
+//                .andExpect(status().isOk())
+//                .andExpect(jsonPath("$[2].crowdQnaId").value(crowdQnaId))
+//                .andExpect(jsonPath("$[2].qnaReplyContent").value(content));
+//    }`
+
     @Test
     @Transactional
     @DisplayName("crowd 1번글의 Qna 1번글의 전체 reply 조회시 2번요소의 데이터와 given의 데이터가 일치할것이다.")
-    void findAll() throws Exception {
+    void findAllfindAllByIsDeletedFalseTest() throws Exception {
         // given
         int crowdId = 1;
         int crowdQnaId = 1;
@@ -55,8 +76,8 @@ public class DynamicCrowdQnaReplyControllerTest {
 
         result
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$[2].crowdQnaId").value(crowdQnaId))
-                .andExpect(jsonPath("$[2].qnaReplyContent").value(content));
+                .andExpect(jsonPath("$[1].crowdQnaId").value(crowdQnaId))
+                .andExpect(jsonPath("$[1].qnaReplyContent").value(content));
     }
 
     @Test
