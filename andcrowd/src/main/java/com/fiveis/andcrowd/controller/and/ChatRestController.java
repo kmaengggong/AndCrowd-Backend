@@ -1,0 +1,32 @@
+package com.fiveis.andcrowd.controller.and;
+
+import com.fiveis.andcrowd.dto.and.ChatMessageDTO;
+import com.fiveis.andcrowd.dto.and.Response;
+import com.fiveis.andcrowd.service.and.ChatService;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RequiredArgsConstructor
+@RequestMapping("/and/message")
+@RestController
+@Slf4j
+public class ChatRestController {
+    private final ChatService chatService;
+
+    @PostMapping()
+    public void addChat(@RequestBody ChatMessageDTO chatMessageDTO){
+        log.info(chatMessageDTO.getMessage()+" "+chatMessageDTO.getSenderName());
+        chatService.addChat(chatMessageDTO);
+    }
+
+    @GetMapping("/{roomId}")
+    public List<ChatMessageDTO> listChat(@PathVariable Long roomId){
+        log.info("roomId : " + roomId);
+        List<ChatMessageDTO> list = chatService.listChat(roomId);
+        return list;
+    }
+
+}
