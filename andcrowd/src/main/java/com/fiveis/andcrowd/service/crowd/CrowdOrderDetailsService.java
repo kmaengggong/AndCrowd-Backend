@@ -11,7 +11,13 @@ import java.util.Optional;
 public interface CrowdOrderDetailsService {
 
    List<CrowdOrderDetailsDTO.FindById> findAll();//int crowdId);
-   Optional<CrowdOrderDetailsDTO.FindById> findById(int crowdId);
+
+   // 해당 로직은 단일 객체만 불러오는 기능으로 결제내역 단일건에 대한 조회로 PK를 파라미터로 사용
+   Optional<CrowdOrderDetailsDTO.FindById> findById(int purchaseId);
+
+   // 특정 crowd글의 결재내역을 조회할수 있는 기능 추가
+   List<CrowdOrderDetailsDTO.FindById> findAllByCrowdId(int crowdId);
+
    void save(CrowdOrderDetails crowdOrderDetails);
    void update(CrowdOrderDetailsDTO.Update updateDTO);
    void deleteById(int purchaseId);
