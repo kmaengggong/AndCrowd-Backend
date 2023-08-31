@@ -41,6 +41,10 @@ public class AdPayment  {
         this.expiredAt = expiredAt;
     }
 
+    public void setPurchasedAt(LocalDateTime purchasedAt){
+        this.purchasedAt = purchasedAt;
+    }
+
     public void setAdPaymentStatus(int adPaymentStatus) {
         this.adPaymentStatus = adPaymentStatus;
     }

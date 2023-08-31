@@ -42,7 +42,8 @@ public class AdControllerTest {
 
     @BeforeEach
     public void setMockMvc(){
-        this.mockMvc = MockMvcBuilders.webAppContextSetup(context).build();
+        this.mockMvc = MockMvcBuilders.webAppContextSetup(context)
+                .build();
     }
 
     @Test
