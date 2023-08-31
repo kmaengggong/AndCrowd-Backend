@@ -51,6 +51,8 @@ dependencies {
 	implementation 'org.webjars:sockjs-client:1.5.1'
 	// stomp
 	implementation 'org.webjars:stomp-websocket:2.3.4'
+	// aws s3
+	implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE'
 }
 
 tasks.named('test') {

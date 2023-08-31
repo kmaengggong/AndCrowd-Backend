@@ -24,6 +24,10 @@ public class ChatMessageDTO {
     private List<String> userList;
     private Status status;
 
+    private String s3DataUrl; // 파일 업로드 url
+    private String fileName; // 파일이름
+    private String fileDir; // s3 파일 경로
+
     public Chat toChat(ChatRoom chatRoom){
         return Chat.builder().message(message)
                 .senderName(senderName)
@@ -31,6 +35,9 @@ public class ChatMessageDTO {
                 .publishedAt(publishedAt)
                 .roomId(roomId)
                 .status(status)
+                .fileName(fileName)
+                .s3DataUrl(s3DataUrl)
+                .fileDir(fileDir)
                 .build();
 
     }

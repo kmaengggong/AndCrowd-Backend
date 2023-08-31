@@ -43,6 +43,9 @@ public class ChatService {
                     .receiverName(chat.getReceiverName())
                     .publishedAt(chat.getPublishedAt())
                     .status(chat.getStatus())
+                    .fileName(chat.getFileName())
+                    .s3DataUrl(chat.getS3DataUrl())
+                    .fileDir(chat.getFileDir())
                     .build();
             list.add(chatMessageDTO);
         }
