@@ -23,6 +23,23 @@ public class InfoBoardDTO {
         private boolean isDeleted;
     }
 
+    @Getter
+    @Setter
+    @Builder
+    @ToString
+    @AllArgsConstructor
+    @NoArgsConstructor
+    public static class Update {
+        private int infoId;
+        private int userId;
+        private boolean infoType;
+        private String infoTitle;
+        private String infoContent;
+        private LocalDateTime publishedAt;
+        private LocalDateTime updatedAt;
+        private boolean isDeleted;
+    }
+
     public static InfoBoardDTO.Find convertToInfoFindDTO(InfoBoard infoBoard) {
         InfoBoardDTO.Find convertedDTO = Find.builder()
                 .infoId(infoBoard.getInfoId())

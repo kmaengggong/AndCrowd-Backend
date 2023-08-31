@@ -43,8 +43,9 @@ public class InfoBoard {
 
     @PrePersist
     public void setDefaultValue() {
-        this.publishedAt = publishedAt;
-        this.updatedAt = updatedAt;
+        this.publishedAt = LocalDateTime.now();
+        this.updatedAt = LocalDateTime.now();
+        this.isDeleted = false;
     }
 
     public void setDeleted(boolean deleted) {

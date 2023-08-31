@@ -3,9 +3,11 @@ package com.fiveis.andcrowd.service.etc;
 import com.fiveis.andcrowd.dto.etc.InfoBoardDTO;
 import com.fiveis.andcrowd.entity.etc.InfoBoard;
 import com.fiveis.andcrowd.repository.etc.InfoBoardJPARepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -52,7 +54,16 @@ public class InfoBoardServiceImpl implements InfoBoardService{
 
     @Override
     public void save(InfoBoard infoBoard) {
-        infoBoardJPARepository.save(infoBoard);
+        Optional<InfoBoard> infoBoardOptional = infoBoardJPARepository.findById(infoBoard.getInfoId());
+        if(infoBoardOptional.isPresent()) {
+            InfoBoard updateInfo = infoBoardOptional.get();
+            updateInfo.setInfoTitle(infoBoard.getInfoTitle());
+            updateInfo.setInfoContent(infoBoard.getInfoContent());
+            updateInfo.setUpdatedAt(LocalDateTime.now());
+            infoBoardJPARepository.save(updateInfo);
+        } else {
+            throw new EntityNotFoundException("존재하지않는 게시글 입니다.");
+        }
     }
 
     @Override

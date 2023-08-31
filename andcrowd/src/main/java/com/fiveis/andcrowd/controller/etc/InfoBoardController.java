@@ -38,10 +38,10 @@ public class InfoBoardController {
         }
     }// 특정 infoId의 상세글 조회
 
-    @PostMapping("/create")
+    @RequestMapping(value = "/create", method = RequestMethod.POST)
     public ResponseEntity<String> createInfoBoard(@RequestBody InfoBoard infoBoard) {
         infoBoardService.save(infoBoard);
-        return ResponseEntity.ok("공지글이 등록되었습니다.");
+        return ResponseEntity.ok("공지글이 정상적으로 등록되었습니다.");
     } // 공지글 업로드
 
     @RequestMapping(value = "/{infoId}/update", method = {RequestMethod.PUT, RequestMethod.PATCH})
