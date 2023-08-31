@@ -2,12 +2,16 @@ package com.fiveis.andcrowd.service.crowd;
 
 import com.fiveis.andcrowd.dto.crowd.CrowdOrderDetailsDTO;
 import com.fiveis.andcrowd.entity.crowd.CrowdOrderDetails;
+import com.fiveis.andcrowd.entity.user.DynamicUserOrder;
+import com.fiveis.andcrowd.entity.user.User;
 import com.fiveis.andcrowd.repository.crowd.CrowdOrderDetailsJPARepository;
+import com.fiveis.andcrowd.repository.user.DynamicUserOrderRepository;
+import com.fiveis.andcrowd.repository.user.UserJPARepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -16,10 +20,16 @@ import java.util.stream.Collectors;
 public class CrowdOrderDetailsServiceImpl implements CrowdOrderDetailsService{
 
     CrowdOrderDetailsJPARepository crowdOrderDetailsJPARepository;
+    DynamicUserOrderRepository dynamicUserOrderRepository;
+    UserJPARepository userJPARepository;
 
     @Autowired
-    public CrowdOrderDetailsServiceImpl(CrowdOrderDetailsJPARepository crowdOrderDetailsJPARepository){
+    public CrowdOrderDetailsServiceImpl(CrowdOrderDetailsJPARepository crowdOrderDetailsJPARepository,
+                                        DynamicUserOrderRepository dynamicUserOrderRepository,
+                                        UserJPARepository userJPARepository){
         this.crowdOrderDetailsJPARepository = crowdOrderDetailsJPARepository;
+        this.dynamicUserOrderRepository = dynamicUserOrderRepository;
+        this.userJPARepository = userJPARepository;
     }
 
     @Override
@@ -36,9 +46,43 @@ public class CrowdOrderDetailsServiceImpl implements CrowdOrderDetailsService{
         return crowdOrderDetailsOptional.map(this::convertToFindByIdDTO);
     } // 특정 주문을 ID로 조회하는 메서드
 
+    // crowdId를 기준으로 조회하는 메서드
     @Override
+    public List<CrowdOrderDetailsDTO.FindById> findAllByCrowdId(int crowdId){
+        List<CrowdOrderDetails> orderListByCrowdId = crowdOrderDetailsJPARepository.findAllByCrowdId(crowdId);
+        return orderListByCrowdId.stream()
+                .map(this::convertToFindByIdDTO)
+                .collect(Collectors.toList());
+    }
+
+
+    //
+    @Override
+    @Transactional
     public void save(CrowdOrderDetails crowdOrderDetails) {
+        // 현재시간 입력
+        crowdOrderDetails.setPurchaseDate(LocalDateTime.now());
         CrowdOrderDetails insertOrder = crowdOrderDetailsJPARepository.save(crowdOrderDetails);
+        // 추가된 결제내역 유저별 주문 테이블에 적재
+        // 전체 주문내역을 가져온후
+        List<CrowdOrderDetails> orderList = crowdOrderDetailsJPARepository.findAll();
+        // 가장 첫번째 인덱스 번호 저장
+        CrowdOrderDetails newOrder = orderList.get(0);
+        // 주문내역에 저장된 userId를 가져옴
+        int orderUserId = newOrder.getUserId();
+        // 클라이언트에서 보낸 유저Id와 첫번째 인덱스에서 가져온 유저 아이디 비교후
+        // 해당 유저 주문내역 테이블에 데이터 적재
+        if(orderUserId == insertOrder.getUserId()){
+            // 주문내역의 유저 Id로 유저 정보 불러옴
+            Optional<User> orderUser = userJPARepository.findByUserId(orderUserId);
+            // 유저 정보에서 email 추출후 테이블명으로 들어가도록 변환
+            String userEmail = User.toTableName(orderUser.get().getUserEmail());
+            // newUserOrder 객체에 주문Id 적재
+            DynamicUserOrder newUserOrder = DynamicUserOrder.builder()
+                    .orderId(newOrder.getPurchaseId())
+                    .build();
+            dynamicUserOrderRepository.save(userEmail, newUserOrder);
+        }
     } // 주문내역 저장 메서드
 
     @Override

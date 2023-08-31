@@ -3,28 +3,25 @@ package com.fiveis.andcrowd.controller.crowd;
 import com.fiveis.andcrowd.dto.crowd.CrowdOrderDetailsDTO;
 import com.fiveis.andcrowd.entity.crowd.CrowdOrderDetails;
 import com.fiveis.andcrowd.service.crowd.CrowdOrderDetailsService;
-import nonapi.io.github.classgraph.json.JSONUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
 
 @Controller
+@CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/crowd_order")
 public class CrowdOrderDetailsController {
 
     private final CrowdOrderDetailsService crowdOrderDetailsService;
 
     @Autowired
-    public CrowdOrderDetailsController(CrowdOrderDetailsService orderDetailsService) {
-        this.crowdOrderDetailsService = orderDetailsService;
+    public CrowdOrderDetailsController(CrowdOrderDetailsService crowdOrderDetailsService) {
+        this.crowdOrderDetailsService = crowdOrderDetailsService;
     }
 
     @RequestMapping(value = "/list", method = RequestMethod.GET) // 관리자 권한 전체 조회 // 일반 유저는 조회 불가

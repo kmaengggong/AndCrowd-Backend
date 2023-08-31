@@ -1,7 +1,11 @@
 package com.fiveis.andcrowd.service.crowd;
 
 import com.fiveis.andcrowd.dto.crowd.CrowdOrderDetailsDTO;
+import com.fiveis.andcrowd.dto.user.UserDTO;
 import com.fiveis.andcrowd.entity.crowd.CrowdOrderDetails;
+import com.fiveis.andcrowd.entity.user.User;
+import com.fiveis.andcrowd.service.user.DynamicUserOrderService;
+import com.fiveis.andcrowd.service.user.UserService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +17,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
@@ -21,6 +26,10 @@ public class CrowdOrderDetailsServiceTest {
     CrowdOrderDetailsService crowdOrderDetailsService;
     @Autowired
     CrowdService crowdService;
+    @Autowired
+    DynamicUserOrderService dynamicUserOrderService;
+    @Autowired
+    UserService userService;
 
     @Test
     @Transactional
@@ -47,52 +56,39 @@ public class CrowdOrderDetailsServiceTest {
 
     @Test
     @Transactional
-    @DisplayName("crowd 3번글의 후원결제시 3번글의 결제내역은 총 2개")
+    @DisplayName("1번 유저가 crowd 3번글의 후원결제시 3번글의 결제내역은 총 2개" +
+            "이며, 해당 유저의 결제내역에 결제한 내역이 저장된다.")
     public void saveTest() {
         // given
-        int purchaseId = 4;
         int crowdId = 3;
-        String purchaseAddress = "광주광역시 북구";
-        LocalDateTime purchaseDate = LocalDateTime.now();
-        String purchaseName = "김부트";
-        String purchasePhone = "01012345678";
+        String purchaseAddress = "서울시";
+        String purchaseName = "조승연";
+        String purchasePhone = "010-0101-0101";
+        String purchaseStatus = "결제완료";
         int rewardId = 1;
-        int sponsorId = 4;
-        int userId = 4;
-        String purchaseStatus = "결제대기";
+        int userId = 1;
+
         CrowdOrderDetails saveList = CrowdOrderDetails.builder()
-                .purchaseId(purchaseId)
                 .crowdId(crowdId)
                 .purchaseAddress(purchaseAddress)
-                .purchaseDate(purchaseDate)
                 .purchaseName(purchaseName)
                 .purchasePhone(purchasePhone)
-                .rewardId(rewardId)
-                .sponsorId(sponsorId)
-                .userId(userId)
                 .purchaseStatus(purchaseStatus)
+                .rewardId(rewardId)
+                .userId(userId)
                 .build();
 
         // when
         crowdOrderDetailsService.save(saveList);
-//        System.out.println(saveList);
-//        CrowdOrderDetailsDTO.FindById findById = crowdOrderDetailsService.findById(crowdId);
-//        System.out.println(findById);
-        List<CrowdOrderDetailsDTO.FindById> crowdOrders = crowdOrderDetailsService.findAll();
-        List<CrowdOrderDetailsDTO.FindById> filteredOrders = crowdOrders.stream()
-                .filter(order -> order.getCrowdId() == crowdId)
-                .collect(Collectors.toList());
 
-//        List<CrowdOrderDetailsDTO.FindById> filteredOrders = new ArrayList<>();
-//        for (CrowdOrderDetailsDTO.FindById order : crowdOrders) {
-//            if (order.getCrowdId() == 3) {
-//                filteredOrders.add(order);
-//            }
-//        }
-        System.out.println(filteredOrders);
+        List<CrowdOrderDetailsDTO.FindById> crowdOrderList = crowdOrderDetailsService.findAllByCrowdId(crowdId);
+        UserDTO.FindAsAdmin user = userService.findById(userId);
+        String userEmail = user.getUserEmail().replace('@', '_').replace('.', '_');
+        List<CrowdOrderDetailsDTO.FindById> userOrder = dynamicUserOrderService.findAll(userEmail);
 
         // then
-        assertEquals(2, filteredOrders.size());
+        assertThat(crowdOrderList.size()).isEqualTo(2);
+        assertThat(userOrder.get(0).getUserId()).isEqualTo(userId);
     }
 
 //    private boolean checkTableExists(String tableName) {

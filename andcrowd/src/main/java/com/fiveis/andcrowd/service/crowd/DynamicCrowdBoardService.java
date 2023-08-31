@@ -2,9 +2,11 @@ package com.fiveis.andcrowd.service.crowd;
 
 import com.fiveis.andcrowd.dto.crowd.DynamicCrowdBoardDTO;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public interface DynamicCrowdBoardService {
     void createDynamicCrowdBoardTable(@Param("crowdId") int crowdId);
 
