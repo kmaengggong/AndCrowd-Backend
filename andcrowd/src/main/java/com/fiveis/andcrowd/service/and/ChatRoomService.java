@@ -3,6 +3,7 @@ package com.fiveis.andcrowd.service.and;
 import com.fiveis.andcrowd.dto.and.ChatRoomDTO;
 import com.fiveis.andcrowd.dto.and.DynamicAndMemberDTO;
 import com.fiveis.andcrowd.dto.user.DynamicUserAndDTO;
+import com.fiveis.andcrowd.dto.user.UserDTO;
 import com.fiveis.andcrowd.entity.and.And;
 import com.fiveis.andcrowd.entity.and.ChatRoom;
 import com.fiveis.andcrowd.entity.user.User;
@@ -36,6 +37,14 @@ public class ChatRoomService {
         List<ChatRoom> result = chatRoomRepository.findAll();
         List<ChatRoomDTO> list =  ChatRoomDTO.createList(result);
         return list;
+    }
+
+    public void updateChatRoomName(Long roomId, String newName) {
+        ChatRoom chatRoom = chatRoomRepository.findByRoomId(roomId)
+                .orElseThrow(() -> new EntityNotFoundException("Chat room not found with id: " + roomId));
+
+        chatRoom.setName(newName);
+        chatRoomRepository.save(chatRoom);
     }
 
     // 사용자의 이름을 받아 해당 사용자가 속한 채팅방 리스트를 조회
@@ -75,18 +84,23 @@ public class ChatRoomService {
         Optional<And> and = andRepository.findById(andId);
         ChatRoom andChatRoom = new ChatRoom();
         andChatRoom.setName("Chat Room for " + and.get().getAndTitle());
+        andChatRoom.setAndId(andId);
         chatRoomRepository.save(andChatRoom);
     }
 
-    public List<User> chatMember(Long roomId) {
+    public List<UserDTO.UserInfo> chatMember(Long roomId) {
         Optional<ChatRoom> chatRoom = chatRoomRepository.findByRoomId(roomId);
         int andId = chatRoom.get().getAndId();
         List<DynamicAndMemberDTO.FindByAndMemberId> andMemberList = memberRepository.findAll(andId);
+        System.out.println("andMemberList: " + andMemberList);
 
-        List<User> chatMember = andMemberList.stream()
+        List<UserDTO.UserInfo> chatMember = andMemberList.stream()
                 .map(dynamicAndMember -> userRepository.findById(dynamicAndMember.getUserId())
                         .orElseThrow(() -> new EntityNotFoundException("User not found with userId: " + dynamicAndMember.getUserId())))
+                .map(user -> new UserDTO.UserInfo(user.getUserId(), user.getUserKorName(), user.getUserNickname()))
+                .distinct() // 중복 제거
                 .collect(Collectors.toList());
+        System.out.println("chatMember: " + chatMember);
 
         return chatMember;
     }

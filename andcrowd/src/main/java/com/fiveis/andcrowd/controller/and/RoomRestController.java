@@ -1,6 +1,7 @@
 package com.fiveis.andcrowd.controller.and;
 
 import com.fiveis.andcrowd.dto.and.DynamicAndMemberDTO;
+import com.fiveis.andcrowd.dto.user.UserDTO;
 import com.fiveis.andcrowd.entity.and.And;
 import com.fiveis.andcrowd.entity.and.ChatRoom;
 import com.fiveis.andcrowd.entity.user.User;
@@ -12,6 +13,7 @@ import com.fiveis.andcrowd.repository.and.DynamicAndMemberRepository;
 import com.fiveis.andcrowd.repository.user.UserJPARepository;
 import com.fiveis.andcrowd.service.and.ChatRoomService;
 import com.fiveis.andcrowd.service.and.ChatService;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.ResponseEntity;
@@ -79,6 +81,21 @@ public class RoomRestController {
         }
 
         return ResponseEntity.ok(response);
+    }
+
+    @PutMapping("/{andId}/chat/room/{roomId}/name-update")
+    public ResponseEntity<String> updateChatRoomName(
+            @PathVariable Long roomId,
+            @RequestBody String newName
+    ) {
+        chatRoomService.updateChatRoomName(roomId, newName);
+        return ResponseEntity.ok("Chat room name updated successfully.");
+    }
+
+    @GetMapping("{andId}/chat/{roomId}/member")
+    public List<UserDTO.UserInfo> chatMember(@PathVariable Long roomId) {
+        List<UserDTO.UserInfo> chatMember = chatRoomService.chatMember(roomId);
+        return chatMember;
     }
 
 }
