@@ -12,7 +12,7 @@ import java.util.List;
 @CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/crowd/{crowdId}/qna/{crowdQnaId}/qnareply")
 public class DynamicCrowdQnaReplyController {
-    private DynamicCrowdQnaReplyService dynamicCrowdQnaReplyService;
+    private final DynamicCrowdQnaReplyService dynamicCrowdQnaReplyService;
 
     @Autowired
     public DynamicCrowdQnaReplyController(DynamicCrowdQnaReplyService dynamicCrowdQnaReplyService){

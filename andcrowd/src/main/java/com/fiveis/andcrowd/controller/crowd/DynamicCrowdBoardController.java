@@ -13,7 +13,7 @@ import java.util.List;
 @RequestMapping("/crowd/{crowdId}/board")
 public class DynamicCrowdBoardController {
 
-    private DynamicCrowdBoardService dynamicCrowdBoardService;
+    private final DynamicCrowdBoardService dynamicCrowdBoardService;
 
     @Autowired
     public DynamicCrowdBoardController(DynamicCrowdBoardService dynamicCrowdBoardService){

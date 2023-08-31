@@ -14,7 +14,7 @@ import java.util.List;
 @RequestMapping("/crowd/{crowdId}/qna")
 public class DynamicCrowdQnaController {
 
-    private DynamicCrowdQnaService dynamicCrowdQnaService;
+    private final DynamicCrowdQnaService dynamicCrowdQnaService;
 
     @Autowired
     public DynamicCrowdQnaController(DynamicCrowdQnaService dynamicCrowdQnaService){
