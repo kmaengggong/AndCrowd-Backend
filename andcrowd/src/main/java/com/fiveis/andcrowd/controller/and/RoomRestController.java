@@ -47,7 +47,6 @@ public class RoomRestController {
     @RequestMapping(value="/chat/rooms/{nickname}", method = RequestMethod.GET)
     public List<ChatRoom> getChatRooms(@PathVariable("nickname") String nickname) {
         List<ChatRoom> chatRoomList = chatRoomService.findByUserNickname(nickname);
-//        System.out.println(chatRoomList);
         return chatRoomList;
     }
 

@@ -31,21 +31,6 @@ public class ChatService {
     }
 
 
-    private ChatRoom findOrCreateChatRoom(Long roomId) {
-        Optional<ChatRoom> existingChatRoom = chatRoomRepository.findByRoomId(roomId);
-
-        if (existingChatRoom.isPresent()) {
-            return existingChatRoom.get();
-        } else {
-            // ChatRoom이 없으면 새로 생성
-            ChatRoom newChatRoom = ChatRoom.builder()
-                    .roomId(roomId)
-                    .build();
-            return chatRoomRepository.save(newChatRoom);
-        }
-    }
-
-
     public List<ChatMessageDTO> listChat(Long roomId){
         ChatRoom chatRoom = chatRoomRepository.findByRoomId(roomId).orElseThrow(()->new AppException(ErrorCode.DB_ERROR,""));
         List<Chat> chats = chatRepository.findByRoomId(roomId);

@@ -1,17 +1,19 @@
 package com.fiveis.andcrowd.controller.and;
 
-import com.fiveis.andcrowd.controller.and.model.Message;
 import com.fiveis.andcrowd.controller.and.model.Status;
 import com.fiveis.andcrowd.dto.and.ChatMessageDTO;
 import com.fiveis.andcrowd.entity.and.Chat;
 import com.fiveis.andcrowd.service.and.ChatService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.event.EventListener;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
-import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
+import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.socket.messaging.SessionDisconnectEvent;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -26,34 +28,34 @@ public class StompChatController {
     private final ChatService chatService;
 
     @MessageMapping(value = "/chat/enter")
-    public void enter(ChatMessageDTO message){
+    public void enter(@Payload ChatMessageDTO message){
         List<String> liveUser = new ArrayList<>();
-        message.setMessage(message.getSenderName() + "님이 채팅방에 참여하였습니다.");
-
-        map.put(message.getSenderName(),message.getRoomId());
-        for(Map.Entry<String, Long> entry : map.entrySet()){
-            if(entry.getValue().equals(message.getRoomId()) ){
+        map.put(message.getSenderName(), message.getRoomId());
+        for (Map.Entry<String, Long> entry : map.entrySet()) {
+            if (entry.getValue().equals(message.getRoomId())) {
                 liveUser.add(entry.getKey());
             }
         }
         message.setUserList(liveUser);
+        message.setMessage(message.getSenderName() + "님이 채팅방에 참여하였습니다.");
         message.setStatus(Status.JOIN);
+        message.setPublishedAt(LocalDateTime.now());
         simpMessagingTemplate.convertAndSend("/sub/chat/room/" + message.getRoomId(), message);
     }
 
     @MessageMapping(value = "/chat/out")
-    public void out(ChatMessageDTO message){
-        message.setMessage(message.getSenderName() + "님이 채팅방에 나가셨습니다.");
-
+    public void out(@Payload ChatMessageDTO message){
         List<String> liveUser = new ArrayList<>();
         map.remove(message.getSenderName());
-        for(Map.Entry<String, Long> entry : map.entrySet()){
-            if(entry.getValue().equals(message.getRoomId()) ){
+        for (Map.Entry<String, Long> entry : map.entrySet()) {
+            if (entry.getValue().equals(message.getRoomId())) {
                 liveUser.add(entry.getKey());
             }
         }
         message.setUserList(liveUser);
+        message.setMessage(message.getSenderName() + "님이 채팅방에 나가셨습니다.");
         message.setStatus(Status.LEAVE);
+        message.setPublishedAt(LocalDateTime.now());
         simpMessagingTemplate.convertAndSend("/sub/chat/room/" + message.getRoomId(), message);
     }
 
@@ -67,10 +69,27 @@ public class StompChatController {
         simpMessagingTemplate.convertAndSend("/sub/chat/room/" + message.getRoomId(), message);
     }
 
-    @MessageMapping("private-message")
-    public Message receivePrivateMessage(@Payload Message message){
+//    @MessageMapping("private-message")
+//    public Message receivePrivateMessage(@Payload Message message){
+//
+//        simpMessagingTemplate.convertAndSendToUser(message.getReceiverName(), "/private", message); // /user/David/private
+//        return message;
+//    }
 
-        simpMessagingTemplate.convertAndSendToUser(message.getReceiverName(), "/private", message); // /user/David/private
-        return message;
+    @EventListener
+    public void handleWebSocketDisconnectListener(SessionDisconnectEvent event) {
+        StompHeaderAccessor headerAccessor = StompHeaderAccessor.wrap(event.getMessage());
+        String senderName = (String) headerAccessor.getSessionAttributes().get("senderName");
+        Long roomId = (Long) headerAccessor.getSessionAttributes().get("roomId");
+
+        if (senderName != null) {
+            map.remove(senderName);
+            ChatMessageDTO leaveMessage = new ChatMessageDTO();
+            leaveMessage.setSenderName(senderName);
+            leaveMessage.setRoomId(roomId);
+            leaveMessage.setStatus(Status.LEAVE);
+            simpMessagingTemplate.convertAndSend("/sub/chat/room/" + roomId, leaveMessage);
+        }
     }
+
 }

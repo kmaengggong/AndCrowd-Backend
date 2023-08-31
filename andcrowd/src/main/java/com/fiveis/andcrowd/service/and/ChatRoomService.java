@@ -39,13 +39,12 @@ public class ChatRoomService {
         return list;
     }
 
-    public void updateChatRoomName(Long roomId, String newName) {
-        ChatRoom chatRoom = chatRoomRepository.findByRoomId(roomId)
-                .orElseThrow(() -> new EntityNotFoundException("Chat room not found with id: " + roomId));
-
-        chatRoom.setName(newName);
-        chatRoomRepository.save(chatRoom);
+    // 채팅방 ID로 채팅방 조회
+    public ChatRoom findRoomById(Long id){
+        ChatRoom chatRoom = chatRoomRepository.findByRoomId(id).orElseThrow(()->new AppException(ErrorCode.DB_ERROR,""));
+        return chatRoom;
     }
+
 
     // 사용자의 이름을 받아 해당 사용자가 속한 채팅방 리스트를 조회
     public List<ChatRoom> findByUserNickname(String userNickname){
@@ -73,12 +72,6 @@ public class ChatRoomService {
         return chatRoomRepository.findByAndId(andId);
     }
 
-    // 채팅방 ID로 채팅방 조회
-    public ChatRoom findRoomById(Long id){
-        ChatRoom chatRoom = chatRoomRepository.findByRoomId(id).orElseThrow(()->new AppException(ErrorCode.DB_ERROR,""));
-        return chatRoom;
-    }
-
 
     public void createAndChatroom(int andId) {
         Optional<And> and = andRepository.findById(andId);
@@ -86,6 +79,14 @@ public class ChatRoomService {
         andChatRoom.setName("Chat Room for " + and.get().getAndTitle());
         andChatRoom.setAndId(andId);
         chatRoomRepository.save(andChatRoom);
+    }
+
+    public void updateChatRoomName(Long roomId, String newName) {
+        ChatRoom chatRoom = chatRoomRepository.findByRoomId(roomId)
+                .orElseThrow(() -> new EntityNotFoundException("Chat room not found with id: " + roomId));
+
+        chatRoom.setName(newName);
+        chatRoomRepository.save(chatRoom);
     }
 
     public List<UserDTO.UserInfo> chatMember(Long roomId) {
