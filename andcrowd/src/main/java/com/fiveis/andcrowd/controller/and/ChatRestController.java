@@ -29,4 +29,10 @@ public class ChatRestController {
         return list;
     }
 
+    @GetMapping("/{roomId}/private/{sender}/{receiver}")
+    public List<ChatMessageDTO> privateChatList (@PathVariable Long roomId, @PathVariable String sender, @PathVariable String receiver){
+        List<ChatMessageDTO> list = chatService.privateChatList(roomId, sender, receiver);
+        return list;
+    }
+
 }

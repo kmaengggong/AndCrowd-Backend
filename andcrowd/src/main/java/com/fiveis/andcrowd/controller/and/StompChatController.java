@@ -69,12 +69,12 @@ public class StompChatController {
         simpMessagingTemplate.convertAndSend("/sub/chat/room/" + message.getRoomId(), message);
     }
 
-//    @MessageMapping("private-message")
-//    public Message receivePrivateMessage(@Payload Message message){
-//
-//        simpMessagingTemplate.convertAndSendToUser(message.getReceiverName(), "/private", message); // /user/David/private
-//        return message;
-//    }
+    @MessageMapping("/private-message")
+    public Chat receivePrivateMessage(@Payload Chat message){
+        chatService.saveChatMessage(message);
+        simpMessagingTemplate.convertAndSendToUser(message.getReceiverName(), "/private", message); // /user/David/private
+        return message;
+    }
 
     @EventListener
     public void handleWebSocketDisconnectListener(SessionDisconnectEvent event) {

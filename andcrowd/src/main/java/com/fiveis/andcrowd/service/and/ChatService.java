@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -37,20 +38,48 @@ public class ChatService {
         List<ChatMessageDTO> list = new ArrayList<>();
 
         for(Chat chat : chats){
-            ChatMessageDTO chatMessageDTO = ChatMessageDTO.builder()
-                    .message(chat.getMessage())
-                    .senderName(chat.getSenderName())
-                    .receiverName(chat.getReceiverName())
-                    .publishedAt(chat.getPublishedAt())
-                    .status(chat.getStatus())
-                    .fileName(chat.getFileName())
-                    .s3DataUrl(chat.getS3DataUrl())
-                    .fileDir(chat.getFileDir())
-                    .build();
-            list.add(chatMessageDTO);
+            if (chat.getReceiverName() == null) { // receiverName이 null인 경우에만
+                ChatMessageDTO chatMessageDTO = ChatMessageDTO.builder()
+                        .message(chat.getMessage())
+                        .senderName(chat.getSenderName())
+                        .receiverName(chat.getReceiverName())
+                        .publishedAt(chat.getPublishedAt())
+                        .status(chat.getStatus())
+                        .fileName(chat.getFileName())
+                        .s3DataUrl(chat.getS3DataUrl())
+                        .fileDir(chat.getFileDir())
+                        .build();
+                list.add(chatMessageDTO);
+            }
         }
         return list;
     }
+
+    public List<ChatMessageDTO> privateChatList(Long roomId, String sender, String receiver){
+        ChatRoom chatRoom = chatRoomRepository.findByRoomId(roomId).orElseThrow(()->new AppException(ErrorCode.DB_ERROR,""));
+        List<Chat> chats = chatRepository.findByRoomId(roomId);
+        List<ChatMessageDTO> list = new ArrayList<>();
+
+        for(Chat chat : chats){
+            if ((Objects.equals(receiver, chat.getReceiverName()) && Objects.equals(sender, chat.getSenderName()))
+                    || (Objects.equals(sender, chat.getReceiverName()) && Objects.equals(receiver, chat.getSenderName()))) {
+                ChatMessageDTO chatMessageDTO = ChatMessageDTO.builder()
+                        .message(chat.getMessage())
+                        .senderName(chat.getSenderName())
+                        .receiverName(chat.getReceiverName())
+                        .publishedAt(chat.getPublishedAt())
+                        .status(chat.getStatus())
+                        .fileName(chat.getFileName())
+                        .s3DataUrl(chat.getS3DataUrl())
+                        .fileDir(chat.getFileDir())
+                        .build();
+                list.add(chatMessageDTO);
+            }
+        }
+
+        return list;
+    }
+
 
     public void saveChatMessage(Chat chat){
         chat.setPublishedAt(LocalDateTime.now());

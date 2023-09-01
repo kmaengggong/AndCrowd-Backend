@@ -100,29 +100,21 @@ public class S3FileService implements FileService {
         // bucket 와 fileDir 을 사용해서 S3 에 있는 객체 - object - 를 가져온다.
         S3Object object = amazonS3Client.getObject(new GetObjectRequest(bucket, fileDir));
 
-        // object 를 S3ObjectInputStream 형태로 변환한다.
+        // object 를 S3ObjectInputStream 형태로 변환
         S3ObjectInputStream objectInputStream = object.getObjectContent();
 
-        // 이후 다시 byte 배열 형태로 변환한다.
-        // 아마도 파일 다운로드를 위해서는 byte 형태로 변환할 필요가 있어서 그런듯하다
+        // 이후 다시 byte 배열 형태로 변환
         byte[] bytes = IOUtils.toByteArray(objectInputStream);
 
         // 여기는 httpHeader 에 파일 다운로드 요청을 하기 위한내용
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setContentType(MediaType.APPLICATION_OCTET_STREAM);
 
-        // 지정된 fileName 으로 파일이 다운로드 된다.
+        // 지정된 fileName 으로 파일이 다운로드
         httpHeaders.setContentDispositionFormData("attachment", fileName);
 
         log.info("HttpHeader : [{}]", httpHeaders);
 
-        // 최종적으로 ResponseEntity 객체를 리턴하는데
-        // --> ResponseEntity 란?
-        // ResponseEntity 는 사용자의 httpRequest 에 대한 응답 테이터를 포함하는 클래스이다.
-        // 단순히 body 에 데이터를 포함하는 것이 아니라, header 와 httpStatus 까지 넣어 줄 수 있다.
-        // 이를 통해서 header 에 따라서 다른 동작을 가능하게 할 수 있다 => 파일 다운로드!!
-
-        // 나는 object가 변환된 byte 데이터, httpHeader 와 HttpStatus 가 포함된다.
         return new ResponseEntity<>(bytes, httpHeaders, HttpStatus.OK);
     }
 
