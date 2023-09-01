@@ -2,6 +2,7 @@ package com.fiveis.andcrowd.controller.and;
 
 import com.fiveis.andcrowd.dto.and.DynamicAndQnaDTO;
 import com.fiveis.andcrowd.service.and.DynamicAndQnaService;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,8 +20,18 @@ public class DynamicAndQnaController {
     }
 
     @RequestMapping(value="/list", method = RequestMethod.GET)
-    public List<DynamicAndQnaDTO.FindById> getList(@PathVariable("andId") int andId){
-        return dynamicAndQnaService.findAllNotDeleted(andId);
+    public List<DynamicAndQnaDTO.FindById> getList(@RequestParam(defaultValue = "0") int page,
+                                                   @RequestParam(defaultValue = "5") int size,
+                                                   @PathVariable("andId") int andId){
+        int offset = page * size;
+        int limit = size;
+
+        return dynamicAndQnaService.findAllNotDeleted(offset, limit, andId);
+    }
+
+    @GetMapping("/list/count")
+    public int countAll(@PathVariable("andId") int andId) {
+        return dynamicAndQnaService.countAll(andId);
     }
 
     @RequestMapping(value = "/{andQnaId}", method = RequestMethod.GET)

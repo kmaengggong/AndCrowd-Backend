@@ -2,6 +2,7 @@ package com.fiveis.andcrowd.service.and;
 
 import com.fiveis.andcrowd.dto.and.DynamicAndQnaReplyDTO;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,5 +17,6 @@ public interface DynamicAndQnaReplyService {
     void update(DynamicAndQnaReplyDTO.Update andReplyUpdateDTO);
     void deleteByAndReplyId(int andId, int andReplyId);
     void deleteByAndQnaId(int andId, int andQnaId);
+    void deleteAll(int andId);
 
 }

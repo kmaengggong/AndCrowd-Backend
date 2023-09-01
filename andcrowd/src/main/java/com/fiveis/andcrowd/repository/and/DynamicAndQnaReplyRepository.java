@@ -16,6 +16,7 @@ public interface DynamicAndQnaReplyRepository {
     void update(DynamicAndQnaReplyDTO.Update andReplyUpdateDTO);
     void deleteByAndReplyId(@Param("andId") int andId, @Param("andReplyId") int andReplyId);
     void deleteByAndQnaId(@Param("andId") int andId, @Param("andQnaId") int andQnaId);
+    void deleteAll(@Param("andId") int andId);
 
     void createAndQnaReplyTable ();
     void dropAndQnaReplyTable();
