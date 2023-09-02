@@ -16,6 +16,7 @@ public interface DynamicCrowdRewardRepository {
     void save(DynamicCrowdRewardDTO.Update dynamicRewardInsertDTO);
     void update(DynamicCrowdRewardDTO.Update dynamicRewardUpdateDTO);
     void deleteByCrowdRewardId(@Param("crowdId") int crowdId, @Param("rewardId") int rewardId);
+    void deleteAll(@Param("crowdId") int crowdId);
 
     void createDynamicCrowdRewardTable();
     void testCreateDynamicCrowdRewardTable();

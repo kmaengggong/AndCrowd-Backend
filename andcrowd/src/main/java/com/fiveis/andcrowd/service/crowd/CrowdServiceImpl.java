@@ -78,10 +78,11 @@ public class CrowdServiceImpl implements CrowdService {
     @Override
     public void deleteByCrowdId(int crowdId) {
         crowdCategoryJPARepository.deleteById(crowdId);
-//        dynamicCrowdBoardRepository.deleteByCrowdBoardId(crowdId);
-//        dynamicCrowdQnaRepository.deleteByCrowdQnaId(crowdId);
-//        dynamicCrowdRewardRepository.deleteByRewardId(crowdId);
-//       crowdJPARepository.deleteById(crowdId);
+        dynamicCrowdBoardRepository.deleteByCrowdId(crowdId);
+        dynamicCrowdQnaRepository.deleteAll(crowdId);
+        dynamicCrowdQnaReplyRepository.deleteAll(crowdId);
+        dynamicCrowdRewardRepository.deleteAll(crowdId);
+        crowdJPARepository.deleteById(crowdId);
         Optional<Crowd> crowdOptional = crowdJPARepository.findById(crowdId);
 
         if(crowdOptional.isPresent()) {

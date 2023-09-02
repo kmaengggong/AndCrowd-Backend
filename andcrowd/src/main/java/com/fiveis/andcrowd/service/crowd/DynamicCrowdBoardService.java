@@ -20,4 +20,6 @@ public interface DynamicCrowdBoardService {
     void save(DynamicCrowdBoardDTO.Save dynamicCrowdBoardDTOSave);
 
     void update(DynamicCrowdBoardDTO.Update dynamicCrowdBoardDTOUpdate);
+
+    void deleteByCrowdId(int crowdId);
 }
