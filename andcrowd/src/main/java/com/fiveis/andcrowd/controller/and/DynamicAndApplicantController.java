@@ -51,6 +51,14 @@ public class DynamicAndApplicantController {
         dynamicAndApplicantService.update(updatedApply);
     }
 
+    @RequestMapping(value = "/{andApplyId}/update/admin", method = RequestMethod.PATCH)
+    public void updateApplyStatus(
+            @PathVariable("andId") int andId,
+            @PathVariable("andApplyId") int andApplyId,
+            @RequestBody int andApplyStatus){
+        dynamicAndApplicantService.updateApplyStatus(andId, andApplyId, andApplyStatus);
+    }
+
     @RequestMapping(value = "/{andApplyId}/delete", method = RequestMethod.DELETE)
     public void deleteApply(@PathVariable("andId") int andId, @PathVariable("andApplyId") int andApplyId){
         dynamicAndApplicantService.deleteByAndApplicantId(andId, andApplyId);
