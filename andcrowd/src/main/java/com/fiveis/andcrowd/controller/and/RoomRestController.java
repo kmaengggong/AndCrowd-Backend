@@ -5,8 +5,6 @@ import com.fiveis.andcrowd.dto.user.UserDTO;
 import com.fiveis.andcrowd.entity.and.And;
 import com.fiveis.andcrowd.entity.and.ChatRoom;
 import com.fiveis.andcrowd.entity.user.User;
-import com.fiveis.andcrowd.exception.AppException;
-import com.fiveis.andcrowd.exception.ErrorCode;
 import com.fiveis.andcrowd.repository.and.AndJPARepository;
 import com.fiveis.andcrowd.repository.and.ChatRoomRepository;
 import com.fiveis.andcrowd.repository.and.DynamicAndMemberRepository;

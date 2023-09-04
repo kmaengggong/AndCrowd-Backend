@@ -7,7 +7,6 @@ import com.amazonaws.services.s3.transfer.TransferManagerBuilder;
 import com.amazonaws.services.s3.transfer.Upload;
 import com.amazonaws.util.IOUtils;
 import com.fiveis.andcrowd.dto.and.FileUploadDTO;
-import com.fiveis.andcrowd.repository.and.FileService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import lombok.extern.slf4j.Slf4j;

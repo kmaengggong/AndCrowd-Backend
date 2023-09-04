@@ -1,6 +1,6 @@
 package com.fiveis.andcrowd.controller.and;
 
-import com.fiveis.andcrowd.controller.and.model.Status;
+import com.fiveis.andcrowd.dto.and.ChatStatus;
 import com.fiveis.andcrowd.dto.and.ChatMessageDTO;
 import com.fiveis.andcrowd.entity.and.Chat;
 import com.fiveis.andcrowd.service.and.ChatService;
@@ -38,7 +38,7 @@ public class StompChatController {
         }
         message.setUserList(liveUser);
         message.setMessage(message.getSenderName() + "님이 채팅방에 참여하였습니다.");
-        message.setStatus(Status.JOIN);
+        message.setChatStatus(ChatStatus.JOIN);
         message.setPublishedAt(LocalDateTime.now());
         simpMessagingTemplate.convertAndSend("/sub/chat/room/" + message.getRoomId(), message);
     }
@@ -54,7 +54,7 @@ public class StompChatController {
         }
         message.setUserList(liveUser);
         message.setMessage(message.getSenderName() + "님이 채팅방에 나가셨습니다.");
-        message.setStatus(Status.LEAVE);
+        message.setChatStatus(ChatStatus.LEAVE);
         message.setPublishedAt(LocalDateTime.now());
         simpMessagingTemplate.convertAndSend("/sub/chat/room/" + message.getRoomId(), message);
     }
@@ -87,7 +87,7 @@ public class StompChatController {
             ChatMessageDTO leaveMessage = new ChatMessageDTO();
             leaveMessage.setSenderName(senderName);
             leaveMessage.setRoomId(roomId);
-            leaveMessage.setStatus(Status.LEAVE);
+            leaveMessage.setChatStatus(ChatStatus.LEAVE);
             simpMessagingTemplate.convertAndSend("/sub/chat/room/" + roomId, leaveMessage);
         }
     }

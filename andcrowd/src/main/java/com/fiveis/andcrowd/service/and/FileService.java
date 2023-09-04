@@ -1,4 +1,4 @@
-package com.fiveis.andcrowd.repository.and;
+package com.fiveis.andcrowd.service.and;
 
 import com.fiveis.andcrowd.dto.and.FileUploadDTO;
 import org.springframework.http.ResponseEntity;

@@ -7,8 +7,6 @@ import com.fiveis.andcrowd.dto.user.UserDTO;
 import com.fiveis.andcrowd.entity.and.And;
 import com.fiveis.andcrowd.entity.and.ChatRoom;
 import com.fiveis.andcrowd.entity.user.User;
-import com.fiveis.andcrowd.exception.AppException;
-import com.fiveis.andcrowd.exception.ErrorCode;
 import com.fiveis.andcrowd.repository.and.AndJPARepository;
 import com.fiveis.andcrowd.repository.and.ChatRoomRepository;
 import com.fiveis.andcrowd.repository.and.DynamicAndMemberRepository;
@@ -40,15 +38,15 @@ public class ChatRoomService {
     }
 
     // 채팅방 ID로 채팅방 조회
-    public ChatRoom findRoomById(Long id){
-        ChatRoom chatRoom = chatRoomRepository.findByRoomId(id).orElseThrow(()->new AppException(ErrorCode.DB_ERROR,""));
-        return chatRoom;
+    public Optional<ChatRoom> findRoomById(Long id){
+        return chatRoomRepository.findByRoomId(id);
     }
 
 
     // 사용자의 이름을 받아 해당 사용자가 속한 채팅방 리스트를 조회
-    public List<ChatRoom> findByUserNickname(String userNickname){
-        User user = userRepository.findByUserNickname(userNickname).orElseThrow(()->new AppException(ErrorCode.USERID_NOT_FOUND,ErrorCode.USERID_NOT_FOUND.getMessage()));
+    public List<ChatRoom> findByUserNickname(String userNickname) {
+        Optional<User> userOptional = userRepository.findByUserNickname(userNickname);
+        User user = userOptional.orElseThrow(() -> new IllegalArgumentException("사용자를 찾을 수 없습니다."));
         String userEmail = user.getUserEmail();
         List<DynamicUserAndDTO.Find> userAndList= userAndRepository.findAll(userEmail);
         // andId와 그에 일치하는 ChatRoom를 반복해서 얻어와 list 얻기

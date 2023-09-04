@@ -1,6 +1,6 @@
 package com.fiveis.andcrowd.entity.and;
 
-import com.fiveis.andcrowd.controller.and.model.Status;
+import com.fiveis.andcrowd.dto.and.ChatStatus;
 import lombok.*;
 
 import jakarta.persistence.*;
@@ -24,7 +24,7 @@ public class Chat {
 
     private LocalDateTime publishedAt;
     private String message;
-    private Status status;
+    private ChatStatus chatStatus;
 
     private String s3DataUrl; // 파일 업로드 url
     private String fileName; // 파일이름

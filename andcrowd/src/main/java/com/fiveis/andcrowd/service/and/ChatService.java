@@ -4,8 +4,6 @@ import com.fiveis.andcrowd.dto.and.ChatMessageDTO;
 import com.fiveis.andcrowd.dto.and.Response;
 import com.fiveis.andcrowd.entity.and.Chat;
 import com.fiveis.andcrowd.entity.and.ChatRoom;
-import com.fiveis.andcrowd.exception.AppException;
-import com.fiveis.andcrowd.exception.ErrorCode;
 import com.fiveis.andcrowd.repository.and.ChatRepository;
 import com.fiveis.andcrowd.repository.and.ChatRoomRepository;
 import jakarta.transaction.Transactional;
@@ -16,7 +14,6 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -26,14 +23,14 @@ public class ChatService {
 
     @Transactional
     public Response addChat(ChatMessageDTO chatMessageDTO){
-        ChatRoom chatRoom = chatRoomRepository.findByRoomId(chatMessageDTO.getRoomId()).orElseThrow(()->new AppException(ErrorCode.DB_ERROR,""));
+        ChatRoom chatRoom = chatRoomRepository.findByRoomId(chatMessageDTO.getRoomId()).orElseThrow(()->new IllegalArgumentException("DB ERROR"));
         Chat chater = chatRepository.save(chatMessageDTO.toChat(chatRoom));
         return Response.success(chater);
     }
 
 
     public List<ChatMessageDTO> listChat(Long roomId){
-        ChatRoom chatRoom = chatRoomRepository.findByRoomId(roomId).orElseThrow(()->new AppException(ErrorCode.DB_ERROR,""));
+        ChatRoom chatRoom = chatRoomRepository.findByRoomId(roomId).orElseThrow(()->new IllegalArgumentException("DB ERROR"));
         List<Chat> chats = chatRepository.findByRoomId(roomId);
         List<ChatMessageDTO> list = new ArrayList<>();
 
@@ -44,7 +41,7 @@ public class ChatService {
                         .senderName(chat.getSenderName())
                         .receiverName(chat.getReceiverName())
                         .publishedAt(chat.getPublishedAt())
-                        .status(chat.getStatus())
+                        .chatStatus(chat.getChatStatus())
                         .fileName(chat.getFileName())
                         .s3DataUrl(chat.getS3DataUrl())
                         .fileDir(chat.getFileDir())
@@ -56,7 +53,7 @@ public class ChatService {
     }
 
     public List<ChatMessageDTO> privateChatList(Long roomId, String sender, String receiver){
-        ChatRoom chatRoom = chatRoomRepository.findByRoomId(roomId).orElseThrow(()->new AppException(ErrorCode.DB_ERROR,""));
+        ChatRoom chatRoom = chatRoomRepository.findByRoomId(roomId).orElseThrow(()->new IllegalArgumentException("DB ERROR"));
         List<Chat> chats = chatRepository.findByRoomId(roomId);
         List<ChatMessageDTO> list = new ArrayList<>();
 
@@ -68,7 +65,7 @@ public class ChatService {
                         .senderName(chat.getSenderName())
                         .receiverName(chat.getReceiverName())
                         .publishedAt(chat.getPublishedAt())
-                        .status(chat.getStatus())
+                        .chatStatus(chat.getChatStatus())
                         .fileName(chat.getFileName())
                         .s3DataUrl(chat.getS3DataUrl())
                         .fileDir(chat.getFileDir())

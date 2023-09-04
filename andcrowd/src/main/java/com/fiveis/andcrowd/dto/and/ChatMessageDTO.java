@@ -1,6 +1,5 @@
 package com.fiveis.andcrowd.dto.and;
 
-import com.fiveis.andcrowd.controller.and.model.Status;
 import com.fiveis.andcrowd.entity.and.Chat;
 import com.fiveis.andcrowd.entity.and.ChatRoom;
 import lombok.*;
@@ -22,7 +21,7 @@ public class ChatMessageDTO {
 
     private LocalDateTime publishedAt;
     private List<String> userList;
-    private Status status;
+    private ChatStatus chatStatus;
 
     private String s3DataUrl; // 파일 업로드 url
     private String fileName; // 파일이름
@@ -34,7 +33,7 @@ public class ChatMessageDTO {
                 .receiverName(receiverName)
                 .publishedAt(publishedAt)
                 .roomId(roomId)
-                .status(status)
+                .chatStatus(chatStatus)
                 .fileName(fileName)
                 .s3DataUrl(s3DataUrl)
                 .fileDir(fileDir)
