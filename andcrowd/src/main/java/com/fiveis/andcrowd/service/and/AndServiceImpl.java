@@ -16,22 +16,26 @@ public class AndServiceImpl implements AndService{
 
     AndJPARepository andJPARepository;
     AndDynamicRepository andDynamicRepository;
+    ChatRoomService chatRoomService;
     DynamicAndQnaRepository dynamicAndQnaRepository;
     DynamicAndQnaReplyRepository dynamicAndQnaReplyRepository;
     DynamicAndBoardRepository dynamicAndBoardRepository;
+
 
     @Autowired
     public AndServiceImpl(AndJPARepository andJPARepository,
                           AndDynamicRepository andDynamicRepository,
                           DynamicAndQnaRepository dynamicAndQnaRepository,
                           DynamicAndQnaReplyRepository dynamicAndQnaReplyRepository,
-                          DynamicAndBoardRepository dynamicAndBoardRepository
+                          DynamicAndBoardRepository dynamicAndBoardRepository,
+                          ChatRoomService chatRoomService
                           ){
         this.andJPARepository = andJPARepository;
         this.andDynamicRepository = andDynamicRepository;
         this.dynamicAndQnaRepository = dynamicAndQnaRepository;
         this.dynamicAndQnaReplyRepository = dynamicAndQnaReplyRepository;
         this.dynamicAndBoardRepository = dynamicAndBoardRepository;
+        this.chatRoomService = chatRoomService;
     }
 
 
@@ -97,6 +101,7 @@ public class AndServiceImpl implements AndService{
         andDynamicRepository.createDynamicAndRoleTable(savedAnd.getAndId());
         andDynamicRepository.createDynamicAndApplicantTable(savedAnd.getAndId());
         andDynamicRepository.createDynamicAndQnaReplyTable(savedAnd.getAndId());
+        chatRoomService.createAndChatroom(savedAnd.getAndId());
     }
 
 

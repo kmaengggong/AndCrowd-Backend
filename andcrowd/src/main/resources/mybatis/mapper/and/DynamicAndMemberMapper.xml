@@ -22,7 +22,12 @@
     </select>
 
     <select id="findAll" resultType="com.fiveis.andcrowd.dto.and.DynamicAndMemberDTO$FindByAndMemberId">
-        SELECT * FROM and_member_#{andId}
+        SELECT
+            member_id AS MemberId,
+            and_id AS andId,
+            user_id AS userId,
+            is_deleted AS isDeleted
+        FROM and_member_#{andId}
     </select>
 
     <delete id="deleteById" parameterType="int">
