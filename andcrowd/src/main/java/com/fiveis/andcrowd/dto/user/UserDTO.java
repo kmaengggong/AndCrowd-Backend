@@ -7,6 +7,19 @@ import lombok.*;
 import java.time.LocalDateTime;
 
 public class UserDTO {
+
+    @Getter
+    @Setter
+    @Builder
+    @ToString
+    @AllArgsConstructor
+    @NoArgsConstructor
+    public static class UserInfo{
+        private int userId;
+        private String userKorName;
+        private String userNickname;
+    }
+
     @Getter
     @Setter
     @Builder
