@@ -14,6 +14,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 @SpringBootTest
 public class AdPaymentServiceTest {
     @Autowired
@@ -114,5 +116,19 @@ public class AdPaymentServiceTest {
 
         // Given
         Assertions.assertNull(adPaymentService.findById(adPaymentId));
+    }
+
+    @Test
+    @Transactional
+    @DisplayName("1번 유저의 결제내역을 조회할경우 2개의 결제내역이 조회될것이다.")
+    public void findAllByUserId(){
+        //given
+        int userId = 1;
+
+        //when
+        List<AdPaymentDTO.Find> adPaymentListByUserId = adPaymentService.findAllByUserId(userId);
+
+        //then
+        assertThat(adPaymentListByUserId.size()).isEqualTo(2);
     }
 }
