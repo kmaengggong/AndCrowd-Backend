@@ -1,7 +1,6 @@
 package com.fiveis.andcrowd.controller.and;
 
 import com.fiveis.andcrowd.dto.and.ChatMessageDTO;
-import com.fiveis.andcrowd.dto.and.Response;
 import com.fiveis.andcrowd.service.and.ChatService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

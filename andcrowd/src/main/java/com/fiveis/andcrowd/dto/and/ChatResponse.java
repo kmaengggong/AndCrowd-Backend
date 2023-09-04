@@ -5,12 +5,12 @@ import lombok.Getter;
 
 @AllArgsConstructor
 @Getter
-public class Response<T> {
+public class ChatResponse<T> {
     private String resultCode;
     private T result;
 
     // 성공 리턴
-    public static <T> Response<T> success(T result) {
-        return new Response("SUCCESS", result);
+    public static <T> ChatResponse<T> success(T result) {
+        return new ChatResponse("SUCCESS", result);
     }
 }

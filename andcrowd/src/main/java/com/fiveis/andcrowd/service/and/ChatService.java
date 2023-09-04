@@ -1,7 +1,7 @@
 package com.fiveis.andcrowd.service.and;
 
 import com.fiveis.andcrowd.dto.and.ChatMessageDTO;
-import com.fiveis.andcrowd.dto.and.Response;
+import com.fiveis.andcrowd.dto.and.ChatResponse;
 import com.fiveis.andcrowd.entity.and.Chat;
 import com.fiveis.andcrowd.entity.and.ChatRoom;
 import com.fiveis.andcrowd.repository.and.ChatRepository;
@@ -22,10 +22,10 @@ public class ChatService {
     private final ChatRoomRepository chatRoomRepository;
 
     @Transactional
-    public Response addChat(ChatMessageDTO chatMessageDTO){
+    public ChatResponse addChat(ChatMessageDTO chatMessageDTO){
         ChatRoom chatRoom = chatRoomRepository.findByRoomId(chatMessageDTO.getRoomId()).orElseThrow(()->new IllegalArgumentException("DB ERROR"));
         Chat chater = chatRepository.save(chatMessageDTO.toChat(chatRoom));
-        return Response.success(chater);
+        return ChatResponse.success(chater);
     }
 
 
