@@ -1,9 +1,11 @@
 package com.fiveis.andcrowd.service.crowd;
 
 import com.fiveis.andcrowd.dto.crowd.CrowdCategoryDTO;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public interface CrowdCategoryService {
     List<CrowdCategoryDTO.Find> findAll();
 

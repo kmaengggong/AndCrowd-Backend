@@ -6,6 +6,7 @@ import com.fiveis.andcrowd.repository.etc.AdPaymentJPARepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,7 +36,20 @@ public class AdPaymentServiceImpl implements AdPaymentService{
     }
 
     @Override
+    public List<AdPaymentDTO.Find> findAllByUserId(int userId){
+        List<AdPayment> adPaymentListByUserId = adPaymentJPARepository.findAllByUserId(userId);
+        List<AdPaymentDTO.Find> findListByUserId = new ArrayList<>();
+        for(AdPayment adPayment : adPaymentListByUserId){
+            findListByUserId.add(AdPaymentDTO.converToAdPaymentDTOFind(adPayment));
+        }
+        return findListByUserId;
+    }
+
+    @Override
     public void save(AdPayment adPayment) {
+        adPayment.setPurchasedAt(LocalDateTime.now());
+        // 광고 종료시간의 경우 now가 아니나 현재 광고 정책이 확정되지 않아 임시 작성
+        adPayment.setExpiredAt(LocalDateTime.now());
         adPaymentJPARepository.save(adPayment);
     }
 

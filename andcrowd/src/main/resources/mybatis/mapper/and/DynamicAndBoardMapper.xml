@@ -35,6 +35,15 @@
         WHERE
             and_board_id = #{andBoardId}
     </delete>
+    <delete id="deleteAll" parameterType="int">
+        UPDATE
+            and_board_#{andId}
+        SET
+            is_deleted = true
+        WHERE
+            and_id = #{andId}
+    </delete>
+
     <insert id="save" parameterType="com.fiveis.andcrowd.dto.and.DynamicAndBoardDTO$Update">
         INSERT INTO and_board_#{andId} (
             and_id, user_id, and_board_tag, and_board_title,

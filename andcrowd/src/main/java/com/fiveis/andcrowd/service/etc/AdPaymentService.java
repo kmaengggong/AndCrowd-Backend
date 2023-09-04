@@ -10,6 +10,7 @@ import java.util.List;
 public interface AdPaymentService {
     List<AdPaymentDTO.Find> findAll();
     AdPaymentDTO.Find findById(int adPaymentId);
+    List<AdPaymentDTO.Find> findAllByUserId(int userId);
     void save(AdPayment adPayment);
     void update(AdPaymentDTO.Update update);
     void deleteById(int adPaymentId);

@@ -60,4 +60,9 @@ public class DynamicAndQnaReplyServiceImpl implements DynamicAndQnaReplyService{
     public void deleteByAndQnaId(int andId, int andQnaId) {
         dynamicAndQnaReplyRepository.deleteByAndQnaId(andId, andQnaId);
     }
+
+    @Override
+    public void deleteAll(int andId) {
+        dynamicAndQnaReplyRepository.deleteAll(andId);
+    }
 }

@@ -33,6 +33,11 @@ public class DynamicCrowdQnaServiceImpl implements DynamicCrowdQnaService {
     }
 
     @Override
+    public List<DynamicCrowdQnaDTO.Find> findAllByIsDeletedFalse(int crowdId){
+        return dynamicCrowdQnaRepository.findAllByIsDeletedFalse(crowdId);
+    }
+
+    @Override
     public DynamicCrowdQnaDTO.Find findById(int crowdId, int crowdQnaId) {
         return dynamicCrowdQnaRepository.findById(crowdId, crowdQnaId);
     }

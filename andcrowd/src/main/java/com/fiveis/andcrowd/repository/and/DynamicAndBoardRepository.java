@@ -14,6 +14,7 @@ public interface DynamicAndBoardRepository {
     void update(DynamicAndBoardDTO.Update andBoardUpdateDTO);
     void deleteByAndId(@Param("andId") int andId);
     void deleteByAndBoardId(@Param("andId") int andId, @Param("andBoardId") int andBoardId);
+    void deleteAll(@Param("andId") int andId);
 
     void createAndBoardTable();
     void dropAndBoardTable();

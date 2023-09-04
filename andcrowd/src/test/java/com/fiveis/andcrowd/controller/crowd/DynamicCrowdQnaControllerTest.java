@@ -41,10 +41,30 @@ public class DynamicCrowdQnaControllerTest {
         this.mockMvc = MockMvcBuilders.webAppContextSetup(context).build();
     }
 
+//    findAll 기능 제외로 인한 주석처리
+//    @Test
+//    @Transactional
+//    @DisplayName("crowd 1번글의 Qna 전체글 조회시 2번째 요소의 title은 1번글제목, content는 1번글본문 이다.")
+//    void findAll() throws Exception {
+//        // given
+//        int crowdId = 1;
+//        String title = "1번글제목";
+//        String content = "1번글본문";
+//        String url = "/crowd/1/qna/all";
+//
+//        // when
+//        final ResultActions result = mockMvc.perform(get(url).accept(MediaType.APPLICATION_JSON));
+//
+//        result
+//                .andExpect(status().isOk())
+//                .andExpect(jsonPath("$[2].qnaTitle").value(title))
+//                .andExpect(jsonPath("$[2].qnaContent").value(content));
+//    }
+
     @Test
     @Transactional
     @DisplayName("crowd 1번글의 Qna 전체글 조회시 2번째 요소의 title은 1번글제목, content는 1번글본문 이다.")
-    void findAll() throws Exception {
+    void findAllByIsDeletedFalseTest() throws Exception {
         // given
         int crowdId = 1;
         String title = "1번글제목";
@@ -56,8 +76,8 @@ public class DynamicCrowdQnaControllerTest {
 
         result
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$[2].qnaTitle").value(title))
-                .andExpect(jsonPath("$[2].qnaContent").value(content));
+                .andExpect(jsonPath("$[1].qnaTitle").value(title))
+                .andExpect(jsonPath("$[1].qnaContent").value(content));
     }
 
     @Test

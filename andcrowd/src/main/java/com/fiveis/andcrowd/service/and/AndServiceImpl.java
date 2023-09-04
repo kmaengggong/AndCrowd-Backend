@@ -2,8 +2,7 @@ package com.fiveis.andcrowd.service.and;
 
 import com.fiveis.andcrowd.dto.and.AndDTO;
 import com.fiveis.andcrowd.entity.and.And;
-import com.fiveis.andcrowd.repository.and.AndDynamicRepository;
-import com.fiveis.andcrowd.repository.and.AndJPARepository;
+import com.fiveis.andcrowd.repository.and.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,11 +17,24 @@ public class AndServiceImpl implements AndService{
     AndJPARepository andJPARepository;
     AndDynamicRepository andDynamicRepository;
     ChatRoomService chatRoomService;
+    DynamicAndQnaRepository dynamicAndQnaRepository;
+    DynamicAndQnaReplyRepository dynamicAndQnaReplyRepository;
+    DynamicAndBoardRepository dynamicAndBoardRepository;
+
 
     @Autowired
-    public AndServiceImpl(AndJPARepository andJPARepository, AndDynamicRepository andDynamicRepository, ChatRoomService chatRoomService){
+    public AndServiceImpl(AndJPARepository andJPARepository,
+                          AndDynamicRepository andDynamicRepository,
+                          DynamicAndQnaRepository dynamicAndQnaRepository,
+                          DynamicAndQnaReplyRepository dynamicAndQnaReplyRepository,
+                          DynamicAndBoardRepository dynamicAndBoardRepository,
+                          ChatRoomService chatRoomService
+                          ){
         this.andJPARepository = andJPARepository;
         this.andDynamicRepository = andDynamicRepository;
+        this.dynamicAndQnaRepository = dynamicAndQnaRepository;
+        this.dynamicAndQnaReplyRepository = dynamicAndQnaReplyRepository;
+        this.dynamicAndBoardRepository = dynamicAndBoardRepository;
         this.chatRoomService = chatRoomService;
     }
 
@@ -73,6 +85,9 @@ public class AndServiceImpl implements AndService{
 
     @Override
     public void deleteById(int andId) {
+        dynamicAndBoardRepository.deleteAll(andId);
+        dynamicAndQnaReplyRepository.deleteAll(andId);
+        dynamicAndQnaRepository.deleteAll(andId);
         andJPARepository.deleteById(andId);
 
     }

@@ -14,7 +14,7 @@ import java.util.List;
 @RequestMapping("/crowd/{crowdId}/qna")
 public class DynamicCrowdQnaController {
 
-    private DynamicCrowdQnaService dynamicCrowdQnaService;
+    private final DynamicCrowdQnaService dynamicCrowdQnaService;
 
     @Autowired
     public DynamicCrowdQnaController(DynamicCrowdQnaService dynamicCrowdQnaService){
@@ -23,7 +23,7 @@ public class DynamicCrowdQnaController {
 
     @RequestMapping(value = "/all", method = RequestMethod.GET)
     public ResponseEntity<List<DynamicCrowdQnaDTO.Find>> findAllQnas(@PathVariable int crowdId){
-        List<DynamicCrowdQnaDTO.Find> qnas = dynamicCrowdQnaService.findAll(crowdId);
+        List<DynamicCrowdQnaDTO.Find> qnas = dynamicCrowdQnaService.findAllByIsDeletedFalse(crowdId);
         return ResponseEntity.ok().body(qnas);
     }
 
