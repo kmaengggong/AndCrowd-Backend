@@ -74,7 +74,6 @@
         user_id INT NOT NULL,
         is_deleted BOOL default false
         );
-
     </insert>
 
 

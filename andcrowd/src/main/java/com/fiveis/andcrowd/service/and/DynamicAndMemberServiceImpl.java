@@ -1,6 +1,7 @@
 package com.fiveis.andcrowd.service.and;
 
 import com.fiveis.andcrowd.dto.and.DynamicAndMemberDTO;
+import com.fiveis.andcrowd.dto.and.DynamicAndQnaDTO;
 import com.fiveis.andcrowd.dto.and.DynamicAndQnaReplyDTO;
 import com.fiveis.andcrowd.repository.and.DynamicAndMemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +23,10 @@ public class DynamicAndMemberServiceImpl implements DynamicAndMemberService {
     public void save(DynamicAndMemberDTO.Update dynamicAndMemberDTOUpdate) {
         dynamicAndMemberRepository.save(dynamicAndMemberDTOUpdate);
     }
-
+    @Override
+    public List<DynamicAndMemberDTO.FindByAndMemberId> findAllNotDeleted(int andId) {
+        return dynamicAndMemberRepository.findAllNotDeleted(andId);
+    }
     @Override
     public DynamicAndMemberDTO.FindByAndMemberId findByAndMemberId(int andId, int memberId) {
         return dynamicAndMemberRepository.findByAndMemberId(andId, memberId);

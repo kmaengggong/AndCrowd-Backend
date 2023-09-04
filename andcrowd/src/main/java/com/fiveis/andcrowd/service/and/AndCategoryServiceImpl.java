@@ -1,11 +1,14 @@
 package com.fiveis.andcrowd.service.and;
 
 import com.fiveis.andcrowd.dto.and.AndCategoryDTO;
+import com.fiveis.andcrowd.dto.and.AndDTO;
+import com.fiveis.andcrowd.entity.and.And;
 import com.fiveis.andcrowd.entity.and.AndCategory;
 import com.fiveis.andcrowd.repository.and.AndCategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -27,11 +30,17 @@ public class AndCategoryServiceImpl implements AndCategoryService {
     }
 
     @Override
-    public List<AndCategoryDTO.FindByCategoryId> findAll() {
-        List<AndCategory> andCategoryList = andCategoryRepository.findAll();
-        return andCategoryList.stream()
-                .map(this::convertToAndCategoryFindDTO)
-                .collect(Collectors.toList());
+    public List<AndCategoryDTO.FindByCategoryId> findAllByIsDeletedFalse() {
+        List<AndCategory> andList = andCategoryRepository.findAllByIsDeletedFalse();
+        List<AndCategoryDTO.FindByCategoryId> findAllNotDeletedList = new ArrayList<>();
+
+        for (AndCategory andCategory : andList) {
+            AndCategoryDTO.FindByCategoryId dto = AndCategoryDTO.convertToAndCategoryFindDTO(andCategory);
+            findAllNotDeletedList.add(dto);
+        }
+
+
+        return findAllNotDeletedList;
     }
 
     @Override
