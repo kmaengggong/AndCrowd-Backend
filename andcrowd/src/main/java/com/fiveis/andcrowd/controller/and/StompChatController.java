@@ -1,6 +1,6 @@
 package com.fiveis.andcrowd.controller.and;
 
-import com.fiveis.andcrowd.dto.and.ChatStatus;
+import com.fiveis.andcrowd.enums.ChatStatus;
 import com.fiveis.andcrowd.dto.and.ChatMessageDTO;
 import com.fiveis.andcrowd.entity.and.Chat;
 import com.fiveis.andcrowd.service.and.ChatService;

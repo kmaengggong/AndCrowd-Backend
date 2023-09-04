@@ -2,6 +2,7 @@ package com.fiveis.andcrowd.dto.and;
 
 import com.fiveis.andcrowd.entity.and.Chat;
 import com.fiveis.andcrowd.entity.and.ChatRoom;
+import com.fiveis.andcrowd.enums.ChatStatus;
 import lombok.*;
 
 import java.time.LocalDateTime;

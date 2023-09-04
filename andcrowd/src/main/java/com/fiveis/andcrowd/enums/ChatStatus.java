@@ -1,4 +1,4 @@
-package com.fiveis.andcrowd.dto.and;
+package com.fiveis.andcrowd.enums;
 
 
 public enum ChatStatus {

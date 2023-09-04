@@ -1,6 +1,6 @@
 package com.fiveis.andcrowd.entity.and;
 
-import com.fiveis.andcrowd.dto.and.ChatStatus;
+import com.fiveis.andcrowd.enums.ChatStatus;
 import lombok.*;
 
 import jakarta.persistence.*;
