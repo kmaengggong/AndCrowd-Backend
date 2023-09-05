@@ -1,7 +1,7 @@
 package com.fiveis.andcrowd.dto.user;
 
 import com.fiveis.andcrowd.entity.user.User;
-import com.fiveis.andcrowd.enums.Authority;
+import com.fiveis.andcrowd.enums.Role;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -26,6 +26,7 @@ public class UserDTO {
     @AllArgsConstructor
     @NoArgsConstructor
     public static class FindAsUser{
+        private int userId;
         private String userEmail;
         private String userPassword;
         private String userKorName;
@@ -55,7 +56,7 @@ public class UserDTO {
         private int userTos;
         private int userPrivacy;
         private int userMarketing;
-        private Authority authority;
+        private Role role;
     }
 
     @Getter
@@ -118,7 +119,7 @@ public class UserDTO {
                 .userTos(user.getUserTos())
                 .userPrivacy(user.getUserPrivacy())
                 .userMarketing(user.getUserMarketing())
-                .authority(user.getAuthority())
+                .role(user.getRole())
                 .build();
     }
 }

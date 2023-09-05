@@ -38,3 +38,5 @@ out/
 
 ### Custom ###
 application-db.yml
+application-jwt.yml
+application-oauth2.yml

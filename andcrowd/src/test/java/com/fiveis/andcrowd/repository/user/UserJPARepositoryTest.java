@@ -2,8 +2,7 @@ package com.fiveis.andcrowd.repository.user;
 
 import com.fiveis.andcrowd.dto.user.UserDTO;
 import com.fiveis.andcrowd.entity.user.User;
-import com.fiveis.andcrowd.enums.Authority;
-import com.fiveis.andcrowd.repository.user.UserJPARepository;
+import com.fiveis.andcrowd.enums.Role;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +33,7 @@ public class UserJPARepositoryTest {
         int userTos = 1;
         int userPrivacy = 1;
         int userMarketing = 1;
-        Authority authority = Authority.ROLE_ADMIN;
+        Role role = Role.ROLE_ADMIN;
 
         // When
         User user = User.builder()
@@ -49,7 +48,7 @@ public class UserJPARepositoryTest {
                 .userTos(userTos)
                 .userPrivacy(userPrivacy)
                 .userMarketing(userMarketing)
-                .authority(authority)
+                .authority(role)
                 .build();
 
         userJPARepository.save(user);
