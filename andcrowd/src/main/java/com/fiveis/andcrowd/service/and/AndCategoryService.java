@@ -12,7 +12,7 @@ public interface AndCategoryService {
 
     Optional<AndCategoryDTO.FindByCategoryId> findById(int andId);
 
-    List<AndCategoryDTO.FindByCategoryId> findAll();
+    List<AndCategoryDTO.FindByCategoryId> findAllByIsDeletedFalse();
 
     void deleteById(int andCategoryId);
 

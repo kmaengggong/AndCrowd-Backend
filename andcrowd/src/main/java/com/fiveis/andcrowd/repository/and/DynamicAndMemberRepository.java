@@ -1,6 +1,7 @@
 package com.fiveis.andcrowd.repository.and;
 
 import com.fiveis.andcrowd.dto.and.DynamicAndMemberDTO;
+import com.fiveis.andcrowd.dto.and.DynamicAndQnaDTO;
 import com.fiveis.andcrowd.dto.and.DynamicAndQnaReplyDTO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -25,4 +26,6 @@ public interface DynamicAndMemberRepository {
     void insertTestData();
 
     void update(DynamicAndMemberDTO.Update andMemberUpdateDTO);
+    List<DynamicAndMemberDTO.FindByAndMemberId> findAllNotDeleted(int andId);
+
 }

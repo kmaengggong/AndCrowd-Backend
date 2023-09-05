@@ -7,15 +7,16 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder @Entity
-public class AndCategory {
+    public class AndCategory {
 
-    @Id
-    @Column(nullable = false)
-    private int andCategoryId;
+        @Id
+        @GeneratedValue(strategy = GenerationType.IDENTITY)
+        @Column(nullable = false)
+        private int andCategoryId;
 
-    @Column(nullable = false)
-    private String andCategoryName;
+        @Column(nullable = false)
+        private String andCategoryName;
 
-    @Column(nullable = false)
-    private boolean isDeleted;
-}
+        @Column(nullable = false)
+        private boolean isDeleted;
+    }

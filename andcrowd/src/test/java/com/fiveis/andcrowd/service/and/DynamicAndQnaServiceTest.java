@@ -1,3 +1,4 @@
+
 package com.fiveis.andcrowd.service.and;
 
 import com.fiveis.andcrowd.dto.and.DynamicAndQnaDTO;
@@ -32,21 +33,6 @@ public class DynamicAndQnaServiceTest {
 
     }
 
-//    @Test
-//    @Transactional
-//    public void findAllNotDeletedTest(){
-//        //given
-//        int andId = 321;
-//        int andQnaId = 1;
-//
-//        // when
-//        dynamicAndQnaService.deleteByAndQnaId(andId, andQnaId);
-//        List<DynamicAndQnaDTO.FindById> findAllList= dynamicAndQnaService.findAllNotDeleted(andId);
-//
-//        // then
-//        assertEquals(2, findAllList.size());
-//
-//    }
 
     @Test
     @Transactional
