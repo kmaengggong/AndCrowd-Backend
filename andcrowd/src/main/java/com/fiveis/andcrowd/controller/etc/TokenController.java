@@ -2,7 +2,6 @@ package com.fiveis.andcrowd.controller.etc;
 
 import com.fiveis.andcrowd.config.jwt.TokenProvider;
 import com.fiveis.andcrowd.dto.etc.AccessTokenResponseDTO;
-import com.fiveis.andcrowd.dto.etc.RefreshTokenRequestDTO;
 import com.fiveis.andcrowd.dto.user.UserDTO;
 import com.fiveis.andcrowd.entity.user.User;
 import com.fiveis.andcrowd.service.etc.TokenService;
@@ -10,7 +9,6 @@ import com.fiveis.andcrowd.service.user.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,9 +23,9 @@ public class TokenController {
     private final UserService userService;
 
     @RequestMapping(value="/getUserId", method=RequestMethod.POST)
-    public ResponseEntity<?> getUserId(@RequestBody Map<String, String> accessToken){
+    public ResponseEntity<?> getUserId(HttpServletRequest request){
         try{
-            return ResponseEntity.ok(tokenProvider.getUserId(accessToken.get("accessToken")));
+            return ResponseEntity.ok(tokenProvider.getUserId(request.getHeader("Authorization")));
         } catch(Exception e){
             return ResponseEntity.badRequest().body("/getUserId: Invalid Access Token");
         }

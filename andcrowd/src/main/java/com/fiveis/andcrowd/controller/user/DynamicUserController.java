@@ -31,38 +31,13 @@ public class DynamicUserController {
     private final TokenProvider tokenProvider;
     private final TokenService tokenService;
 
-//    @Autowired
-//    public DynamicUserController(UserService userService,
-//                                 DynamicUserAndService dynamicUserAndService,
-//                                 DynamicUserFollowService dynamicUserFollowService,
-//                                 DynamicUserLikeService dynamicUserLikeService,
-//                                 DynamicUserMakerService dynamicUserMakerService,
-//                                 DynamicUserOrderService dynamicUserOrderService){
-//        this.userService = userService;
-//        this.dynamicUserAndService = dynamicUserAndService;
-//        this.dynamicUserFollowService = dynamicUserFollowService;
-//        this.dynamicUserLikeService = dynamicUserLikeService;
-//        this.dynamicUserMakerService = dynamicUserMakerService;
-//        this.dynamicUserOrderService = dynamicUserOrderService;
-//    }
-
     // 유저가 참여한 모임
     @RequestMapping(value="{userId}/and", method=RequestMethod.GET)
-    public ResponseEntity<?> findUserAnd(@PathVariable int userId,
-                                         @CookieValue String access_token){
-        System.out.println(tokenProvider.isTokenExpired(access_token));
-        // 엑세스 토큰이 유효하지 않음
-        if(!tokenProvider.validToken(access_token)){
-            // 로그아웃 수행
-//            tokenService.deleteAllToken(userId, access_token);
-        }
-        // 엑세스 토큰 유효기간 지났을 경우
-        if(tokenProvider.isTokenExpired(access_token)){
-            // 리프레쉬 토큰을 이용해 재발급 시도
-            return ResponseEntity.status(401).build();
-        }
+    public ResponseEntity<?> findUserAnd(@PathVariable int userId){
+        System.out.println("/user/" + userId + "/and: " + userId);
         String userEmail = User.toTableName(userService.findById(userId).getUserEmail());
         List<AndDTO.Find> andDTOFindList = dynamicUserAndService.findAll(userEmail);
+        System.out.println(andDTOFindList);
         return ResponseEntity.ok(andDTOFindList);
     }
 

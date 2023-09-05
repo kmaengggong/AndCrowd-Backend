@@ -31,11 +31,9 @@ public class UserController {
     public ResponseEntity<?> findUserAsUser(@PathVariable int userId){//,
                                             //Principal principal){
         try{
-            String userEmail = userService.findById(userId).getUserEmail();
-            User user = userService.findByUserEmail(userEmail);
-            System.out.println("userEmail: " + userEmail);
-            System.out.println("User: " + user);
-            return ResponseEntity.ok(user);
+            String userNickname = userService.findById(userId).getUserNickname();
+            UserDTO.FindAsPublic findAsPublic = userService.findByUserNickname(userNickname);
+            return ResponseEntity.ok(findAsPublic);
         } catch(Exception e){
             return ResponseEntity.badRequest().body("User Not Found");
         }
