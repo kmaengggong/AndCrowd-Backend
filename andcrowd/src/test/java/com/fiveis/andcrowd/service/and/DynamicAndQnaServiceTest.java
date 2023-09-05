@@ -1,3 +1,4 @@
+
 package com.fiveis.andcrowd.service.and;
 
 import com.fiveis.andcrowd.dto.and.DynamicAndQnaDTO;
@@ -32,6 +33,7 @@ public class DynamicAndQnaServiceTest {
 
     }
 
+
 //    @Test
 //    @Transactional
 //    public void findAllNotDeletedTest(){
@@ -47,6 +49,7 @@ public class DynamicAndQnaServiceTest {
 //        assertEquals(2, findAllList.size());
 //
 //    }
+
 
     @Test
     @Transactional

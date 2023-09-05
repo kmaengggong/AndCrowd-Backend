@@ -4,12 +4,13 @@ import com.fiveis.andcrowd.dto.and.AndCategoryDTO;
 import com.fiveis.andcrowd.entity.and.AndCategory;
 import com.fiveis.andcrowd.service.and.AndCategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/andCategory{andId}") // 컨트롤러에 대한 기본 URL 경로 설정
+@RequestMapping("/andCategory") // 컨트롤러에 대한 기본 URL 경로 설정
 public class AndCategoryController {
 
     private final AndCategoryService andCategoryService;
@@ -26,7 +27,7 @@ public class AndCategoryController {
 
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public List<AndCategoryDTO.FindByCategoryId> getAllAndCategories() {
-        return andCategoryService.findAll();
+        return andCategoryService.findAllByIsDeletedFalse();
     }
 
     @RequestMapping(value = "/create", method = RequestMethod.POST)

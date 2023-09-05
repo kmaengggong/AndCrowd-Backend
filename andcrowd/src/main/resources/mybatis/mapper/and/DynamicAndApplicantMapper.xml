@@ -81,6 +81,13 @@
         WHERE and_apply_id = #{andApplyId}
     </update>
 
+    <update id="updateApplyStatus" parameterType="int">
+        UPDATE and_applicant_#{andId}
+        SET
+            and_apply_status = #{andApplyStatus}
+        WHERE and_apply_id = #{andApplyId}
+    </update>
+
     <delete id="deleteByAndApplicantId" parameterType="int">
         UPDATE and_applicant_#{andId}
         SET is_deleted = true

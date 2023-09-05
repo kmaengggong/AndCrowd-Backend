@@ -6,13 +6,12 @@ import com.fiveis.andcrowd.dto.crowd.CrowdOrderDetailsDTO;
 import com.fiveis.andcrowd.entity.and.And;
 import com.fiveis.andcrowd.entity.crowd.CrowdOrderDetails;
 import com.fiveis.andcrowd.entity.user.*;
-import com.fiveis.andcrowd.enums.Authority;
+import com.fiveis.andcrowd.enums.Role;
 import com.fiveis.andcrowd.service.and.AndService;
 import com.fiveis.andcrowd.service.crowd.CrowdOrderDetailsService;
 import com.fiveis.andcrowd.service.user.*;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -24,7 +23,6 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-import javax.xml.transform.Result;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -71,7 +69,7 @@ public class DynamicUserControllerTest {
     int userTos = 1;
     int userPrivacy = 1;
     int userMarketing = 1;
-    Authority authority = Authority.ROLE_ADMIN;
+    Role role = Role.ROLE_ADMIN;
 
     // 그 외 테스트 데이터
     int andId = 1;
@@ -93,7 +91,7 @@ public class DynamicUserControllerTest {
                 .userTos(userTos)
                 .userPrivacy(userPrivacy)
                 .userMarketing(userMarketing)
-                .authority(authority)
+                .authority(role)
                 .build());
 
         // And 테이블 중복 생성 및 중복 데이터 추가 시 오류
@@ -175,7 +173,7 @@ public class DynamicUserControllerTest {
                 .userTos(userTos)
                 .userPrivacy(userPrivacy)
                 .userMarketing(userMarketing)
-                .authority(authority)
+                .authority(role)
                 .build());
 
         dynamicUserFollowService.save(User.toTableName(userEmail),
