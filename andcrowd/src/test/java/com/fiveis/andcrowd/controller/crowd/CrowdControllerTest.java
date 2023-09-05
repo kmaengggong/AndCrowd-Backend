@@ -70,6 +70,7 @@ class CrowdControllerTest {
         String crowdTitle = "4번펀딩";
         String headerImg = "4번헤더";
         String url = "/crowd/create";
+        LocalDateTime publishedAt = LocalDateTime.now();
 
         Crowd newCrowd = Crowd.builder()
                 .crowdId(crowdId)
@@ -79,8 +80,9 @@ class CrowdControllerTest {
                 .crowdGoal(crowdGoal)
                 .crowdTitle(crowdTitle)
                 .headerImg(headerImg)
+                .publishedAt(publishedAt)
                 .build();
-        newCrowd.setCrowdEndDate(LocalDateTime.now());
+        newCrowd.setCrowdEndDate(LocalDateTime.of(2023,12,31,0,0));
 
         String url2 = "/crowd/list";
         // when
