@@ -2,6 +2,7 @@ package com.fiveis.andcrowd.service.and;
 
 import com.fiveis.andcrowd.dto.and.DynamicAndMemberDTO;
 import com.fiveis.andcrowd.dto.and.DynamicAndQnaReplyDTO;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,5 +16,7 @@ public interface DynamicAndMemberService {
     List<DynamicAndMemberDTO.FindByAndMemberId> findAll(int andId);
 
     void deleteById(int andId, int memberId);
+    void deleteByUserId(int andId, int userId);
+
     void update(DynamicAndMemberDTO.Update andMemberUpdateDTO);
 }

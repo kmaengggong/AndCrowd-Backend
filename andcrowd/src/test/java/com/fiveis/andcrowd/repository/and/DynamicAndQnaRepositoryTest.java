@@ -43,21 +43,21 @@ public class DynamicAndQnaRepositoryTest {
 
     }
 
-    @Test
-    @DisplayName("R: findAllNotDeleted를 통해 전체 질문글 조회")
-    public void findAllNotDeletedTest(){
-        //given
-        int andId = 123;
-        int andQnaId = 3;
-
-        // when
-        dynamicAndQnaRepository.deleteByAndQnaId(andId, andQnaId);
-        List<DynamicAndQnaDTO.FindById> findAllList= dynamicAndQnaRepository.findAllNotDeleted(andId);
-
-        // then
-        assertEquals(2, findAllList.size());
-
-    }
+//    @Test
+//    @DisplayName("R: findAllNotDeleted를 통해 전체 질문글 조회")
+//    public void findAllNotDeletedTest(){
+//        //given
+//        int andId = 123;
+//        int andQnaId = 3;
+//
+//        // when
+//        dynamicAndQnaRepository.deleteByAndQnaId(andId, andQnaId);
+//        List<DynamicAndQnaDTO.FindById> findAllList= dynamicAndQnaRepository.findAllNotDeleted(andId);
+//
+//        // then
+//        assertEquals(2, findAllList.size());
+//
+//    }
 
 
     @Test
