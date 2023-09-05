@@ -1,8 +1,14 @@
 package com.fiveis.andcrowd.config;
 
 import com.fiveis.andcrowd.config.jwt.TokenProvider;
+import com.fiveis.andcrowd.config.oauth.OAuth2AuthorizationRequestBasedOnCookieRepository;
+import com.fiveis.andcrowd.config.oauth.OAuth2UserCustomService;
+import com.fiveis.andcrowd.config.oauth.OAuth2SuccessHandler;
+import com.fiveis.andcrowd.repository.etc.RefreshTokenRepository;
 import com.fiveis.andcrowd.service.user.UserAuthorityService;
+import com.fiveis.andcrowd.service.user.UserService;
 import jakarta.servlet.DispatcherType;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,22 +21,29 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.CorsConfigurationSource;
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 
 @Configuration
+@RequiredArgsConstructor
 public class BasicSecurityConfig {
     private final UserDetailsService userDetailsService;
     private final TokenProvider tokenProvider;
+    private final OAuth2UserCustomService oauth2UserCustomService;
+    private final RefreshTokenRepository refreshTokenRepository;
+    private final UserService userService;
 
-    @Autowired
-    public BasicSecurityConfig(UserDetailsService userDetailsService,
-                               TokenProvider tokenProvider) {
-        this.userDetailsService = userDetailsService;
-        this.tokenProvider = tokenProvider;
-    }
+//    @Autowired
+//    public BasicSecurityConfig(UserDetailsService userDetailsService,
+//                               TokenProvider tokenProvider,
+//                               OAuth2UserCustomService oauth2UserCustomService,
+//                               RefreshTokenRepository refreshTokenRepository,
+//                               UserService userService){
+//        this.userDetailsService = userDetailsService;
+//        this.tokenProvider = tokenProvider;
+//        this.oauth2UserCustomService = oauth2UserCustomService;
+//        this.refreshTokenRepository = refreshTokenRepository;
+//        this.userService = userService;
+//    }
 
     // 정적 파일이나 .jsp 파일 등 스프링 시큐리티가 기본적으로 적용되지 않을 영역 설정하기.
     @Bean
@@ -47,7 +60,7 @@ public class BasicSecurityConfig {
         return http
                 .authorizeHttpRequests(authorizationConfig -> {
                     authorizationConfig
-                            .requestMatchers("/**")//"/login", "/signup", "/user")
+                            .requestMatchers("/**", "/login", "/signup", "/user")
                             .permitAll()
                             .anyRequest()
                             .authenticated();
@@ -55,6 +68,10 @@ public class BasicSecurityConfig {
                 .formLogin(formLoginConfig -> {
                     formLoginConfig
                             .disable(); // 토큰기반 로그인시에는 폼 로그인을 막아야 합니다.
+                })
+                .httpBasic(httpBasicConfig -> {
+                    httpBasicConfig
+                            .disable();
                 })
                 .logout(logoutConfig -> {
                     logoutConfig
@@ -69,12 +86,20 @@ public class BasicSecurityConfig {
                     csrfConfig
                             .disable();
                 })
+                .oauth2Login(oauth2Config -> {
+                    oauth2Config.loginPage("/login")
+                            .authorizationEndpoint(endpointConfig ->
+                                    endpointConfig.authorizationRequestRepository(oAuth2AuthorizationRequestBasedOnCookieRepository()))
+                            .successHandler(oAuth2SuccessHandler())
+                            .userInfoEndpoint(userInfoConfig ->
+                                    userInfoConfig
+                                            .userService(oauth2UserCustomService));
+                })
                 // Before시점(Request를 서버가 처리하기 직전 시점)에 해당 필터를 사용해 로그인을 검증하도록 설정
-                .addFilterBefore(tokenAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(tokenAuthenticationFilter(),
+                        UsernamePasswordAuthenticationFilter.class)
                 .build();
     }
-
-
 
     @Bean
     public AuthenticationManager authenticationManager(HttpSecurity http,
@@ -97,5 +122,18 @@ public class BasicSecurityConfig {
     @Bean
     public TokenAuthenticationFilter tokenAuthenticationFilter() {
         return new TokenAuthenticationFilter(tokenProvider);
+    }
+
+    @Bean
+    public OAuth2SuccessHandler oAuth2SuccessHandler() {
+        return new OAuth2SuccessHandler(tokenProvider,
+                refreshTokenRepository,
+                oAuth2AuthorizationRequestBasedOnCookieRepository(),
+                userService);
+    }
+
+    @Bean
+    public OAuth2AuthorizationRequestBasedOnCookieRepository oAuth2AuthorizationRequestBasedOnCookieRepository() {
+        return new OAuth2AuthorizationRequestBasedOnCookieRepository();
     }
 }

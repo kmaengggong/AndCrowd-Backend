@@ -5,7 +5,7 @@ spring:
       prefix: /WEB-INF/views/
       suffix: .jsp
   profiles:
-    active: db, jwt, cd
+    active: db, jwt, cd, oauth2
   datasource:
     # DB
     url: ${url}
@@ -20,16 +20,38 @@ spring:
       hibernate:
         format_sql: true
     show-sql: true
+  # aws
+  servlet:
+    multipart:
+      max-request-size: 10MB
+      max-file-size: 10MB
+
+  security:
+    oauth2:
+      client:
+        registration:
+          naver:
+            client-id: ${client-id}
+            client-secret: ${client-secret}
+            redirect-uri: ${redirect-uri}
+            client-name: ${client-name}
+            authorization-grant-type: ${authorization-grant-type}
+            scope: ${scope}
+
 
 # JWT
 jwt:
   issuer: ${issuer}
   secret_key: ${secret_key}
 
+# Oauth2
+
+
 #MyBatis
 mybatis:
   mapper-locations: classpath:mybatis/mapper/**/**.xml
 
+# s3 bucket
 cloud:
   aws:
     credentials:
@@ -42,7 +64,8 @@ cloud:
     s3:
       endpoint: https://kr.object.ncloudstorage.com
 #      endpoint: s3.ap-northeast-2.amazonaws.com
-      bucket: ${bucket}
+      chat-bucket: ${chat-bucket}
+      and-bucket: ${and-bucket}
 
 # Server Auto Reload
 #server:

@@ -1,6 +1,8 @@
 package com.fiveis.andcrowd.config.jwt;
 
+import com.fiveis.andcrowd.entity.etc.RefreshToken;
 import com.fiveis.andcrowd.entity.user.User;
+import com.fiveis.andcrowd.repository.etc.RefreshTokenRepository;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Header;
 import io.jsonwebtoken.Jwts;
@@ -19,8 +21,11 @@ import java.util.Set;
 @Service
 @RequiredArgsConstructor
 public class TokenProvider {
+    public static final Duration REFRESH_TOKEN_DURATION = Duration.ofDays(2); // 이틀(리프레시 토큰의 유효기간)
+    public static final Duration ACCESS_TOKEN_DURATION = Duration.ofSeconds(2); // 시간(억세스 토큰의 유효기간)
 
     private final JwtProperties jwtProperties;
+    private final RefreshTokenRepository refreshTokenRepository;
 
     public String generateToken(User user, Duration expiredAt){
         Date now = new Date();
@@ -35,10 +40,23 @@ public class TokenProvider {
                 .setIssuer(jwtProperties.getIssuer())
                 .setIssuedAt(now)
                 .setExpiration(expiry)
-                .setSubject(user.getUserEmail()) // 기본적으로는 아이디를 줍니다
-                .claim("userId", user.getUserId()) // 클레임에는 PK제공
+                .setSubject(user.getUserEmail())
+                .claim("userId", user.getUserId()) // 클레임에는 PK 제공
                 .signWith(SignatureAlgorithm.HS256, jwtProperties.getSecretKey())
                 .compact();
+    }
+
+    public void saveRefreshToken(int userId, String newRefreshToken){
+        RefreshToken refreshToken = refreshTokenRepository.findByUserId(userId);
+
+        if(refreshToken != null){
+            refreshToken.update(newRefreshToken);
+        }
+        else{
+            refreshToken = new RefreshToken(userId, newRefreshToken);
+        }
+
+        refreshTokenRepository.save(refreshToken);
     }
 
     public boolean validToken(String token){
@@ -52,6 +70,11 @@ public class TokenProvider {
         }
     }
 
+    public boolean isRefreshTokenValid(String refreshToken){
+        if(!validToken(refreshToken)) return false;
+        return refreshTokenRepository.findByRefreshToken(refreshToken) != null;
+    }
+
     public Authentication getAuthentication(String token){
         Claims claims = getClaims(token);
         Set<SimpleGrantedAuthority> authorities =
@@ -62,9 +85,23 @@ public class TokenProvider {
                         "", authorities), token, authorities);
     }
 
-    public Long getUserId(String token) {
+    public Integer getUserId(String token) {
         Claims claims = getClaims(token);
-        return claims.get("id", Long.class);
+        return claims.get("userId", Integer.class);
+    }
+
+    public String getUserEmail(String token){
+        Claims claims = getClaims(token);
+        return claims.get("sub", String.class);
+    }
+
+    public Date getExpirationDate(String token){
+        Claims claims = getClaims(token);
+        return claims.getExpiration();
+    }
+
+    public boolean isTokenExpired(String token){
+        return !getExpirationDate(token).before(new Date());
     }
 
     private Claims getClaims(String token){
