@@ -19,6 +19,8 @@ public interface DynamicAndMemberRepository {
 
     void deleteById(@Param("andId") int andId, @Param("memberId") int memberId);
 
+    void deleteByUserId(@Param("andId") int andId, @Param("userId") int userId);
+
     void createAndMemberTable ();
     void dropAndMemberTable();
     void insertTestData();

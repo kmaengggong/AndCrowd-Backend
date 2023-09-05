@@ -43,6 +43,11 @@ public class DynamicAndMemberServiceImpl implements DynamicAndMemberService {
     }
 
     @Override
+    public void deleteByUserId(int andId, int userId) {
+        dynamicAndMemberRepository.deleteByUserId(andId, userId);
+    }
+
+    @Override
     public void update(DynamicAndMemberDTO.Update andMemberDTO) {
         dynamicAndMemberRepository.update(andMemberDTO);
     }

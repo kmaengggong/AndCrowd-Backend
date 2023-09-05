@@ -16,6 +16,7 @@ public interface DynamicAndApplicantService {
 
     void save(DynamicAndApplicantDTO.Update andApplicantInsertDTO);
     void update(DynamicAndApplicantDTO.Update andApplicantUpdateDTO);
+    void updateApplyStatus(@Param("andId") int andId, @Param("andApplyId") int andApplyId, @Param("andApplyStatus") int andApplyStatus);
     void deleteByAndApplicantId(@Param("andId") int andId, @Param("andApplyId") int andApplyId);
 
 }

@@ -52,6 +52,15 @@
             member_id = #{memberId}
      </delete>
 
+    <delete id="deleteByUserId" parameterType="int">
+        UPDATE
+            and_member_#{andId}
+        SET
+            is_deleted = true
+        WHERE
+            user_id = #{userId}
+    </delete>
+
     <insert id="createAndMemberTable">
         CREATE TABLE and_member_1111 (
         member_id INT AUTO_INCREMENT PRIMARY KEY,
