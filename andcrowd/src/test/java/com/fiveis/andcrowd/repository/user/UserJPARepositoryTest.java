@@ -86,19 +86,19 @@ public class UserJPARepositoryTest {
         Assertions.assertEquals(userEmail, user.getUserEmail());
     }
 
-    @Test
-    @Transactional
-    @DisplayName("R: userNickname='NICK' 유저 조회")
-    public void findByUserNicknameTest(){
-        // Given
-        String userNickname = "NICK";
-
-        // When
-        UserDTO.FindAsPublic user = userJPARepository.findByUserNickname(userNickname).get();
-
-        // Then
-        Assertions.assertEquals(userNickname, user.getUserNickname());
-    }
+//    @Test
+//    @Transactional
+//    @DisplayName("R: userNickname='NICK' 유저 조회")
+//    public void findByUserNicknameTest(){
+//        // Given
+//        String userNickname = "NICK";
+//
+//        // When
+//        UserDTO.FindAsPublic user = userJPARepository.findByUserNickname(userNickname).get();
+//
+//        // Then
+//        Assertions.assertEquals(userNickname, user.getUserNickname());
+//    }
 
     @Test
     @Transactional

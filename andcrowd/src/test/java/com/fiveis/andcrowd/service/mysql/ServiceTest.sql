@@ -116,3 +116,56 @@ VALUES
 
 DROP TABLE and_member_1111;
 
+
+
+/* CROWD */
+INSERT INTO crowd VALUES
+(null, 1, 1, 1, '1번본문', now(), 10000, 'user/img/img.png', 'user/img/img.png', 'user/img/img.png', 'user/img/img.png', 'user/img/img.png', 1, '1번제목', 'user/img/img.png', 0, 100, now(), now(), 1, 0),
+(null, 2, 2, 2, '2번본문', now(), 20000, 'user/img/img2.png', 'user/img/img2.png', 'user/img/img2.png', 'user/img/img2.png', 'user/img/img2.png', 2, '2번제목', 'user/img/img2.png', 0, 200, now(), now(), 2, 0),
+(null, 3, 3, 3, '3번본문', now(), 30000, 'user/img/img3.png', 'user/img/img3.png', 'user/img/img3.png', 'user/img/img3.png', 'user/img/img3.png', 3, '3번제목', 'user/img/img3.png', 0, 300, now(), now(), 3, 0),
+(null, 4, 4, 4, '4번본문', now(), 40000, 'user/img/img4.png', 'user/img/img4.png', 'user/img/img4.png', 'user/img/img4.png', 'user/img/img4.png', 4, '4번제목', 'user/img/img4.png', 0, 400, now(), now(), 4, 0);
+
+/* CROWD_CATEGORY */
+INSERT INTO crowd_category VALUES
+(null, "게임"),
+(null, "제조"),
+(null, "프로그램"),
+(null, "운동");
+
+/* CROWD_BOARD */
+INSERT INTO crowd_board_1 VALUES
+(null, 1, 0, "1번글제목", "1번글본문", "user/img/img1.png", now(), now(), 0, false),
+(null, 1, 0, "2번글제목", "2번글본문", "user/img/img2.png", now(), now(), 0, true),
+(null, 1, 0, "3번글제목", "3번글본문", "user/img/img3.png", now(), now(), 0, false);
+
+/* CROWD_QNA */
+INSERT INTO crowd_qna_1 VALUES
+(null, 1, "1번글제목", "1번글본문", now(), now(), false),
+(null, 1, "2번글제목", "2번글본문", now(), now(), true),
+(null, 1, "3번글제목", "3번글본문", now(), now(), false);
+
+/* CROWD_QNA_REPLY */
+INSERT INTO crowd_qna_reply_1 VALUES
+(null, 1, "1번댓글", now(), false),
+(null, 1, "2번댓글", now(), true),
+(null, 1, "3번댓글", now(), false),
+(null, 2, "4번댓글", now(), true),
+(null, 3, "5번댓글", now(), true);
+
+/* CROWD_ORDER_DETAILS */
+INSERT INTO crowd_order_details VALUES
+   (null, 1, 0, '서울시 강남구', '23-08-01', '김자바', '01012345678', '카드결제', 1, 1, 1),
+    (null, 2, 0, '경기도 안산시', '23-08-02', '김파이', '01045678900', '카드결제', 1, 2, 2),
+    (null, 3, 0, '서울시 강북구', '23-08-01', '김코드', '01088889999', '계좌송금', 1, 3, 3);
+
+/* REWARD */
+INSERT INTO reward VALUES
+   (null, 1, '슈퍼얼리버드1', '기본후원1', 1000, 5),
+    (null, 1, '슈퍼얼리버드2', '기본후원2', 10000, 5),
+    (null, 1, '슈퍼얼리버드3', '기본후원3', 50000, 5);
+
+/* SPONSOR */
+INSERT INTO sponsor VALUES
+      (null, 1, 1),
+        (null, 1, 2),
+        (null, 1, 3);

@@ -9,10 +9,10 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 public class DynamicUserAnd {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int uAndId;  // 유저 참가 모임 ID
 
-    @Column(nullable = false)
+//    @Column(nullable = false)
     private int andId;  // 참여한 모임 ID
 }

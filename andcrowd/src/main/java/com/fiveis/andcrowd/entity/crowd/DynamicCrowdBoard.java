@@ -26,7 +26,5 @@ public class DynamicCrowdBoard {
 
     private LocalDateTime updatedAt;
 
-    private int viewCount;
-
     private boolean isDeleted;
 }

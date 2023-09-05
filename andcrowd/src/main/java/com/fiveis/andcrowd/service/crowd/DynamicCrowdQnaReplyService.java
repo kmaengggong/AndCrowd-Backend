@@ -12,6 +12,8 @@ public interface DynamicCrowdQnaReplyService {
 
     List<DynamicCrowdQnaReplyDTO.Find> findAll(@Param("crowdId") int crowdId, @Param("crowdQnaId") int crowdQnaId);
 
+    List<DynamicCrowdQnaReplyDTO.Find> findAllByIsDeletedFalse(@Param("crowdId") int crowdId, @Param("crowdQnaId") int crowdQnaId);
+
     DynamicCrowdQnaReplyDTO.Find findById(@Param("crowdId") int crowdId, @Param("qnaReplyId") int qnaReplyId);
 
     void deleteByQnaReplyId(@Param("crowdId") int crowdId, @Param("qnaReplyId") int qnaReplyId);

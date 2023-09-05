@@ -38,6 +38,26 @@
             crowdBoardId DESC
     </select>
 
+    <select id="findAllByIsDeletedFalse">
+        SELECT
+            crowd_board_id AS crowdBoardId ,
+            crowd_id AS crowdId ,
+            crowd_board_tag AS crowdBoardTag ,
+            crowd_board_title AS crowdBoardTitle ,
+            crowd_board_content AS crowdBoardContent ,
+            crowd_img AS crowdImg ,
+            publishe_at AS publishedAt ,
+            updated_at AS updatedAt ,
+            view_count AS viewCount ,
+            is_deleted AS isDeleted
+        FROM
+            crowd_board_#{crowd_id}
+        WHERE
+            is_deleted = false
+        ORDER BY
+            crowdBoardId DESC
+    </select>
+
     <select id="findById" parameterType="int">
         SELECT
             crowd_board_id AS crowdBoardId ,
@@ -83,5 +103,12 @@
             is_deleted = true
         WHERE
             crowd_board_id = #{crowdBoardId}
+    </delete>
+
+    <delete id="deleteByCrowdId" parameterType="int">
+        UPDATE
+            crowd_board_#{crowdId}
+        SET
+            is_deleted = true
     </delete>
 </mapper>

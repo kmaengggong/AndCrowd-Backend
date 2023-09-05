@@ -1,6 +1,7 @@
 package com.fiveis.andcrowd.controller.crowd;
 
 import com.fiveis.andcrowd.dto.crowd.DynamicCrowdQnaDTO;
+import com.fiveis.andcrowd.service.crowd.DynamicCrowdQnaReplyService;
 import com.fiveis.andcrowd.service.crowd.DynamicCrowdQnaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -9,10 +10,11 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/crowd/{crowdId}/qna")
 public class DynamicCrowdQnaController {
 
-    private DynamicCrowdQnaService dynamicCrowdQnaService;
+    private final DynamicCrowdQnaService dynamicCrowdQnaService;
 
     @Autowired
     public DynamicCrowdQnaController(DynamicCrowdQnaService dynamicCrowdQnaService){
@@ -21,7 +23,7 @@ public class DynamicCrowdQnaController {
 
     @RequestMapping(value = "/all", method = RequestMethod.GET)
     public ResponseEntity<List<DynamicCrowdQnaDTO.Find>> findAllQnas(@PathVariable int crowdId){
-        List<DynamicCrowdQnaDTO.Find> qnas = dynamicCrowdQnaService.findAll(crowdId);
+        List<DynamicCrowdQnaDTO.Find> qnas = dynamicCrowdQnaService.findAllByIsDeletedFalse(crowdId);
         return ResponseEntity.ok().body(qnas);
     }
 

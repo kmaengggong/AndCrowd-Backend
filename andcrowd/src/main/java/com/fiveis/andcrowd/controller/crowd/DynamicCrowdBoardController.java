@@ -9,10 +9,11 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/crowd/{crowdId}/board")
 public class DynamicCrowdBoardController {
 
-    private DynamicCrowdBoardService dynamicCrowdBoardService;
+    private final DynamicCrowdBoardService dynamicCrowdBoardService;
 
     @Autowired
     public DynamicCrowdBoardController(DynamicCrowdBoardService dynamicCrowdBoardService){
@@ -21,7 +22,7 @@ public class DynamicCrowdBoardController {
 
     @RequestMapping(value = "/all", method = RequestMethod.GET)
     public ResponseEntity<List<DynamicCrowdBoardDTO.Find>> findAllBoards(@PathVariable int crowdId){
-        List<DynamicCrowdBoardDTO.Find> boards = dynamicCrowdBoardService.findAll(crowdId);
+        List<DynamicCrowdBoardDTO.Find> boards = dynamicCrowdBoardService.findAllByIsDeletedFalse(crowdId);
 
         return ResponseEntity.ok().body(boards);
     }

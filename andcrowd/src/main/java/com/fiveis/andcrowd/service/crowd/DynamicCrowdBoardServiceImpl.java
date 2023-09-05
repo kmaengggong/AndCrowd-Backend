@@ -27,6 +27,11 @@ public class DynamicCrowdBoardServiceImpl implements DynamicCrowdBoardService{
     }
 
     @Override
+    public List<DynamicCrowdBoardDTO.Find> findAllByIsDeletedFalse(int crowdId){
+        return dynamicCrowdBoardRepository.findAllByIsDeletedFalse(crowdId);
+    }
+
+    @Override
     public DynamicCrowdBoardDTO.Find findById(int crowdId, int crowdBoardId) {
         return dynamicCrowdBoardRepository.findById(crowdId, crowdBoardId);
     }
@@ -43,6 +48,8 @@ public class DynamicCrowdBoardServiceImpl implements DynamicCrowdBoardService{
 
     @Override
     public void update(DynamicCrowdBoardDTO.Update dynamicCrowdBoardDTOUpdate) {
+
+
         dynamicCrowdBoardRepository.update(dynamicCrowdBoardDTOUpdate);
     }
 }

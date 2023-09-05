@@ -38,4 +38,32 @@ public class CrowdCategoryServiceImpl implements CrowdCategoryService{
             CrowdCategory crowdCategory = optioanlCrowdCategory.get();
             return CrowdCategoryDTO.Find.convertToCrowdCategoryFindDTO(crowdCategory);
     }
+
+    @Override
+    public void save(CrowdCategoryDTO.Save crowdCategoryDTOSave) {
+        crowdCategoryJPARepository.save(CrowdCategoryDTO.Save
+                                        .convertToCrowdCategoryEntity(crowdCategoryDTOSave));
+    }
+
+    @Override
+    public void update(CrowdCategoryDTO.Update crowdCategoryDTOUpdate) {
+
+        // convertToCrowdCategoryUpdateDTO 메서드를 통해 Entity를 DTO로 변환
+        CrowdCategoryDTO.Update category = CrowdCategoryDTO.Update.convertToCrowdCategoryUpdateDTO(
+                crowdCategoryJPARepository.findById(crowdCategoryDTOUpdate.getCrowdCategoryId()).get());
+
+        // DTO로 변환된 객체에 수정내용 반영
+        category.setCrowdCategoryName(crowdCategoryDTOUpdate.getCrowdCategoryName());
+
+        // 수정된 객체를 Entity 형태로 변환
+        CrowdCategory crowdCategoryEntity = CrowdCategoryDTO.Update.convertToCrowdCategoryEntity(category);
+
+        // save 기능 수행
+        crowdCategoryJPARepository.save(crowdCategoryEntity);
+    }
+
+    @Override
+    public void deleteById(int crowdCategoryId) {
+        crowdCategoryJPARepository.deleteById(crowdCategoryId);
+    }
 }

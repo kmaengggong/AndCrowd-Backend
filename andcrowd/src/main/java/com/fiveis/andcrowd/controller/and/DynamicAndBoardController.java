@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/andBoard{andId}")
+@RequestMapping("/and/{andId}/board")
 public class DynamicAndBoardController {
 
     private final DynamicAndBoardService dynamicAndBoardService;

@@ -41,10 +41,31 @@ public class DynamicCrowdBoardControllerTest {
         this.mockMvc = MockMvcBuilders.webAppContextSetup(context).build();
     }
 
+
+//    findAll 기능 제외로 인한 주석처리
+//    @Test
+//    @Transactional
+//    @DisplayName("crowd 1번글의 board 전체글 조회시 2번째 요소의 title은 1번글제목, content는 1번글본문 이다.")
+//    void findAll() throws Exception {
+//        // given
+//        int crowdId = 1;
+//        String title = "1번글제목";
+//        String content = "1번글본문";
+//        String url = "/crowd/1/board/all";
+//
+//        // when
+//        final ResultActions result = mockMvc.perform(get(url).accept(MediaType.APPLICATION_JSON));
+//
+//        result
+//                .andExpect(status().isOk())
+//                .andExpect(jsonPath("$[2].crowdBoardTitle").value(title))
+//                .andExpect(jsonPath("$[2].crowdBoardContent").value(content));
+//    }
+
     @Test
     @Transactional
     @DisplayName("crowd 1번글의 board 전체글 조회시 2번째 요소의 title은 1번글제목, content는 1번글본문 이다.")
-    void findAll() throws Exception {
+    void findAllByIsDeletedFalseTest() throws Exception {
         // given
         int crowdId = 1;
         String title = "1번글제목";
@@ -56,8 +77,8 @@ public class DynamicCrowdBoardControllerTest {
 
         result
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$[2].crowdBoardTitle").value(title))
-                .andExpect(jsonPath("$[2].crowdBoardContent").value(content));
+                .andExpect(jsonPath("$[1].crowdBoardTitle").value(title))
+                .andExpect(jsonPath("$[1].crowdBoardContent").value(content));
     }
 
     @Test

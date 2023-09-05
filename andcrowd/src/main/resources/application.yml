@@ -44,6 +44,20 @@ jwt:
 mybatis:
   mapper-locations: classpath:mybatis/mapper/**/**.xml
 
+cloud:
+  aws:
+    credentials:
+      access-key: ${access}
+      secret-key: ${secret}
+    stack:
+      auto: false
+    region:
+      static: ap-northeast-2
+    s3:
+      endpoint: https://kr.object.ncloudstorage.com
+#      endpoint: s3.ap-northeast-2.amazonaws.com
+      bucket: ${bucket}
+
 # Server Auto Reload
 #server:
 #  devtools:

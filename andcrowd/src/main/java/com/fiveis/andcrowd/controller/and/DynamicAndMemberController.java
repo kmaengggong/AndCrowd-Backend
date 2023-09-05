@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/dynamicAndMember/{andId}")
+    @RequestMapping("/and/{andId}/member")
 public class DynamicAndMemberController {
 
     private final DynamicAndMemberService dynamicAndMemberService;
@@ -24,17 +24,15 @@ public class DynamicAndMemberController {
     }
 
     @RequestMapping(value = "/{memberId}", method = RequestMethod.GET)
-    public DynamicAndMemberDTO.FindByAndMemberId getDynamicAndMemberById(
+    public DynamicAndMemberDTO.FindByAndMemberId findByAndMemberId(
             @PathVariable("andId") int andId,
             @PathVariable("memberId") int memberId
     ) {
         return dynamicAndMemberService.findByAndMemberId(andId, memberId);
     }
 
-    @RequestMapping(value = "/members", method = RequestMethod.GET)
-    public List<DynamicAndMemberDTO.FindByAndMemberId> getAllDynamicAndMembers(
-            @PathVariable("andId") int andId
-    ) {
+    @RequestMapping(value = "/list", method = RequestMethod.GET)
+    public List<DynamicAndMemberDTO.FindByAndMemberId> findAll (@PathVariable("andId") int andId) {
         return dynamicAndMemberService.findAll(andId);
     }
 

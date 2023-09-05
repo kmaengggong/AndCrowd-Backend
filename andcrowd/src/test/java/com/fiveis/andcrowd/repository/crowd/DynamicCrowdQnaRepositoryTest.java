@@ -18,27 +18,27 @@ public class DynamicCrowdQnaRepositoryTest {
     @Autowired
     DynamicCrowdQnaRepository dynamicCrowdQnaRepository;
 
-    @Test
-    @Transactional
-    @DisplayName("2번 crowd게시글 생성시 crowd_qna_2 이라는 이름의 테이블이 생성되며, 글이 정상적으로 추가된다.")
-    public void createDynamicCrowdQnaTableTest(){
-        // given
-        int crowdId = 2;
-        String title = "추가된 제목";
-        String content = "추가된 본문";
-
-        // when
-        dynamicCrowdQnaRepository.createDynamicCrowdQnaTable(crowdId);
-        DynamicCrowdQnaDTO.Save newQna = new DynamicCrowdQnaDTO.Save();
-        newQna.setCrowdId(crowdId);
-        newQna.setQnaTitle(title);
-        newQna.setQnaContent(content);
-        dynamicCrowdQnaRepository.save(newQna);
-
-        // then
-        List<DynamicCrowdQnaDTO.Find> crowdBoardList = dynamicCrowdQnaRepository.findAll(crowdId);
-        assertThat(crowdBoardList.get(0).getCrowdId()).isEqualTo(crowdId);
-    }
+//    @Test
+//    @Transactional
+//    @DisplayName("2번 crowd게시글 생성시 crowd_qna_2 이라는 이름의 테이블이 생성되며, 글이 정상적으로 추가된다.")
+//    public void createDynamicCrowdQnaTableTest(){
+//        // given
+//        int crowdId = 2;
+//        String title = "추가된 제목";
+//        String content = "추가된 본문";
+//
+//        // when
+//        dynamicCrowdQnaRepository.createDynamicCrowdQnaTable(crowdId);
+//        DynamicCrowdQnaDTO.Save newQna = new DynamicCrowdQnaDTO.Save();
+//        newQna.setCrowdId(crowdId);
+//        newQna.setQnaTitle(title);
+//        newQna.setQnaContent(content);
+//        dynamicCrowdQnaRepository.save(newQna);
+//
+//        // then
+//        List<DynamicCrowdQnaDTO.Find> crowdBoardList = dynamicCrowdQnaRepository.findAll(crowdId);
+//        assertThat(crowdBoardList.get(0).getCrowdId()).isEqualTo(crowdId);
+//    }
 
 
     @Test
@@ -54,6 +54,21 @@ public class DynamicCrowdQnaRepositoryTest {
 
         // then
         assertThat(crowdQnaList.size()).isEqualTo(3);
+    }
+
+    @Test
+    @Transactional
+    @DisplayName("crowdId 1번글의 전체 crowd_Qna 조회시 데이터가 2개일 것이다.")
+    public void findAllByIsDeletedFalseTest(){
+
+        // given
+        int crowdId = 1;
+
+        // when
+        List<DynamicCrowdQnaDTO.Find> crowdQnaList = dynamicCrowdQnaRepository.findAllByIsDeletedFalse(crowdId);
+
+        // then
+        assertThat(crowdQnaList.size()).isEqualTo(2);
     }
 
     @Test

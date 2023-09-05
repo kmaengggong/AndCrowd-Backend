@@ -18,8 +18,8 @@ public class DynamicCrowdRewardServiceImpl implements DynamicCrowdRewardService 
     }
 
     @Override
-    public void createDynamicCrowdRewardTable(int crowdId) {
-        dynamicCrowdRewardRepository.createDynamicCrowdRewardTable(crowdId);
+    public void createDynamicCrowdRewardTable() {
+        dynamicCrowdRewardRepository.createDynamicCrowdRewardTable();
     }
 
     @Override
@@ -49,6 +49,16 @@ public class DynamicCrowdRewardServiceImpl implements DynamicCrowdRewardService 
 
     @Override
     public void deleteByCrowdRewardId(int crowdId, int rewardId) {
-        dynamicCrowdRewardRepository.deleteByRewardId(crowdId, rewardId);
+        dynamicCrowdRewardRepository.deleteByCrowdRewardId(crowdId, rewardId);
+        DynamicCrowdRewardDTO.FindAllById crowdRewardDTO = dynamicCrowdRewardRepository.findByRewardId(crowdId, rewardId);
+        if(crowdRewardDTO != null && !crowdRewardDTO.isDeleted()) {
+            DynamicCrowdRewardDTO.Update updateDTO = DynamicCrowdRewardDTO.Update.builder()
+                    .rewardId(rewardId)
+                    .crowdId(crowdId)
+                    .isDeleted(true)
+                    .build();
+
+            dynamicCrowdRewardRepository.update(updateDTO);
+        }
     }
 }

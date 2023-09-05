@@ -36,8 +36,9 @@ public class AdPaymentDTO {
     }
 
     public static AdPaymentDTO.Find converToAdPaymentDTOFind(AdPayment adPayment){
-        return AdPaymentDTO.Find.builder()
+        return Find.builder()
                 .adPaymentId(adPayment.getAdPaymentId())
+                .adId(adPayment.getAdId())
                 .userId(adPayment.getUserId())
                 .projectId(adPayment.getProjectId())
                 .projectType(adPayment.getProjectId())

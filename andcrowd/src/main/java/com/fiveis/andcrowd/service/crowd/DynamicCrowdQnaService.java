@@ -12,6 +12,8 @@ public interface DynamicCrowdQnaService {
 
     List<DynamicCrowdQnaDTO.Find> findAll(int crowdId);
 
+    List<DynamicCrowdQnaDTO.Find> findAllByIsDeletedFalse(int crowdId);
+
     DynamicCrowdQnaDTO.Find findById(@Param("crowdId") int crowdId, @Param("crowdQnaId") int crowdQnaId);
 
     void deleteByCrowdQnaId(@Param("crowdId") int crowdId, @Param("crowdQnaId") int crowdQnaId);
@@ -19,4 +21,7 @@ public interface DynamicCrowdQnaService {
     void save(DynamicCrowdQnaDTO.Save dynamicCrowdQnaDTOSave);
 
     void update(DynamicCrowdQnaDTO.Update dynamicCrowdBoardDTOUpdate);
+
+    void deleteAllByCrowdId(@Param("crowdId") int crowdId);
+
 }

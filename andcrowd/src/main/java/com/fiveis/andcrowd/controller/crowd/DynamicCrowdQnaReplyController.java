@@ -9,9 +9,10 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/crowd/{crowdId}/qna/{crowdQnaId}/qnareply")
 public class DynamicCrowdQnaReplyController {
-    private DynamicCrowdQnaReplyService dynamicCrowdQnaReplyService;
+    private final DynamicCrowdQnaReplyService dynamicCrowdQnaReplyService;
 
     @Autowired
     public DynamicCrowdQnaReplyController(DynamicCrowdQnaReplyService dynamicCrowdQnaReplyService){
@@ -21,7 +22,7 @@ public class DynamicCrowdQnaReplyController {
     @RequestMapping(value = "/all", method = RequestMethod.GET)
     public ResponseEntity<List<DynamicCrowdQnaReplyDTO.Find>> findAllQnaReplies(@PathVariable int crowdId,
                                                                                @PathVariable int crowdQnaId){
-        List<DynamicCrowdQnaReplyDTO.Find> replies = dynamicCrowdQnaReplyService.findAll(crowdId, crowdQnaId);
+        List<DynamicCrowdQnaReplyDTO.Find> replies = dynamicCrowdQnaReplyService.findAllByIsDeletedFalse(crowdId, crowdQnaId);
         return ResponseEntity.ok().body(replies);
     }
 

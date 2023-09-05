@@ -29,6 +29,11 @@ public class DynamicCrowdQnaReplyServiceImpl implements DynamicCrowdQnaReplyServ
     }
 
     @Override
+    public List<DynamicCrowdQnaReplyDTO.Find> findAllByIsDeletedFalse(int crowdId, int crowdQnaId){
+        return dynamicCrowdQnaReplyRepository.findAllByIsDeletedFalse(crowdId, crowdQnaId);
+    }
+
+    @Override
     public DynamicCrowdQnaReplyDTO.Find findById(int crowdId, int qnaReplyId) {
         return dynamicCrowdQnaReplyRepository.findById(crowdId, qnaReplyId);
     }
@@ -47,4 +52,6 @@ public class DynamicCrowdQnaReplyServiceImpl implements DynamicCrowdQnaReplyServ
     public void update(DynamicCrowdQnaReplyDTO.Update dynamicCrowdBoardReplyDTOUpdate) {
         dynamicCrowdQnaReplyRepository.update(dynamicCrowdBoardReplyDTOUpdate);
     }
+
+
 }

@@ -5,6 +5,7 @@ import com.fiveis.andcrowd.repository.and.DynamicAndQnaReplyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -39,11 +40,14 @@ public class DynamicAndQnaReplyServiceImpl implements DynamicAndQnaReplyService{
 
     @Override
     public void save(DynamicAndQnaReplyDTO.Update andReplySaveDTO) {
+        andReplySaveDTO.setPublishedAt(LocalDateTime.now());
+        andReplySaveDTO.setUpdatedAt(LocalDateTime.now());
         dynamicAndQnaReplyRepository.save(andReplySaveDTO);
     }
 
     @Override
     public void update(DynamicAndQnaReplyDTO.Update andReplyUpdateDTO) {
+        andReplyUpdateDTO.setUpdatedAt(LocalDateTime.now());
         dynamicAndQnaReplyRepository.update(andReplyUpdateDTO);
     }
 
@@ -55,5 +59,10 @@ public class DynamicAndQnaReplyServiceImpl implements DynamicAndQnaReplyService{
     @Override
     public void deleteByAndQnaId(int andId, int andQnaId) {
         dynamicAndQnaReplyRepository.deleteByAndQnaId(andId, andQnaId);
+    }
+
+    @Override
+    public void deleteAll(int andId) {
+        dynamicAndQnaReplyRepository.deleteAll(andId);
     }
 }
