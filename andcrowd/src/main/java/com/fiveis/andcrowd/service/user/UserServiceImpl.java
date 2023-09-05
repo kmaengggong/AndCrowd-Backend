@@ -5,7 +5,9 @@ import com.fiveis.andcrowd.entity.user.User;
 import com.fiveis.andcrowd.repository.user.*;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -15,20 +17,20 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
     private final UserJPARepository userJPARepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
-    private DynamicUserAndRepository dynamicUserAndRepository;
-    private DynamicUserFollowRepository dynamicUserFollowRepository;
-    private DynamicUserLikeRepository dynamicUserLikeRepository;
-    private DynamicUserMakerRepository dynamicUserMakerRepository;
-    private DynamicUserOrderRepository dynamicUserOrderRepository;
+    private final DynamicUserAndRepository dynamicUserAndRepository;
+    private final DynamicUserFollowRepository dynamicUserFollowRepository;
+    private final DynamicUserLikeRepository dynamicUserLikeRepository;
+    private final DynamicUserMakerRepository dynamicUserMakerRepository;
+    private final DynamicUserOrderRepository dynamicUserOrderRepository;
 
     @Autowired
     public UserServiceImpl(UserJPARepository userJPARepository,
-                           BCryptPasswordEncoder bCryptPasswordEncoder,
-                           DynamicUserAndRepository dynamicUserAndRepository,
-                           DynamicUserFollowRepository dynamicUserFollowRepository,
-                           DynamicUserLikeRepository dynamicUserLikeRepository,
-                           DynamicUserMakerRepository dynamicUserMakerRepository,
-                           DynamicUserOrderRepository dynamicUserOrderRepository){
+                           @Lazy BCryptPasswordEncoder bCryptPasswordEncoder,
+                       DynamicUserAndRepository dynamicUserAndRepository,
+                       DynamicUserFollowRepository dynamicUserFollowRepository,
+                       DynamicUserLikeRepository dynamicUserLikeRepository,
+                       DynamicUserMakerRepository dynamicUserMakerRepository,
+                       DynamicUserOrderRepository dynamicUserOrderRepository){
         this.userJPARepository = userJPARepository;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
         this.dynamicUserAndRepository = dynamicUserAndRepository;
@@ -57,9 +59,9 @@ public class UserServiceImpl implements UserService {
         return UserDTO.convertToFindAsAdminDTO(userJPARepository.findById(userId).get());
     }
 
-    public UserDTO.FindAsUser findByUserEmail(String userEmail){
+    public User findByUserEmail(String userEmail){
         if(userJPARepository.findByUserEmail(userEmail).isEmpty()) return null;
-        return UserDTO.convertToFindAsUserDTO(userJPARepository.findByUserEmail(userEmail).get());
+        return userJPARepository.findByUserEmail(userEmail).get();
     }
 
     public UserDTO.FindAsPublic findByUserNickname(String userNickname){
@@ -73,9 +75,21 @@ public class UserServiceImpl implements UserService {
     }
 
     @Transactional
-    public void save(User user) {
-        user.setUserPassword(bCryptPasswordEncoder.encode(user.getUserPassword()));
-        userJPARepository.save(user);
+    public void save(User user) throws Exception{
+        if(userJPARepository.findByUserEmail(user.getUserEmail()).isPresent()){
+            throw new Exception("Exception: Email already exist");
+        }
+        if(userJPARepository.findByUserNickname(user.getUserNickname()).isPresent()){
+            throw new Exception("Exception: Nickname already exist");
+        }
+        User newUser = User.builder()
+                .userEmail(user.getUserEmail())
+                .userNickname(user.getUserNickname())
+                .userPassword(user.getUserPassword())
+                .build();
+
+        newUser.passwordEncode(bCryptPasswordEncoder);
+        userJPARepository.save(newUser);
 
         // User 생성 시 동적 테이블 자동 생성
         String userEmail = User.toTableName(user.getUserEmail());
@@ -91,7 +105,8 @@ public class UserServiceImpl implements UserService {
         User user = userJPARepository.findByUserEmail(userUpdateDTO.getUserEmail()).get();
 
         if(userUpdateDTO.getUserPassword() != null){
-            user.setUserPassword(bCryptPasswordEncoder.encode(userUpdateDTO.getUserPassword()));
+            user.setUserPassword(userUpdateDTO.getUserPassword());
+            user.passwordEncode(bCryptPasswordEncoder);
         }
         if(userUpdateDTO.getUserNickname() != null){
             user.setUserNickname(userUpdateDTO.getUserNickname());

@@ -11,10 +11,10 @@ public interface UserService {
     List<UserDTO.FindAsPublic> findAll();
     List<UserDTO.FindAsUser> findAllByUserKorName(String userKorName);
     UserDTO.FindAsAdmin findById(int userId);
-    UserDTO.FindAsUser findByUserEmail(String userEmail);
+    User findByUserEmail(String userEmail);
     UserDTO.FindAsPublic findByUserNickname(String userNickname);
     void deleteByUserEmail(String userEmail);
-    void save(User user);
+    void save(User user) throws Exception;
     void update(UserDTO.Update user);
     User getByCredentials(String userEmail);
 }

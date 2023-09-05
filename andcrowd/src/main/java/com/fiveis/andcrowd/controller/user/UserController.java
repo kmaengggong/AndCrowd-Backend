@@ -1,20 +1,14 @@
 package com.fiveis.andcrowd.controller.user;
 
-import com.fiveis.andcrowd.config.jwt.TokenProvider;
-import com.fiveis.andcrowd.dto.etc.AccessTokenResponseDTO;
 import com.fiveis.andcrowd.dto.user.UserDTO;
 import com.fiveis.andcrowd.entity.user.User;
 import com.fiveis.andcrowd.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
-
-import java.time.Duration;
 
 @RestController
 @RequestMapping(value="/user")
-
 public class UserController {
     private final UserService userService;
 
@@ -38,10 +32,10 @@ public class UserController {
                                             //Principal principal){
         try{
             String userEmail = userService.findById(userId).getUserEmail();
-            UserDTO.FindAsUser findAsUser = userService.findByUserEmail(userEmail);
+            User user = userService.findByUserEmail(userEmail);
             System.out.println("userEmail: " + userEmail);
-            System.out.println("findAsUser: " + findAsUser);
-            return ResponseEntity.ok(findAsUser);
+            System.out.println("User: " + user);
+            return ResponseEntity.ok(user);
         } catch(Exception e){
             return ResponseEntity.badRequest().body("User Not Found");
         }

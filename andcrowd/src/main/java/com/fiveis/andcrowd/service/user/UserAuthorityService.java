@@ -1,5 +1,6 @@
 package com.fiveis.andcrowd.service.user;
 
+import com.fiveis.andcrowd.entity.user.User;
 import com.fiveis.andcrowd.repository.user.UserJPARepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -18,6 +19,7 @@ public class UserAuthorityService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String userEmail) throws UsernameNotFoundException{
-        return userJPARepository.findByUserEmail(userEmail).get();
+        return userJPARepository.findByUserEmail(userEmail)
+                .orElseThrow(() -> new UsernameNotFoundException("해당 이메일이 존재하지 않습니다."));
     }
 }

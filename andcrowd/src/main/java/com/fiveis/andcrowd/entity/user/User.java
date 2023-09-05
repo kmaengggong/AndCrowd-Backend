@@ -1,6 +1,7 @@
 package com.fiveis.andcrowd.entity.user;
 
-import com.fiveis.andcrowd.enums.Authority;
+import com.fiveis.andcrowd.enums.Role;
+import com.fiveis.andcrowd.enums.SocialType;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
@@ -8,6 +9,8 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.time.LocalDateTime;
 import java.util.Collection;
@@ -15,9 +18,9 @@ import java.util.List;
 
 @Entity
 @Getter
-@Builder
 @ToString
 @NoArgsConstructor
+@AllArgsConstructor
 @Table(name="users")
 public class User implements UserDetails {
     // 필드
@@ -28,8 +31,8 @@ public class User implements UserDetails {
     @Column(nullable = false)  // 이메일
     private String userEmail;
 
-    @Column(nullable = false)  // 비밀번호
-    private String userPassword;
+//    @Column(nullable = false)
+    private String userPassword;  // 비밀번호
 
     //@Column(nullable = false)
     private String userKorName;  // 이름
@@ -59,13 +62,25 @@ public class User implements UserDetails {
     private int userMarketing;  // 마케팅 동의
 
     @ColumnDefault("0")
-    private Authority authority;  // 관리자 권한 여부
+    private Role role;  // 관리자 권한 여부
+
+    private SocialType socialType;
+    private String socialId;
+    private String refreshToken;
+
+    public void passwordEncode(BCryptPasswordEncoder bCryptPasswordEncoder){
+        this.userPassword = bCryptPasswordEncoder.encode(this.userPassword);
+    }
+    public void updateRefreshToken(String refreshToken){
+        this.refreshToken = refreshToken;
+    }
 
     // 생성자
     @Builder
     public User(int userId, String userEmail, String userPassword, String userKorName, String userNickname,
                 String userPhone, String userProfileImg, LocalDateTime userBirth, LocalDateTime userRegister,
-                int userTos, int userPrivacy, int userMarketing, Authority authority){
+                int userTos, int userPrivacy, int userMarketing, Role role, SocialType socialType,
+                String socialId, String refreshToken, String auth){
         this.userId = userId;
         this.userEmail = userEmail;
         this.userPassword = userPassword;
@@ -78,7 +93,10 @@ public class User implements UserDetails {
         this.userTos = userTos;
         this.userPrivacy = userPrivacy;
         this.userMarketing = userMarketing;
-        this.authority = authority;
+        this.role = role;
+        this.socialType = socialType;
+        this.socialId = socialId;
+        this.refreshToken = refreshToken;
     }
 
     // 수정을 위한 Setter
@@ -93,6 +111,10 @@ public class User implements UserDetails {
     }
     public void setUserProfileImg(String userProfileImg){
         this.userProfileImg = userProfileImg;
+    }
+    public User update(String userEmail){
+        this.userEmail = userEmail;
+        return this;
     }
 
     // userEmail replacement
