@@ -118,4 +118,16 @@ public class AndServiceImpl implements AndService{
         andJPARepository.save(updatedAnd);
     }
 
+    @Override
+    public void updateStatus(int andId) {
+        Optional<And> optionalAnd = andJPARepository.findById(andId);
+        if (optionalAnd.isPresent()) {
+            And updatedAnd = optionalAnd.get();
+            updatedAnd.setAndStatus(2);
+
+            // 변경된 And 객체를 다시 저장
+            andJPARepository.save(updatedAnd);
+        }
+    }
+
 }

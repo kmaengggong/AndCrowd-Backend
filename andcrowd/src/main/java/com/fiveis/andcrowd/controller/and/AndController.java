@@ -43,6 +43,11 @@ public class AndController {
         andService.update(and);
     }
 
+    @RequestMapping(value="/{andId}/update/status" , method=RequestMethod.PATCH)
+    public void updateAndStatus( @PathVariable("andId") int andId) {
+        andService.updateStatus(andId);
+    }
+
     @RequestMapping("/{andId}/delete")
     public void deleteItem(@PathVariable("andId") int andId) {
         andService.deleteById(andId);

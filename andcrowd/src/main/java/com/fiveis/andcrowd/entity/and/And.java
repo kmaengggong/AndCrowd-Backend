@@ -71,7 +71,7 @@ public class And {
     private int andViewCount;
 
     @ColumnDefault("1")
-    private int andStatus; // 0 : 모집 중, 1 : 심사 중, 2 : 반려, 3: 모집 종료
+    private int andStatus; // 0 : 모집 중, 1 : 작성중, 2 : 심사 중, 3 : 반려, 4: 모집 종료,
 
     @Column(nullable = true)
     private int adId;
