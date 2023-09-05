@@ -1,7 +1,7 @@
 package com.fiveis.andcrowd.service.user;
 
 import com.fiveis.andcrowd.dto.user.UserDTO;
-import com.fiveis.andcrowd.service.user.UserService;
+import com.fiveis.andcrowd.entity.user.User;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -40,10 +40,10 @@ public class UserServiceTest {
         String userEmail = "asdf@gmail.com";
 
         // When
-        UserDTO.FindAsUser userFindDTO = userService.findByUserEmail(userEmail);
+        User user = userService.findByUserEmail(userEmail);
 
         // Then
-        Assertions.assertEquals(userEmail, userFindDTO.getUserEmail());
+        Assertions.assertEquals(userEmail, user.getUserEmail());
     }
 
     @Test
@@ -96,9 +96,9 @@ public class UserServiceTest {
         userService.update(userUpdateDTO);
 
         // Then
-        UserDTO.FindAsUser userFindDTO = userService.findByUserEmail(userEmail);
-        Assertions.assertEquals(userEmail, userFindDTO.getUserEmail());
-        Assertions.assertEquals(userNickname, userFindDTO.getUserNickname());
-        Assertions.assertEquals(userProfileImg, userFindDTO.getUserProfileImg());
+        User user = userService.findByUserEmail(userEmail);
+        Assertions.assertEquals(userEmail, user.getUserEmail());
+        Assertions.assertEquals(userNickname, user.getUserNickname());
+        Assertions.assertEquals(userProfileImg, user.getUserProfileImg());
     }
 }

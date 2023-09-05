@@ -1,19 +1,26 @@
 package com.fiveis.andcrowd.controller.user;
 
+import com.fiveis.andcrowd.config.jwt.TokenProvider;
+import com.fiveis.andcrowd.config.jwt.TokenValidator;
 import com.fiveis.andcrowd.dto.and.AndDTO;
 import com.fiveis.andcrowd.dto.crowd.CrowdOrderDetailsDTO;
 import com.fiveis.andcrowd.dto.etc.ProjectDTO;
 import com.fiveis.andcrowd.dto.user.UserDTO;
 import com.fiveis.andcrowd.entity.user.*;
+import com.fiveis.andcrowd.service.etc.TokenService;
 import com.fiveis.andcrowd.service.user.*;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 
 @RestController
 @RequestMapping(value="/user")
+@RequiredArgsConstructor
 public class DynamicUserController {
     private final UserService userService;
     private final DynamicUserAndService dynamicUserAndService;
@@ -21,26 +28,39 @@ public class DynamicUserController {
     private final DynamicUserLikeService dynamicUserLikeService;
     private final DynamicUserMakerService dynamicUserMakerService;
     private final DynamicUserOrderService dynamicUserOrderService;
+    private final TokenProvider tokenProvider;
+    private final TokenService tokenService;
 
-    @Autowired
-    public DynamicUserController(UserService userService,
-                                 DynamicUserAndService dynamicUserAndService,
-                                 DynamicUserFollowService dynamicUserFollowService,
-                                 DynamicUserLikeService dynamicUserLikeService,
-                                 DynamicUserMakerService dynamicUserMakerService,
-                                 DynamicUserOrderService dynamicUserOrderService){
-        this.userService = userService;
-        this.dynamicUserAndService = dynamicUserAndService;
-        this.dynamicUserFollowService = dynamicUserFollowService;
-        this.dynamicUserLikeService = dynamicUserLikeService;
-        this.dynamicUserMakerService = dynamicUserMakerService;
-        this.dynamicUserOrderService = dynamicUserOrderService;
-    }
+//    @Autowired
+//    public DynamicUserController(UserService userService,
+//                                 DynamicUserAndService dynamicUserAndService,
+//                                 DynamicUserFollowService dynamicUserFollowService,
+//                                 DynamicUserLikeService dynamicUserLikeService,
+//                                 DynamicUserMakerService dynamicUserMakerService,
+//                                 DynamicUserOrderService dynamicUserOrderService){
+//        this.userService = userService;
+//        this.dynamicUserAndService = dynamicUserAndService;
+//        this.dynamicUserFollowService = dynamicUserFollowService;
+//        this.dynamicUserLikeService = dynamicUserLikeService;
+//        this.dynamicUserMakerService = dynamicUserMakerService;
+//        this.dynamicUserOrderService = dynamicUserOrderService;
+//    }
 
     // 유저가 참여한 모임
     @RequestMapping(value="{userId}/and", method=RequestMethod.GET)
-    public ResponseEntity<?> findUserAnd(@PathVariable int userId){//,
-                                        //Principal principal){
+    public ResponseEntity<?> findUserAnd(@PathVariable int userId,
+                                         @CookieValue String access_token){
+        System.out.println(tokenProvider.isTokenExpired(access_token));
+        // 엑세스 토큰이 유효하지 않음
+        if(!tokenProvider.validToken(access_token)){
+            // 로그아웃 수행
+//            tokenService.deleteAllToken(userId, access_token);
+        }
+        // 엑세스 토큰 유효기간 지났을 경우
+        if(tokenProvider.isTokenExpired(access_token)){
+            // 리프레쉬 토큰을 이용해 재발급 시도
+            return ResponseEntity.status(401).build();
+        }
         String userEmail = User.toTableName(userService.findById(userId).getUserEmail());
         List<AndDTO.Find> andDTOFindList = dynamicUserAndService.findAll(userEmail);
         return ResponseEntity.ok(andDTOFindList);
