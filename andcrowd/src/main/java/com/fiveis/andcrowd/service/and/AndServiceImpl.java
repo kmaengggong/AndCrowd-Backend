@@ -128,6 +128,7 @@ public class AndServiceImpl implements AndService{
         DynamicAndMemberDTO.Update userMember = DynamicAndMemberDTO.Update.builder()
                 .userId(savedAnd.getUserId())
                 .andId(savedAnd.getAndId())
+                .andApplyId(0)
                 .build();
         andMemberRepository.save(userMember);
     }

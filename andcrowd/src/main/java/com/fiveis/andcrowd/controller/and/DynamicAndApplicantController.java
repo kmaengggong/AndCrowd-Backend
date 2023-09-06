@@ -3,7 +3,9 @@ package com.fiveis.andcrowd.controller.and;
 import com.fiveis.andcrowd.dto.and.DynamicAndApplicantDTO;
 import com.fiveis.andcrowd.service.and.AndService;
 import com.fiveis.andcrowd.service.and.DynamicAndApplicantService;
+import com.nimbusds.jose.shaded.gson.JsonObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,10 +24,18 @@ public class DynamicAndApplicantController {
         this.andService = andService;
     }
 
-//    @RequestMapping(value = "/neednum", method = RequestMethod.GET)
-//    public ResponseEntity<String> getNeedMem(@PathVariable("andId") int andId){
-//
-//    }
+    @RequestMapping(value = "/neednum", method = RequestMethod.GET)
+    public ResponseEntity<?> getNeedMem(@PathVariable("andId") int andId){
+        int totalApplicantNum = dynamicAndApplicantService.findAllNotDeleted(andId).size();
+        int needNumMem = andService.findById(andId).get().getNeedNumMem();
+
+        // JSON 객체 생성
+        JsonObject responseJson = new JsonObject();
+        responseJson.addProperty("totalApplicantNum", totalApplicantNum);
+        responseJson.addProperty("needNumMem", needNumMem);
+
+        return ResponseEntity.status(HttpStatus.OK).body(responseJson.toString());
+    }
 
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public List<DynamicAndApplicantDTO.FindById> getList(@PathVariable("andId") int andId){

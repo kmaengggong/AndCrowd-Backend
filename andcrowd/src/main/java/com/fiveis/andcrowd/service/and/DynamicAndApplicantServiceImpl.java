@@ -9,10 +9,13 @@ import com.fiveis.andcrowd.repository.and.DynamicAndMemberRepository;
 import com.fiveis.andcrowd.repository.and.DynamicAndRoleRepository;
 import com.fiveis.andcrowd.repository.user.DynamicUserAndRepository;
 import com.fiveis.andcrowd.repository.user.UserJPARepository;
+import com.fiveis.andcrowd.service.user.DynamicUserAndService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
+import static com.fiveis.andcrowd.entity.user.User.toTableName;
 
 @Service
 public class DynamicAndApplicantServiceImpl implements DynamicAndApplicantService{
@@ -20,15 +23,20 @@ public class DynamicAndApplicantServiceImpl implements DynamicAndApplicantServic
     DynamicAndApplicantRepository dynamicAndApplicantRepository;
     DynamicAndMemberRepository dynamicAndMemberRepository;
     AndJPARepository andJPARepository;
-    DynamicUserAndRepository dynamicUserAndRepository;
+    DynamicUserAndService dynamicUserAndService;
     UserJPARepository userJPARepository;
 
     @Autowired
-    public DynamicAndApplicantServiceImpl(DynamicAndApplicantRepository dynamicAndApplicantRepository, DynamicAndMemberRepository dynamicAndMemberRepository, AndJPARepository andJPARepository, DynamicUserAndRepository dynamicUserAndRepository, UserJPARepository userJPARepository){
+    public DynamicAndApplicantServiceImpl(
+            DynamicAndApplicantRepository dynamicAndApplicantRepository,
+            DynamicAndMemberRepository dynamicAndMemberRepository,
+            AndJPARepository andJPARepository,
+            DynamicUserAndService dynamicUserAndService,
+            UserJPARepository userJPARepository){
         this.dynamicAndApplicantRepository = dynamicAndApplicantRepository;
         this.dynamicAndMemberRepository = dynamicAndMemberRepository;
         this.andJPARepository = andJPARepository;
-        this.dynamicUserAndRepository = dynamicUserAndRepository;
+        this.dynamicUserAndService = dynamicUserAndService;
         this.userJPARepository = userJPARepository;
     }
 
@@ -75,25 +83,36 @@ public class DynamicAndApplicantServiceImpl implements DynamicAndApplicantServic
 
     @Override
     public void updateApplyStatus(int andId, int andApplyId, int andApplyStatus) {
+
+        // 상태 변경 전의 지원
         DynamicAndApplicantDTO.FindById beforeUpdate = dynamicAndApplicantRepository.findByAndApplicantId(andId, andApplyId);
+        System.out.println("beforeUpdate: "+ beforeUpdate);
+        // 상태 변경
         dynamicAndApplicantRepository.updateApplyStatus(andId, andApplyId, andApplyStatus);
+
+        // 상태 변경 후의 지원
         DynamicAndApplicantDTO.FindById afterUpdate = dynamicAndApplicantRepository.findByAndApplicantId(andId, andApplyId);
-        String userEmail = userJPARepository.findByUserId(afterUpdate.getUserId()).get().getUserEmail();
+        System.out.println("afterUpdate: "+afterUpdate);
+
+        String userEmail = toTableName(userJPARepository.findByUserId(afterUpdate.getUserId()).get().getUserEmail());
         DynamicUserAnd dynamicUserAnd = DynamicUserAnd.builder()
                         .andId(andId)
                         .build();
+
+        // 승인 상태로 상태가 변경된 경우
         if(afterUpdate.getAndApplyStatus() == 1){
             DynamicAndMemberDTO.Update newMember = DynamicAndMemberDTO.Update.builder()
                             .andId(andId)
                             .userId(afterUpdate.getUserId())
+                            .andApplyId(andApplyId)
                             .isDeleted(false)
                             .build();
             dynamicAndMemberRepository.save(newMember);
-            dynamicUserAndRepository.save(userEmail, dynamicUserAnd);
+            dynamicUserAndService.save(userEmail, dynamicUserAnd);
+            // 승인 상태에서 다른 상태로 변경된 경우
         } else if (beforeUpdate.getAndApplyStatus() == 1 && afterUpdate.getAndApplyStatus() != 1) {
             dynamicAndMemberRepository.deleteByUserId(afterUpdate.getAndId(), afterUpdate.getUserId());
         }
-
     }
 
     @Override
