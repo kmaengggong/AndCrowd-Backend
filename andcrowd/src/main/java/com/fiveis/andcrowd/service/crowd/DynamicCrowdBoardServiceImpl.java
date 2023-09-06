@@ -52,4 +52,9 @@ public class DynamicCrowdBoardServiceImpl implements DynamicCrowdBoardService{
 
         dynamicCrowdBoardRepository.update(dynamicCrowdBoardDTOUpdate);
     }
+
+    @Override
+    public void deleteByCrowdId(int crowdId) {
+        dynamicCrowdBoardRepository.deleteByCrowdId(crowdId);
+    }
 }

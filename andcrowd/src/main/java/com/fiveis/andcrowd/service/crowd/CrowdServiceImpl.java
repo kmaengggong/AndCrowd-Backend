@@ -77,11 +77,12 @@ public class CrowdServiceImpl implements CrowdService {
     @Transactional // 둘다 실행되던지 둘 다 실행 안되던지(갑작스런 서버 다운이 되었을 경우를 대비해)
     @Override
     public void deleteByCrowdId(int crowdId) {
+        dynamicCrowdQnaReplyRepository.deleteAll(crowdId);
+        dynamicCrowdQnaRepository.deleteAll(crowdId);
+        dynamicCrowdBoardRepository.deleteByCrowdId(crowdId);
+        dynamicCrowdRewardRepository.deleteAll(crowdId);
         crowdCategoryJPARepository.deleteById(crowdId);
-//        dynamicCrowdBoardRepository.deleteByCrowdBoardId(crowdId);
-//        dynamicCrowdQnaRepository.deleteByCrowdQnaId(crowdId);
-//        dynamicCrowdRewardRepository.deleteByRewardId(crowdId);
-//       crowdJPARepository.deleteById(crowdId);
+        crowdJPARepository.deleteById(crowdId);
         Optional<Crowd> crowdOptional = crowdJPARepository.findById(crowdId);
 
         if(crowdOptional.isPresent()) {
