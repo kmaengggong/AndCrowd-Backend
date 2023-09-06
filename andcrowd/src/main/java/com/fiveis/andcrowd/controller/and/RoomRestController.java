@@ -2,7 +2,6 @@ package com.fiveis.andcrowd.controller.and;
 
 import com.fiveis.andcrowd.dto.and.DynamicAndMemberDTO;
 import com.fiveis.andcrowd.dto.user.UserDTO;
-import com.fiveis.andcrowd.entity.and.And;
 import com.fiveis.andcrowd.entity.and.ChatRoom;
 import com.fiveis.andcrowd.entity.user.User;
 import com.fiveis.andcrowd.repository.and.AndJPARepository;
@@ -11,13 +10,17 @@ import com.fiveis.andcrowd.repository.and.DynamicAndMemberRepository;
 import com.fiveis.andcrowd.repository.user.UserJPARepository;
 import com.fiveis.andcrowd.service.and.ChatRoomService;
 import com.fiveis.andcrowd.service.and.ChatService;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.ui.Model;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -57,9 +60,10 @@ public class RoomRestController {
     @GetMapping("/{andId}/check-member")
     public ResponseEntity<Map<String, Boolean>> checkMember(@RequestParam String nickname, @PathVariable int andId) {
         List<DynamicAndMemberDTO.FindByAndMemberId> members = memberRepository.findAll(andId);
+        System.out.println("들어온닉네임: "+ nickname);
         Optional<User> user = userRepository.findByUserNickname(nickname);
-        System.out.println("members" + members);
-        System.out.println("user" + user);
+        System.out.println("members: " + members);
+        System.out.println("user: " + user);
 
         Map<String, Boolean> response = new HashMap<>();
 
