@@ -61,4 +61,9 @@ public class DynamicCrowdRewardServiceImpl implements DynamicCrowdRewardService 
             dynamicCrowdRewardRepository.update(updateDTO);
         }
     }
+
+    @Override
+    public void deleteAll(int crowdId) {
+        dynamicCrowdRewardRepository.deleteAll(crowdId);
+    }
 }

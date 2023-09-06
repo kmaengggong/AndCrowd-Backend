@@ -6,51 +6,51 @@
 
     <update id="createDynamicCrowdRewardTable">
         CREATE TABLE IF NOT EXISTS
-        crowd_reward_#{crowdId} (
-        reward_id INT AUTO_INCREMENT PRIMARY KEY,
-        crowd_id INT default #{crowdId},
-        reward_title VARCHAR(255) NOT NULL,
-        reward_content VARCHAR(255) NOT NULL,
-        reward_amount INT NOT NULL,
-        reward_limit INT NOT NULL,
-        is_deleted BOOL default false
+            crowd_reward_#{crowdId} (
+                reward_id INT AUTO_INCREMENT PRIMARY KEY,
+                crowd_id INT default #{crowdId},
+                reward_title VARCHAR(255) NOT NULL,
+                reward_content VARCHAR(255) NOT NULL,
+                reward_amount INT NOT NULL,
+                reward_limit INT NOT NULL,
+                is_deleted BOOL default false
         )
     </update>
 
     <select id="findAll" resultType="com.fiveis.andcrowd.dto.crowd.DynamicCrowdRewardDTO$FindAllById">
         SELECT
-        reward_id AS rewardId,
-        crowd_id AS crowdId,
-        reward_title AS rewardTitle,
-        reward_content AS rewardContent,
-        reward_amount AS rewardAmount,
-        reward_limit AS rewardLimit,
-        is_deleted AS isDeleted
+            reward_id AS rewardId,
+            crowd_id AS crowdId,
+            reward_title AS rewardTitle,
+            reward_content AS rewardContent,
+            reward_amount AS rewardAmount,
+            reward_limit AS rewardLimit,
+            is_deleted AS isDeleted
         FROM crowd_reward_#{crowdId}
     </select>
 
     <select id="findAllNotDeleted" resultType="com.fiveis.andcrowd.dto.crowd.DynamicCrowdRewardDTO$FindAllById">
         SELECT
-        reward_id AS rewardId,
-        crowd_id AS crowdId,
-        reward_title AS rewardTitle,
-        reward_content AS rewardContent,
-        reward_amount AS rewardAmount,
-        reward_limit AS rewardLimit,
-        is_deleted AS isDeleted
+            reward_id AS rewardId,
+            crowd_id AS crowdId,
+            reward_title AS rewardTitle,
+            reward_content AS rewardContent,
+            reward_amount AS rewardAmount,
+            reward_limit AS rewardLimit,
+            is_deleted AS isDeleted
         FROM crowd_reward_#{crowdId}
         WHERE is_deleted = false
     </select>
 
     <select id="findByRewardId" parameterType="int" resultType="com.fiveis.andcrowd.dto.crowd.DynamicCrowdRewardDTO$FindAllById">
         SELECT
-        reward_id AS rewardId,
-        crowd_id AS crowdId,
-        reward_title AS rewardTitle,
-        reward_content AS rewardContent,
-        reward_amount AS rewardAmount,
-        reward_limit AS rewardLimit,
-        is_deleted AS isDeleted
+            reward_id AS rewardId,
+            crowd_id AS crowdId,
+            reward_title AS rewardTitle,
+            reward_content AS rewardContent,
+            reward_amount AS rewardAmount,
+            reward_limit AS rewardLimit,
+            is_deleted AS isDeleted
         FROM crowd_reward_#{crowdId}
         WHERE reward_id = #{rewardId}
     </select>
@@ -64,12 +64,13 @@
     </insert>
 
     <update id="update" parameterType="com.fiveis.andcrowd.dto.crowd.DynamicCrowdRewardDTO$Update">
-        UPDATE crowd_reward_#{crowdId}
+        UPDATE
+            crowd_reward_#{crowdId}
         SET
-        reward_title = #{rewardTitle},
-        reward_content = #{rewardContent},
-        reward_amount = #{rewardAmount},
-        reward_limit = #{rewardLimit}
+            reward_title = #{rewardTitle},
+            reward_content = #{rewardContent},
+            reward_amount = #{rewardAmount},
+            reward_limit = #{rewardLimit}
         WHERE reward_id = #{rewardId}
     </update>
 
@@ -82,13 +83,13 @@
     <!--  테스트용 쿼리문  -->
     <update id="testCreateDynamicCrowdRewardTable">
         CREATE TABLE crowd_reward_123(
-        reward_id INT AUTO_INCREMENT PRIMARY KEY,
-        crowd_id INT NOT NULL,
-        reward_title varchar(255) NOT NULL,
-        reward_content varchar(255) NOT NULL,
-        reward_amount INT NOT NULL,
-        reward_limit INT NOT NULL,
-        is_deleted BOOL default false
+            reward_id INT AUTO_INCREMENT PRIMARY KEY,
+            crowd_id INT NOT NULL,
+            reward_title varchar(255) NOT NULL,
+            reward_content varchar(255) NOT NULL,
+            reward_amount INT NOT NULL,
+            reward_limit INT NOT NULL,
+            is_deleted BOOL default false
         )
     </update>
 
