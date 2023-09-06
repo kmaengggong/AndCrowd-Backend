@@ -3,6 +3,7 @@ package com.fiveis.andcrowd.config;
 import com.fiveis.andcrowd.config.jwt.TokenProvider;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -17,30 +18,32 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
     private final TokenProvider tokenProvider;
 
     private final static String HEADER_AUTHORIZATION = "Authorization";
-//    private final static String TOKEN_PREFIX = "Bearer ";
+    private final static String TOKEN_PREFIX = "Bearer ";
 
     @Override
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,
                                     FilterChain filterChain) throws ServletException, IOException {
-        String token = request.getHeader(HEADER_AUTHORIZATION);
-//        System.out.println(token);
-//        String token = getAccessToken(authorizationHeader);
-        System.out.println("doFilterInternal: " + token);
+        String authorizationHeader = request.getHeader(HEADER_AUTHORIZATION);
+        String accessToken = getAccessToken(authorizationHeader);
+        System.out.println("doFilterInternal: " + accessToken);
 
-        if (tokenProvider.validToken(token)) {
-            Authentication authentication = tokenProvider.getAuthentication(token);
+        if(tokenProvider.validToken(accessToken)) {
+            Authentication authentication = tokenProvider.getAuthentication(accessToken);
             SecurityContextHolder.getContext().setAuthentication(authentication);
+        }
+        else{
+            System.out.println("Invalid Access Token");
         }
 
         filterChain.doFilter(request, response);
     }
 
     // 들어온 토큰에서 Bearer 접두사 제거로직
-//    private String getAccessToken(String authorizationHeader) {
-//        if (authorizationHeader != null && authorizationHeader.startsWith(TOKEN_PREFIX)) {
-//            return authorizationHeader.substring(TOKEN_PREFIX.length());
-//        }
-//        return null;
-//    }
+    private String getAccessToken(String authorizationHeader) {
+        if (authorizationHeader != null && authorizationHeader.startsWith(TOKEN_PREFIX)) {
+            return authorizationHeader.substring(TOKEN_PREFIX.length());
+        }
+        return null;
+    }
 }

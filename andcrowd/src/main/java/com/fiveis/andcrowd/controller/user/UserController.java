@@ -5,6 +5,8 @@ import com.fiveis.andcrowd.entity.user.User;
 import com.fiveis.andcrowd.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -26,14 +28,22 @@ public class UserController {
         }
     }
 
-    // 유저가 자기 자신 조회할 떄
     @RequestMapping(value="/{userId}", method=RequestMethod.GET)
-    public ResponseEntity<?> findUserAsUser(@PathVariable int userId){//,
-                                            //Principal principal){
+    public ResponseEntity<?> findUserAsUser(@PathVariable int userId){
         try{
-            String userNickname = userService.findById(userId).getUserNickname();
-            UserDTO.FindAsPublic findAsPublic = userService.findByUserNickname(userNickname);
-            return ResponseEntity.ok(findAsPublic);
+            // 권한 확인
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            UserDTO.FindAsAdmin findAsAdmin = userService.findById(userId);
+            String userEmail = findAsAdmin.getUserEmail();
+
+            // 본인인 경우
+            if(authentication.getName().equals(userEmail)){
+                return ResponseEntity.ok(UserDTO.convertToFindAsUserDTO(userService.findByUserEmail(userEmail)));
+            }
+
+            // 본인이 아닌 경우
+            return ResponseEntity.ok(UserDTO.convertToFindAsPublicDTO(userService.findByUserEmail(userEmail)));
+
         } catch(Exception e){
             return ResponseEntity.badRequest().body("User Not Found");
         }
