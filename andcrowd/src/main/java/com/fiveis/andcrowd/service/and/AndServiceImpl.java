@@ -1,8 +1,13 @@
 package com.fiveis.andcrowd.service.and;
 
 import com.fiveis.andcrowd.dto.and.AndDTO;
+import com.fiveis.andcrowd.dto.and.DynamicAndMemberDTO;
 import com.fiveis.andcrowd.entity.and.And;
+import com.fiveis.andcrowd.entity.user.DynamicUserAnd;
+import com.fiveis.andcrowd.entity.user.User;
 import com.fiveis.andcrowd.repository.and.*;
+import com.fiveis.andcrowd.repository.user.DynamicUserAndRepository;
+import com.fiveis.andcrowd.repository.user.UserJPARepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,6 +15,8 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
+import static com.fiveis.andcrowd.entity.user.User.toTableName;
 
 @Service
 public class AndServiceImpl implements AndService{
@@ -20,6 +27,9 @@ public class AndServiceImpl implements AndService{
     DynamicAndQnaRepository dynamicAndQnaRepository;
     DynamicAndQnaReplyRepository dynamicAndQnaReplyRepository;
     DynamicAndBoardRepository dynamicAndBoardRepository;
+    DynamicUserAndRepository dynamicUserAndRepository;
+    UserJPARepository userJPARepository;
+    DynamicAndMemberRepository andMemberRepository;
 
 
     @Autowired
@@ -28,7 +38,10 @@ public class AndServiceImpl implements AndService{
                           DynamicAndQnaRepository dynamicAndQnaRepository,
                           DynamicAndQnaReplyRepository dynamicAndQnaReplyRepository,
                           DynamicAndBoardRepository dynamicAndBoardRepository,
-                          ChatRoomService chatRoomService
+                          ChatRoomService chatRoomService,
+                          DynamicUserAndRepository dynamicUserAndRepository,
+                          UserJPARepository userJPARepository,
+                          DynamicAndMemberRepository andMemberRepository
                           ){
         this.andJPARepository = andJPARepository;
         this.andDynamicRepository = andDynamicRepository;
@@ -36,6 +49,9 @@ public class AndServiceImpl implements AndService{
         this.dynamicAndQnaReplyRepository = dynamicAndQnaReplyRepository;
         this.dynamicAndBoardRepository = dynamicAndBoardRepository;
         this.chatRoomService = chatRoomService;
+        this.dynamicUserAndRepository = dynamicUserAndRepository;
+        this.userJPARepository = userJPARepository;
+        this.andMemberRepository = andMemberRepository;
     }
 
 
@@ -102,6 +118,18 @@ public class AndServiceImpl implements AndService{
         andDynamicRepository.createDynamicAndApplicantTable(savedAnd.getAndId());
         andDynamicRepository.createDynamicAndQnaReplyTable(savedAnd.getAndId());
         chatRoomService.createAndChatroom(savedAnd.getAndId());
+
+        String userEmail = toTableName(userJPARepository.findByUserId(savedAnd.getUserId()).get().getUserEmail());
+        DynamicUserAnd dynamicUserAnd = DynamicUserAnd.builder()
+                .andId(savedAnd.getAndId())
+                .build();
+        dynamicUserAndRepository.save(userEmail, dynamicUserAnd);
+
+        DynamicAndMemberDTO.Update userMember = DynamicAndMemberDTO.Update.builder()
+                .userId(savedAnd.getUserId())
+                .andId(savedAnd.getAndId())
+                .build();
+        andMemberRepository.save(userMember);
     }
 
 
