@@ -13,6 +13,7 @@ public interface DynamicAndApplicantRepository {
     DynamicAndApplicantDTO.FindById findByAndApplicantId(@Param("and_id") int andId, @Param("andApplyId") int andApplyId);
     List<DynamicAndApplicantDTO.FindById> findByUserId(@Param("and_id") int andId, @Param("userId") int userId);
     List<DynamicAndApplicantDTO.FindById> findByAndRoleId(@Param("and_id") int andId, @Param("andRoleId") int andRoleId);
+    List<DynamicAndApplicantDTO.FindByIdWithCount> findByAndRoleIdWithCount(@Param("and_id") int andId);
 
     void save(DynamicAndApplicantDTO.Update andApplicantInsertDTO);
     void update(DynamicAndApplicantDTO.Update andApplicantUpdateDTO);

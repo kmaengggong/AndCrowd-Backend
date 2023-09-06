@@ -17,6 +17,8 @@ public interface DynamicAndMemberRepository {
 
     List<DynamicAndMemberDTO.FindByAndMemberId> findAll(int andId);
 
+    List<DynamicAndMemberDTO.FindByAndMemberId> findAllNotDeletedByUserId(@Param("andId") int andId, @Param("userId") int userId);
+
     void deleteById(@Param("andId") int andId, @Param("memberId") int memberId);
 
     void deleteByUserId(@Param("andId") int andId, @Param("userId") int userId);

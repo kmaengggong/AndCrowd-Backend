@@ -24,6 +24,11 @@ public class DynamicAndRoleController {
         return dynamicAndRoleService.findAllNotDeleted(andId);
     }
 
+    @RequestMapping(value = "/applicant/count", method = RequestMethod.GET)
+    public List<DynamicAndRoleDTO.AndRoleWithApplicantsDTO> getRolesWithApplicantCounts (@PathVariable("andId") int andId){
+        return dynamicAndRoleService.getRolesWithApplicantCounts(andId);
+    }
+
     @RequestMapping(value = "/{andRoleId}", method = RequestMethod.GET)
     public DynamicAndRoleDTO.FindById findByAndRoleId(@PathVariable("andId") int andId,
                                                       @PathVariable ("andRoleId") int andRoleId) {

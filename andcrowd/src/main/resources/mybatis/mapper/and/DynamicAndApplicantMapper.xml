@@ -68,6 +68,15 @@
         WHERE and_role_id = #{andRoleId}
     </select>
 
+    <select id="findByAndRoleIdWithCount" resultType="com.fiveis.andcrowd.dto.and.DynamicAndApplicantDTO$FindByIdWithCount">
+        SELECT
+            and_role_id AS andRoleId,
+            COUNT(*) AS count
+        FROM and_applicant_#{and_id}
+        WHERE is_deleted = false
+        GROUP BY and_role_id
+    </select>
+
 
     <insert id="save" parameterType="com.fiveis.andcrowd.dto.and.DynamicAndApplicantDTO$Update">
         INSERT IGNORE INTO and_applicant_#{andId} (and_apply_id, and_id, user_id, and_role_id, and_apply_content, and_apply_status, is_deleted)

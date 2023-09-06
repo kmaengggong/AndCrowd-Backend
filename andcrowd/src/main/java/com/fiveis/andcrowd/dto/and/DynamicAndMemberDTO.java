@@ -10,6 +10,7 @@ public class DynamicAndMemberDTO {
         private int memberId;
         private int andId;
         private int userId;
+        private int andApplyId;
         private boolean isDeleted;
     }
 
@@ -20,6 +21,7 @@ public class DynamicAndMemberDTO {
         private int memberId;
         private int andId;
         private int userId;
+        private int andApplyId;
         private boolean isDeleted;
     }
     
