@@ -1,8 +1,10 @@
 package com.fiveis.andcrowd.controller.and;
 
 import com.fiveis.andcrowd.dto.and.DynamicAndApplicantDTO;
+import com.fiveis.andcrowd.service.and.AndService;
 import com.fiveis.andcrowd.service.and.DynamicAndApplicantService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -12,11 +14,18 @@ import java.util.List;
 public class DynamicAndApplicantController {
 
     private final DynamicAndApplicantService dynamicAndApplicantService;
+    private final AndService andService;
 
     @Autowired
-    public DynamicAndApplicantController(DynamicAndApplicantService dynamicAndApplicantService) {
+    public DynamicAndApplicantController(DynamicAndApplicantService dynamicAndApplicantService, AndService andService) {
         this.dynamicAndApplicantService = dynamicAndApplicantService;
+        this.andService = andService;
     }
+
+//    @RequestMapping(value = "/neednum", method = RequestMethod.GET)
+//    public ResponseEntity<String> getNeedMem(@PathVariable("andId") int andId){
+//
+//    }
 
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public List<DynamicAndApplicantDTO.FindById> getList(@PathVariable("andId") int andId){
