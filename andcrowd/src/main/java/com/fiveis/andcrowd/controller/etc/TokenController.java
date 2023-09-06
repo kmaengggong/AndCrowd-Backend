@@ -2,6 +2,7 @@ package com.fiveis.andcrowd.controller.etc;
 
 import com.fiveis.andcrowd.config.jwt.TokenProvider;
 import com.fiveis.andcrowd.dto.etc.AccessTokenResponseDTO;
+import com.fiveis.andcrowd.dto.user.NaverDTO;
 import com.fiveis.andcrowd.dto.user.UserDTO;
 import com.fiveis.andcrowd.entity.user.User;
 import com.fiveis.andcrowd.service.etc.TokenService;
@@ -29,7 +30,6 @@ public class TokenController {
         } catch(Exception e){
             return ResponseEntity.badRequest().body("/getUserId: Invalid Access Token");
         }
-
     }
 
     @RequestMapping(value="/accessTokenValid", method=RequestMethod.POST)
@@ -64,4 +64,11 @@ public class TokenController {
             return ResponseEntity.badRequest().body("/getNewAccessToken: Invalid RefreshToken");
         }
     }
+
+    @RequestMapping(value="/oauth/naver", method=RequestMethod.POST)
+    public ResponseEntity<?> naverLogin(@RequestBody NaverDTO.Params params){
+        System.out.println(params);
+        return null;
+    }
+
 }
