@@ -9,6 +9,7 @@ import java.util.List;
 
 @RestController
     @RequestMapping("/and/{andId}/member")
+@CrossOrigin(origins = "http://localhost:3000")
 public class DynamicAndMemberController {
 
     private final DynamicAndMemberService dynamicAndMemberService;

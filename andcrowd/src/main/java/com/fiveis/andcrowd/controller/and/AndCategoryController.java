@@ -11,6 +11,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/andCategory") // 컨트롤러에 대한 기본 URL 경로 설정
+@CrossOrigin(origins = "http://localhost:3000")
 public class AndCategoryController {
 
     private final AndCategoryService andCategoryService;

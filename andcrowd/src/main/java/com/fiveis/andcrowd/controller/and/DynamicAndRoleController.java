@@ -10,6 +10,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/and/{andId}/role")
+@CrossOrigin(origins = "http://localhost:3000")
 public class DynamicAndRoleController {
 
     private final DynamicAndRoleService dynamicAndRoleService;

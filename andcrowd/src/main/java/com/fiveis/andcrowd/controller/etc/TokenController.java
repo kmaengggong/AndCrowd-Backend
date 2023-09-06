@@ -19,6 +19,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api")
+@CrossOrigin(origins = "http://localhost:3000")
 public class TokenController {
     private final TokenService tokenService;
     private final TokenProvider tokenProvider;

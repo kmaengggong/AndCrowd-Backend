@@ -13,6 +13,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/infoboard")
+@CrossOrigin(origins = "http://localhost:3000")
 public class InfoBoardController {
 
     private final InfoBoardService infoBoardService;

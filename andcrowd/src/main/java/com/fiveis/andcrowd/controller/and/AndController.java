@@ -11,6 +11,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/and")
+@CrossOrigin(origins = "http://localhost:3000")
 public class AndController {
 
     private final AndService andService;

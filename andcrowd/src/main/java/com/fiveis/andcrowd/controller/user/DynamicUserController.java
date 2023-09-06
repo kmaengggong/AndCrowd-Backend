@@ -20,6 +20,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(value="/user")
+@CrossOrigin(origins = "http://localhost:3000")
 @RequiredArgsConstructor
 public class DynamicUserController {
     private final UserService userService;

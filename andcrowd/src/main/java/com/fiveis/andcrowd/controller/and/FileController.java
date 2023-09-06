@@ -14,6 +14,7 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/s3")
 @Slf4j
+@CrossOrigin(origins = "http://localhost:3000")
 public class FileController {
 
     @Autowired

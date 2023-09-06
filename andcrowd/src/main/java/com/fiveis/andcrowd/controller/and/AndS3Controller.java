@@ -12,7 +12,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/and/s3")
-
+@CrossOrigin(origins = "http://localhost:3000")
 public class AndS3Controller {
 
     private final AndS3Service andS3Service;

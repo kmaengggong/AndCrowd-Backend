@@ -37,6 +37,9 @@ public class AdPayment  {
     @Column(nullable = false)
     private int adPaymentStatus;   // 결제 상태(0: 결제대기, 1: 결제완료, 2: 환불)
 
+    @Column(nullable = false)
+    private String merchantUid; // 결제번호
+
     public void setExpiredAt(LocalDateTime expiredAt) {
         this.expiredAt = expiredAt;
     }

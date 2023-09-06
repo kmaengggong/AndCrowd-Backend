@@ -9,6 +9,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/and/{andId}/qna/reply")
+@CrossOrigin(origins = "http://localhost:3000")
 public class DynamicAndQnaReplyController {
 
     DynamicAndQnaReplyService dynamicAndQnaReplyService;

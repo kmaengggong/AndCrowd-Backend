@@ -13,6 +13,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/crowd")
+@CrossOrigin(origins = "http://localhost:3000")
 public class CrowdController {
 
     private final CrowdService crowdService;

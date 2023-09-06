@@ -5,7 +5,7 @@ spring:
       prefix: /WEB-INF/views/
       suffix: .jsp
   profiles:
-    active: db, jwt, cd, oauth2, bucket
+    active: db, jwt, cd, oauth2, bucket, payment
   datasource:
     # DB
     url: ${url}
@@ -81,3 +81,8 @@ cloud:
 #      enabled: true
 #    restart:
 #      enabled: true
+
+# import REST API
+import:
+  key: ${import.key}
+  secret: ${import.secret}

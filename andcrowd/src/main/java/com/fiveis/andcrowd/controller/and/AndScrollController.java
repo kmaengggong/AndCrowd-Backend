@@ -5,6 +5,7 @@ import com.fiveis.andcrowd.service.and.AndQueryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -13,6 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/and")
+@CrossOrigin(origins = "http://localhost:3000")
 public class AndScrollController {
     private final AndQueryService andQueryService;
 

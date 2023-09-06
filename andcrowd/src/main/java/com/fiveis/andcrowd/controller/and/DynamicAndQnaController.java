@@ -10,6 +10,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/and/{andId}/qna")
+@CrossOrigin(origins = "http://localhost:3000")
 public class DynamicAndQnaController {
 
     private final DynamicAndQnaService dynamicAndQnaService;

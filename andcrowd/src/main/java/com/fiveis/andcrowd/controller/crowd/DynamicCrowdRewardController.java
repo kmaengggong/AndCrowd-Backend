@@ -11,6 +11,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/crowd/{crowdId}/reward")
+@CrossOrigin(origins = "http://localhost:3000")
 public class DynamicCrowdRewardController {
 
     private final DynamicCrowdRewardService dynamicCrowdRewardService;

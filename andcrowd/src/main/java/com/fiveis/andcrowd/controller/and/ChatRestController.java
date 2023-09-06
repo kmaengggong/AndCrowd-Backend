@@ -12,6 +12,7 @@ import java.util.List;
 @RequestMapping("/and/message")
 @RestController
 @Slf4j
+@CrossOrigin(origins = "http://localhost:3000")
 public class ChatRestController {
     private final ChatService chatService;
 

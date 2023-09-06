@@ -21,6 +21,7 @@ public class AdPaymentDTO {
         private LocalDateTime purchasedAt;
         private LocalDateTime expiredAt;
         private int adPaymentStatus;
+        private String merchantUid;
     }
 
     @Getter
@@ -45,6 +46,7 @@ public class AdPaymentDTO {
                 .purchasedAt(adPayment.getPurchasedAt())
                 .expiredAt(adPayment.getExpiredAt())
                 .adPaymentStatus(adPayment.getAdPaymentStatus())
+                .merchantUid(adPayment.getMerchantUid())
                 .build();
     }
 }

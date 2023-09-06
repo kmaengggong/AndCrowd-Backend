@@ -50,6 +50,9 @@ public class CrowdOrderDetails { // 크라우드 주문내역
     @ColumnDefault("false")
     private boolean isDeleted; // 삭제여부
 
+    @Column(nullable = false)
+    private String merchantUid; // 결제번호
+
     public void setPurchaseDate(LocalDateTime purchaseDate){
         this.purchaseDate = LocalDateTime.now();
     }

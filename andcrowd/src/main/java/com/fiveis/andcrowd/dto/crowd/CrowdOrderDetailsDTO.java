@@ -25,6 +25,7 @@ public class CrowdOrderDetailsDTO { // findAll, findById, update, save, delete
         private LocalDateTime purchaseDate;
         private String purchaseStatus;
         private boolean isDeleted;
+        private String merchantUid;
 
         public static CrowdOrderDetailsDTO.FindById convertToFindByIdDTO(CrowdOrderDetails crowdOrderDetails){
             return FindById.builder()
@@ -39,6 +40,7 @@ public class CrowdOrderDetailsDTO { // findAll, findById, update, save, delete
                     .purchaseDate(crowdOrderDetails.getPurchaseDate())
                     .purchaseStatus(crowdOrderDetails.getPurchaseStatus())
                     .isDeleted(crowdOrderDetails.isDeleted())
+                    .merchantUid(crowdOrderDetails.getMerchantUid())
                     .build();
         }
     }
@@ -61,6 +63,6 @@ public class CrowdOrderDetailsDTO { // findAll, findById, update, save, delete
         private LocalDateTime purchaseDate;
         private String purchaseStatus;
         private boolean isDeleted;
-
+        private String merchantUid;
     }
 }
