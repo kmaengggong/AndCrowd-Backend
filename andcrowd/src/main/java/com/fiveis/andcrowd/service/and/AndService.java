@@ -22,4 +22,6 @@ public interface AndService {
     void save(And and);
 
     void update(And and);
+
+    void updateStatus(int andId);
 }

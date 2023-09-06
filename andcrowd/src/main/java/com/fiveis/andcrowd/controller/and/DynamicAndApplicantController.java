@@ -48,6 +48,7 @@ public class DynamicAndApplicantController {
     public void update(
             @PathVariable("andId") int andId,
             @RequestBody DynamicAndApplicantDTO.Update updatedApply){
+        System.out.println(updatedApply);
         dynamicAndApplicantService.update(updatedApply);
     }
 

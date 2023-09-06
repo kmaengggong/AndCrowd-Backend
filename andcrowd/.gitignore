@@ -40,3 +40,4 @@ out/
 application-db.yml
 application-jwt.yml
 application-oauth2.yml
+application-bucket.yml

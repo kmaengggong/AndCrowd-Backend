@@ -29,8 +29,8 @@ public class S3FileService implements FileService {
     private final AmazonS3Client amazonS3Client;
 
     // S3 bucket 이름
-    @Value("${cloud.aws.s3.bucket}")
-    private String bucket;
+    @Value("${cloud.aws.s3.chat-bucket}")
+    private String chatBucket;
 
     // S3 base URL
     @Value("${cloud.aws.s3.endpoint}")
@@ -55,10 +55,10 @@ public class S3FileService implements FileService {
                     .withS3Client(amazonS3Client)
                     .build();
 
-            PutObjectRequest putObjectRequest = new PutObjectRequest(bucket, key, convertedFile);
+            PutObjectRequest putObjectRequest = new PutObjectRequest(chatBucket, key, convertedFile);
             putObjectRequest.setCannedAcl(CannedAccessControlList.PublicRead); // ACL 설정
 
-            // bucket 에 key 와 convertedFile 을 이용해서 파일 업로드
+            // chatBucket 에 key 와 convertedFile 을 이용해서 파일 업로드
             Upload upload = transferManager.upload(putObjectRequest);
             upload.waitForUploadResult();
 
@@ -71,8 +71,8 @@ public class S3FileService implements FileService {
                     .chatRoom(roomId)
                     .originFileName(filename)
                     .fileDir(key)
-                    .s3DataUrl(baseUrl+"/"+bucket+"/"+key)
-//                    .s3DataUrl(" https://"+bucket+"."+baseUrl+"/"+key)
+                    .s3DataUrl(baseUrl+"/"+chatBucket+"/"+key)
+//                    .s3DataUrl(" https://"+chatBucket+"."+baseUrl+"/"+key)
                     .build();
 
 
@@ -87,8 +87,8 @@ public class S3FileService implements FileService {
 
     @Override
     public void deleteFileDir(String path) {
-        for (S3ObjectSummary summary : amazonS3Client.listObjects(bucket, path).getObjectSummaries()) {
-            amazonS3Client.deleteObject(bucket, summary.getKey());
+        for (S3ObjectSummary summary : amazonS3Client.listObjects(chatBucket, path).getObjectSummaries()) {
+            amazonS3Client.deleteObject(chatBucket, summary.getKey());
         }
     }
 
@@ -96,8 +96,8 @@ public class S3FileService implements FileService {
 
     @Override
     public ResponseEntity<byte[]> getObject(String fileDir, String fileName) throws IOException {
-        // bucket 와 fileDir 을 사용해서 S3 에 있는 객체 - object - 를 가져온다.
-        S3Object object = amazonS3Client.getObject(new GetObjectRequest(bucket, fileDir));
+        // chatBucket 와 fileDir 을 사용해서 S3 에 있는 객체 - object - 를 가져온다.
+        S3Object object = amazonS3Client.getObject(new GetObjectRequest(chatBucket, fileDir));
 
         // object 를 S3ObjectInputStream 형태로 변환
         S3ObjectInputStream objectInputStream = object.getObjectContent();
