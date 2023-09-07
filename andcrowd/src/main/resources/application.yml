@@ -83,6 +83,6 @@ cloud:
 #      enabled: true
 
 # import REST API
-import:
-  key: ${import.key}
-  secret: ${import.secret}
+#import:
+#  key: ${import.key}
+#  secret: ${import.secret}
