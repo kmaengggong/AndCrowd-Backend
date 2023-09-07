@@ -34,4 +34,15 @@ public class DynamicAndApplicantDTO {
         private int andApplyStatus; // 1: 합격, 2: 보류, 3: 탈락
         private boolean isDeleted;
     }
+
+    @Getter
+    @Setter
+    @Builder
+    @ToString
+    @AllArgsConstructor
+    @NoArgsConstructor
+    public static class FindByIdWithCount {
+        private int andRoleId;
+        private int count;
+    }
 }

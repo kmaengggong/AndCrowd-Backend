@@ -12,6 +12,8 @@ import java.util.List;
 public interface DynamicAndMemberService {
     void save(DynamicAndMemberDTO.Update dynamicAndMemberDTOUpdate);
     List<DynamicAndMemberDTO.FindByAndMemberId> findAllNotDeleted(int andId);
+    List<DynamicAndMemberDTO.FindByAndMemberId> findAllNotDeletedByUserId(int andId, int userId);
+
 
     DynamicAndMemberDTO.FindByAndMemberId findByAndMemberId(int andId, int memberId);
 

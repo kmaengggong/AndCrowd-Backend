@@ -34,7 +34,7 @@ public class DynamicAndMemberController {
 
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public List<DynamicAndMemberDTO.FindByAndMemberId> findAll (@PathVariable("andId") int andId) {
-        return dynamicAndMemberService.findAll(andId);
+        return dynamicAndMemberService.findAllNotDeleted(andId);
     }
 
     @RequestMapping(value = "/{memberId}/delete", method = RequestMethod.DELETE)

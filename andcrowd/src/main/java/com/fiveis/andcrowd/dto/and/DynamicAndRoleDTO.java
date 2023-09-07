@@ -18,6 +18,19 @@ public class DynamicAndRoleDTO {
         private int andRoleLimit;
         private boolean isDeleted;
     }
+    @Getter
+    @Setter
+    @Builder
+    @ToString
+    @AllArgsConstructor
+    @NoArgsConstructor
+    public static class AndRoleWithApplicantsDTO {
+        private int andRoleId;
+        private int andId;
+        private String andRole;
+        private int andRoleLimit;
+        private int applicantCount; // 추가: 지원 인원 수
+    }
 
     @Getter
     @Setter
