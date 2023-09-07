@@ -16,7 +16,7 @@ public class AndQueryServiceImpl implements AndQueryService{
     }
 
     @Override
-    public Slice<AndDTO.Find> findAllByCategoryAndStatusAndSort(Integer categoryId, Integer andStatus, String sortField, String sortOrder, Pageable pageable) {
-        return andQueryRepository.findAllByCategoryAndStatusAndSort(categoryId, andStatus, sortField, sortOrder, pageable);
+    public Slice<AndDTO.Find> findAllByCategoryAndStatusAndSort(Integer categoryId, Integer andStatus, String sortField, String sortOrder, String searchKeyword, Pageable pageable) {
+        return andQueryRepository.findAllByCategoryAndStatusAndSort(categoryId, andStatus, sortField, sortOrder, searchKeyword, pageable);
     }
 }

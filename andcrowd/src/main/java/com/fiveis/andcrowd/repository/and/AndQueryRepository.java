@@ -9,5 +9,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface AndQueryRepository {
     Slice<AndDTO.Find> findAllByCategoryAndStatusAndSort(
-            Integer categoryId, Integer andStatus, String sortField, String sortOrder, Pageable pageable);
+            Integer categoryId, Integer andStatus, String sortField, String sortOrder, String searchKeyword, Pageable pageable);
 }
