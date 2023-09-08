@@ -53,6 +53,20 @@ public class UserController {
     @RequestMapping(value="/{userId}", method=RequestMethod.PATCH)
     public ResponseEntity<?> updateUser(@PathVariable int userId,
                                         @RequestBody UserDTO.Update update){
+        // 권한 확인
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        List<String> authorityList = authentication
+                .getAuthorities()
+                .stream()
+                .map(authority -> authority.toString())
+                .toList();
+
+        // 본인이 아니라면 컷
+        if(!authorityList.contains("ROLE_USER") ||
+                !authentication.getName().equals(userService.findById(userId).getUserEmail())){
+            return ResponseEntity.badRequest().body("Permission Denied");
+        }
+
         try{
             if(update.getUserEmail() == null){
                 update.setUserEmail(userService.findById(userId).getUserEmail());
