@@ -73,6 +73,7 @@ cloud:
 #      endpoint: s3.ap-northeast-2.amazonaws.com
       chat-bucket: ${chat-bucket}
       and-bucket: ${and-bucket}
+      crowd-bucket: ${crowd-bucket}
 
 # Server Auto Reload
 #server:
