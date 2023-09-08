@@ -71,6 +71,7 @@ public class UserController {
             if(update.getUserEmail() == null){
                 update.setUserEmail(userService.findById(userId).getUserEmail());
             }
+            System.out.println(update);
             userService.update(update);
             return ResponseEntity.ok("User Updated!");
         } catch(Exception e){

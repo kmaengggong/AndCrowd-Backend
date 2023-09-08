@@ -12,12 +12,15 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -59,6 +62,31 @@ public class SignController {
             return ResponseEntity.ok("Sign Up Success!");
         } catch(Exception e){
             return ResponseEntity.badRequest().body("Sign Up Failed");
+        }
+    }
+
+    @RequestMapping(value="/passwordCheck", method=RequestMethod.POST)
+    public ResponseEntity<?> passwordCheck(@RequestBody UserDTO.Login userLogin){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        List<String> authorityList = authentication
+                .getAuthorities()
+                .stream()
+                .map(authority -> authority.toString())
+                .toList();
+
+        // 로그인 안 한 유저면 컷
+        if(authorityList.contains("ROLE_ANONYMOUS")){
+            return ResponseEntity.badRequest().body("Permission Denied");
+        }
+
+        User userInfo = userService.getByCredentials(userLogin.getUserEmail());
+        System.out.println(userInfo);
+        System.out.println(userLogin.getUserPassword());
+        if(bCryptPasswordEncoder.matches(userLogin.getUserPassword(), userInfo.getUserPassword())){
+            return ResponseEntity.ok("Correct Password");
+        }
+        else{
+            return ResponseEntity.badRequest().body("Wrong Password");
         }
     }
 
