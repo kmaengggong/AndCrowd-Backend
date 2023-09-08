@@ -8,6 +8,6 @@ import org.springframework.stereotype.Service;
 @Service
 public interface AndQueryService {
     Slice<AndDTO.Find> findAllByCategoryAndStatusAndSort(
-            Integer categoryId, Integer andStatus, String sortField, String sortOrder, Pageable pageable);
+            Integer categoryId, Integer andStatus, String sortField, String sortOrder, String searchKeyword, Pageable pageable);
 
 }

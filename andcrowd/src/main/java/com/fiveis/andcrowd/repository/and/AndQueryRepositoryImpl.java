@@ -30,13 +30,15 @@ public class AndQueryRepositoryImpl implements AndQueryRepository{
     }
 
     public Slice<AndDTO.Find> findAllByCategoryAndStatusAndSort(
-            Integer andCategoryId, Integer andStatus, String sortField, String sortOrder, Pageable pageable) {
+            Integer andCategoryId, Integer andStatus, String sortField, String sortOrder, String searchKeyword, Pageable pageable) {
 
         BooleanExpression categoryExpression = eqCategory(andCategoryId);
         if (andCategoryId != null && andCategoryId == 0) {
             // andCategoryId가 0인 경우, 조건식을 null로 변경하여 전체 데이터를 조회하도록 처리
             categoryExpression = null;
         }
+
+        BooleanExpression searchExpression = eqAndTitle(searchKeyword);
 
         List<AndDTO.Find> results = query
                 .select(Projections.fields(AndDTO.Find.class,
@@ -65,7 +67,8 @@ public class AndQueryRepositoryImpl implements AndQueryRepository{
                 .from(and)
                 .where(
                         categoryExpression,
-                        eqAndStatus(andStatus)
+                        eqAndStatus(andStatus),
+                        searchExpression
                 )
                 .orderBy(buildOrderSpecifier(sortField, sortOrder))
                 .offset(pageable.getOffset())
@@ -88,6 +91,10 @@ public class AndQueryRepositoryImpl implements AndQueryRepository{
         return andStatus != null ? and.andStatus.eq(andStatus) : null;
     }
 
+    private BooleanExpression eqAndTitle(String searchKeyword) {
+        return StringUtils.hasText(searchKeyword) ? and.andTitle.contains(searchKeyword) : null;
+    }
+
     private OrderSpecifier<?> buildOrderSpecifier(String sortField, String sortOrder) {
         if (StringUtils.isEmpty(sortField) || StringUtils.isEmpty(sortOrder)) {
             return and.publishedAt.desc();
@@ -96,16 +103,16 @@ public class AndQueryRepositoryImpl implements AndQueryRepository{
         OrderSpecifier<?> orderSpecifier;
         switch (sortField) {
             case "publishedAt":
-                orderSpecifier = sortOrder.equalsIgnoreCase("asc") ? and.publishedAt.asc() : and.publishedAt.desc();
+                orderSpecifier = and.publishedAt.desc();
                 break;
             case "andEndDate":
-                orderSpecifier = sortOrder.equalsIgnoreCase("asc") ? and.andEndDate.asc() : and.andEndDate.desc();
+                orderSpecifier = and.andEndDate.asc();
                 break;
             case "andLikeCount":
-                orderSpecifier = sortOrder.equalsIgnoreCase("asc") ? and.andLikeCount.asc() : and.andLikeCount.desc();
+                orderSpecifier = and.andLikeCount.desc();
                 break;
             case "andViewCount":
-                orderSpecifier = sortOrder.equalsIgnoreCase("asc") ? and.andViewCount.asc() : and.andViewCount.desc();
+                orderSpecifier = and.andViewCount.desc();
                 break;
             default:
                 orderSpecifier = and.publishedAt.desc();
