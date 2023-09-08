@@ -17,7 +17,11 @@ public class DynamicAndApplicant {
 
     private int andRoleId;
 
-    private String applyContent;
+    private String andApplyTitle;
+
+    private String andApplyContent;
+
+    private String andApplyfile;
 
     private int andApplyStatus;
 

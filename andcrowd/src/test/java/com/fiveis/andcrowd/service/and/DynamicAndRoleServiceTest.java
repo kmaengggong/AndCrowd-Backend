@@ -18,6 +18,14 @@ public class DynamicAndRoleServiceTest {
     DynamicAndRoleService dynamicAndRoleService;
 
     @Test
+    public void testGetRolesWithApplicantCounts() {
+        int andId = 1;
+        List<DynamicAndRoleDTO.AndRoleWithApplicantsDTO> rolesWithCounts = dynamicAndRoleService.getRolesWithApplicantCounts(andId);
+
+        System.out.println(rolesWithCounts);
+    }
+
+    @Test
     @Transactional
     public void findAllTest(){
         //given

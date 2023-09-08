@@ -23,11 +23,12 @@ public class AndScrollController {
 
     @RequestMapping("/scroll")
     public Slice<AndDTO.Find> findAllByCategoryAndStatusAndSort(
-            @RequestParam(value = "andCategoryId",required = false) Integer andCategoryId,
-            @RequestParam(value = "andStatus",required = false) Integer andStatus,
-            @RequestParam(value = "sortField",required = false) String sortField,
-            @RequestParam(value = "sortOrder",required = false) String sortOrder,
+            @RequestParam(value = "andCategoryId", required = false) Integer andCategoryId,
+            @RequestParam(value = "andStatus", required = false) Integer andStatus,
+            @RequestParam(value = "sortField", required = false) String sortField,
+            @RequestParam(value = "sortOrder", required = false) String sortOrder,
+            @RequestParam(value = "searchKeyword", required = false) String searchKeyword, // 검색어 추가
             Pageable pageable) {
-        return andQueryService.findAllByCategoryAndStatusAndSort(andCategoryId, andStatus, sortField, sortOrder, pageable);
+        return andQueryService.findAllByCategoryAndStatusAndSort(andCategoryId, andStatus, sortField, sortOrder, searchKeyword, pageable);
     }
 }

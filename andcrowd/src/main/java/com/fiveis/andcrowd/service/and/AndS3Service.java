@@ -79,6 +79,47 @@ public class AndS3Service {
         return s3files;
     }
 
+    @Transactional
+    public AndS3DTO uploadFile(int andId, String fileType, MultipartFile multipartFile) {
+        String uploadFilePath = andId + "/" + fileType;
+        AndS3DTO s3file = null;
+
+        String originalFileName = multipartFile.getOriginalFilename();
+        String uploadFileName = getUuidFileName(originalFileName);
+        String uploadFileUrl = "";
+
+        ObjectMetadata objectMetadata = new ObjectMetadata();
+        objectMetadata.setContentLength(multipartFile.getSize());
+        objectMetadata.setContentType(multipartFile.getContentType());
+
+        try (InputStream inputStream = multipartFile.getInputStream()) {
+
+            String keyName = uploadFilePath + "/" + uploadFileName;
+
+            // S3에 폴더 및 파일 업로드
+            amazonS3Client.putObject(
+                    new PutObjectRequest(andBucket, keyName, inputStream, objectMetadata)
+                            .withCannedAcl(CannedAccessControlList.PublicRead));
+
+            // S3에 업로드한 폴더 및 파일 URL
+            uploadFileUrl = amazonS3Client.getUrl(andBucket, keyName).toString();
+
+            s3file = AndS3DTO.builder()
+                    .originalFileName(originalFileName)
+                    .uploadFileName(uploadFileName)
+                    .uploadFilePath(uploadFilePath)
+                    .uploadFileUrl(uploadFileUrl)
+                    .build();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            log.error("File upload failed", e);
+        }
+
+        return s3file;
+    }
+
+
     /**
      * S3에 업로드된 파일 삭제
      */

@@ -5,10 +5,10 @@
 
     <insert id="save" parameterType="com.fiveis.andcrowd.dto.and.DynamicAndMemberDTO$Update">
         INSERT INTO and_member_#{andId} (
-            and_id, user_id, is_deleted
+            and_id, user_id, and_apply_id, is_deleted
         )
         VALUES (
-                   #{andId}, #{userId}, #{isDeleted}
+                   #{andId}, #{userId}, #{andApplyId}, #{isDeleted}
                )
     </insert>
 
@@ -17,6 +17,7 @@
             member_id AS memberId,
             and_id AS andId,
             user_id AS userId,
+            and_apply_id AS andApplyId,
             is_deleted AS isDeleted
         FROM and_member_#{andId} WHERE member_id = #{memberId}
     </select>
@@ -31,6 +32,7 @@
         SELECT member_id AS memberId,
                and_id AS andId,
                user_id AS userId,
+               and_apply_id AS andApplyId,
                is_deleted AS isDeleted
         FROM and_member_#{andId}
     </select>
@@ -38,9 +40,20 @@
         SELECT member_id AS memberId,
                and_id AS andId,
                user_id AS userId,
+               and_apply_id AS andApplyId,
                is_deleted AS isDeleted
         FROM and_member_#{andId}
         WHERE is_deleted = false
+    </select>
+    <select id="findAllNotDeletedByUserId" resultType="com.fiveis.andcrowd.dto.and.DynamicAndMemberDTO$FindByAndMemberId">
+        SELECT member_id AS memberId,
+               and_id AS andId,
+               user_id AS userId,
+               and_apply_id AS andApplyId,
+               is_deleted AS isDeleted
+        FROM and_member_#{andId}
+        WHERE is_deleted = false
+            AND user_id = #{userId}
     </select>
 
     <delete id="deleteById" parameterType="int">

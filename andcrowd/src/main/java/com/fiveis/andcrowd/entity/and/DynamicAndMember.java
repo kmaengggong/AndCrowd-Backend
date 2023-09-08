@@ -15,6 +15,8 @@ public class DynamicAndMember {
 
     private int userId;
 
+    private int andApplyId;
+
     private boolean isDeleted;
 
 }
