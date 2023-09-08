@@ -20,7 +20,7 @@ public class DynamicAndBoardController {
 
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public List<DynamicAndBoardDTO.FindById> getAllAndBoards(@PathVariable("andId") int andId) {
-        return dynamicAndBoardService.findAll(andId);
+        return dynamicAndBoardService.findAllNotDeleted(andId);
     }
 
     @RequestMapping(value = "{andBoardId}", method = RequestMethod.GET)
