@@ -3,26 +3,21 @@ package com.fiveis.andcrowd.controller.user;
 //import com.fiveis.andcrowd.config.jwt.TokenProvider;
 import com.fiveis.andcrowd.config.jwt.TokenProvider;
 import com.fiveis.andcrowd.dto.etc.AccessTokenResponseDTO;
-import com.fiveis.andcrowd.dto.etc.RefreshTokenRequestDTO;
 import com.fiveis.andcrowd.dto.user.UserDTO;
 import com.fiveis.andcrowd.entity.user.User;
 import com.fiveis.andcrowd.service.etc.TokenService;
 import com.fiveis.andcrowd.service.user.MailService;
 import com.fiveis.andcrowd.service.user.UserService;
-import com.fiveis.andcrowd.util.CookieUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.time.Duration;
-import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -30,7 +25,6 @@ import java.util.Map;
 public class SignController {
     private final UserService userService;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
-    private final TokenProvider tokenProvider;
     private final TokenService tokenService;
     private final MailService mailService;
 
