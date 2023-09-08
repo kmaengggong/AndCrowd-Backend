@@ -1,5 +1,6 @@
 package com.fiveis.andcrowd.controller.and;
 
+import com.fiveis.andcrowd.dto.and.AndS3DTO;
 import com.fiveis.andcrowd.service.and.AndS3Service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -22,9 +23,21 @@ public class AndS3Controller {
             @RequestParam(value = "andId") int andId,
             @RequestParam(value = "fileType") String fileType,
             @RequestPart(value = "files") List<MultipartFile> multipartFiles) {
+        List<AndS3DTO> uploadedFiles = andS3Service.uploadFiles(andId, fileType, multipartFiles);
         return ResponseEntity
                 .status(HttpStatus.OK)
-                .body(andS3Service.uploadFiles(andId, fileType, multipartFiles));
+                .body(uploadedFiles);
+    }
+
+    @PostMapping("/upload")
+    public ResponseEntity<Object> uploadFile(
+            @RequestParam(value = "andId") int andId,
+            @RequestParam(value = "fileType") String fileType,
+            @RequestPart(value = "file") MultipartFile multipartFile) {
+        AndS3DTO uploadedFile = andS3Service.uploadFile(andId, fileType, multipartFile);
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(uploadedFile);
     }
 
     @DeleteMapping("/delete")
