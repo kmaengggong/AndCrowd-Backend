@@ -22,7 +22,8 @@ import java.util.Set;
 @RequiredArgsConstructor
 public class TokenProvider {
     public static final Duration REFRESH_TOKEN_DURATION = Duration.ofDays(2); // 이틀(리프레시 토큰의 유효기간)
-    public static final Duration ACCESS_TOKEN_DURATION = Duration.ofHours(2); // 시간(억세스 토큰의 유효기간)
+    public static final Duration ACCESS_TOKEN_DURATION = Duration.ofHours(2); // 2시간(억세스 토큰의 유효기간)
+
 
     private final JwtProperties jwtProperties;
     private final RefreshTokenRepository refreshTokenRepository;

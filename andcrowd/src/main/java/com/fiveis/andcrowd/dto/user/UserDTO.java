@@ -41,7 +41,6 @@ public class UserDTO {
     public static class FindAsUser{
         private int userId;
         private String userEmail;
-        private String userPassword;
         private String userKorName;
         private String userNickname;
         private String userPhone;
@@ -108,7 +107,6 @@ public class UserDTO {
     public static UserDTO.FindAsUser convertToFindAsUserDTO(User user){
         return UserDTO.FindAsUser.builder()
                 .userEmail(user.getUserEmail())
-                .userPassword(user.getUserPassword())
                 .userKorName(user.getUserKorName())
                 .userNickname(user.getUserNickname())
                 .userPhone(user.getUserPhone())

@@ -3,6 +3,7 @@ package com.fiveis.andcrowd.config;
 import com.fiveis.andcrowd.config.jwt.TokenProvider;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -24,12 +25,15 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
                                     HttpServletResponse response,
                                     FilterChain filterChain) throws ServletException, IOException {
         String authorizationHeader = request.getHeader(HEADER_AUTHORIZATION);
-        String token = getAccessToken(authorizationHeader);
-        System.out.println("doFilterInternal: " + token);
+        String accessToken = getAccessToken(authorizationHeader);
+        System.out.println("doFilterInternal: " + accessToken);
 
-        if (tokenProvider.validToken(token)) {
-            Authentication authentication = tokenProvider.getAuthentication(token);
+        if(tokenProvider.validToken(accessToken)) {
+            Authentication authentication = tokenProvider.getAuthentication(accessToken);
             SecurityContextHolder.getContext().setAuthentication(authentication);
+        }
+        else{
+            System.out.println("Invalid Access Token");
         }
 
         filterChain.doFilter(request, response);
