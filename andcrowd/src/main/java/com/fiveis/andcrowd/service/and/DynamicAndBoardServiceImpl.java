@@ -5,6 +5,7 @@ import com.fiveis.andcrowd.repository.and.DynamicAndBoardRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -22,17 +23,25 @@ public class DynamicAndBoardServiceImpl implements DynamicAndBoardService {
     }
 
     @Override
+    public List<DynamicAndBoardDTO.FindById> findAllNotDeleted(int andId) {
+        return dynamicAndBoardRepository.findAllNotDeleted(andId);
+    }
+
+    @Override
     public DynamicAndBoardDTO.FindById findByAndBoardId(int andId, int andBoardId) {
         return dynamicAndBoardRepository.findByAndBoardId(andId, andBoardId);
     }
 
     @Override
     public void save(DynamicAndBoardDTO.Update andBoardInsertDTO) {
+        andBoardInsertDTO.setPublishedAt(LocalDateTime.now());
+        andBoardInsertDTO.setUpdatedAt(LocalDateTime.now());
         dynamicAndBoardRepository.save(andBoardInsertDTO);
     }
 
     @Override
     public void update(DynamicAndBoardDTO.Update andBoardUpdateDTO) {
+        andBoardUpdateDTO.setUpdatedAt(LocalDateTime.now());
         dynamicAndBoardRepository.update(andBoardUpdateDTO);
     }
 
