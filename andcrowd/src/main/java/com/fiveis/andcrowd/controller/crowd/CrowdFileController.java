@@ -13,7 +13,7 @@ import java.io.IOException;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/s3")
+@RequestMapping("/_s3")
 @Slf4j
 @CrossOrigin(origins = "http://localhost:3000")
 public class CrowdFileController {
