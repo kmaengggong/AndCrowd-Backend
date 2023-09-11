@@ -19,6 +19,7 @@ public class OAuth2UserCustomService extends DefaultOAuth2UserService {
 
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
+        System.out.println(("loadUser"));
         // 소셜로그인 요청이 들어오면 해당 정보를 클라이언트측에서 사용하는 User 객체로 변환
         OAuth2User user = super.loadUser(userRequest);
         // 로그인 유저가 없으면 신규가입, 있으면 정보를 갱신만
@@ -29,6 +30,7 @@ public class OAuth2UserCustomService extends DefaultOAuth2UserService {
     // 위에서 호출하는 saveOrUpdate 정의
     // 유저가 있으면 업데이트, 없으면 인서트
     private User saveOrUpdate(OAuth2User oAuth2User) {
+        System.out.println("saveOrUpdate");
         // 유저 내용을 키,벨류 쌍으로 Map형식으로 변환(변수명 : key, 변수에 대입된 값 : value)
         Map<String, Object> attributes = oAuth2User.getAttributes();
         String email = (String) attributes.get("email"); // email 변수에 담겨있단 이메일 값 받아오기

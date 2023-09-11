@@ -1,5 +1,7 @@
 package com.fiveis.andcrowd.service.user;
 
+import com.fiveis.andcrowd.config.MailConfig;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.mail.*;
@@ -9,7 +11,10 @@ import java.util.Date;
 import java.util.Properties;
 
 @Service
+@RequiredArgsConstructor
 public class MailServiceimpl implements MailService{
+    private final MailConfig mailConfig;
+
     @Override
     public String getRandomNumber() {
         String randomNumber = Integer.toString((int) (Math.random()*1000000));
@@ -18,8 +23,8 @@ public class MailServiceimpl implements MailService{
 
     @Override
     public String setEmail(String userEmail){
-        final String fromEmail = "kmaengggong@gmail.com"; //requires valid gmail id
-        final String password = "qxnaiehoypbiyyeb"; // correct password for gmail id
+        final String fromEmail = mailConfig.getFromEmail(); //requires valid gmail id
+        final String password = mailConfig.getEmailPassword(); // correct password for gmail id
 
         System.out.println("TLSEmail Start");
         Properties props = new Properties();
@@ -73,7 +78,6 @@ public class MailServiceimpl implements MailService{
             return "Work";
         } catch (Exception e) {
             e.printStackTrace();
-            System.out.println("Fuck this shit");
             return null;
         }
     }

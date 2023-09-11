@@ -6,11 +6,11 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.DynamicInsert;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.time.LocalDateTime;
 import java.util.Collection;
@@ -21,6 +21,7 @@ import java.util.List;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
+@DynamicInsert
 @Table(name="users")
 public class User implements UserDetails {
     // 필드
@@ -34,7 +35,7 @@ public class User implements UserDetails {
 //    @Column(nullable = false)
     private String userPassword;  // 비밀번호
 
-    //@Column(nullable = false)
+    @Column(nullable = false)
     private String userKorName;  // 이름
 
     @Column(nullable = false)

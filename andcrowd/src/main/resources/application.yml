@@ -5,7 +5,7 @@ spring:
       prefix: /WEB-INF/views/
       suffix: .jsp
   profiles:
-    active: db, jwt, cd, oauth2, bucket
+    active: db, jwt, cd, oauth2, bucket, mail
   datasource:
     # DB
     url: ${url}
@@ -53,8 +53,12 @@ jwt:
 
 # Oauth2
 
+# Email
+mail:
+  from_email: ${from_email}
+  email_password: ${email_password}
 
-#MyBatis
+# MyBatis
 mybatis:
   mapper-locations: classpath:mybatis/mapper/**/**.xml
 

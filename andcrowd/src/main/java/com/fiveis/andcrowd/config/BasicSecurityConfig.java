@@ -9,7 +9,6 @@ import com.fiveis.andcrowd.service.user.UserAuthorityService;
 import com.fiveis.andcrowd.service.user.UserService;
 import jakarta.servlet.DispatcherType;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -21,10 +20,12 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 
 @Configuration
 @RequiredArgsConstructor
+@CrossOrigin(origins="http://localhost:3000")
 public class BasicSecurityConfig {
     private final UserDetailsService userDetailsService;
     private final TokenProvider tokenProvider;

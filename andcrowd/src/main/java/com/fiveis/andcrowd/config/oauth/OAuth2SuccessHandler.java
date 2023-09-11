@@ -49,6 +49,7 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
     public void onAuthenticationSuccess(HttpServletRequest request,
                                         HttpServletResponse response,
                                         Authentication authentication) throws IOException {
+        System.out.println("onAuthenticationSuccess");
         OAuth2User oAuth2User = (OAuth2User) authentication.getPrincipal(); // 인증 정보 가져옴
         User user = userService.findByUserEmail((String) oAuth2User.getAttributes().get("userEmail")); // 인증 객체 내부 이메일로 유저정보 조회
 
