@@ -4,7 +4,6 @@ import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
-import com.fiveis.andcrowd.dto.and.AndS3DTO;
 import com.fiveis.andcrowd.dto.crowd.CrowdS3DTO;
 import com.fiveis.andcrowd.entity.crowd.Crowd;
 import com.fiveis.andcrowd.repository.crowd.CrowdJPARepository;
@@ -33,7 +32,11 @@ public class CrowdS3Service {
     private String crowdBucket;
 
     @Transactional
-    public List<CrowdS3DTO> uploadFile(int crowdId, String fileType, List<MultipartFile> files) {
+    public List<CrowdS3DTO> uploadFiles(int crowdId, String fileType, List<MultipartFile> files) {
+        if (files.size() != 6) {
+            // 이미지가 6장이 아닌 경우 오류 처리 (예: 예외 또는 메시지 반환)
+            throw new IllegalArgumentException("이미지는 정확히 6장이어야 합니다.");
+        }
         List<CrowdS3DTO> fileUrls = new ArrayList<>();
         String uploadFilePath = crowdId + "/" + fileType;
 
@@ -100,6 +103,8 @@ public class CrowdS3Service {
             amazonS3Client.putObject(
                     new PutObjectRequest(crowdBucket, keyName, inputStream, objectMetadata)
                             .withCannedAcl(CannedAccessControlList.PublicRead));
+            log.debug("S3 업로드 완료. 파일 경로: {}", keyName);
+            log.debug("S3 업로드 완료. 파일 URL: {}", uploadFileUrl);
 
             // S3에 업로드한 폴더 및 파일 URL
             uploadFileUrl = amazonS3Client.getUrl(crowdBucket, keyName).toString();

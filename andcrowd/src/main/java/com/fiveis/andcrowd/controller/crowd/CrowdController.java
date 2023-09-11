@@ -13,6 +13,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/crowd")
+@CrossOrigin(origins = "http://localhost:3000")
 public class CrowdController {
 
     private final CrowdService crowdService;
@@ -28,9 +29,9 @@ public class CrowdController {
     }
 
     @PostMapping(value = "/create")
-    public ResponseEntity<String> createCrowd(@RequestBody Crowd crowd) {
+    public ResponseEntity<Integer> createCrowd(@RequestBody Crowd crowd) {
         crowdService.save(crowd);
-        return ResponseEntity.ok("펀딩글이 등록되었습니다. 심사는 5-7일 정도 소요됩니다.");
+        return ResponseEntity.ok(crowd.getCrowdId());
     }
 
     @GetMapping(value = "/detail/{crowdId}")
@@ -57,4 +58,5 @@ public class CrowdController {
         ResponseEntity.ok("펀딩글이 삭제되었습니다.");
         return "redirect:/crowd/list";
     }
+
 }

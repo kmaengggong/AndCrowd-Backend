@@ -2,12 +2,9 @@ package com.fiveis.andcrowd.controller.crowd;
 
 import com.fiveis.andcrowd.dto.crowd.CrowdS3DTO;
 import com.fiveis.andcrowd.service.crowd.CrowdS3Service;
-import jakarta.servlet.http.HttpServletRequest;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -15,34 +12,47 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
 
 @RestController
+@RequiredArgsConstructor
 @Slf4j
 @RequestMapping("/crowd/s3")
+@CrossOrigin(origins = "http://localhost:3000")
 public class CrowdS3Controller {
 
     private final CrowdS3Service crowdS3Service;
 
-    public CrowdS3Controller(CrowdS3Service crowdS3Service) {
-        this.crowdS3Service = crowdS3Service;
+    @PostMapping("/uploads")
+    public ResponseEntity<Object> uploadImages(
+            @RequestParam(value = "crowdId") int crowdId,
+            @RequestParam(value = "fileType") String fileType,
+            @RequestParam(value = "files") List<MultipartFile> files) {
+        List<CrowdS3DTO> uploadedFiles = crowdS3Service.uploadFiles(crowdId, fileType, files);
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(uploadedFiles);
     }
 
     @PostMapping("/upload")
-    public ResponseEntity<List<CrowdS3DTO>> uploadImages(
-            @RequestParam("crowdId") int crowdId,
-            @RequestParam("fileType") String fileType,
-            @RequestParam("files") List<MultipartFile> files) {
-        List<CrowdS3DTO> uploadedFiles = crowdS3Service.uploadFile(crowdId, fileType, files);
-        return ResponseEntity.ok(uploadedFiles);
+    public ResponseEntity<Object> uploadImage(
+            @RequestParam(value = "crowdId") int crowdId,
+            @RequestParam(value = "fileType") String fileType,
+            @RequestParam(value = "file") MultipartFile file) {
+        CrowdS3DTO uploadedFile = crowdS3Service.uploadFile(crowdId, fileType, file);
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(uploadedFile);
     }
 
     @DeleteMapping("/delete")
-    public ResponseEntity<String> deleteImage(
-            @RequestParam("uploadFilePath") String uploadFilePath,
-            @RequestParam("uuidFileName") String uuidFileName) {
+    public ResponseEntity<Object> deleteImage(
+            @RequestParam(value = "uploadFilePath") String uploadFilePath,
+            @RequestParam(value = "uuidFileName") String uuidFileName) {
         String result = crowdS3Service.deleteFiles(uploadFilePath, uuidFileName);
         if ("success".equals(result)) {
-            return ResponseEntity.ok("File deleted successfully");
+            return ResponseEntity.ok("파일 삭제 성공");
+        } else if ("file not found".equals(result)) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("파일을 찾을 수 없습니다.");
         } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("File not found");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("파일 삭제 실패");
         }
     }
 

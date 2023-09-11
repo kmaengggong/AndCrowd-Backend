@@ -25,7 +25,7 @@ import java.io.IOException;
 @Slf4j
 public class CrowdS3FileService implements CrowdFileService{
 
-    private final AmazonS3Client amazonS3Client;
+    private final AmazonS3Client amazonS3Client; // Amazon S3 주입
 
     @Value("${cloud.aws.s3.crowd-bucket}")
     private String crowdBucket;

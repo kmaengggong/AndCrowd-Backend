@@ -13,13 +13,13 @@ public class DynamicCrowdReward { // 리워드 카테고리
 
     private int crowdId;
 
-    private String rewardTitle;
+    private String rewardTitle; // 리워드 제목
 
-    private String rewardContent;
+    private String rewardContent; // 리워드 본문
 
-    private int rewardAmount;
+    private int rewardAmount; // 리워드 금액
 
-    private int rewardLimit;
+    private int rewardLimit; // 리워드 제한
 
     private boolean isDeleted;
 }

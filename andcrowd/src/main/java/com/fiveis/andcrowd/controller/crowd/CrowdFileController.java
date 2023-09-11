@@ -15,6 +15,7 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/crowd_s3")
 @Slf4j
+@CrossOrigin(origins = "http://localhost:3000")
 public class CrowdFileController {
     @Autowired
     private CrowdS3FileService crowdS3FileService;
