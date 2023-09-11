@@ -74,7 +74,6 @@ cloud:
       chat-bucket: ${chat-bucket}
       and-bucket: ${and-bucket}
       crowd-bucket: ${crowd-bucket}
-      user-bucket: ${user-bucket}
 
 # Server Auto Reload
 #server:
