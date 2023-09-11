@@ -93,13 +93,32 @@ public class SignController {
     @RequestMapping(value="/mailAuth", method=RequestMethod.POST)
     public ResponseEntity<?> getEmailAuthNumber(@RequestBody Map<String, String> userEmail){
         System.out.println("/mailAuth: " + userEmail.get("userEmail"));
-        if(userService.findByUserEmail(userEmail.get("userEmail")) != null){
-            return ResponseEntity.badRequest().body("이미 존재하는 이메일입니다.");
-        }
         String res = mailService.setEmail(userEmail.get("userEmail"));
         System.out.println(res);
         if(res == null) return ResponseEntity.internalServerError().body("서버 오류입니다.");
         return ResponseEntity.ok(res);
+    }
+
+    @RequestMapping(value="/isEmailExists", method=RequestMethod.POST)
+    public ResponseEntity<?> isEmailExists(@RequestBody Map<String, String> userEmail){
+        System.out.println("/isEmailExists: " + userEmail.get("userEmail"));
+        if(userService.findByUserEmail(userEmail.get("userEmail")) == null){
+            return ResponseEntity.badRequest().body("존재하지 않는 이메일입니다.");
+        }
+        return ResponseEntity.ok("Email Exists");
+    }
+
+    @RequestMapping(value="/changePassword", method=RequestMethod.POST)
+    public ResponseEntity<?> changePassword(@RequestBody Map<String, String> userInfo){
+        System.out.println("userInfo: " + userInfo);
+
+        UserDTO.Update update = UserDTO.Update.builder()
+                .userEmail(userInfo.get("userEmail"))
+                .userPassword(userInfo.get("userPassword"))
+                .build();
+
+        userService.update(update);
+        return ResponseEntity.ok("UserPassoword Changed");
     }
 
     @RequestMapping(value="/nicknameCheck", method=RequestMethod.POST)

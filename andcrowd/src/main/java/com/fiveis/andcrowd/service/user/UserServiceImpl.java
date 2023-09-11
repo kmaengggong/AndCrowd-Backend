@@ -82,14 +82,16 @@ public class UserServiceImpl implements UserService {
         if(userJPARepository.findByUserNickname(user.getUserNickname()).isPresent()){
             throw new Exception("Exception: Nickname already exist");
         }
-        User newUser = User.builder()
-                .userEmail(user.getUserEmail())
-                .userNickname(user.getUserNickname())
-                .userPassword(user.getUserPassword())
-                .build();
-
-        newUser.passwordEncode(bCryptPasswordEncoder);
-        userJPARepository.save(newUser);
+//        User newUser = User.builder()
+//                .userEmail(user.getUserEmail())
+//                .userNickname(user.getUserNickname())
+//                .userPassword(user.getUserPassword())
+//                .build();
+//
+//        newUser.passwordEncode(bCryptPasswordEncoder);
+        user.passwordEncode(bCryptPasswordEncoder);
+        System.out.println(user);
+        userJPARepository.save(user);
 
         // User 생성 시 동적 테이블 자동 생성
         String userEmail = User.toTableName(user.getUserEmail());
