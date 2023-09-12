@@ -39,9 +39,11 @@ public class DynamicUserLikeServiceImpl implements DynamicUserLikeService{
                 And and = andJPARepository.findById(find.getProjectId()).get();
                 ProjectDTO.Find projectFind = ProjectDTO.Find.builder()
                         .projectId(and.getAndId())
-                        .projectType(1)
+                        .projectType(0)
                         .projectHeaderImg(and.getAndHeaderImg())
                         .projectTitle(and.getAndTitle())
+                        .projectContent(and.getAndContent())
+                        .projectEndDate(and.getAndEndDate())
                         .build();
                 projectList.add(projectFind);
             }
@@ -54,6 +56,8 @@ public class DynamicUserLikeServiceImpl implements DynamicUserLikeService{
                         .projectType(1)
                         .projectHeaderImg(crowd.getHeaderImg())
                         .projectTitle(crowd.getCrowdTitle())
+                        .projectContent(crowd.getCrowdContent())
+                        .projectEndDate(crowd.getCrowdEndDate())
                         .build();
                 projectList.add(projectFind);
             }

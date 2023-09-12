@@ -1,24 +1,24 @@
 package com.fiveis.andcrowd.controller.user;
 
 import com.fiveis.andcrowd.dto.user.UserDTO;
+import com.fiveis.andcrowd.dto.user.UserS3DTO;
+import com.fiveis.andcrowd.service.user.UserS3Service;
 import com.fiveis.andcrowd.service.user.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping(value="/user")
 public class UserController {
     private final UserService userService;
-
-    @Autowired
-    public UserController(UserService userService){
-        this.userService = userService;
-    }
+    private final UserS3Service userS3Service;
 
     @RequestMapping(value="/list", method=RequestMethod.GET)
     public ResponseEntity<?> findAllUser(){
@@ -112,5 +112,14 @@ public class UserController {
         } catch(Exception e){
             return ResponseEntity.badRequest().body("User Delete Failed");
         }
+    }
+
+    @RequestMapping(value="/uploadProfileImg", method=RequestMethod.POST)
+    public ResponseEntity<Object> uploadProfileImg(
+            @RequestParam(value="userId") int userId,
+            @RequestParam(value="fileType") String fileType,
+            @RequestParam(value="file")MultipartFile multipartFile){
+        UserS3DTO profileImg = userS3Service.uploadFile(userId, fileType, multipartFile);
+        return ResponseEntity.ok().body(profileImg);
     }
 }
