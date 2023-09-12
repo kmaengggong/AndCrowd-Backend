@@ -14,6 +14,8 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.fiveis.andcrowd.entity.user.User.toTableName;
+
 @Service
 public class DynamicUserLikeServiceImpl implements DynamicUserLikeService{
     private static DynamicUserLikeRepository dynamicUserLikeRepository;
@@ -67,6 +69,12 @@ public class DynamicUserLikeServiceImpl implements DynamicUserLikeService{
 
     public DynamicUserLikeDTO.Find findById(String userEmail, int uLikeId){
         return dynamicUserLikeRepository.findById(userEmail, uLikeId);
+    }
+
+    @Override
+    public DynamicUserLikeDTO.Find findByProject(String userEmail, int projectId, int projectType) {
+        String convertedUserEmail = toTableName(userEmail);
+        return dynamicUserLikeRepository.findByProject(convertedUserEmail, projectId, projectType);
     }
 
     public boolean save(String userEmail, DynamicUserLike dynamicUserLike){

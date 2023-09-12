@@ -28,6 +28,13 @@ public interface AndService {
 
     int updateView(int andId);
 
-//    void updateLike(Integer andId, boolean like);
+    void increaseLike(Integer andId);
 
-}
+    void decreaseLike(Integer andId);
+
+    void updateLike(Integer andId, int userId);
+
+    boolean isLiked(int andId, int userId);
+
+
+    }

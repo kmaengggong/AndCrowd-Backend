@@ -44,11 +44,17 @@ public class AndController {
         return ResponseEntity.ok("View count updated successfully.");
     }
 
-    @PutMapping("/{andId}/like")
-    public ResponseEntity<String> updatelike(@PathVariable("andId") int andId) {
-
+    @PostMapping("/{andId}/like/{userId}")
+    public ResponseEntity<String> updateLike(@PathVariable("andId") int andId, @PathVariable("userId") int userId) {
+        andService.updateLike(andId, userId);
         return ResponseEntity.ok("like count updated successfully.");
     }
+
+    @GetMapping("/{andId}/like/{userId}")
+    public boolean isLike(@PathVariable("andId") int andId, @PathVariable("userId") int userId) {
+        return andService.isLiked(andId, userId);
+    }
+
 
     @RequestMapping(value="/{andId}/update" , method=RequestMethod.PATCH)
     public void updateAnd( @RequestBody And and) {

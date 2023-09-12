@@ -20,6 +20,13 @@ public interface AndJPARepository extends JpaRepository<And, Integer>, AndQueryR
     @Query("UPDATE And a SET a.andViewCount = a.andViewCount + 1 WHERE a.andId = :andId")
     int updateView(@Param("andId") Integer andId);
 
-//    void updateLike(@Param("andId") Integer andId, boolean like);
+
+    @Modifying
+    @Query("UPDATE And a SET a.andLikeCount = a.andLikeCount + 1 WHERE a.andId = :andId")
+    void increaseLike(@Param("andId") Integer andId);
+
+    @Modifying
+    @Query("UPDATE And a SET a.andLikeCount = a.andLikeCount - 1 WHERE a.andId = :andId")
+    void decreaseLike(@Param("andId") Integer andId);
 
 }
