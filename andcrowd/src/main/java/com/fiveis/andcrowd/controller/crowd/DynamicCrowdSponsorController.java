@@ -21,7 +21,7 @@ public class DynamicCrowdSponsorController {
         this.dynamicCrowdSponsorService = dynamicCrowdSponsorService;
     }
 
-    @RequestMapping(value = "/list", method = RequestMethod.GET)
+    @RequestMapping(value = "/all", method = RequestMethod.GET)
     public ResponseEntity<List<DynamicCrowdSponsorDTO.FindById>> findAll(@PathVariable int crowdId) {
         // crowd글 클릭 하면 후원자 리스트 조회
         List<DynamicCrowdSponsorDTO.FindById> sponsorList = dynamicCrowdSponsorService.findAll(crowdId);

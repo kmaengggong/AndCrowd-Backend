@@ -21,7 +21,7 @@ public class DynamicCrowdRewardController {
         this.dynamicCrowdRewardService = dynamicCrowdRewardService;
     }
 
-    @RequestMapping(value = "/list", method = RequestMethod.GET)
+    @RequestMapping(value = "/all", method = RequestMethod.GET)
     public ResponseEntity<List<DynamicCrowdRewardDTO.FindAllById>> findAllRewardList(@PathVariable int crowdId) {
         // 리워드 목록 들고오기
         List<DynamicCrowdRewardDTO.FindAllById> rewards = dynamicCrowdRewardService.findAll(crowdId);
