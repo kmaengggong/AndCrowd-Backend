@@ -9,7 +9,7 @@ import java.util.List;
 @Service
 public interface DynamicCrowdRewardService {
 
-    void createDynamicCrowdRewardTable();
+    void createDynamicCrowdRewardTable(int crowdId);
     List<DynamicCrowdRewardDTO.FindAllById> findAll(int crowdId);
     List<DynamicCrowdRewardDTO.FindAllById> findAllNotDeleted(int crowdId);
     DynamicCrowdRewardDTO.FindAllById findByRewardId(@Param("crowdId") int crowdId, @Param("rewardId") int rewardId);

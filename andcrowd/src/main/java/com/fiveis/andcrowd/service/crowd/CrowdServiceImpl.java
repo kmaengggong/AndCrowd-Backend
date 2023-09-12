@@ -95,7 +95,7 @@ public class CrowdServiceImpl implements CrowdService {
     @Override
     public void save(Crowd crowd) {
         Crowd insertCrowd = crowdJPARepository.save(crowd);
-        dynamicCrowdRewardRepository.createDynamicCrowdRewardTable();
+        dynamicCrowdRewardRepository.createDynamicCrowdRewardTable(insertCrowd.getCrowdId());
         dynamicCrowdBoardRepository.createDynamicCrowdBoardTable(insertCrowd.getCrowdId());
         dynamicCrowdQnaRepository.createDynamicCrowdQnaTable(insertCrowd.getCrowdId());
         dynamicCrowdQnaReplyRepository.createDynamicCrowdQnaReplyTable(insertCrowd.getCrowdId());

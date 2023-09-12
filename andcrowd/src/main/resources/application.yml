@@ -70,7 +70,7 @@ cloud:
       static: ap-northeast-2
     s3:
       endpoint: https://kr.object.ncloudstorage.com
-#      endpoint: s3.ap-northeast-2.amazonaws.com
+      #      endpoint: s3.ap-northeast-2.amazonaws.com
       chat-bucket: ${chat-bucket}
       and-bucket: ${and-bucket}
 

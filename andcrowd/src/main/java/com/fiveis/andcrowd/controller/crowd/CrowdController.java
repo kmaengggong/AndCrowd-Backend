@@ -34,7 +34,7 @@ public class CrowdController {
         return ResponseEntity.ok(crowd.getCrowdId());
     }
 
-    @GetMapping(value = "/detail/{crowdId}")
+    @GetMapping(value = "/{crowdId}")
     public ResponseEntity<?> getCrowd(@PathVariable("crowdId") int crowdId) {
         // 특정번호의 펀딩글 조회
         Optional<CrowdDTO.FindById> findCrowd = crowdService.findByCrowdId(crowdId);

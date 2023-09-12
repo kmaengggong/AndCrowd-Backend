@@ -18,8 +18,8 @@ public class DynamicCrowdRewardServiceImpl implements DynamicCrowdRewardService 
     }
 
     @Override
-    public void createDynamicCrowdRewardTable() {
-        dynamicCrowdRewardRepository.createDynamicCrowdRewardTable();
+    public void createDynamicCrowdRewardTable(int crowdId) {
+        dynamicCrowdRewardRepository.createDynamicCrowdRewardTable(crowdId);
     }
 
     @Override
