@@ -8,6 +8,7 @@ import com.fiveis.andcrowd.entity.user.User;
 import com.fiveis.andcrowd.repository.and.*;
 import com.fiveis.andcrowd.repository.user.DynamicUserAndRepository;
 import com.fiveis.andcrowd.repository.user.UserJPARepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -158,5 +159,21 @@ public class AndServiceImpl implements AndService{
             andJPARepository.save(updatedAnd);
         }
     }
+
+    @Override
+    @Transactional
+    public int updateView(int andId) {
+        return andJPARepository.updateView(andId);
+    }
+
+//    @Override
+//    public void updateLike(Integer andId, boolean like) {
+//        if(like){
+//
+//        } else{
+//
+//        }
+//    }
+
 
 }

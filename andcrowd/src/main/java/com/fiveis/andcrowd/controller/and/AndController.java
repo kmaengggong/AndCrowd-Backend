@@ -33,9 +33,21 @@ public class AndController {
     }
 
 
-    @RequestMapping("/{andId}")
+    @GetMapping("/{andId}")
     public AndDTO.Find getItem(@PathVariable("andId") int andId) {
         return andService.findById(andId).orElse(null);
+    }
+
+    @PutMapping("/{andId}/updateView")
+    public ResponseEntity<String> updateView(@PathVariable("andId") int andId) {
+        andService.updateView(andId);
+        return ResponseEntity.ok("View count updated successfully.");
+    }
+
+    @PutMapping("/{andId}/like")
+    public ResponseEntity<String> updatelike(@PathVariable("andId") int andId) {
+
+        return ResponseEntity.ok("like count updated successfully.");
     }
 
     @RequestMapping(value="/{andId}/update" , method=RequestMethod.PATCH)
