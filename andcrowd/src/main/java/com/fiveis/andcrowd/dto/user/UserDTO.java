@@ -2,6 +2,7 @@ package com.fiveis.andcrowd.dto.user;
 
 import com.fiveis.andcrowd.entity.user.User;
 import com.fiveis.andcrowd.enums.Role;
+import com.fiveis.andcrowd.enums.SocialType;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -69,6 +70,8 @@ public class UserDTO {
         private int userPrivacy;
         private int userMarketing;
         private Role role;
+        private SocialType socialType;
+        private String socialId;
     }
 
     @Getter
@@ -117,7 +120,7 @@ public class UserDTO {
     }
 
     public static UserDTO.FindAsAdmin convertToFindAsAdminDTO(User user){
-        return UserDTO.FindAsAdmin.builder()
+        return FindAsAdmin.builder()
                 .userId(user.getUserId())
                 .userEmail(user.getUserEmail())
                 .userPassword(user.getUserPassword())
@@ -131,6 +134,8 @@ public class UserDTO {
                 .userPrivacy(user.getUserPrivacy())
                 .userMarketing(user.getUserMarketing())
                 .role(user.getRole())
+                .socialType(user.getSocialType())
+                .socialId(user.getSocialId())
                 .build();
     }
 }

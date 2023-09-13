@@ -23,19 +23,44 @@ public class UserController {
     @RequestMapping(value="/list", method=RequestMethod.GET)
     public ResponseEntity<?> findAllUser(){
         try{
-            return ResponseEntity.ok(userService.findAll());
+            // 권한 확인
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            List<String> authorityList = authentication
+                    .getAuthorities()
+                    .stream()
+                    .map(authority -> authority.toString())
+                    .toList();
+
+            // 관리자 유저의 경우
+            if(authorityList.contains("ROLE_ADMIN")){
+                System.out.println("!!! 어드민 유저");
+                return ResponseEntity.ok(userService.findAllAsAdmin());
+            }
+            return ResponseEntity.ok(userService.findAllAsPublic());
         } catch(Exception e){
             return ResponseEntity.badRequest().body("Find All User Failed");
         }
     }
 
     @RequestMapping(value="/{userId}", method=RequestMethod.GET)
-    public ResponseEntity<?> findUserAsUser(@PathVariable int userId){
+    public ResponseEntity<?> findUser(@PathVariable int userId){
         try{
             // 권한 확인
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
             UserDTO.FindAsAdmin findAsAdmin = userService.findById(userId);
             String userEmail = findAsAdmin.getUserEmail();
+
+            List<String> authorityList = authentication
+                    .getAuthorities()
+                    .stream()
+                    .map(authority -> authority.toString())
+                    .toList();
+
+            // 관리자 유저의 경우
+            if(authorityList.contains("ROLE_ADMIN")){
+                System.out.println("!!! 어드민 유저");
+                return ResponseEntity.ok(findAsAdmin);
+            }
 
             // 본인인 경우
             if(authentication.getName().equals(userEmail)){
