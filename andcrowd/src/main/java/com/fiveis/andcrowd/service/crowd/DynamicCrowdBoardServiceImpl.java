@@ -5,6 +5,7 @@ import com.fiveis.andcrowd.repository.crowd.DynamicCrowdBoardRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -17,8 +18,8 @@ public class DynamicCrowdBoardServiceImpl implements DynamicCrowdBoardService{
         this.dynamicCrowdBoardRepository = dynamicCrowdBoardRepository;
     }
     @Override
-    public void createDynamicCrowdBoardTable(int crowdId) {
-        dynamicCrowdBoardRepository.createDynamicCrowdBoardTable(crowdId);
+    public void createDynamicCrowdBoardTable() {
+        dynamicCrowdBoardRepository.createDynamicCrowdBoardTable();
     }
 
     @Override
@@ -48,8 +49,7 @@ public class DynamicCrowdBoardServiceImpl implements DynamicCrowdBoardService{
 
     @Override
     public void update(DynamicCrowdBoardDTO.Update dynamicCrowdBoardDTOUpdate) {
-
-
+        dynamicCrowdBoardDTOUpdate.setUpdatedAt(LocalDateTime.now());
         dynamicCrowdBoardRepository.update(dynamicCrowdBoardDTOUpdate);
     }
 
