@@ -19,8 +19,20 @@ public class DynamicAndBoardController {
     }
 
     @RequestMapping(value = "/list", method = RequestMethod.GET)
-    public List<DynamicAndBoardDTO.FindById> getAllAndBoards(@PathVariable("andId") int andId) {
-        return dynamicAndBoardService.findAllNotDeleted(andId);
+    public List<DynamicAndBoardDTO.FindById> getAllAndBoards(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "5") int size,
+            @PathVariable("andId") int andId) {
+
+        int offset = page * size;
+        int limit = size;
+
+        return dynamicAndBoardService.findAllNotDeleted(offset, limit, andId);
+    }
+
+    @GetMapping("/list/count")
+    public int countAll(@PathVariable("andId") int andId) {
+        return dynamicAndBoardService.countAll(andId);
     }
 
     @RequestMapping(value = "{andBoardId}", method = RequestMethod.GET)
