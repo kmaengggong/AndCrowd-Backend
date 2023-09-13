@@ -3,6 +3,7 @@ package com.fiveis.andcrowd.controller.and;
 import com.fiveis.andcrowd.dto.and.AndDTO;
 import com.fiveis.andcrowd.entity.and.And;
 import com.fiveis.andcrowd.service.and.AndService;
+import com.fiveis.andcrowd.service.user.DynamicUserFollowService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -54,6 +55,18 @@ public class AndController {
     public boolean isLike(@PathVariable("andId") int andId, @PathVariable("userId") int userId) {
         return andService.isLiked(andId, userId);
     }
+
+    @GetMapping("/{myId}/follow/{userId}")
+    public boolean isFollowed(@PathVariable("myId") int myId, @PathVariable("userId") int userId) {
+        return andService.isFollowed(myId, userId);
+    }
+
+    @PostMapping("/{myId}/follow/{userId}")
+    public ResponseEntity<String> updateFollow(@PathVariable("myId") int myId, @PathVariable("userId") int userId) {
+        andService.updateFollow(myId, userId);
+        return ResponseEntity.ok("follow updated successfully.");
+    }
+
 
 
     @RequestMapping(value="/{andId}/update" , method=RequestMethod.PATCH)

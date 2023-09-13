@@ -78,7 +78,7 @@ public class DynamicUserController {
     public ResponseEntity<?> deleteUserFollow(@PathVariable int userId, @PathVariable int fUserId){//,
         //Principal principal){
         String userEmail = User.toTableName(userService.findById(userId).getUserEmail());
-        dynamicUserFollowService.deleteByAndId(userEmail, fUserId);
+        dynamicUserFollowService.deleteByUserId(userEmail, fUserId);
         return ResponseEntity.ok("UserFollow Deleted!");
     }
 

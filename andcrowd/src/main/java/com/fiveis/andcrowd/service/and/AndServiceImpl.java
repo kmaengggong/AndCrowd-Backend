@@ -2,14 +2,17 @@ package com.fiveis.andcrowd.service.and;
 
 import com.fiveis.andcrowd.dto.and.AndDTO;
 import com.fiveis.andcrowd.dto.and.DynamicAndMemberDTO;
+import com.fiveis.andcrowd.dto.user.DynamicUserFollowDTO;
 import com.fiveis.andcrowd.dto.user.DynamicUserLikeDTO;
 import com.fiveis.andcrowd.entity.and.And;
 import com.fiveis.andcrowd.entity.user.DynamicUserAnd;
+import com.fiveis.andcrowd.entity.user.DynamicUserFollow;
 import com.fiveis.andcrowd.entity.user.DynamicUserLike;
 import com.fiveis.andcrowd.entity.user.User;
 import com.fiveis.andcrowd.repository.and.*;
 import com.fiveis.andcrowd.repository.user.DynamicUserAndRepository;
 import com.fiveis.andcrowd.repository.user.UserJPARepository;
+import com.fiveis.andcrowd.service.user.DynamicUserFollowService;
 import com.fiveis.andcrowd.service.user.DynamicUserLikeService;
 import com.fiveis.andcrowd.service.user.DynamicUserLikeServiceImpl;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -39,6 +42,7 @@ public class AndServiceImpl implements AndService{
     private final UserJPARepository userJPARepository;
     private final DynamicAndMemberRepository andMemberRepository;
     private final DynamicUserLikeService dynamicUserLikeService;
+    private final DynamicUserFollowService dynamicUserFollowService;
     private final JPAQueryFactory query;
 
 
@@ -53,6 +57,7 @@ public class AndServiceImpl implements AndService{
                           UserJPARepository userJPARepository,
                           DynamicAndMemberRepository andMemberRepository,
                           DynamicUserLikeService dynamicUserLikeService,
+                          DynamicUserFollowService dynamicUserFollowService,
                           EntityManager em
                           ){
         this.andJPARepository = andJPARepository;
@@ -65,6 +70,7 @@ public class AndServiceImpl implements AndService{
         this.userJPARepository = userJPARepository;
         this.andMemberRepository = andMemberRepository;
         this.dynamicUserLikeService = dynamicUserLikeService;
+        this.dynamicUserFollowService = dynamicUserFollowService;
         this.query = new JPAQueryFactory(em);
     }
 
@@ -218,6 +224,36 @@ public class AndServiceImpl implements AndService{
         DynamicUserLikeDTO.Find like = dynamicUserLikeService.findByProject(userEmail, andId, 0);
 
         if (like == null) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    @Override
+    public void updateFollow(int myId, int userId) {
+        String userEmail = userJPARepository.findByUserId(myId).get().getUserEmail();
+        String convertedUserEmail = toTableName(userEmail);
+        DynamicUserFollowDTO.Find follow = dynamicUserFollowService.findByUserId(convertedUserEmail, userId);
+
+        if (follow == null) {
+            DynamicUserFollow dynamicUserFollow = DynamicUserFollow.builder()
+                    .userId(userId)
+                    .build();
+            dynamicUserFollowService.save(convertedUserEmail, dynamicUserFollow);
+        } else {
+            dynamicUserFollowService.deleteByUserId(convertedUserEmail, userId);
+        }
+
+    }
+
+    @Override
+    public boolean isFollowed(int myId, int userId) {
+        String userEmail = userJPARepository.findByUserId(myId).get().getUserEmail();
+        String convertedUserEmail = toTableName(userEmail);
+        DynamicUserFollowDTO.Find follow = dynamicUserFollowService.findByUserId(convertedUserEmail, userId);
+
+        if (follow == null) {
             return false;
         } else {
             return true;

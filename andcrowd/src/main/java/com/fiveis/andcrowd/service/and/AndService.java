@@ -36,5 +36,8 @@ public interface AndService {
 
     boolean isLiked(int andId, int userId);
 
+    void updateFollow(int myId, int userId);
 
-    }
+    boolean isFollowed(int andId, int userId);
+
+}
