@@ -20,7 +20,6 @@ public interface AndService {
     void deleteById(int andId);
 
     void save(And and);
-
     void update(And and);
 
     void updateStatus(int andId);

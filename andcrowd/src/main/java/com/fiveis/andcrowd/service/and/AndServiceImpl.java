@@ -133,8 +133,6 @@ public class AndServiceImpl implements AndService{
         andMemberRepository.save(userMember);
     }
 
-
-
     @Override
     public void update(And and) {
         And updatedAnd = andJPARepository.findById(and.getAndId()).get();
