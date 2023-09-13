@@ -2,6 +2,7 @@ package com.fiveis.andcrowd.service.and;
 
 import com.fiveis.andcrowd.dto.and.AndDTO;
 import com.fiveis.andcrowd.entity.and.And;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -24,4 +25,19 @@ public interface AndService {
     void update(And and);
 
     void updateStatus(int andId);
+
+    int updateView(int andId);
+
+    void increaseLike(Integer andId);
+
+    void decreaseLike(Integer andId);
+
+    void updateLike(Integer andId, int userId);
+
+    boolean isLiked(int andId, int userId);
+
+    void updateFollow(int myId, int userId);
+
+    boolean isFollowed(int andId, int userId);
+
 }
