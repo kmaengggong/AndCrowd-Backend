@@ -83,8 +83,8 @@ public class CrowdServiceImpl implements CrowdService {
         dynamicCrowdRewardRepository.deleteAll(crowdId);
         crowdCategoryJPARepository.deleteById(crowdId);
         crowdJPARepository.deleteById(crowdId);
-        Optional<Crowd> crowdOptional = crowdJPARepository.findById(crowdId);
 
+        Optional<Crowd> crowdOptional = crowdJPARepository.findById(crowdId);
         if(crowdOptional.isPresent()) {
             Crowd crowd = crowdOptional.get();
             crowd.setDeleted(true);
@@ -95,7 +95,7 @@ public class CrowdServiceImpl implements CrowdService {
     @Override
     public void save(Crowd crowd) {
         Crowd insertCrowd = crowdJPARepository.save(crowd);
-        dynamicCrowdRewardRepository.createDynamicCrowdRewardTable();
+        dynamicCrowdRewardRepository.createDynamicCrowdRewardTable(insertCrowd.getCrowdId());
         dynamicCrowdBoardRepository.createDynamicCrowdBoardTable(insertCrowd.getCrowdId());
         dynamicCrowdQnaRepository.createDynamicCrowdQnaTable(insertCrowd.getCrowdId());
         dynamicCrowdQnaReplyRepository.createDynamicCrowdQnaReplyTable(insertCrowd.getCrowdId());

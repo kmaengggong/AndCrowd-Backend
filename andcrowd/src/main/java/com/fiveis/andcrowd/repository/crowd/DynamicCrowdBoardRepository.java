@@ -24,5 +24,5 @@ public interface DynamicCrowdBoardRepository {
     //CrowdService의 deleteAll기능 추가
     void deleteByCrowdId(@Param("crowdId") int crowdId);
 
-    void createDynamicCrowdBoardTable();
+    void createDynamicCrowdBoardTable(int crowdId);
 }
