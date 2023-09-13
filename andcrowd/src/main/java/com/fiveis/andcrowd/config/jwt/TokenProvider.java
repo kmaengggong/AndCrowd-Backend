@@ -2,7 +2,9 @@ package com.fiveis.andcrowd.config.jwt;
 
 import com.fiveis.andcrowd.entity.etc.RefreshToken;
 import com.fiveis.andcrowd.entity.user.User;
+import com.fiveis.andcrowd.enums.Role;
 import com.fiveis.andcrowd.repository.etc.RefreshTokenRepository;
+import com.fiveis.andcrowd.repository.user.UserJPARepository;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Header;
 import io.jsonwebtoken.Jwts;
@@ -24,9 +26,9 @@ public class TokenProvider {
     public static final Duration REFRESH_TOKEN_DURATION = Duration.ofDays(2); // 이틀(리프레시 토큰의 유효기간)
     public static final Duration ACCESS_TOKEN_DURATION = Duration.ofHours(2); // 2시간(억세스 토큰의 유효기간)
 
-
     private final JwtProperties jwtProperties;
     private final RefreshTokenRepository refreshTokenRepository;
+    private final UserJPARepository userJPARepository;
 
     public String generateToken(User user, Duration expiredAt){
         Date now = new Date();
@@ -78,8 +80,17 @@ public class TokenProvider {
 
     public Authentication getAuthentication(String token){
         Claims claims = getClaims(token);
-        Set<SimpleGrantedAuthority> authorities =
-                Collections.singleton(new SimpleGrantedAuthority("ROLE_USER"));
+        String role =  userJPARepository.findByUserEmail(claims.getSubject()).get().getRole().toString();
+        Set<SimpleGrantedAuthority> authorities = null;
+
+        if(role.equals("ADMIN")){
+            authorities = Collections.singleton(new SimpleGrantedAuthority("ROLE_ADMIN"));
+            System.out.println("ROLE_ADMIN");
+        }
+        else{
+            authorities = Collections.singleton(new SimpleGrantedAuthority("ROLE_USER"));
+            System.out.println("ROLE_USER");
+        }
 
         return new UsernamePasswordAuthenticationToken(
                 new org.springframework.security.core.userdetails.User(claims.getSubject(),

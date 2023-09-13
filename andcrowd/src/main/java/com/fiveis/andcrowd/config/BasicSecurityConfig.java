@@ -33,19 +33,6 @@ public class BasicSecurityConfig {
     private final RefreshTokenRepository refreshTokenRepository;
     private final UserService userService;
 
-//    @Autowired
-//    public BasicSecurityConfig(UserDetailsService userDetailsService,
-//                               TokenProvider tokenProvider,
-//                               OAuth2UserCustomService oauth2UserCustomService,
-//                               RefreshTokenRepository refreshTokenRepository,
-//                               UserService userService){
-//        this.userDetailsService = userDetailsService;
-//        this.tokenProvider = tokenProvider;
-//        this.oauth2UserCustomService = oauth2UserCustomService;
-//        this.refreshTokenRepository = refreshTokenRepository;
-//        this.userService = userService;
-//    }
-
     // 정적 파일이나 .jsp 파일 등 스프링 시큐리티가 기본적으로 적용되지 않을 영역 설정하기.
     @Bean
     public WebSecurityCustomizer configure() {

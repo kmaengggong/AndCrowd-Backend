@@ -122,4 +122,20 @@ public class UserController {
         UserS3DTO profileImg = userS3Service.uploadFile(userId, fileType, multipartFile);
         return ResponseEntity.ok().body(profileImg);
     }
+
+    @RequestMapping(value="{userId}/isNotAdmin", method=RequestMethod.GET)
+    public ResponseEntity<?> isNotAdmin(@PathVariable int userId){
+        try{
+            UserDTO.FindAsAdmin findAsAdmin = userService.findById(userId);
+            String role = findAsAdmin.getRole().toString();
+            if(role.equals("ADMIN")){
+                return ResponseEntity.badRequest().body("It's ADMIN user");
+            }
+            else{
+                return ResponseEntity.ok("It's not ADMIN user");
+            }
+        } catch(Exception e){
+            return ResponseEntity.internalServerError().body("isNotAdmin Error");
+        }
+    }
 }
