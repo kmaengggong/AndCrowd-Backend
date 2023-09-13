@@ -2,7 +2,9 @@ package com.fiveis.andcrowd.controller.and;
 
 import com.fiveis.andcrowd.dto.and.AndDTO;
 import com.fiveis.andcrowd.entity.and.And;
+import com.fiveis.andcrowd.entity.etc.Report;
 import com.fiveis.andcrowd.service.and.AndService;
+import com.fiveis.andcrowd.service.etc.ReportService;
 import com.fiveis.andcrowd.service.user.DynamicUserFollowService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -15,10 +17,12 @@ import java.util.List;
 public class AndController {
 
     private final AndService andService;
+    private final ReportService reportService;
 
     @Autowired
-    public AndController(AndService andService) {
+    public AndController(AndService andService, ReportService reportService) {
         this.andService = andService;
+        this.reportService = reportService;
     }
 
     @RequestMapping("/list")
@@ -31,6 +35,12 @@ public class AndController {
         andService.save(and);
         // 생성된 andId 값을 응답 Body에 포함하여 클라이언트에게 전달
         return ResponseEntity.ok(and.getAndId());
+    }
+
+    @RequestMapping(value="/report", method = RequestMethod.POST)
+    public ResponseEntity<String> createReport(@RequestBody Report report) {
+        reportService.save(report);
+        return ResponseEntity.ok("신고 완료");
     }
 
 
