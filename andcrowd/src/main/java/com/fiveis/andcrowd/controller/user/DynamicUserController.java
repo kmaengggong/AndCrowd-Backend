@@ -120,6 +120,22 @@ public class DynamicUserController {
         return ResponseEntity.ok(projectDTOFindList);
     }
 
+    @RequestMapping(value="{userId}/maker/0", method=RequestMethod.GET)
+    public ResponseEntity<?> findUserMakerAnd(@PathVariable int userId){//,
+        //Principal principal){
+        String userEmail = User.toTableName(userService.findById(userId).getUserEmail());
+        List<ProjectDTO.Find> projectDTOFindList = dynamicUserMakerService.findAllAnd(userEmail);
+        return ResponseEntity.ok(projectDTOFindList);
+    }
+
+    @RequestMapping(value="{userId}/maker/1", method=RequestMethod.GET)
+    public ResponseEntity<?> findUserMakerCrowd(@PathVariable int userId){//,
+        //Principal principal){
+        String userEmail = User.toTableName(userService.findById(userId).getUserEmail());
+        List<ProjectDTO.Find> projectDTOFindList = dynamicUserMakerService.findAllCrowd(userEmail);
+        return ResponseEntity.ok(projectDTOFindList);
+    }
+
     @RequestMapping(value="{userId}/maker", method=RequestMethod.POST)
     public ResponseEntity<?> saveUserMaker(@PathVariable int userId, @RequestBody DynamicUserMaker dynamicUserMaker){//,
                                             //Principal principal){

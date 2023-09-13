@@ -8,7 +8,7 @@ import org.hibernate.annotations.DynamicInsert;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder @Entity
-@DynamicInsert
+//@DynamicInsert
 @Table(name = "crowd_category")
 public class CrowdCategory {
 
@@ -20,8 +20,11 @@ public class CrowdCategory {
     @Column(nullable = false)
     private String crowdCategoryName;
 
+    @Column(nullable = false)
+    private boolean isDeleted;
+
     //SaveDTO를 통해 Entity를 초기화 하기 위한 생성자
-    public CrowdCategory(String crowdCategoryName){
-        this.crowdCategoryName = crowdCategoryName;
-    }
+//    public CrowdCategory(String crowdCategoryName){
+//        this.crowdCategoryName = crowdCategoryName;
+//    }
 }

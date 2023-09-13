@@ -8,9 +8,11 @@ import com.fiveis.andcrowd.entity.and.And;
 import com.fiveis.andcrowd.entity.user.DynamicUserAnd;
 import com.fiveis.andcrowd.entity.user.DynamicUserFollow;
 import com.fiveis.andcrowd.entity.user.DynamicUserLike;
+import com.fiveis.andcrowd.entity.user.DynamicUserMaker;
 import com.fiveis.andcrowd.entity.user.User;
 import com.fiveis.andcrowd.repository.and.*;
 import com.fiveis.andcrowd.repository.user.DynamicUserAndRepository;
+import com.fiveis.andcrowd.repository.user.DynamicUserMakerRepository;
 import com.fiveis.andcrowd.repository.user.UserJPARepository;
 import com.fiveis.andcrowd.service.user.DynamicUserFollowService;
 import com.fiveis.andcrowd.service.user.DynamicUserLikeService;
@@ -43,6 +45,7 @@ public class AndServiceImpl implements AndService{
     private final DynamicAndMemberRepository andMemberRepository;
     private final DynamicUserLikeService dynamicUserLikeService;
     private final DynamicUserFollowService dynamicUserFollowService;
+    private final DynamicUserMakerRepository dynamicUserMakerRepository;
     private final JPAQueryFactory query;
 
 
@@ -58,6 +61,7 @@ public class AndServiceImpl implements AndService{
                           DynamicAndMemberRepository andMemberRepository,
                           DynamicUserLikeService dynamicUserLikeService,
                           DynamicUserFollowService dynamicUserFollowService,
+                          DynamicUserMakerRepository dynamicUserMakerRepository,
                           EntityManager em
                           ){
         this.andJPARepository = andJPARepository;
@@ -71,6 +75,7 @@ public class AndServiceImpl implements AndService{
         this.andMemberRepository = andMemberRepository;
         this.dynamicUserLikeService = dynamicUserLikeService;
         this.dynamicUserFollowService = dynamicUserFollowService;
+        this.dynamicUserMakerRepository = dynamicUserMakerRepository;
         this.query = new JPAQueryFactory(em);
     }
 
@@ -145,6 +150,12 @@ public class AndServiceImpl implements AndService{
                 .build();
         dynamicUserAndRepository.save(userEmail, dynamicUserAnd);
 
+        DynamicUserMaker dynamicUserMaker = DynamicUserMaker.builder()
+                .projectId(savedAnd.getAndId())
+                .projectType(0)
+                .build();
+        dynamicUserMakerRepository.save(userEmail, dynamicUserMaker);
+
         DynamicAndMemberDTO.Update userMember = DynamicAndMemberDTO.Update.builder()
                 .userId(savedAnd.getUserId())
                 .andId(savedAnd.getAndId())
@@ -152,8 +163,6 @@ public class AndServiceImpl implements AndService{
                 .build();
         andMemberRepository.save(userMember);
     }
-
-
 
     @Override
     public void update(And and) {
