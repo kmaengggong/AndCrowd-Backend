@@ -2,6 +2,7 @@ package com.fiveis.andcrowd.entity.user;
 
 import com.fiveis.andcrowd.enums.Role;
 import com.fiveis.andcrowd.enums.SocialType;
+import com.querydsl.core.annotations.QueryEntity;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
@@ -16,6 +17,7 @@ import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
 
+@QueryEntity
 @Entity
 @Getter
 @ToString
