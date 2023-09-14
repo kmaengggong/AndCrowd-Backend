@@ -24,28 +24,28 @@ public class And {
     @Column(nullable = false)
     private int andId;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private int userId;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private int andCategoryId;
 
     @Column(nullable = true)
     private int crowdId;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String andTitle;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String andHeaderImg;
 
-    @Column(nullable = false)
+    @Column(nullable = true, length = 6000)
     private String andContent;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private LocalDateTime andEndDate;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private int needNumMem;
 
     private String andImg1;

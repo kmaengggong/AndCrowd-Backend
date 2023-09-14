@@ -50,7 +50,7 @@ public class Crowd {
     @Column(nullable = false)
     private String crowdTitle;
 
-    @Column(nullable = false)
+    //@Column(nullable = false)
     private String headerImg;
 
     @ColumnDefault("false")

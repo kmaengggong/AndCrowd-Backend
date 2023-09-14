@@ -2,6 +2,7 @@ package com.fiveis.andcrowd.service.and;
 
 import com.fiveis.andcrowd.dto.and.DynamicAndBoardDTO;
 import com.fiveis.andcrowd.repository.and.DynamicAndBoardRepository;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,8 +24,8 @@ public class DynamicAndBoardServiceImpl implements DynamicAndBoardService {
     }
 
     @Override
-    public List<DynamicAndBoardDTO.FindById> findAllNotDeleted(int andId) {
-        return dynamicAndBoardRepository.findAllNotDeleted(andId);
+    public List<DynamicAndBoardDTO.FindById> findAllNotDeleted(@Param("offset") int offset, @Param("limit") int limit, int andId) {
+        return dynamicAndBoardRepository.findAllNotDeleted(offset, limit, andId);
     }
 
     @Override
@@ -72,5 +73,10 @@ public class DynamicAndBoardServiceImpl implements DynamicAndBoardService {
     @Override
     public void insertTestData() {
         dynamicAndBoardRepository.insertTestData();
+    }
+
+    @Override
+    public int countAll(int andId) {
+        return dynamicAndBoardRepository.countNotDeleted(andId);
     }
 }
