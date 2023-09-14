@@ -1,5 +1,6 @@
 package com.fiveis.andcrowd.controller.etc;
 
+import com.fiveis.andcrowd.config.NaverOauthConfig;
 import com.fiveis.andcrowd.config.jwt.TokenProvider;
 import com.fiveis.andcrowd.dto.etc.AccessTokenResponseDTO;
 import com.fiveis.andcrowd.dto.user.NaverDTO;
@@ -15,9 +16,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.UriComponentsBuilder;
 
+import java.io.IOException;
 import java.util.List;
-import java.util.Map;
 
 @RequiredArgsConstructor
 @RestController
@@ -26,6 +28,7 @@ public class TokenController {
     private final TokenService tokenService;
     private final TokenProvider tokenProvider;
     private final UserService userService;
+    private final NaverOauthConfig naverOauthConfig;
 
 //    @RequestMapping(value="/getUserId", method=RequestMethod.POST)
 //    public ResponseEntity<?> getUserId(HttpServletRequest request){
@@ -122,10 +125,22 @@ public class TokenController {
 //        }
 //    }
 
-    @RequestMapping(value="/oauth/naver", method=RequestMethod.POST)
-    public ResponseEntity<?> naverLogin(@RequestBody NaverDTO.Params params){
-        System.out.println(params);
-        return null;
+    @RequestMapping(value="/oauth/naver", method=RequestMethod.GET)
+    public ResponseEntity<?> naverLogin(HttpServletResponse response/*@RequestBody NaverDTO.Params params*/) throws IOException {
+        System.out.println("naverLogin");
+
+        String uri = UriComponentsBuilder
+                .fromUriString("https://nid.naver.com/oauth2.0/authorize")
+                .queryParam("response_type", "code")
+                .queryParam("client_id", naverOauthConfig.getClientId())
+                .queryParam("state", "test")
+                .queryParam("redirect_uri", naverOauthConfig.getRedirectUri())
+                .toUriString();
+
+        System.out.println(uri);
+        response.sendRedirect(uri);
+
+        return ResponseEntity.ok().build();
     }
 
 }

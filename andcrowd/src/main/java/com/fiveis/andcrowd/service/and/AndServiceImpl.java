@@ -2,12 +2,24 @@ package com.fiveis.andcrowd.service.and;
 
 import com.fiveis.andcrowd.dto.and.AndDTO;
 import com.fiveis.andcrowd.dto.and.DynamicAndMemberDTO;
+import com.fiveis.andcrowd.dto.user.DynamicUserFollowDTO;
+import com.fiveis.andcrowd.dto.user.DynamicUserLikeDTO;
 import com.fiveis.andcrowd.entity.and.And;
 import com.fiveis.andcrowd.entity.user.DynamicUserAnd;
+import com.fiveis.andcrowd.entity.user.DynamicUserFollow;
+import com.fiveis.andcrowd.entity.user.DynamicUserLike;
+import com.fiveis.andcrowd.entity.user.DynamicUserMaker;
 import com.fiveis.andcrowd.entity.user.User;
 import com.fiveis.andcrowd.repository.and.*;
 import com.fiveis.andcrowd.repository.user.DynamicUserAndRepository;
+import com.fiveis.andcrowd.repository.user.DynamicUserMakerRepository;
 import com.fiveis.andcrowd.repository.user.UserJPARepository;
+import com.fiveis.andcrowd.service.user.DynamicUserFollowService;
+import com.fiveis.andcrowd.service.user.DynamicUserLikeService;
+import com.fiveis.andcrowd.service.user.DynamicUserLikeServiceImpl;
+import com.querydsl.jpa.impl.JPAQueryFactory;
+import jakarta.persistence.EntityManager;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,20 +28,25 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import static com.fiveis.andcrowd.dto.and.AndDTO.convertToAndFindDTO;
 import static com.fiveis.andcrowd.entity.user.User.toTableName;
 
 @Service
 public class AndServiceImpl implements AndService{
 
-    AndJPARepository andJPARepository;
-    AndDynamicRepository andDynamicRepository;
-    ChatRoomService chatRoomService;
-    DynamicAndQnaRepository dynamicAndQnaRepository;
-    DynamicAndQnaReplyRepository dynamicAndQnaReplyRepository;
-    DynamicAndBoardRepository dynamicAndBoardRepository;
-    DynamicUserAndRepository dynamicUserAndRepository;
-    UserJPARepository userJPARepository;
-    DynamicAndMemberRepository andMemberRepository;
+    private final AndJPARepository andJPARepository;
+    private final AndDynamicRepository andDynamicRepository;
+    private final ChatRoomService chatRoomService;
+    private final DynamicAndQnaRepository dynamicAndQnaRepository;
+    private final DynamicAndQnaReplyRepository dynamicAndQnaReplyRepository;
+    private final DynamicAndBoardRepository dynamicAndBoardRepository;
+    private final DynamicUserAndRepository dynamicUserAndRepository;
+    private final UserJPARepository userJPARepository;
+    private final DynamicAndMemberRepository andMemberRepository;
+    private final DynamicUserLikeService dynamicUserLikeService;
+    private final DynamicUserFollowService dynamicUserFollowService;
+    private final DynamicUserMakerRepository dynamicUserMakerRepository;
+    private final JPAQueryFactory query;
 
 
     @Autowired
@@ -41,7 +58,11 @@ public class AndServiceImpl implements AndService{
                           ChatRoomService chatRoomService,
                           DynamicUserAndRepository dynamicUserAndRepository,
                           UserJPARepository userJPARepository,
-                          DynamicAndMemberRepository andMemberRepository
+                          DynamicAndMemberRepository andMemberRepository,
+                          DynamicUserLikeService dynamicUserLikeService,
+                          DynamicUserFollowService dynamicUserFollowService,
+                          DynamicUserMakerRepository dynamicUserMakerRepository,
+                          EntityManager em
                           ){
         this.andJPARepository = andJPARepository;
         this.andDynamicRepository = andDynamicRepository;
@@ -52,6 +73,10 @@ public class AndServiceImpl implements AndService{
         this.dynamicUserAndRepository = dynamicUserAndRepository;
         this.userJPARepository = userJPARepository;
         this.andMemberRepository = andMemberRepository;
+        this.dynamicUserLikeService = dynamicUserLikeService;
+        this.dynamicUserFollowService = dynamicUserFollowService;
+        this.dynamicUserMakerRepository = dynamicUserMakerRepository;
+        this.query = new JPAQueryFactory(em);
     }
 
 
@@ -77,7 +102,7 @@ public class AndServiceImpl implements AndService{
         List<AndDTO.Find> findAllNotDeletedList = new ArrayList<>();
 
         for (And and : andList) {
-            AndDTO.Find dto = AndDTO.convertToAndFindDTO(and);
+            AndDTO.Find dto = convertToAndFindDTO(and);
             findAllNotDeletedList.add(dto);
         }
 
@@ -91,7 +116,7 @@ public class AndServiceImpl implements AndService{
         List<AndDTO.Find> findList = new ArrayList<>();
 
         for (And and : andList) {
-            AndDTO.Find dto = AndDTO.convertToAndFindDTO(and);
+            AndDTO.Find dto = convertToAndFindDTO(and);
             findList.add(dto);
         }
 
@@ -125,6 +150,12 @@ public class AndServiceImpl implements AndService{
                 .build();
         dynamicUserAndRepository.save(userEmail, dynamicUserAnd);
 
+        DynamicUserMaker dynamicUserMaker = DynamicUserMaker.builder()
+                .projectId(savedAnd.getAndId())
+                .projectType(0)
+                .build();
+        dynamicUserMakerRepository.save(userEmail, dynamicUserMaker);
+
         DynamicAndMemberDTO.Update userMember = DynamicAndMemberDTO.Update.builder()
                 .userId(savedAnd.getUserId())
                 .andId(savedAnd.getAndId())
@@ -132,8 +163,6 @@ public class AndServiceImpl implements AndService{
                 .build();
         andMemberRepository.save(userMember);
     }
-
-
 
     @Override
     public void update(And and) {
@@ -156,6 +185,87 @@ public class AndServiceImpl implements AndService{
 
             // 변경된 And 객체를 다시 저장
             andJPARepository.save(updatedAnd);
+        }
+    }
+
+    @Override
+    @Transactional
+    public int updateView(int andId) {
+        return andJPARepository.updateView(andId);
+    }
+
+    @Override
+    @Transactional
+    public void increaseLike(Integer andId) {
+        andJPARepository.increaseLike(andId);
+    }
+
+    @Override
+    @Transactional
+    public void decreaseLike(Integer andId) {
+        andJPARepository.decreaseLike(andId);
+    }
+
+    @Override
+    @Transactional
+    public void updateLike(Integer andId, int userId){
+        String userEmail = userJPARepository.findByUserId(userId).get().getUserEmail();
+        String convertedUserEmail = toTableName(userEmail);
+        DynamicUserLikeDTO.Find like = dynamicUserLikeService.findByProject(convertedUserEmail, andId, 0);
+
+        if (like == null) {
+            increaseLike(andId);
+            DynamicUserLike dynamicUserLike = DynamicUserLike.builder()
+                    .projectId(andId)
+                    .projectType(0)
+                    .build();
+            dynamicUserLikeService.save(convertedUserEmail, dynamicUserLike);
+        } else {
+            decreaseLike(andId);
+            dynamicUserLikeService.deleteByProjectId(convertedUserEmail, andId, 0);
+        }
+    }
+
+    @Override
+    @Transactional
+    public boolean isLiked(int andId, int userId) {
+        String userEmail = userJPARepository.findByUserId(userId).get().getUserEmail();
+        DynamicUserLikeDTO.Find like = dynamicUserLikeService.findByProject(userEmail, andId, 0);
+
+        if (like == null) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    @Override
+    public void updateFollow(int myId, int userId) {
+        String userEmail = userJPARepository.findByUserId(myId).get().getUserEmail();
+        String convertedUserEmail = toTableName(userEmail);
+        DynamicUserFollowDTO.Find follow = dynamicUserFollowService.findByUserId(convertedUserEmail, userId);
+
+        if (follow == null) {
+            DynamicUserFollow dynamicUserFollow = DynamicUserFollow.builder()
+                    .userId(userId)
+                    .build();
+            dynamicUserFollowService.save(convertedUserEmail, dynamicUserFollow);
+        } else {
+            dynamicUserFollowService.deleteByUserId(convertedUserEmail, userId);
+        }
+
+    }
+
+    @Override
+    public boolean isFollowed(int myId, int userId) {
+        String userEmail = userJPARepository.findByUserId(myId).get().getUserEmail();
+        String convertedUserEmail = toTableName(userEmail);
+        DynamicUserFollowDTO.Find follow = dynamicUserFollowService.findByUserId(convertedUserEmail, userId);
+
+        if (follow == null) {
+            return false;
+        } else {
+            return true;
         }
     }
 

@@ -15,6 +15,7 @@ public class OAuth2AuthorizationRequestBasedOnCookieRepository
 
     @Override
     public OAuth2AuthorizationRequest loadAuthorizationRequest(HttpServletRequest request) {
+        System.out.println("loadAuthorizationRequest");
         // 토큰을 발급해서 쿠키에 실어서 사용자측에 보냈을때 쿠키에서 토큰만 추려내기
         Cookie cookie = WebUtils.getCookie(request, OAUTH2_AUTHORIZATION_REQUEST_COOKIE_NAME);
         // 쿠키에 대한 정보를 역직렬화해 자바 내부에서 쓸 수 있게 만들어서 리턴
@@ -23,6 +24,7 @@ public class OAuth2AuthorizationRequestBasedOnCookieRepository
 
     @Override
     public void saveAuthorizationRequest(OAuth2AuthorizationRequest authorizationRequest, HttpServletRequest request, HttpServletResponse response) {
+        System.out.println("saveAuthorizatonRequest");
         // 저장하려고 했지만 요청정보가 null인경우(비정상적인 인증요청인 경우)
         if(authorizationRequest == null){
             removeAuthorizationRequest(request, response);// 인증정보 제거 후

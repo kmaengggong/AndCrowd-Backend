@@ -90,7 +90,7 @@ public class ChatRoomService {
     public List<UserDTO.UserInfo> chatMember(Long roomId) {
         Optional<ChatRoom> chatRoom = chatRoomRepository.findByRoomId(roomId);
         int andId = chatRoom.get().getAndId();
-        List<DynamicAndMemberDTO.FindByAndMemberId> andMemberList = memberRepository.findAll(andId);
+        List<DynamicAndMemberDTO.FindByAndMemberId> andMemberList = memberRepository.findAllNotDeleted(andId);
         System.out.println("andMemberList: " + andMemberList);
 
         List<UserDTO.UserInfo> chatMember = andMemberList.stream()

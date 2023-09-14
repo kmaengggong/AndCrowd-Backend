@@ -68,7 +68,8 @@ public class AndQueryRepositoryImpl implements AndQueryRepository{
                 .where(
                         categoryExpression,
                         eqAndStatus(andStatus),
-                        searchExpression
+                        searchExpression,
+                        eqIsDeletedFalse()
                 )
                 .orderBy(buildOrderSpecifier(sortField, sortOrder))
                 .offset(pageable.getOffset())
@@ -85,6 +86,10 @@ public class AndQueryRepositoryImpl implements AndQueryRepository{
 
     private BooleanExpression eqCategory(Integer andCategoryId) {
         return andCategoryId != null ? and.andCategoryId.eq(andCategoryId) : null;
+    }
+
+    private BooleanExpression eqIsDeletedFalse() {
+        return and.isDeleted.eq(false);
     }
 
     private BooleanExpression eqAndStatus(Integer andStatus) {

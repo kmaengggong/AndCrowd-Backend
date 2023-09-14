@@ -14,6 +14,8 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.fiveis.andcrowd.entity.user.User.toTableName;
+
 @Service
 public class DynamicUserLikeServiceImpl implements DynamicUserLikeService{
     private static DynamicUserLikeRepository dynamicUserLikeRepository;
@@ -39,9 +41,11 @@ public class DynamicUserLikeServiceImpl implements DynamicUserLikeService{
                 And and = andJPARepository.findById(find.getProjectId()).get();
                 ProjectDTO.Find projectFind = ProjectDTO.Find.builder()
                         .projectId(and.getAndId())
-                        .projectType(1)
+                        .projectType(0)
                         .projectHeaderImg(and.getAndHeaderImg())
                         .projectTitle(and.getAndTitle())
+                        .projectContent(and.getAndContent())
+                        .projectEndDate(and.getAndEndDate())
                         .build();
                 projectList.add(projectFind);
             }
@@ -54,6 +58,8 @@ public class DynamicUserLikeServiceImpl implements DynamicUserLikeService{
                         .projectType(1)
                         .projectHeaderImg(crowd.getHeaderImg())
                         .projectTitle(crowd.getCrowdTitle())
+                        .projectContent(crowd.getCrowdContent())
+                        .projectEndDate(crowd.getCrowdEndDate())
                         .build();
                 projectList.add(projectFind);
             }
@@ -63,6 +69,12 @@ public class DynamicUserLikeServiceImpl implements DynamicUserLikeService{
 
     public DynamicUserLikeDTO.Find findById(String userEmail, int uLikeId){
         return dynamicUserLikeRepository.findById(userEmail, uLikeId);
+    }
+
+    @Override
+    public DynamicUserLikeDTO.Find findByProject(String userEmail, int projectId, int projectType) {
+        String convertedUserEmail = toTableName(userEmail);
+        return dynamicUserLikeRepository.findByProject(convertedUserEmail, projectId, projectType);
     }
 
     public boolean save(String userEmail, DynamicUserLike dynamicUserLike){
