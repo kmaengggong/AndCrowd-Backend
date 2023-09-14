@@ -76,6 +76,7 @@ public class AndController {
 
     @PostMapping("/{andId}/like/{userId}")
     public ResponseEntity<String> updateLike(@PathVariable("andId") int andId, @PathVariable("userId") int userId) {
+        System.out.println("here");
         andService.updateLike(andId, userId);
         return ResponseEntity.ok("like count updated successfully.");
     }
