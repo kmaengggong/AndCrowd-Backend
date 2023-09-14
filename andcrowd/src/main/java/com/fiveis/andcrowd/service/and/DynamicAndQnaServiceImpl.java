@@ -17,8 +17,9 @@ public class DynamicAndQnaServiceImpl implements DynamicAndQnaService{
     DynamicAndQnaReplyRepository dynamicAndQnaReplyRepository;
 
     @Autowired
-    public DynamicAndQnaServiceImpl(DynamicAndQnaRepository dynamicAndQnaRepository){
+    public DynamicAndQnaServiceImpl(DynamicAndQnaRepository dynamicAndQnaRepository, DynamicAndQnaReplyRepository dynamicAndQnaReplyRepository){
         this.dynamicAndQnaRepository = dynamicAndQnaRepository;
+        this.dynamicAndQnaReplyRepository = dynamicAndQnaReplyRepository;
     }
 
     @Override
