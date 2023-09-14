@@ -31,6 +31,10 @@ public class AndController {
         // 생성된 andId 값을 응답 Body에 포함하여 클라이언트에게 전달
         return ResponseEntity.ok(and.getAndId());
     }
+    @RequestMapping(value="/{andId}/create" , method=RequestMethod.PATCH)
+    public void createAnd( @RequestBody And and) {
+        andService.update(and);
+    }
 
 
     @RequestMapping("/{andId}")
