@@ -30,6 +30,18 @@ public class InfoBoardServiceImpl implements InfoBoardService{
     }
 
     @Override
+    public List<InfoBoardDTO.Find> findAll(){
+        List<InfoBoard> infoList = infoBoardJPARepository.findAll();
+        List<InfoBoardDTO.Find> findList = new ArrayList<>();
+
+        for(InfoBoard infoBoard : infoList) {
+            InfoBoardDTO.Find result = convertToInfoFindDTO(infoBoard);
+            findList.add(result);
+        }
+        return findList;
+    }
+
+    @Override
     public List<InfoBoardDTO.Find> findAllByIsDeletedFalseOrderByInfoIdDesc() {
         List<InfoBoard> infoList = infoBoardJPARepository.findAllByIsDeletedFalseOrderByInfoIdDesc();
         List<InfoBoardDTO.Find> findAllNotDeletedList = new ArrayList<>();
@@ -53,7 +65,7 @@ public class InfoBoardServiceImpl implements InfoBoardService{
     }
 
     @Override
-    public void save(InfoBoard infoBoard) {
+    public void update(InfoBoard infoBoard) {
         Optional<InfoBoard> infoBoardOptional = infoBoardJPARepository.findById(infoBoard.getInfoId());
         if(infoBoardOptional.isPresent()) {
             InfoBoard updateInfo = infoBoardOptional.get();
@@ -67,7 +79,7 @@ public class InfoBoardServiceImpl implements InfoBoardService{
     }
 
     @Override
-    public void update(InfoBoard infoBoard) {
+    public void save(InfoBoard infoBoard) {
         infoBoardJPARepository.save(infoBoard);
     }
 }

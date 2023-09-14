@@ -6,6 +6,8 @@ import com.fiveis.andcrowd.service.etc.InfoBoardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,7 +26,24 @@ public class InfoBoardController {
 
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public List<InfoBoardDTO.Find> getlist() {
-        return infoBoardService.findAllByIsDeletedFalseOrderByInfoIdDesc();
+        try{
+            // 권한 확인
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            List<String> authorityList = authentication
+                    .getAuthorities()
+                    .stream()
+                    .map(authority -> authority.toString())
+                    .toList();
+
+            // 관리자 유저의 경우
+            if(authorityList.contains("ROLE_ADMIN")){
+                System.out.println("!!! 어드민 유저");
+                return infoBoardService.findAll();
+            }
+            return infoBoardService.findAllByIsDeletedFalseOrderByInfoIdDesc();
+        } catch(Exception e){
+            return null;
+        }
     } // 공지사항 글 전체 조회
 
     @GetMapping("/detail/{infoId}")
@@ -44,16 +63,15 @@ public class InfoBoardController {
         return ResponseEntity.ok("공지글이 정상적으로 등록되었습니다.");
     } // 공지글 업로드
 
-    @RequestMapping(value = "/{infoId}/update", method = {RequestMethod.PUT, RequestMethod.PATCH})
+    @RequestMapping(value = "/{infoId}/update", method=RequestMethod.PATCH)
     public ResponseEntity<String> updateInfoBoard(@RequestBody InfoBoard infoBoard) {
         infoBoardService.update(infoBoard);
         return ResponseEntity.ok("게시글이 수정되었습니다.");
     } // 공지글 수정
 
     @PatchMapping(value = "/{infoId}")
-    public String deleteInfoBoard(@PathVariable("infoId") int infoId) {
+    public ResponseEntity<String> deleteInfoBoard(@PathVariable("infoId") int infoId) {
         infoBoardService.deleteById(infoId);
-        ResponseEntity.ok("글이 삭제되었습니다.");
-        return "redirect:/infoboard/list";
+        return ResponseEntity.ok("글이 삭제되었습니다.");
     } // 공지글 삭제
 }
