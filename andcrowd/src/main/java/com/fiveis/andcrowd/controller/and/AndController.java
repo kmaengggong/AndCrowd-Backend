@@ -13,6 +13,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/and")
@@ -105,8 +106,8 @@ public class AndController {
     }
 
     @RequestMapping(value="/{andId}/update/status" , method=RequestMethod.PATCH)
-    public void updateAndStatus( @PathVariable("andId") int andId) {
-        andService.updateStatus(andId);
+    public void updateAndStatus( @PathVariable("andId") int andId, @RequestBody Map<String, Integer> status) {
+        andService.updateStatus(andId, status.get("status"));
     }
 
     @RequestMapping("/{andId}/delete")

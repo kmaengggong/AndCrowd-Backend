@@ -157,4 +157,16 @@ public class CrowdServiceImpl implements CrowdService {
         }
         return pageNum.intValue();
     }
+
+    @Override
+    public void updateStatus(int crowdId, int crowdStatus) {
+        Optional<Crowd> optionalCrowd = crowdJPARepository.findById(crowdId);
+        if (optionalCrowd.isPresent()) {
+            Crowd updatedCrowd = optionalCrowd.get();
+            updatedCrowd.setCrowdStatus(crowdStatus);
+
+            // 변경된 And 객체를 다시 저장
+            crowdJPARepository.save(updatedCrowd);
+        }
+    }
 }

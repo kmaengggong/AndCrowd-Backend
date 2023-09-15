@@ -46,7 +46,7 @@ public class InfoBoardController {
         }
     } // 공지사항 글 전체 조회
 
-    @GetMapping("/detail/{infoId}")
+    @GetMapping("/{infoId}")
     public ResponseEntity<?> detail(@PathVariable int infoId) {
         Optional<InfoBoardDTO.Find> findList = infoBoardService.findById(infoId);
 
@@ -64,7 +64,10 @@ public class InfoBoardController {
     } // 공지글 업로드
 
     @RequestMapping(value = "/{infoId}/update", method=RequestMethod.PATCH)
-    public ResponseEntity<String> updateInfoBoard(@RequestBody InfoBoard infoBoard) {
+    public ResponseEntity<String> updateInfoBoard(@PathVariable int infoId,
+                                                  @RequestBody InfoBoard infoBoard) {
+        System.out.println(infoBoard);
+        infoBoard.setInfoId(infoId);
         infoBoardService.update(infoBoard);
         return ResponseEntity.ok("게시글이 수정되었습니다.");
     } // 공지글 수정

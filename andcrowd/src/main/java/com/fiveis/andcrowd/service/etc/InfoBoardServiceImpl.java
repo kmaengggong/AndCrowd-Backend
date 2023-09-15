@@ -69,8 +69,8 @@ public class InfoBoardServiceImpl implements InfoBoardService{
         Optional<InfoBoard> infoBoardOptional = infoBoardJPARepository.findById(infoBoard.getInfoId());
         if(infoBoardOptional.isPresent()) {
             InfoBoard updateInfo = infoBoardOptional.get();
-            updateInfo.setInfoTitle(infoBoard.getInfoTitle());
-            updateInfo.setInfoContent(infoBoard.getInfoContent());
+            if(infoBoard.getInfoTitle() != null) updateInfo.setInfoTitle(infoBoard.getInfoTitle());
+            if(infoBoard.getInfoContent() != null) updateInfo.setInfoContent(infoBoard.getInfoContent());
             updateInfo.setUpdatedAt(LocalDateTime.now());
             infoBoardJPARepository.save(updateInfo);
         } else {

@@ -11,6 +11,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -76,6 +77,11 @@ public class CrowdController {
         crowdService.deleteByCrowdId(crowdId);
         ResponseEntity.ok("펀딩글이 삭제되었습니다.");
         return "redirect:/crowd/list";
+    }
+
+    @RequestMapping(value="/{crowdId}/update/status" , method=RequestMethod.PATCH)
+    public void updateCrowdStatus( @PathVariable("crowdId") int crowdId, @RequestBody Map<String, Integer> status) {
+        crowdService.updateStatus(crowdId, status.get("status"));
     }
 
 }
