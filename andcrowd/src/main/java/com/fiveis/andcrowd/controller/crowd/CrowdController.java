@@ -52,7 +52,7 @@ public class CrowdController {
         return ResponseEntity.ok("펀딩글이 수정되었습니다.");
     }
 
-    @PatchMapping(value = "/{crowdId}/delete")
+    @RequestMapping(value = "/{crowdId}/delete")
     public String deleteCrowd(@PathVariable("crowdId") int crowdId) {
         crowdService.deleteByCrowdId(crowdId);
         ResponseEntity.ok("펀딩글이 삭제되었습니다.");

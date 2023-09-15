@@ -8,7 +8,7 @@ import org.hibernate.annotations.DynamicInsert;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder @Entity
-//@DynamicInsert
+@DynamicInsert
 @Table(name = "crowd_category")
 public class CrowdCategory {
 
