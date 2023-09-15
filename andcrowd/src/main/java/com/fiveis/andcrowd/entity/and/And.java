@@ -86,7 +86,7 @@ public class And {
         this.isDeleted = false;
         this.andLikeCount = 0;
         this.andViewCount = 0;
-        this.andStatus = 1; // 처음 작성시 자동으로 심사 중인 1로 표기
+//        this.andStatus = 1; // 처음 작성시 자동으로 심사 중인 1로 표기
     }
 
     @PreUpdate
