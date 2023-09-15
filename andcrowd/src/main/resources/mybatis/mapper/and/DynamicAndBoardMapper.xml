@@ -29,6 +29,12 @@
                is_deleted AS isDeleted
         FROM and_board_#{andId}
         WHERE is_deleted = false
+        ORDER BY
+            CASE
+                WHEN and_board_tag = 0 THEN 0
+                ELSE 1
+                END, and_board_id DESC
+            LIMIT #{limit} OFFSET #{offset}
     </select>
     <select id="findByAndBoardId" resultType="com.fiveis.andcrowd.dto.and.DynamicAndBoardDTO$FindById">
         SELECT
@@ -45,6 +51,11 @@
             is_deleted AS isDeleted
         FROM and_board_#{andId} WHERE and_board_id = #{andBoardId}
     </select>
+
+    <select id="countNotDeleted" resultType="int">
+        SELECT COUNT(*) FROM and_board_#{andId} WHERE is_deleted = false
+    </select>
+
     <delete id="deleteByAndId" parameterType="int">
         UPDATE
             and_board_#{andId}

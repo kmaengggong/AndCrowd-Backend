@@ -37,6 +37,11 @@ public class DynamicUserFollowServiceImpl implements DynamicUserFollowService{
         return dynamicUserFollowRepository.findById(userEmail, uFollowId);
     }
 
+    @Override
+    public DynamicUserFollowDTO.Find findByUserId(String userEmail, int userId) {
+        return dynamicUserFollowRepository.findByUserId(userEmail, userId);
+    }
+
     public boolean save(String userEmail, DynamicUserFollow dynamicUserFollow){
         // 존재하지 않는 userId
         if(userJPARepository.findByUserId(dynamicUserFollow.getUserId()).isEmpty()) {System.out.println("먼데씨발"); return false;}
@@ -51,7 +56,7 @@ public class DynamicUserFollowServiceImpl implements DynamicUserFollowService{
         dynamicUserFollowRepository.deleteById(userEmail, uFollowId);
     }
 
-    public void deleteByAndId(String userEmail, int userId){
+    public void deleteByUserId(String userEmail, int userId){
         dynamicUserFollowRepository.deleteByUserId(userEmail, userId);
     }
 }

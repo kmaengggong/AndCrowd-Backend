@@ -10,7 +10,7 @@ import java.util.List;
 @Mapper
 public interface DynamicAndBoardRepository {
     List<DynamicAndBoardDTO.FindById> findAll(int andId);
-    List<DynamicAndBoardDTO.FindById> findAllNotDeleted(int andId);
+    List<DynamicAndBoardDTO.FindById> findAllNotDeleted(@Param("offset") int offset, @Param("limit") int limit, int andId);
     DynamicAndBoardDTO.FindById findByAndBoardId(@Param("andId") int andId, @Param("andBoardId") int andBoardId);
     void save(DynamicAndBoardDTO.Update andBoardInsertDTO);
     void update(DynamicAndBoardDTO.Update andBoardUpdateDTO);
@@ -22,4 +22,7 @@ public interface DynamicAndBoardRepository {
     void dropAndBoardTable();
     void insertTestData();
     void createAndTestBoardTable();
+
+    int countNotDeleted(int andId);
+
 }

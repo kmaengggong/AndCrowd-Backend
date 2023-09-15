@@ -21,7 +21,7 @@ public class DynamicAndQnaController {
 
     @RequestMapping(value="/list", method = RequestMethod.GET)
     public List<DynamicAndQnaDTO.FindById> getList(@RequestParam(defaultValue = "0") int page,
-                                                   @RequestParam(defaultValue = "5") int size,
+                                                   @RequestParam(defaultValue = "7") int size,
                                                    @PathVariable("andId") int andId){
         int offset = page * size;
         int limit = size;

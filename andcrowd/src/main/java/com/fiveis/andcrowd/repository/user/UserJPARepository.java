@@ -3,7 +3,9 @@ package com.fiveis.andcrowd.repository.user;
 import com.fiveis.andcrowd.dto.user.UserDTO;
 import com.fiveis.andcrowd.entity.user.User;
 import com.fiveis.andcrowd.enums.SocialType;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 import java.util.Optional;
@@ -16,4 +18,7 @@ public interface UserJPARepository extends JpaRepository<User, Integer> {
     Optional<User> findByRefreshToken(String refreshToken);
     Optional<User> findBySocialTypeAndSocialId(SocialType socialType, String socialId);
     void deleteByUserEmail(String userEmail);
+
+    @Query("SELECT u.userNickname FROM User u WHERE u.userId = :userId")
+    String findUserNicknameByUserId(@Param("userId") int userId);
 }
