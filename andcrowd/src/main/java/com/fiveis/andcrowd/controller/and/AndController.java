@@ -30,11 +30,21 @@ public class AndController {
         return andService.findAllByIsDeletedFalse();
     }
 
+    @GetMapping("/total/{searchKeyword}")
+    public int getSearchSize(@PathVariable String searchKeyword){
+        return andService.totalCount(searchKeyword);
+    }
+
     @RequestMapping(value="/create", method = RequestMethod.POST)
     public ResponseEntity<Integer> createItem(@RequestBody And and) {
         andService.save(and);
         // 생성된 andId 값을 응답 Body에 포함하여 클라이언트에게 전달
         return ResponseEntity.ok(and.getAndId());
+    }
+
+    @RequestMapping(value="/{andId}/create" , method=RequestMethod.PATCH)
+    public void createAnd( @RequestBody And and) {
+        andService.update(and);
     }
 
     @RequestMapping(value="/report", method = RequestMethod.POST)

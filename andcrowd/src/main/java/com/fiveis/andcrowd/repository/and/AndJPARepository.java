@@ -29,4 +29,6 @@ public interface AndJPARepository extends JpaRepository<And, Integer>, AndQueryR
     @Query("UPDATE And a SET a.andLikeCount = a.andLikeCount - 1 WHERE a.andId = :andId")
     void decreaseLike(@Param("andId") Integer andId);
 
+    @Query("SELECT COUNT(a) FROM And a WHERE a.andTitle LIKE %:searchKeyword%")
+    int totalCount(@Param("searchKeyword") String searchKeyword);
 }
