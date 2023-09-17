@@ -39,4 +39,6 @@ public interface AndService {
 
     boolean isFollowed(int andId, int userId);
 
+    int totalCount(String searchKeyword);
+
 }
