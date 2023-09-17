@@ -46,7 +46,7 @@ public class DynamicCrowdBoardController {
         return ResponseEntity.ok("공지사항 수정 완료");
     }
 
-    @RequestMapping(value = "/{crowdBoardId}/delete", method = RequestMethod.PATCH)
+    @RequestMapping(value = "/{crowdBoardId}/delete", method = RequestMethod.DELETE)
     public ResponseEntity<String> deleteCrowdBoard(@PathVariable int crowdId, @PathVariable int crowdBoardId){
         dynamicCrowdBoardService.deleteByCrowdBoardId(crowdId, crowdBoardId);
         return ResponseEntity.ok("공지사항 삭제 완료");
