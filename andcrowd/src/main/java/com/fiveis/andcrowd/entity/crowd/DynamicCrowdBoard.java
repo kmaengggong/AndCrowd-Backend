@@ -14,7 +14,7 @@ public class DynamicCrowdBoard {
 
     private int crowdId;
 
-    private int crowdBoardTag;
+    private int crowdBoardTag; // 공지종류 (1:공지), (0:새소식)
 
     private String crowdBoardTitle;
 
