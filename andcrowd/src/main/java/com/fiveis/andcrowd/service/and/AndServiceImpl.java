@@ -173,6 +173,7 @@ public class AndServiceImpl implements AndService{
         updatedAnd.setAndCategoryId(and.getAndCategoryId());
         updatedAnd.setNeedNumMem(and.getNeedNumMem());
         updatedAnd.setUpdatedAt(LocalDateTime.now());
+        updatedAnd.setAndStatus(and.getAndStatus());
         andJPARepository.save(updatedAnd);
     }
 

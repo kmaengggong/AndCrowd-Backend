@@ -70,7 +70,7 @@ public class And {
     @ColumnDefault("0")
     private int andViewCount;
 
-    private int andStatus; // 0 : 모집 중, 1 : 작성중, 2 : 심사 중, 3 : 반려, 4: 모집 종료,
+    private int andStatus; // 1:모집중, 2:반려, 3:종료, 4: 작성중, 0:심사중
 
     @Column(nullable = true)
     private int adId;
