@@ -26,6 +26,19 @@ public class UserDTO {
     @ToString
     @AllArgsConstructor
     @NoArgsConstructor
+    public static class UserChatInfo{
+        private int userId;
+        private String userKorName;
+        private String userNickname;
+        private String userProfileImg;
+    }
+
+    @Getter
+    @Setter
+    @Builder
+    @ToString
+    @AllArgsConstructor
+    @NoArgsConstructor
     public static class FindAsPublic{
         private String userNickname;
         private String userProfileImg;
