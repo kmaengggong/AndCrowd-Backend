@@ -23,7 +23,7 @@ public interface AndService {
     void save(And and);
     void update(And and);
 
-    void updateStatus(int andId);
+    void updateStatus(int andId, int andStatus);
 
     int updateView(int andId);
 

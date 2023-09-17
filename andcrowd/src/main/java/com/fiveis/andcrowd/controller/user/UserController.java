@@ -23,19 +23,44 @@ public class UserController {
     @RequestMapping(value="/list", method=RequestMethod.GET)
     public ResponseEntity<?> findAllUser(){
         try{
-            return ResponseEntity.ok(userService.findAll());
+            // 권한 확인
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            List<String> authorityList = authentication
+                    .getAuthorities()
+                    .stream()
+                    .map(authority -> authority.toString())
+                    .toList();
+
+            // 관리자 유저의 경우
+            if(authorityList.contains("ROLE_ADMIN")){
+                System.out.println("!!! 어드민 유저");
+                return ResponseEntity.ok(userService.findAllAsAdmin());
+            }
+            return ResponseEntity.ok(userService.findAllAsPublic());
         } catch(Exception e){
             return ResponseEntity.badRequest().body("Find All User Failed");
         }
     }
 
     @RequestMapping(value="/{userId}", method=RequestMethod.GET)
-    public ResponseEntity<?> findUserAsUser(@PathVariable int userId){
+    public ResponseEntity<?> findUser(@PathVariable int userId){
         try{
             // 권한 확인
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
             UserDTO.FindAsAdmin findAsAdmin = userService.findById(userId);
             String userEmail = findAsAdmin.getUserEmail();
+
+            List<String> authorityList = authentication
+                    .getAuthorities()
+                    .stream()
+                    .map(authority -> authority.toString())
+                    .toList();
+
+            // 관리자 유저의 경우
+            if(authorityList.contains("ROLE_ADMIN")){
+                System.out.println("!!! 어드민 유저");
+                return ResponseEntity.ok(findAsAdmin);
+            }
 
             // 본인인 경우
             if(authentication.getName().equals(userEmail)){
@@ -121,5 +146,21 @@ public class UserController {
             @RequestParam(value="file")MultipartFile multipartFile){
         UserS3DTO profileImg = userS3Service.uploadFile(userId, fileType, multipartFile);
         return ResponseEntity.ok().body(profileImg);
+    }
+
+    @RequestMapping(value="{userId}/isNotAdmin", method=RequestMethod.GET)
+    public ResponseEntity<?> isNotAdmin(@PathVariable int userId){
+        try{
+            UserDTO.FindAsAdmin findAsAdmin = userService.findById(userId);
+            String role = findAsAdmin.getRole().toString();
+            if(role.equals("ADMIN")){
+                return ResponseEntity.badRequest().body("It's ADMIN user");
+            }
+            else{
+                return ResponseEntity.ok("It's not ADMIN user");
+            }
+        } catch(Exception e){
+            return ResponseEntity.internalServerError().body("isNotAdmin Error");
+        }
     }
 }

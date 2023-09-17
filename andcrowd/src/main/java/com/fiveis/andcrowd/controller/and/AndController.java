@@ -8,9 +8,12 @@ import com.fiveis.andcrowd.service.etc.ReportService;
 import com.fiveis.andcrowd.service.user.DynamicUserFollowService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/and")
@@ -27,7 +30,24 @@ public class AndController {
 
     @RequestMapping("/list")
     public List<AndDTO.Find> getList() {
-        return andService.findAllByIsDeletedFalse();
+        try{
+            // 권한 확인
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            List<String> authorityList = authentication
+                    .getAuthorities()
+                    .stream()
+                    .map(authority -> authority.toString())
+                    .toList();
+
+            // 관리자 유저의 경우
+            if(authorityList.contains("ROLE_ADMIN")){
+                System.out.println("!!! 어드민 유저");
+                return andService.findAll();
+            }
+            return andService.findAllByIsDeletedFalse();
+        } catch(Exception e){
+            return null;
+        }
     }
 
     @GetMapping("/total/{searchKeyword}")
@@ -67,6 +87,7 @@ public class AndController {
 
     @PostMapping("/{andId}/like/{userId}")
     public ResponseEntity<String> updateLike(@PathVariable("andId") int andId, @PathVariable("userId") int userId) {
+        System.out.println("here");
         andService.updateLike(andId, userId);
         return ResponseEntity.ok("like count updated successfully.");
     }
@@ -95,8 +116,8 @@ public class AndController {
     }
 
     @RequestMapping(value="/{andId}/update/status" , method=RequestMethod.PATCH)
-    public void updateAndStatus( @PathVariable("andId") int andId) {
-        andService.updateStatus(andId);
+    public void updateAndStatus( @PathVariable("andId") int andId, @RequestBody Map<String, Integer> status) {
+        andService.updateStatus(andId, status.get("status"));
     }
 
     @RequestMapping("/{andId}/delete")

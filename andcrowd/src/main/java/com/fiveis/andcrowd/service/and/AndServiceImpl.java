@@ -177,11 +177,11 @@ public class AndServiceImpl implements AndService{
     }
 
     @Override
-    public void updateStatus(int andId) {
+    public void updateStatus(int andId, int andStatus) {
         Optional<And> optionalAnd = andJPARepository.findById(andId);
         if (optionalAnd.isPresent()) {
             And updatedAnd = optionalAnd.get();
-            updatedAnd.setAndStatus(2);
+            updatedAnd.setAndStatus(andStatus);
 
             // 변경된 And 객체를 다시 저장
             andJPARepository.save(updatedAnd);

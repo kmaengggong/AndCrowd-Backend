@@ -9,6 +9,7 @@ import java.util.Optional;
 public interface InfoBoardService {
 
     Optional<InfoBoardDTO.Find> findById(int infoId);
+    List<InfoBoardDTO.Find> findAll();
     List<InfoBoardDTO.Find> findAllByIsDeletedFalseOrderByInfoIdDesc();
 
     void deleteById(int infoId);

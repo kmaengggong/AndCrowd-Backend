@@ -6,9 +6,12 @@ import com.fiveis.andcrowd.service.crowd.CrowdService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -25,7 +28,24 @@ public class CrowdController {
 
     @GetMapping(value = "/list")
     public List<CrowdDTO.FindById> getlist() {
-        return crowdService.findAllByIsDeletedFalse();
+        try{
+            // 권한 확인
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            List<String> authorityList = authentication
+                    .getAuthorities()
+                    .stream()
+                    .map(authority -> authority.toString())
+                    .toList();
+
+            // 관리자 유저의 경우
+            if(authorityList.contains("ROLE_ADMIN")){
+                System.out.println("!!! 어드민 유저");
+                return crowdService.findAll();
+            }
+            return crowdService.findAllByIsDeletedFalse();
+        } catch(Exception e){
+            return null;
+        }
     }
 
     @PostMapping(value = "/create")
@@ -57,6 +77,11 @@ public class CrowdController {
         crowdService.deleteByCrowdId(crowdId);
         ResponseEntity.ok("펀딩글이 삭제되었습니다.");
         return "redirect:/crowd/list";
+    }
+
+    @RequestMapping(value="/{crowdId}/update/status" , method=RequestMethod.PATCH)
+    public void updateCrowdStatus( @PathVariable("crowdId") int crowdId, @RequestBody Map<String, Integer> status) {
+        crowdService.updateStatus(crowdId, status.get("status"));
     }
 
 }
