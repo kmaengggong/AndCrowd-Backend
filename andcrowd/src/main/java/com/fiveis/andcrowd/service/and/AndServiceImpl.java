@@ -269,4 +269,9 @@ public class AndServiceImpl implements AndService{
         }
     }
 
+    @Override
+    public int totalCount(String searchKeyword) {
+        return andJPARepository.totalCount(searchKeyword);
+    }
+
 }

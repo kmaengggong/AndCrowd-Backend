@@ -19,6 +19,6 @@ public interface UserJPARepository extends JpaRepository<User, Integer> {
     Optional<User> findBySocialTypeAndSocialId(SocialType socialType, String socialId);
     void deleteByUserEmail(String userEmail);
 
-    @Query("SELECT u.userNickname FROM User u WHERE u.userId = :userId")
-    String findUserNicknameByUserId(@Param("userId") int userId);
+//    @Query("SELECT u.userNickname FROM User u WHERE u.userId = :userId")
+//    String findUserNicknameByUserId(@Param("userId") int userId);
 }

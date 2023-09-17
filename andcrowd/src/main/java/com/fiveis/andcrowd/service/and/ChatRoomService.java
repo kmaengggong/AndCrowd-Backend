@@ -87,20 +87,25 @@ public class ChatRoomService {
         chatRoomRepository.save(chatRoom);
     }
 
-    public List<UserDTO.UserInfo> chatMember(Long roomId) {
+    public List<UserDTO.UserChatInfo> chatMember(Long roomId) {
         Optional<ChatRoom> chatRoom = chatRoomRepository.findByRoomId(roomId);
         int andId = chatRoom.get().getAndId();
         List<DynamicAndMemberDTO.FindByAndMemberId> andMemberList = memberRepository.findAllNotDeleted(andId);
         System.out.println("andMemberList: " + andMemberList);
 
-        List<UserDTO.UserInfo> chatMember = andMemberList.stream()
+        List<UserDTO.UserChatInfo> chatMember = andMemberList.stream()
                 .map(dynamicAndMember -> userRepository.findById(dynamicAndMember.getUserId())
                         .orElseThrow(() -> new EntityNotFoundException("User not found with userId: " + dynamicAndMember.getUserId())))
-                .map(user -> new UserDTO.UserInfo(user.getUserId(), user.getUserKorName(), user.getUserNickname()))
+                .map(user -> new UserDTO.UserChatInfo(user.getUserId(), user.getUserKorName(), user.getUserNickname(), user.getUserProfileImg()))
                 .distinct() // 중복 제거
                 .collect(Collectors.toList());
         System.out.println("chatMember: " + chatMember);
 
         return chatMember;
+    }
+
+    public String nicknameToImg(String nickname){
+        String userProfileImg =  userRepository.findByUserNickname(nickname).get().getUserProfileImg();
+        return userProfileImg;
     }
 }

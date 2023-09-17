@@ -70,7 +70,6 @@ public class And {
     @ColumnDefault("0")
     private int andViewCount;
 
-    @ColumnDefault("1")
     private int andStatus; // 0 : 모집 중, 1 : 작성중, 2 : 심사 중, 3 : 반려, 4: 모집 종료,
 
     @Column(nullable = true)
@@ -86,7 +85,7 @@ public class And {
         this.isDeleted = false;
         this.andLikeCount = 0;
         this.andViewCount = 0;
-        this.andStatus = 1; // 처음 작성시 자동으로 심사 중인 1로 표기
+//        this.andStatus = 1; // 처음 작성시 자동으로 심사 중인 1로 표기
     }
 
     @PreUpdate

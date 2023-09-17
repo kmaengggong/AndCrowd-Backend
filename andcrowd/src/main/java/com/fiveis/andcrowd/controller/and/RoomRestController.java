@@ -84,6 +84,20 @@ public class RoomRestController {
         return ResponseEntity.ok(response);
     }
 
+    @GetMapping("/{andId}/check-member/{userId}")
+    public ResponseEntity<Boolean> checkMember(@PathVariable int userId, @PathVariable int andId) {
+        List<DynamicAndMemberDTO.FindByAndMemberId> members = memberRepository.findAll(andId);
+
+        List<Integer> userIdsInMembers = members.stream()
+                .map(DynamicAndMemberDTO.FindByAndMemberId::getUserId)
+                .collect(Collectors.toList());
+
+        boolean isMember = userIdsInMembers.contains(userId);
+
+        return ResponseEntity.ok(isMember);
+    }
+
+
     @PutMapping("/{andId}/chat/room/{roomId}/name-update")
     public ResponseEntity<String> updateChatRoomName(
             @PathVariable Long roomId,
@@ -94,10 +108,15 @@ public class RoomRestController {
     }
 
     @GetMapping("{andId}/chat/{roomId}/member")
-    public List<UserDTO.UserInfo> chatMember(@PathVariable Long roomId) {
-        List<UserDTO.UserInfo> chatMember = chatRoomService.chatMember(roomId);
+    public List<UserDTO.UserChatInfo> chatMember(@PathVariable Long roomId) {
+        List<UserDTO.UserChatInfo> chatMember = chatRoomService.chatMember(roomId);
         return chatMember;
     }
 
+    @GetMapping("chat/{nickname}/img")
+    public ResponseEntity<String> getUserImg(@PathVariable String nickname){
+        String userImg = chatRoomService.nicknameToImg(nickname);
+        return ResponseEntity.ok(userImg);
+    }
 }
 
