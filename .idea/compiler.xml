@@ -21,5 +21,6 @@
         <module name="andcrowd.main" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel target="17" />
   </component>
 </project>
