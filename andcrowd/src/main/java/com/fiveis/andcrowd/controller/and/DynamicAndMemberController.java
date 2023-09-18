@@ -1,6 +1,7 @@
 package com.fiveis.andcrowd.controller.and;
 
 import com.fiveis.andcrowd.dto.and.DynamicAndMemberDTO;
+import com.fiveis.andcrowd.dto.user.UserDTO;
 import com.fiveis.andcrowd.service.and.DynamicAndMemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -34,6 +35,11 @@ public class DynamicAndMemberController {
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public List<DynamicAndMemberDTO.FindByAndMemberId> findAll (@PathVariable("andId") int andId) {
         return dynamicAndMemberService.findAllNotDeleted(andId);
+    }
+
+    @RequestMapping(value = "/list/popup", method = RequestMethod.GET)
+    public List<UserDTO.UserChatInfo> findAllNotdeletedWithProfile(@PathVariable("andId") int andId){
+        return dynamicAndMemberService.findAllNotdeletedWithProfile(andId);
     }
 
     @RequestMapping(value = "/{memberId}/delete", method = RequestMethod.DELETE)
