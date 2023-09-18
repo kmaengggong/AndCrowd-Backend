@@ -14,19 +14,19 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "crowd_order_details")
-public class CrowdOrderDetails { // 크라우드 주문내역
+public class CrowdOrderDetails { // 크라우드 펀딩 후원결제
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int purchaseId; // 펀딩 결제 ID
 
-    @Column(nullable = false)
+    //@Column(nullable = false)
     private int userId; // 결제한 유저 ID
 
-    @Column(nullable = false)
+    //@Column(nullable = false)
     private int crowdId; // 펀딩 ID
 
-    @Column(nullable = false)
+    //@Column(nullable = false)
     private int rewardId; // 리워드 ID
 
     @Column(nullable = false)
@@ -45,7 +45,7 @@ public class CrowdOrderDetails { // 크라우드 주문내역
     private LocalDateTime purchaseDate; // 결제일
 
     @Column(nullable = false)
-    private String purchaseStatus; // 결제상태 (결제대기, 결제완료, 계좌, 카드, 환불)
+    private String purchaseStatus; // 결제상태 (결제대기, 결제완료, 결제취소)
 
     @ColumnDefault("false")
     private boolean isDeleted; // 삭제여부

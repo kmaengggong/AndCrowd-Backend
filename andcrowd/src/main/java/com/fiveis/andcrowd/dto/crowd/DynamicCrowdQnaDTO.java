@@ -11,17 +11,12 @@ public class DynamicCrowdQnaDTO {
     @AllArgsConstructor
     public static class Find {
         private int crowdQnaId;
-
         private int crowdId;
-
+        private int userId;
         private String qnaTitle;
-
         private String qnaContent;
-
         private LocalDateTime publishedAt;
-
         private LocalDateTime updatedAt;
-
         private boolean isDeleted;
     }
 
@@ -42,11 +37,12 @@ public class DynamicCrowdQnaDTO {
     @AllArgsConstructor
     public static class Update {
         private int crowdQnaId;
-
         private int crowdId;
-
+        private int userId;
         private String qnaTitle;
-
         private String qnaContent;
+        private LocalDateTime publishedAt;
+        private LocalDateTime updatedAt;
+        private boolean isDeleted;
     }
 }

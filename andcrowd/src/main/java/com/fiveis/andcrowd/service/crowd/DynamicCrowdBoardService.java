@@ -8,7 +8,7 @@ import java.util.List;
 
 @Service
 public interface DynamicCrowdBoardService {
-    void createDynamicCrowdBoardTable();
+    void createDynamicCrowdBoardTable(int crowdId);
 
     List<DynamicCrowdBoardDTO.Find> findAll(int crowdId);
 
