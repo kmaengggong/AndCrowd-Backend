@@ -83,8 +83,8 @@ public class CrowdServiceImpl implements CrowdService {
         dynamicCrowdRewardRepository.deleteAll(crowdId);
         crowdCategoryJPARepository.deleteById(crowdId);
         crowdJPARepository.deleteById(crowdId);
-        Optional<Crowd> crowdOptional = crowdJPARepository.findById(crowdId);
 
+        Optional<Crowd> crowdOptional = crowdJPARepository.findById(crowdId);
         if(crowdOptional.isPresent()) {
             Crowd crowd = crowdOptional.get();
             crowd.setDeleted(true);

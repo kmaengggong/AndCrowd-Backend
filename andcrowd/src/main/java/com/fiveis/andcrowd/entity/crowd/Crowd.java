@@ -23,7 +23,6 @@ public class Crowd {
 //    @Column(nullable = false)
     private int adId;
 
-//    @Column(nullable = false)
     private int andId;
 
     @Column(nullable = false)

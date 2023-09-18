@@ -18,7 +18,7 @@ public interface DynamicCrowdRewardRepository {
     void deleteByCrowdRewardId(@Param("crowdId") int crowdId, @Param("rewardId") int rewardId);
     void deleteAll(@Param("crowdId") int crowdId);
 
-    void createDynamicCrowdRewardTable(@Param("crowdId") int crowdId);
+    void createDynamicCrowdRewardTable(int crowdId);
     void testCreateDynamicCrowdRewardTable();
     void dropCrowdRewardTable();
     void insertTestData();

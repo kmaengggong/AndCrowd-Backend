@@ -40,7 +40,7 @@ public class DynamicCrowdBoardController {
         return  ResponseEntity.ok("공지사항 등록 완료");
     }
 
-    @RequestMapping(value = "/{crowdBoardId}", method = RequestMethod.PATCH)
+    @RequestMapping(value = "/{crowdBoardId}/update", method = RequestMethod.PATCH)
     public ResponseEntity<String> updateCrowdBoard(@RequestBody DynamicCrowdBoardDTO.Update dynamicCrowdBoardDTOupdate){
         dynamicCrowdBoardService.update(dynamicCrowdBoardDTOupdate);
         return ResponseEntity.ok("공지사항 수정 완료");
