@@ -1,7 +1,9 @@
 package com.fiveis.andcrowd.config.oauth;
 
 import com.fiveis.andcrowd.entity.user.User;
-import com.fiveis.andcrowd.repository.user.UserJPARepository;
+import com.fiveis.andcrowd.enums.Role;
+import com.fiveis.andcrowd.enums.SocialType;
+import com.fiveis.andcrowd.repository.user.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
@@ -9,6 +11,7 @@ import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.Map;
 
 @RequiredArgsConstructor
@@ -16,6 +19,11 @@ import java.util.Map;
 public class OAuth2UserCustomService extends DefaultOAuth2UserService {
     // 소셜로그인 관련 서비스 레이어도 어차피 회원기능 관련이므로 유저레포지토리쪽에 관여합니다.
     private final UserJPARepository userJPARepository;
+    private final DynamicUserAndRepository dynamicUserAndRepository;
+    private final DynamicUserFollowRepository dynamicUserFollowRepository;
+    private final DynamicUserLikeRepository dynamicUserLikeRepository;
+    private final DynamicUserMakerRepository dynamicUserMakerRepository;
+    private final DynamicUserOrderRepository dynamicUserOrderRepository;
 
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
@@ -34,20 +42,36 @@ public class OAuth2UserCustomService extends DefaultOAuth2UserService {
         // 유저 내용을 키,벨류 쌍으로 Map형식으로 변환(변수명 : key, 변수에 대입된 값 : value)
         Map<String, Object> attributes = oAuth2User.getAttributes();
         String email = (String) attributes.get("email"); // email 변수에 담겨있단 이메일 값 받아오기
+        System.out.println("email: " + email);
+        System.out.println(attributes);
+        String socialId = (String) attributes.get("sub");
+        String at = email.split("@")[1];
 
         // DB에서 유저를 가지고 와 봐서
-        User user = userJPARepository.findByUserEmail(email).get();
+        if(userJPARepository.findByUserEmail(email).isEmpty()){
+            SocialType socialType = null;
+            if(at.contains("gmail")) socialType = SocialType.GOOGLE;
+            else if(at.contains("naver")) socialType = SocialType.NAVER;
 
-        if(user == null) { // 없는 유저면 가입용으로 새로 객체 생성
-            user = User.builder()
+            User user = User.builder()
                     .userEmail(email)
+                    .socialType(socialType)
+                    .socialId(socialId)
+                    .role(Role.USER)
                     .build();
-        } else {
-            user.update(email);// 있는 유저면 name만 수정
+            userJPARepository.save(user);
+
+            String userEmail = User.toTableName(email);
+            dynamicUserAndRepository.createDynamicUserAndTable(userEmail);
+            dynamicUserFollowRepository.createDynamicUserFollowTable(userEmail);
+            dynamicUserLikeRepository.createDynamicUserLikeTable(userEmail);
+            dynamicUserMakerRepository.createDynamicUserMakerTable(userEmail);
+            dynamicUserOrderRepository.createDynamicUserOrderTable(userEmail);
+
+            return user;
         }
-
-        // 있으면 수정, 없으면 삽입
-        return userJPARepository.save(user);
+        else{
+            return userJPARepository.findByUserEmail(email).get();
+        }
     }
-
 }

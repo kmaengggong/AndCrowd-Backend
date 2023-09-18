@@ -31,6 +31,10 @@ spring:
     oauth2:
       client:
         registration:
+          google:
+            client-id: ${client-id}
+            client-secret: ${client-secret}
+            scope: email, profile
           naver:
             client-id: ${client-id}
             client-secret: ${client-secret}
@@ -50,8 +54,6 @@ spring:
 jwt:
   issuer: ${issuer}
   secret_key: ${secret_key}
-
-# Oauth2
 
 # Email
 mail:

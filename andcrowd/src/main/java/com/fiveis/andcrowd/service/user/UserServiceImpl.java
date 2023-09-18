@@ -92,13 +92,7 @@ public class UserServiceImpl implements UserService {
         if(userJPARepository.findByUserNickname(user.getUserNickname()).isPresent()){
             throw new Exception("Exception: Nickname already exist");
         }
-//        User newUser = User.builder()
-//                .userEmail(user.getUserEmail())
-//                .userNickname(user.getUserNickname())
-//                .userPassword(user.getUserPassword())
-//                .build();
-//
-//        newUser.passwordEncode(bCryptPasswordEncoder);
+
         user.passwordEncode(bCryptPasswordEncoder);
         System.out.println(user);
         userJPARepository.save(user);
@@ -130,6 +124,11 @@ public class UserServiceImpl implements UserService {
             user.setUserProfileImg(userUpdateDTO.getUserProfileImg());
         }
 
+        userJPARepository.save(user);
+    }
+
+    @Transactional
+    public void udpateForSocial(User user){
         userJPARepository.save(user);
     }
 

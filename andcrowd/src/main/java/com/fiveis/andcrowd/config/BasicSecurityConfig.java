@@ -5,6 +5,7 @@ import com.fiveis.andcrowd.config.oauth.OAuth2AuthorizationRequestBasedOnCookieR
 import com.fiveis.andcrowd.config.oauth.OAuth2UserCustomService;
 import com.fiveis.andcrowd.config.oauth.OAuth2SuccessHandler;
 import com.fiveis.andcrowd.repository.etc.RefreshTokenRepository;
+import com.fiveis.andcrowd.service.etc.TokenService;
 import com.fiveis.andcrowd.service.user.UserAuthorityService;
 import com.fiveis.andcrowd.service.user.UserService;
 import jakarta.servlet.DispatcherType;
@@ -32,6 +33,7 @@ public class BasicSecurityConfig {
     private final OAuth2UserCustomService oauth2UserCustomService;
     private final RefreshTokenRepository refreshTokenRepository;
     private final UserService userService;
+    private final TokenService tokenService;
 
     // 정적 파일이나 .jsp 파일 등 스프링 시큐리티가 기본적으로 적용되지 않을 영역 설정하기.
     @Bean
@@ -117,7 +119,7 @@ public class BasicSecurityConfig {
         return new OAuth2SuccessHandler(tokenProvider,
                 refreshTokenRepository,
                 oAuth2AuthorizationRequestBasedOnCookieRepository(),
-                userService);
+                userService, tokenService);
     }
 
     @Bean
