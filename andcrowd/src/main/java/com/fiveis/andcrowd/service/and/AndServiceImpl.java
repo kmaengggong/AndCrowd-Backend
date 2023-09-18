@@ -179,6 +179,7 @@ public class AndServiceImpl implements AndService{
     }
 
     @Override
+    @Transactional
     public void updateStatus(int andId, int andStatus) {
         Optional<And> optionalAnd = andJPARepository.findById(andId);
         if (optionalAnd.isPresent()) {
