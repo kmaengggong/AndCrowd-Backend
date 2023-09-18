@@ -20,7 +20,6 @@ public class Crowd {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int crowdId;
 
-//    @Column(nullable = false)
     private int adId;
 
     private int andId;
