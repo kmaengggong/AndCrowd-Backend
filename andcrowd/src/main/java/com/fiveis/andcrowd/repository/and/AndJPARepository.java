@@ -30,7 +30,7 @@ public interface AndJPARepository extends JpaRepository<And, Integer>, AndQueryR
     @Query("UPDATE And a SET a.andLikeCount = a.andLikeCount - 1 WHERE a.andId = :andId")
     void decreaseLike(@Param("andId") Integer andId);
 
-    @Query("SELECT COUNT(a) FROM And a WHERE a.andTitle LIKE %:searchKeyword% AND a.isDeleted = false")
+    @Query("SELECT COUNT(a) FROM And a WHERE a.andTitle LIKE %:searchKeyword% AND a.andStatus IN (1, 3) AND a.isDeleted = false")
     int totalCount(@Param("searchKeyword") String searchKeyword);
 
     // 현재 날짜 이전의 andEndDate와 andStatus가 특정 값이 아닌 엔티티 검색
