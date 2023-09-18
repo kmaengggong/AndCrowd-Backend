@@ -1,14 +1,16 @@
 package com.fiveis.andcrowd.service.and;
 
 import com.fiveis.andcrowd.dto.and.DynamicAndMemberDTO;
-import com.fiveis.andcrowd.dto.and.DynamicAndQnaDTO;
-import com.fiveis.andcrowd.dto.and.DynamicAndQnaReplyDTO;
+import com.fiveis.andcrowd.dto.user.UserDTO;
 import com.fiveis.andcrowd.repository.and.DynamicAndApplicantRepository;
 import com.fiveis.andcrowd.repository.and.DynamicAndMemberRepository;
+import com.fiveis.andcrowd.repository.user.UserJPARepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class DynamicAndMemberServiceImpl implements DynamicAndMemberService {
@@ -17,13 +19,17 @@ public class DynamicAndMemberServiceImpl implements DynamicAndMemberService {
     private final DynamicAndApplicantRepository dynamicAndApplicantRepository;
     private final DynamicAndApplicantService dynamicAndApplicantService;
 
+    private final UserJPARepository userRepository;
+
     @Autowired
     public DynamicAndMemberServiceImpl(DynamicAndMemberRepository dynamicAndMemberRepository,
                                        DynamicAndApplicantRepository dynamicAndApplicantRepository,
-                                       DynamicAndApplicantService dynamicAndApplicantService) {
+                                       DynamicAndApplicantService dynamicAndApplicantService,
+                                       UserJPARepository userRepository) {
         this.dynamicAndMemberRepository = dynamicAndMemberRepository;
         this.dynamicAndApplicantRepository = dynamicAndApplicantRepository;
         this.dynamicAndApplicantService = dynamicAndApplicantService;
+        this.userRepository = userRepository;
     }
 
     @Override
@@ -79,5 +85,21 @@ public class DynamicAndMemberServiceImpl implements DynamicAndMemberService {
     @Override
     public void update(DynamicAndMemberDTO.Update andMemberDTO) {
         dynamicAndMemberRepository.update(andMemberDTO);
+    }
+
+    @Override
+    public List<UserDTO.UserChatInfo> findAllNotdeletedWithProfile(int andId) {
+        List<DynamicAndMemberDTO.FindByAndMemberId> andMemberList = dynamicAndMemberRepository.findAllNotDeleted(andId);
+
+        List<UserDTO.UserChatInfo> memberList = andMemberList.stream()
+                .map(dynamicAndMember -> userRepository.findById(dynamicAndMember.getUserId())
+                        .orElseThrow(() -> new EntityNotFoundException("User not found with userId: " + dynamicAndMember.getUserId())))
+                .map(user -> new UserDTO.UserChatInfo(user.getUserId(), user.getUserKorName(), user.getUserNickname(), user.getUserProfileImg()))
+                .distinct() // 중복 제거
+                .collect(Collectors.toList());
+        System.out.println("chatMember: " + memberList);
+
+
+        return memberList;
     }
 }
