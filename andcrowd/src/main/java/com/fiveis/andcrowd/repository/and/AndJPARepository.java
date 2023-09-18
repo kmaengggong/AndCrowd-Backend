@@ -33,7 +33,7 @@ public interface AndJPARepository extends JpaRepository<And, Integer>, AndQueryR
     @Query("SELECT COUNT(a) FROM And a WHERE a.andTitle LIKE %:searchKeyword% AND a.andStatus IN (1, 3) AND a.isDeleted = false")
     int totalCount(@Param("searchKeyword") String searchKeyword);
 
-    // 현재 날짜 이전의 andEndDate와 andStatus가 특정 값이 아닌 엔티티 검색
+    // 현재 날짜 이전의 andEndDate와 andStatus가 특정 값(3)이 아닌 엔티티 검색
     @Query("SELECT a FROM And a WHERE a.andEndDate < :endDate AND a.andStatus <> :status")
     List<And> findExpiredAnds(@Param("endDate") LocalDateTime endDate, @Param("status") int status);
 }
