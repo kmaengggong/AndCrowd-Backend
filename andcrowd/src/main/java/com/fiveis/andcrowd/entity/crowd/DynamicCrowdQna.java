@@ -15,6 +15,8 @@ public class DynamicCrowdQna {
 
     private int crowdId;
 
+    private int userId;
+
     private String qnaTitle;
 
     private String qnaContent;

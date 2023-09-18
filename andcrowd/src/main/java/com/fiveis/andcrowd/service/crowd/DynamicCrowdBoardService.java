@@ -8,14 +8,14 @@ import java.util.List;
 
 @Service
 public interface DynamicCrowdBoardService {
-    void createDynamicCrowdBoardTable(@Param("crowdId") int crowdId);
+    void createDynamicCrowdBoardTable(int crowdId);
 
     List<DynamicCrowdBoardDTO.Find> findAll(int crowdId);
 
     List<DynamicCrowdBoardDTO.Find> findAllByIsDeletedFalse(int crowdId);
 
-    DynamicCrowdBoardDTO.Find findById(@Param("crowdId") int crowdId, @Param("crowdBoardId") int crowdBoardId);
-    void deleteByCrowdBoardId(/*Map<String, Integer> params*/@Param("crowdId") int crowdId, @Param("crowdBoardId") int crowdBoardId);
+    DynamicCrowdBoardDTO.Find findById(int crowdId, int crowdBoardId);
+    void deleteByCrowdBoardId(int crowdId, int crowdBoardId);
 
     void save(DynamicCrowdBoardDTO.Save dynamicCrowdBoardDTOSave);
 

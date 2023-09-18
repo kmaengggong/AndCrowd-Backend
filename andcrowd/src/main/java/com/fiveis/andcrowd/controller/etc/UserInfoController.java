@@ -3,25 +3,29 @@ package com.fiveis.andcrowd.controller.etc;
 import com.fiveis.andcrowd.entity.user.User;
 import com.fiveis.andcrowd.repository.user.UserJPARepository;
 import com.fiveis.andcrowd.service.user.UserService;
-import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import net.minidev.json.JSONObject;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
-@AllArgsConstructor
 @RestController
 @RequestMapping("/user-info")
 public class UserInfoController {
 
     private final UserService userService;
-    private UserJPARepository userJPARepository;
+    private final UserJPARepository userJPARepository;
+
+    public UserInfoController(UserService userService, UserJPARepository userJPARepository) {
+        this.userService = userService;
+        this.userJPARepository = userJPARepository;
+    }
 
     @GetMapping("/nickname/{userId}")
     public String getUserNickname(@PathVariable int userId){
-        return userJPARepository.findUserNicknameByUserId(userId);
+        String userNickname = userJPARepository.findByUserId(userId).get().getUserNickname();
+
+        return userNickname;
     }
 
     @GetMapping

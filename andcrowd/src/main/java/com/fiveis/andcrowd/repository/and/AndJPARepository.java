@@ -2,10 +2,10 @@ package com.fiveis.andcrowd.repository.and;
 
 import com.fiveis.andcrowd.dto.and.AndDTO;
 import com.fiveis.andcrowd.entity.and.And;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -29,4 +29,6 @@ public interface AndJPARepository extends JpaRepository<And, Integer>, AndQueryR
     @Query("UPDATE And a SET a.andLikeCount = a.andLikeCount - 1 WHERE a.andId = :andId")
     void decreaseLike(@Param("andId") Integer andId);
 
+    @Query("SELECT COUNT(a) FROM And a WHERE a.andTitle LIKE %:searchKeyword%")
+    int totalCount(@Param("searchKeyword") String searchKeyword);
 }

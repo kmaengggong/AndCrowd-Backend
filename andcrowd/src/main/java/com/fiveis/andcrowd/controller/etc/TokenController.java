@@ -143,4 +143,25 @@ public class TokenController {
         return ResponseEntity.ok().build();
     }
 
+    @RequestMapping(value="/isAdmin", method=RequestMethod.GET)
+    public ResponseEntity<Boolean> isAdmin(){
+        try{
+            // 권한 확인
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            List<String> authorityList = authentication
+                    .getAuthorities()
+                    .stream()
+                    .map(authority -> authority.toString())
+                    .toList();
+
+            // 관리자 유저의 경우
+            if(authorityList.contains("ROLE_ADMIN")){
+                System.out.println("!!! 어드민 유저");
+                return ResponseEntity.ok(true);
+            }
+            return ResponseEntity.ok(false);
+        } catch(Exception e){
+            return ResponseEntity.badRequest().body(false);
+        }
+    }
 }

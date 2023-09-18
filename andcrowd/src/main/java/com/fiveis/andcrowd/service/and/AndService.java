@@ -23,7 +23,7 @@ public interface AndService {
     void save(And and);
     void update(And and);
 
-    void updateStatus(int andId);
+    void updateStatus(int andId, int andStatus);
 
     int updateView(int andId);
 
@@ -38,5 +38,7 @@ public interface AndService {
     void updateFollow(int myId, int userId);
 
     boolean isFollowed(int andId, int userId);
+
+    int totalCount(String searchKeyword);
 
 }
