@@ -83,8 +83,8 @@ public class CrowdServiceImpl implements CrowdService {
         dynamicCrowdRewardRepository.deleteAll(crowdId);
         crowdCategoryJPARepository.deleteById(crowdId);
         crowdJPARepository.deleteById(crowdId);
-        Optional<Crowd> crowdOptional = crowdJPARepository.findById(crowdId);
 
+        Optional<Crowd> crowdOptional = crowdJPARepository.findById(crowdId);
         if(crowdOptional.isPresent()) {
             Crowd crowd = crowdOptional.get();
             crowd.setDeleted(true);
@@ -156,5 +156,17 @@ public class CrowdServiceImpl implements CrowdService {
             pageNum = pageNum > totalPagesCount ? totalPagesCount : pageNum;
         }
         return pageNum.intValue();
+    }
+
+    @Override
+    public void updateStatus(int crowdId, int crowdStatus) {
+        Optional<Crowd> optionalCrowd = crowdJPARepository.findById(crowdId);
+        if (optionalCrowd.isPresent()) {
+            Crowd updatedCrowd = optionalCrowd.get();
+            updatedCrowd.setCrowdStatus(crowdStatus);
+
+            // 변경된 And 객체를 다시 저장
+            crowdJPARepository.save(updatedCrowd);
+        }
     }
 }

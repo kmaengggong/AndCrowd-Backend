@@ -8,7 +8,8 @@ import java.util.List;
 
 @Service
 public interface UserService {
-    List<UserDTO.FindAsPublic> findAll();
+    List<UserDTO.FindAsPublic> findAllAsPublic();
+    List<UserDTO.FindAsAdmin> findAllAsAdmin();
     List<UserDTO.FindAsUser> findAllByUserKorName(String userKorName);
     UserDTO.FindAsAdmin findById(int userId);
     User findByUserEmail(String userEmail);
