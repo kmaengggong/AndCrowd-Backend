@@ -40,11 +40,21 @@ public class UserServiceImpl implements UserService {
         this.dynamicUserOrderRepository = dynamicUserOrderRepository;
     }
 
-    public List<UserDTO.FindAsPublic> findAll(){
+    public List<UserDTO.FindAsPublic> findAllAsPublic(){
         List<User> userList = userJPARepository.findAll();
         List<UserDTO.FindAsPublic> userFindDTOList = new ArrayList<>();
         for (User user : userList) {
             UserDTO.FindAsPublic dto = UserDTO.convertToFindAsPublicDTO(user);
+            userFindDTOList.add(dto);
+        }
+        return userFindDTOList;
+    }
+
+    public List<UserDTO.FindAsAdmin> findAllAsAdmin(){
+        List<User> userList = userJPARepository.findAll();
+        List<UserDTO.FindAsAdmin> userFindDTOList = new ArrayList<>();
+        for (User user : userList) {
+            UserDTO.FindAsAdmin dto = UserDTO.convertToFindAsAdminDTO(user);
             userFindDTOList.add(dto);
         }
         return userFindDTOList;

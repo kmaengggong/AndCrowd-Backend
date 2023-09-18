@@ -63,6 +63,8 @@ public class DynamicCrowdBoardDTO {
 
         private String crowdImg;
 
+        private LocalDateTime updatedAt;
+
     }
 
 }

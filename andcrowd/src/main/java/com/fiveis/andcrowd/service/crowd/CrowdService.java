@@ -24,4 +24,5 @@ public interface CrowdService {
 //    public CrowdDTO.FindById convertToAndFindByCrowdId(Crowd crowd);
 
     void update(Crowd crowd);
+    void updateStatus(int crowdId, int crowdStatus);
 }
