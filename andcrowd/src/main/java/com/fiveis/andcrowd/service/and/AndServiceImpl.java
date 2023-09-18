@@ -23,6 +23,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -173,10 +174,12 @@ public class AndServiceImpl implements AndService{
         updatedAnd.setAndCategoryId(and.getAndCategoryId());
         updatedAnd.setNeedNumMem(and.getNeedNumMem());
         updatedAnd.setUpdatedAt(LocalDateTime.now());
+        updatedAnd.setAndStatus(and.getAndStatus());
         andJPARepository.save(updatedAnd);
     }
 
     @Override
+    @Transactional
     public void updateStatus(int andId, int andStatus) {
         Optional<And> optionalAnd = andJPARepository.findById(andId);
         if (optionalAnd.isPresent()) {
@@ -185,6 +188,19 @@ public class AndServiceImpl implements AndService{
 
             // 변경된 And 객체를 다시 저장
             andJPARepository.save(updatedAnd);
+        }
+    }
+
+    @Override
+    public void updateStatusForExpiredItems() {
+        // 오늘 날짜 가져오기
+        LocalDate today = LocalDate.now();
+
+        // 오늘 날짜보다 이전인 항목들을 가져와서 상태 코드를 3으로 업데이트
+        List<And> expiredItems = andJPARepository.findExpiredAnds(today.atStartOfDay(), 3);
+        for (And item : expiredItems) {
+            item.setAndStatus(3);
+            andJPARepository.save(item);
         }
     }
 

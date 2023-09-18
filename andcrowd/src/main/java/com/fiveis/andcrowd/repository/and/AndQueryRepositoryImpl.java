@@ -93,7 +93,14 @@ public class AndQueryRepositoryImpl implements AndQueryRepository{
     }
 
     private BooleanExpression eqAndStatus(Integer andStatus) {
-        return andStatus != null ? and.andStatus.eq(andStatus) : null;
+        if (andStatus != null) {
+            if (andStatus == 13) { // 13 입력시 (1:모집중 or 3:종료)인 글 반환
+                return and.andStatus.in(1, 3);
+            } else {
+                return and.andStatus.eq(andStatus);
+            }
+        }
+        return null;
     }
 
     private BooleanExpression eqAndTitle(String searchKeyword) {

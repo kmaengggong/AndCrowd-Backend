@@ -3,6 +3,7 @@ package com.fiveis.andcrowd.service.and;
 import com.fiveis.andcrowd.dto.and.DynamicAndMemberDTO;
 import com.fiveis.andcrowd.dto.and.DynamicAndQnaDTO;
 import com.fiveis.andcrowd.dto.and.DynamicAndQnaReplyDTO;
+import com.fiveis.andcrowd.dto.user.UserDTO;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Service;
 
@@ -23,4 +24,6 @@ public interface DynamicAndMemberService {
     void deleteByUserId(int andId, int userId);
 
     void update(DynamicAndMemberDTO.Update andMemberUpdateDTO);
+
+    List<UserDTO.UserChatInfo> findAllNotdeletedWithProfile(int andId);
 }

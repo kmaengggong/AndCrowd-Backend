@@ -115,10 +115,23 @@ public class AndController {
         andService.update(and);
     }
 
+
+    @GetMapping("/updateStatusForExpiredItems")
+    public String updateStatusForExpiredItems() {
+        andService.updateStatusForExpiredItems();
+        return "Status updated for expired items.";
+    }
+
     @RequestMapping(value="/{andId}/update/status" , method=RequestMethod.PATCH)
     public void updateAndStatus( @PathVariable("andId") int andId, @RequestBody Map<String, Integer> status) {
         andService.updateStatus(andId, status.get("status"));
     }
+
+    @RequestMapping(value="/{andId}/update/status/{status}" , method=RequestMethod.PATCH)
+    public void updateAndStatusPath( @PathVariable("andId") int andId, @PathVariable("status") int status) {
+        andService.updateStatus(andId, status);
+    }
+
 
     @RequestMapping("/{andId}/delete")
     public void deleteItem(@PathVariable("andId") int andId) {
