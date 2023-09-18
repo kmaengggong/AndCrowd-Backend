@@ -18,8 +18,8 @@ public class DynamicCrowdBoardServiceImpl implements DynamicCrowdBoardService{
         this.dynamicCrowdBoardRepository = dynamicCrowdBoardRepository;
     }
     @Override
-    public void createDynamicCrowdBoardTable() {
-        dynamicCrowdBoardRepository.createDynamicCrowdBoardTable(0);
+    public void createDynamicCrowdBoardTable(int crowdId) {
+        dynamicCrowdBoardRepository.createDynamicCrowdBoardTable(crowdId);
     }
 
     @Override

@@ -15,6 +15,10 @@ public class DynamicCrowdQnaReply {
 
     private int crowdQnaId;
 
+    private int crowdId;
+
+    private int userId;
+
     private String qnaReplyContent;
 
     private LocalDateTime publishedAt;
