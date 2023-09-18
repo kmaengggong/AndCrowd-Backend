@@ -8,7 +8,7 @@ import java.util.List;
 
 @Mapper
 public interface DynamicCrowdQnaRepository {
-    void createDynamicCrowdQnaTable(@Param("crowdId") int crowdId);
+    void createDynamicCrowdQnaTable(int crowdId);
 
     List<DynamicCrowdQnaDTO.Find> findAll(int crowdId);
 
