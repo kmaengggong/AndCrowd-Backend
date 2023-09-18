@@ -28,6 +28,14 @@ public class UserInfoController {
         return userNickname;
     }
 
+    @GetMapping("/profileImg/{userId}")
+    public String getUserProfileImg(@PathVariable int userId){
+        String userProfileImg = userJPARepository.findByUserId(userId).get().getUserProfileImg();
+
+        return userProfileImg;
+    }
+
+
     @GetMapping
     public String getUserInfo() {
         // 현재 인증된 사용자의 정보 가져오기
