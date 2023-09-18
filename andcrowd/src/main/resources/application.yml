@@ -5,7 +5,7 @@ spring:
       prefix: /WEB-INF/views/
       suffix: .jsp
   profiles:
-    active: db, jwt, cd, oauth2, bucket, mail
+    active: db, jwt, cd, oauth2, bucket, mail, chatbot
   datasource:
     # DB
     url: ${url}
@@ -79,6 +79,11 @@ cloud:
       and-bucket: ${and-bucket}
       crowd-bucket: ${crowd-bucket}
       user-bucket: ${user-bucket}
+
+# clova chatbot
+chatbot:
+  secretKey: ${secretKey}
+  apiUrl: ${apiUrl}
 
 # Server Auto Reload
 #server:

@@ -25,6 +25,8 @@ public interface AndService {
 
     void updateStatus(int andId, int andStatus);
 
+    void updateStatusForExpiredItems();
+
     int updateView(int andId);
 
     void increaseLike(Integer andId);

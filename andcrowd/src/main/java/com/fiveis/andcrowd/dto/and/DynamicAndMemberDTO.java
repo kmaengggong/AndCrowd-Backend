@@ -24,5 +24,19 @@ public class DynamicAndMemberDTO {
         private int andApplyId;
         private boolean isDeleted;
     }
-    
+
+    @Getter @Setter
+    @Builder @ToString
+    @AllArgsConstructor @NoArgsConstructor
+    public static class MemberList {
+        private int memberId;
+        private int andId;
+        private int userId;
+        private int andApplyId;
+        private boolean isDeleted;
+        private String nickname;
+        private String profileImg;
+    }
+
+
 }
