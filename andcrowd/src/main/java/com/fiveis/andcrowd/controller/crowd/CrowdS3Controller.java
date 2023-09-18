@@ -24,7 +24,7 @@ public class CrowdS3Controller {
     public ResponseEntity<Object> uploadImages(
             @RequestParam(value = "crowdId") int crowdId,
             @RequestParam(value = "fileType") String fileType,
-            @RequestParam(value = "files") List<MultipartFile> files) {
+            @RequestPart(value = "files") List<MultipartFile> files) {
         List<CrowdS3DTO> uploadedFiles = crowdS3Service.uploadFiles(crowdId, fileType, files);
         return ResponseEntity
                 .status(HttpStatus.OK)
@@ -35,7 +35,7 @@ public class CrowdS3Controller {
     public ResponseEntity<Object> uploadImage(
             @RequestParam(value = "crowdId") int crowdId,
             @RequestParam(value = "fileType") String fileType,
-            @RequestParam(value = "file") MultipartFile file) {
+            @RequestPart(value = "file") MultipartFile file) {
         CrowdS3DTO uploadedFile = crowdS3Service.uploadFile(crowdId, fileType, file);
         return ResponseEntity
                 .status(HttpStatus.OK)
