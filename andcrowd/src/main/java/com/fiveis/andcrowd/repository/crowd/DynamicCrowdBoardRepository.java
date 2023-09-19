@@ -10,19 +10,15 @@ import java.util.List;
 public interface DynamicCrowdBoardRepository {
 
     List<DynamicCrowdBoardDTO.Find> findAll(int crowdId);
-
-    List<DynamicCrowdBoardDTO.Find> findAllByIsDeletedFalse(int crowdId);
-
+    List<DynamicCrowdBoardDTO.Find> findAllByIsDeletedFalse(@Param("offset") int offset, @Param("limit") int limit, @Param("crowdId") int crowdId);
     DynamicCrowdBoardDTO.Find findById(@Param("crowdId") int crowdId, @Param("crowdBoardId") int crowdBoardId);
-
-    void save(DynamicCrowdBoardDTO.Save dynamicCrowdBoardDTOSave);
-
+    void save(DynamicCrowdBoardDTO.Update dynamicCrowdBoardDTOSave);
     void update(DynamicCrowdBoardDTO.Update dynamicCrowdBoardDTOUpdate);
 
-    void deleteByCrowdBoardId(/*Map<String, Integer> params*/@Param("crowdId") int crowdId, @Param("crowdBoardId") int crowdBoardId);
-
-    //CrowdService의 deleteAll기능 추가
     void deleteByCrowdId(@Param("crowdId") int crowdId);
-
+    void deleteByCrowdBoardId(@Param("crowdId") int crowdId, @Param("crowdBoardId") int crowdBoardId);
     void createDynamicCrowdBoardTable(int crowdId);
+
+    int countNotDeleted(int crowdId);
+
 }

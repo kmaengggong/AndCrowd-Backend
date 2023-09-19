@@ -10,7 +10,7 @@ import java.util.List;
 @Service
 public class DynamicCrowdRewardServiceImpl implements DynamicCrowdRewardService {
 
-    DynamicCrowdRewardRepository dynamicCrowdRewardRepository;
+    private final DynamicCrowdRewardRepository dynamicCrowdRewardRepository;
 
     @Autowired
     public DynamicCrowdRewardServiceImpl(DynamicCrowdRewardRepository dynamicCrowdRewardRepository){

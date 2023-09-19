@@ -59,7 +59,7 @@ public class DynamicCrowdRewardController {
         }
     }
 
-    @RequestMapping(value = "/{rewardId}/update", method = {RequestMethod.PUT, RequestMethod.PATCH})
+    @RequestMapping(value = "/{rewardId}", method = {RequestMethod.PUT, RequestMethod.PATCH})
     public ResponseEntity<String> updateCrowdReward(@PathVariable int rewardId,
                                                     @RequestBody DynamicCrowdRewardDTO.Update crowdRewardUpdateDTO) {
         crowdRewardUpdateDTO.setRewardId(rewardId);
@@ -68,7 +68,7 @@ public class DynamicCrowdRewardController {
         return ResponseEntity.ok("리워드가 수정되었습니다.");
     }
 
-    @RequestMapping(value = "/{rewardId}", method = RequestMethod.PATCH)
+    @RequestMapping(value = "/{rewardId}/delete", method = RequestMethod.DELETE)
     public void deleteByCrowdRewardId(@PathVariable("crowdId") int crowdId,
                                       @PathVariable("rewardId") int rewardId) {
         dynamicCrowdRewardService.deleteByCrowdRewardId(crowdId, rewardId);

@@ -27,25 +27,27 @@ public class DynamicCrowdBoardDTO {
 
         private LocalDateTime updatedAt;
 
+        private int viewCount;
+
         private boolean isDeleted;
     }
 
-    @Getter @Setter @ToString @Builder
-    @AllArgsConstructor
-    @NoArgsConstructor
-    public static class Save {
-
-        private int crowdId;
-
-        private int crowdBoardTag;
-
-        private String crowdBoardTitle;
-
-        private String crowdBoardContent;
-
-        private String crowdImg;
-
-    }
+//    @Getter @Setter @ToString @Builder
+//    @AllArgsConstructor
+//    @NoArgsConstructor
+//    public static class Save {
+//
+//        private int crowdId;
+//
+//        private int crowdBoardTag;
+//
+//        private String crowdBoardTitle;
+//
+//        private String crowdBoardContent;
+//
+//        private String crowdImg;
+//
+//    }
 
     @Getter @Setter @ToString @Builder
     @NoArgsConstructor
@@ -63,7 +65,13 @@ public class DynamicCrowdBoardDTO {
 
         private String crowdImg;
 
+        private LocalDateTime publishedAt;
+
         private LocalDateTime updatedAt;
+
+        private int viewCount;
+
+        private boolean isDeleted;
 
     }
 

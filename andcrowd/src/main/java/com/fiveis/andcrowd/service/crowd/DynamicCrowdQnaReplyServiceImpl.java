@@ -5,23 +5,23 @@ import com.fiveis.andcrowd.repository.crowd.DynamicCrowdQnaReplyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
 public class DynamicCrowdQnaReplyServiceImpl implements DynamicCrowdQnaReplyService {
 
-    DynamicCrowdQnaReplyRepository dynamicCrowdQnaReplyRepository;
+    private final DynamicCrowdQnaReplyRepository dynamicCrowdQnaReplyRepository;
 
     @Autowired
     public DynamicCrowdQnaReplyServiceImpl(DynamicCrowdQnaReplyRepository dynamicCrowdQnaReplyRepository){
         this.dynamicCrowdQnaReplyRepository = dynamicCrowdQnaReplyRepository;
     }
 
-
-    @Override
-    public void createDynamicCrowdQnaReplyTable(int crowdId) {
-        dynamicCrowdQnaReplyRepository.createDynamicCrowdQnaReplyTable(crowdId);
-    }
+//    @Override
+//    public void createDynamicCrowdQnaReplyTable(int crowdId) {
+//        dynamicCrowdQnaReplyRepository.createDynamicCrowdQnaReplyTable(crowdId);
+//    }
 
     @Override
     public List<DynamicCrowdQnaReplyDTO.Find> findAll(int crowdId, int crowdQnaId) {
@@ -44,12 +44,15 @@ public class DynamicCrowdQnaReplyServiceImpl implements DynamicCrowdQnaReplyServ
     }
 
     @Override
-    public void save(DynamicCrowdQnaReplyDTO.Save dynamicCrowdQnaReplyDTOSave) {
+    public void save(DynamicCrowdQnaReplyDTO.Update dynamicCrowdQnaReplyDTOSave) {
+        dynamicCrowdQnaReplyDTOSave.setPublishedAt(LocalDateTime.now());
+        dynamicCrowdQnaReplyDTOSave.setUpdatedAt(LocalDateTime.now());
         dynamicCrowdQnaReplyRepository.save(dynamicCrowdQnaReplyDTOSave);
     }
 
     @Override
     public void update(DynamicCrowdQnaReplyDTO.Update dynamicCrowdBoardReplyDTOUpdate) {
+        dynamicCrowdBoardReplyDTOUpdate.setUpdatedAt(LocalDateTime.now());
         dynamicCrowdQnaReplyRepository.update(dynamicCrowdBoardReplyDTOUpdate);
     }
 

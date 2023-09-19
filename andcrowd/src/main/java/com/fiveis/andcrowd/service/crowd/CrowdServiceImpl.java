@@ -17,12 +17,12 @@ import static com.fiveis.andcrowd.dto.crowd.CrowdDTO.convertToCrowdFindDTO;
 @Service
 public class CrowdServiceImpl implements CrowdService {
 
-    CrowdJPARepository crowdJPARepository;
-    CrowdCategoryJPARepository crowdCategoryJPARepository;
-    DynamicCrowdBoardRepository dynamicCrowdBoardRepository;
-    DynamicCrowdQnaRepository dynamicCrowdQnaRepository;
-    DynamicCrowdQnaReplyRepository dynamicCrowdQnaReplyRepository;
-    DynamicCrowdRewardRepository dynamicCrowdRewardRepository;
+    private final CrowdJPARepository crowdJPARepository;
+    private final CrowdCategoryJPARepository crowdCategoryJPARepository;
+    private final DynamicCrowdBoardRepository dynamicCrowdBoardRepository;
+    private final DynamicCrowdQnaRepository dynamicCrowdQnaRepository;
+    private final DynamicCrowdQnaReplyRepository dynamicCrowdQnaReplyRepository;
+    private final DynamicCrowdRewardRepository dynamicCrowdRewardRepository;
 
     @Autowired
     public CrowdServiceImpl(CrowdJPARepository crowdJPARepository,
