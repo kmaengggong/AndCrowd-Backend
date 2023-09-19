@@ -24,5 +24,17 @@ public interface CrowdService {
 //    public CrowdDTO.FindById convertToAndFindByCrowdId(Crowd crowd);
 
     void update(Crowd crowd);
+
     void updateStatus(int crowdId, int crowdStatus);
+
+    int updateView(int crowdId);
+
+    void increaseLike(Integer crowdId);
+
+    void decreaseLike(Integer crowdId);
+
+    void updateLike(Integer crowdId, int userId);
+
+    boolean isLiked(int crowdId, int userId);
+
 }

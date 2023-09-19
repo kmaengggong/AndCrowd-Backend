@@ -1,9 +1,16 @@
 package com.fiveis.andcrowd.service.crowd;
 
 import com.fiveis.andcrowd.dto.crowd.CrowdDTO;
+import com.fiveis.andcrowd.dto.user.DynamicUserLikeDTO;
 import com.fiveis.andcrowd.entity.crowd.Crowd;
+import com.fiveis.andcrowd.entity.user.DynamicUserLike;
+import com.fiveis.andcrowd.entity.user.DynamicUserMaker;
 import com.fiveis.andcrowd.repository.crowd.*;
+import com.fiveis.andcrowd.repository.user.DynamicUserMakerRepository;
+import com.fiveis.andcrowd.repository.user.UserJPARepository;
+import com.fiveis.andcrowd.service.user.DynamicUserLikeService;
 import jakarta.persistence.EntityNotFoundException;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,8 +20,10 @@ import java.util.List;
 import java.util.Optional;
 
 import static com.fiveis.andcrowd.dto.crowd.CrowdDTO.convertToCrowdFindDTO;
+import static com.fiveis.andcrowd.entity.user.User.toTableName;
 
 @Service
+@RequiredArgsConstructor
 public class CrowdServiceImpl implements CrowdService {
 
     private final CrowdJPARepository crowdJPARepository;
@@ -23,21 +32,9 @@ public class CrowdServiceImpl implements CrowdService {
     private final DynamicCrowdQnaRepository dynamicCrowdQnaRepository;
     private final DynamicCrowdQnaReplyRepository dynamicCrowdQnaReplyRepository;
     private final DynamicCrowdRewardRepository dynamicCrowdRewardRepository;
-
-    @Autowired
-    public CrowdServiceImpl(CrowdJPARepository crowdJPARepository,
-                            CrowdCategoryJPARepository crowdCategoryJPARepository,
-                            DynamicCrowdBoardRepository dynamicCrowdBoardRepository,
-                            DynamicCrowdQnaRepository dynamicCrowdQnaRepository,
-                            DynamicCrowdQnaReplyRepository dynamicCrowdQnaReplyRepository,
-                            DynamicCrowdRewardRepository dynamicCrowdRewardRepository){
-        this.crowdJPARepository = crowdJPARepository;
-        this.crowdCategoryJPARepository = crowdCategoryJPARepository;
-        this.dynamicCrowdBoardRepository = dynamicCrowdBoardRepository;
-        this.dynamicCrowdQnaRepository = dynamicCrowdQnaRepository;
-        this.dynamicCrowdQnaReplyRepository = dynamicCrowdQnaReplyRepository;
-        this.dynamicCrowdRewardRepository = dynamicCrowdRewardRepository;
-    }
+    private final UserJPARepository userJPARepository;
+    private final DynamicUserMakerRepository dynamicUserMakerRepository;
+    private final DynamicUserLikeService dynamicUserLikeService;
 
     @Override
     public Optional<CrowdDTO.FindById> findByCrowdId(int crowdId) {
@@ -99,44 +96,30 @@ public class CrowdServiceImpl implements CrowdService {
         dynamicCrowdBoardRepository.createDynamicCrowdBoardTable(insertCrowd.getCrowdId());
         dynamicCrowdQnaRepository.createDynamicCrowdQnaTable(insertCrowd.getCrowdId());
         dynamicCrowdQnaReplyRepository.createDynamicCrowdQnaReplyTable(insertCrowd.getCrowdId());
-    }
 
-//    @Override
-//    public CrowdDTO.FindById convertToAndFindByCrowdId(Crowd crowd) {
-//        return CrowdDTO.FindById.builder()
-//                .crowdId(crowd.getCrowdId())
-//                .adId(crowd.getAdId())
-//                .andId(crowd.getAndId())
-//                .crowdCategoryId(crowd.getCrowdCategoryId())
-//                .crowdContent(crowd.getCrowdContent())
-//                .crowdEndDate(crowd.getCrowdEndDate())
-//                .crowdGoal(crowd.getCrowdGoal())
-//                .crowdImg1(crowd.getCrowdImg1())
-//                .crowdImg2(crowd.getCrowdImg2())
-//                .crowdImg3(crowd.getCrowdImg3())
-//                .crowdImg4(crowd.getCrowdImg4())
-//                .crowdImg5(crowd.getCrowdImg5())
-//                .crowdStatus(crowd.getCrowdStatus())
-//                .crowdTitle(crowd.getCrowdTitle())
-//                .headerImg(crowd.getHeaderImg())
-//                .isDeleted(crowd.isDeleted())
-//                .likeSum(crowd.getLikeSum())
-//                .publishedAt(crowd.getPublishedAt())
-//                .updatedAt(crowd.getUpdatedAt())
-//                .userId(crowd.getUserId())
-//                .viewCount(crowd.getViewCount())
-//                .build();
-//    }
+        String userEmail = toTableName(userJPARepository.findByUserId(insertCrowd.getUserId()).get().getUserEmail());
+
+        DynamicUserMaker dynamicUserMaker = DynamicUserMaker.builder()
+                .projectId(insertCrowd.getCrowdId())
+                .projectType(1)
+                .build();
+        dynamicUserMakerRepository.save(userEmail, dynamicUserMaker);
+    }
 
     @Override
     public void update(Crowd crowd) {
         Optional<Crowd> crowdOptional = crowdJPARepository.findById(crowd.getCrowdId());
         if (crowdOptional.isPresent()) {
             Crowd updatedCrowd = crowdOptional.get();
-            updatedCrowd.setCrowdTitle(crowd.getCrowdTitle());
-            updatedCrowd.setCrowdContent(crowd.getCrowdContent());
+
             // 업데이트된 엔터티 저장
-            crowdJPARepository.save(updatedCrowd);
+            crowdJPARepository.save(updatedCrowd
+                    .updateCrowd(crowd.getCrowdTitle(),
+                            crowd.getCrowdContent(),
+                            crowd.getCrowdCategoryId(),
+                            crowd.getCrowdStatus(),
+                            crowd.getCrowdGoal(),
+                            crowd.getCrowdEndDate()));
         } else {
             // 해당 ID의 엔터티가 존재하지 않을 경우 예외 처리 또는 메시지 전달
             // 예: throw new EntityNotFoundException("Entity with ID " + crowd.getCrowdId() + " not found");
@@ -159,14 +142,66 @@ public class CrowdServiceImpl implements CrowdService {
     }
 
     @Override
+    @Transactional
     public void updateStatus(int crowdId, int crowdStatus) {
         Optional<Crowd> optionalCrowd = crowdJPARepository.findById(crowdId);
         if (optionalCrowd.isPresent()) {
             Crowd updatedCrowd = optionalCrowd.get();
             updatedCrowd.setCrowdStatus(crowdStatus);
 
-            // 변경된 And 객체를 다시 저장
+            // 변경된 Crowd 객체를 다시 저장
             crowdJPARepository.save(updatedCrowd);
+        }
+    }
+
+    @Override
+    @Transactional
+    public int updateView(int crowdId) {
+        return crowdJPARepository.updateView(crowdId);
+    }
+
+    @Override
+    @Transactional
+    public void increaseLike(Integer crowdId) {
+        crowdJPARepository.increaseLike(crowdId);
+    }
+
+    @Override
+    @Transactional
+    public void decreaseLike(Integer crowdId) {
+        crowdJPARepository.decreaseLike(crowdId);
+    }
+
+    @Override
+    @Transactional
+    public void updateLike(Integer crowdId, int userId) {
+        String userEmail = userJPARepository.findByUserId(userId).get().getUserEmail();
+        String convertedUserEmail = toTableName(userEmail);
+        DynamicUserLikeDTO.Find like = dynamicUserLikeService.findByProject(convertedUserEmail, crowdId, 0);
+
+        if(like == null) {
+            increaseLike(crowdId);
+            DynamicUserLike dynamicUserLike = DynamicUserLike.builder()
+                    .projectId(crowdId)
+                    .projectType(0)
+                    .build();
+            dynamicUserLikeService.save(convertedUserEmail, dynamicUserLike);
+        } else {
+            decreaseLike(crowdId);
+            dynamicUserLikeService.deleteByProjectId(convertedUserEmail, crowdId, 0);
+        }
+    }
+
+    @Override
+    @Transactional
+    public boolean isLiked(int crowdId, int userId) {
+        String userEmail = userJPARepository.findByUserId(userId).get().getUserEmail();
+        DynamicUserLikeDTO.Find like = dynamicUserLikeService.findByProject(userEmail, crowdId, 0);
+
+        if (like == null) {
+            return false;
+        } else {
+            return true;
         }
     }
 }

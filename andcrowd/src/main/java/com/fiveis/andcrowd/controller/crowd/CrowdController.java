@@ -84,4 +84,21 @@ public class CrowdController {
         crowdService.updateStatus(crowdId, status.get("status"));
     }
 
+    @PutMapping("/{crowdId}/updateView")
+    public ResponseEntity<String> updateView(@PathVariable("crowdId")int crowdId) {
+        crowdService.updateView(crowdId);
+        return ResponseEntity.ok("조회수 업데이트 완료");
+    }
+
+    @PostMapping("/{crowdId}/like/{userId}")
+    public ResponseEntity<String> updateLike(@PathVariable("crowdId") int crowdId, @PathVariable("userId")int userId) {
+        crowdService.updateLike(crowdId, userId);
+        return ResponseEntity.ok("좋아요 버튼 업데이트");
+    }
+
+    @GetMapping("/{crowdId}/like/{userId}")
+    public boolean isLike(@PathVariable("crowdId")int crowdId, @PathVariable("userId")int userId) {
+        return crowdService.isLiked(crowdId, userId);
+    }
+
 }
