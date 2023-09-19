@@ -3,16 +3,18 @@ package com.fiveis.andcrowd.service.crowd;
 import com.fiveis.andcrowd.dto.crowd.DynamicCrowdQnaDTO;
 import com.fiveis.andcrowd.repository.crowd.DynamicCrowdQnaReplyRepository;
 import com.fiveis.andcrowd.repository.crowd.DynamicCrowdQnaRepository;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
 public class DynamicCrowdQnaServiceImpl implements DynamicCrowdQnaService {
 
-    DynamicCrowdQnaRepository dynamicCrowdQnaRepository;
-    DynamicCrowdQnaReplyRepository dynamicCrowdQnaReplyRepository;
+    private final DynamicCrowdQnaRepository dynamicCrowdQnaRepository;
+    private final DynamicCrowdQnaReplyRepository dynamicCrowdQnaReplyRepository;
 
     @Autowired
     public DynamicCrowdQnaServiceImpl(DynamicCrowdQnaRepository dynamicCrowdQnaRepository,
@@ -21,11 +23,10 @@ public class DynamicCrowdQnaServiceImpl implements DynamicCrowdQnaService {
         this.dynamicCrowdQnaReplyRepository = dynamicCrowdQnaReplyRepository;
     }
 
-
-    @Override
-    public void createDynamicCrowdQnaTable(int crowdId) {
-        dynamicCrowdQnaRepository.createDynamicCrowdQnaTable(crowdId);
-    }
+//    @Override
+//    public void createDynamicCrowdQnaTable(int crowdId) {
+//        dynamicCrowdQnaRepository.createDynamicCrowdQnaTable(crowdId);
+//    }
 
     @Override
     public List<DynamicCrowdQnaDTO.Find> findAll(int crowdId) {
@@ -33,8 +34,8 @@ public class DynamicCrowdQnaServiceImpl implements DynamicCrowdQnaService {
     }
 
     @Override
-    public List<DynamicCrowdQnaDTO.Find> findAllByIsDeletedFalse(int crowdId){
-        return dynamicCrowdQnaRepository.findAllByIsDeletedFalse(crowdId);
+    public List<DynamicCrowdQnaDTO.Find> findAllByIsDeletedFalse(@Param("offset") int offset, @Param("limit") int limit, int crowdId){
+        return dynamicCrowdQnaRepository.findAllByIsDeletedFalse(offset, limit, crowdId);
     }
 
     @Override
@@ -50,12 +51,15 @@ public class DynamicCrowdQnaServiceImpl implements DynamicCrowdQnaService {
     }
 
     @Override
-    public void save(DynamicCrowdQnaDTO.Save dynamicCrowdQnaDTOSave) {
+    public void save(DynamicCrowdQnaDTO.Update dynamicCrowdQnaDTOSave) {
+        dynamicCrowdQnaDTOSave.setPublishedAt(LocalDateTime.now());
+        dynamicCrowdQnaDTOSave.setUpdatedAt(LocalDateTime.now());
         dynamicCrowdQnaRepository.save(dynamicCrowdQnaDTOSave);
     }
 
     @Override
     public void update(DynamicCrowdQnaDTO.Update dynamicCrowdBoardDTOUpdate) {
+        dynamicCrowdBoardDTOUpdate.setUpdatedAt(LocalDateTime.now());
         dynamicCrowdQnaRepository.update(dynamicCrowdBoardDTOUpdate);
     }
 
@@ -64,5 +68,10 @@ public class DynamicCrowdQnaServiceImpl implements DynamicCrowdQnaService {
     public void deleteAllByCrowdId(int crowdId){
         dynamicCrowdQnaReplyRepository.deleteAll(crowdId);
         dynamicCrowdQnaRepository.deleteAll(crowdId);
+    }
+
+    @Override
+    public int countAll(int crowdId) {
+        return dynamicCrowdQnaRepository.countNotDeleted(crowdId);
     }
 }

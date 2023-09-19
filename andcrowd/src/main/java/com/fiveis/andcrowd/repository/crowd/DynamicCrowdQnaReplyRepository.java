@@ -19,7 +19,7 @@ public interface DynamicCrowdQnaReplyRepository {
 
     void deleteByQnaReplyId(@Param("crowdId") int crowdId, @Param("qnaReplyId") int qnaReplyId);
 
-    void save(DynamicCrowdQnaReplyDTO.Save dynamicCrowdQnaReplyDTOSave);
+    void save(DynamicCrowdQnaReplyDTO.Update dynamicCrowdQnaReplyDTOSave);
 
     void update(DynamicCrowdQnaReplyDTO.Update dynamicCrowdBoardReplyDTOUpdate);
 

@@ -9,6 +9,7 @@ import org.hibernate.annotations.DynamicInsert;
 import java.time.LocalDateTime;
 
 @Getter
+@Setter
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
@@ -27,7 +28,7 @@ public class Crowd {
     @Column(nullable = false)
     private int crowdCategoryId;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 6000)
     private String crowdContent;
 
     @Column(nullable = false)
@@ -57,10 +58,10 @@ public class Crowd {
     @ColumnDefault("0")
     private int likeSum;
 
-    @Column(nullable = false)
+    @Column(nullable = true, columnDefinition = "datetime default CURRENT_TIMESTAMP")
     private LocalDateTime publishedAt;
 
-    @Column(nullable = false)
+    @Column(nullable = true, columnDefinition = "datetime default CURRENT_TIMESTAMP")
     private LocalDateTime updatedAt;
 
     @Column(nullable = false)
@@ -74,20 +75,17 @@ public class Crowd {
         this.crowdStatus = 0; // 펀딩글 첫 업로드시 자동으로 심사중 표기
         this.publishedAt = LocalDateTime.now();
         this.updatedAt = LocalDateTime.now();
+        this.isDeleted = false;
+        this.viewCount = 0;
+        this.likeSum = 0;
+        this.crowdStatus = 0;
     }
 
     @PreUpdate
     public void setUpdatedAt(){
         this.updatedAt = LocalDateTime.now();
     }
-
-    public void setCrowdContent(String crowdContent) {
-        this.crowdContent = crowdContent;
-    }
-
-    public void setCrowdGoal(int crowdGoal) {
-        this.crowdGoal = crowdGoal;
-    }
+<<<<<<< HEAD
 
     public void setCrowdImg1(String crowdImg1) {
         this.crowdImg1 = crowdImg1;
@@ -108,13 +106,24 @@ public class Crowd {
     public void setCrowdImg5(String crowdImg5) {
         this.crowdImg5 = crowdImg5;
     }
-
-    public void setCrowdStatus(int crowdStatus) {
+    public Crowd updateCrowd(String crowdTitle,
+                             String crowdContent,
+                             int crowdCategoryId,
+                             int crowdStatus,
+                             int crowdGoal,
+                             LocalDateTime crowdEndDate){
+        this.crowdTitle = crowdTitle;
+        this.crowdContent = crowdContent;
+        this.crowdCategoryId = crowdCategoryId;
         this.crowdStatus = crowdStatus;
+        this.crowdGoal = crowdGoal;
+        this.crowdEndDate = crowdEndDate;
+        return this;
     }
 
-    public void setCrowdTitle(String crowdTitle) {
-        this.crowdTitle = crowdTitle;
+    public Crowd updateCrowdStatus(int crowdStatus) {
+        this.crowdStatus = crowdStatus;
+        return this;
     }
 
     public void setHeaderImg(String headerImg) {

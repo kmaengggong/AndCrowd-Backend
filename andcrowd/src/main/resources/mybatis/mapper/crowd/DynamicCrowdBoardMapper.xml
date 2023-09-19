@@ -5,22 +5,22 @@
 
 <mapper namespace="com.fiveis.andcrowd.repository.crowd.DynamicCrowdBoardRepository">
 
-    <update id="createDynamicCrowdBoardTable">
-        CREATE TABLE crowd_board_#{crowdId}(
+    <insert id="createDynamicCrowdBoardTable">
+        CREATE TABLE IF NOT EXISTS crowd_board_#{crowdId} (
             crowd_board_id INT AUTO_INCREMENT PRIMARY KEY ,
-            crowd_id INT NOT NULL ,
-            crowd_board_tag INT NOT NULL ,
+            crowd_id INT default #{crowd_id} ,
+            crowd_board_tag INT,
             crowd_board_title VARCHAR(200) NOT NULL ,
             crowd_board_content VARCHAR(2000) NOT NULL ,
-            crowd_img VARCHAR(200) ,
-            publishe_at DATETIME DEFAULT now() ,
+            crowd_img VARCHAR(255) ,
+            published_at DATETIME DEFAULT now() ,
             updated_at DATETIME DEFAULT now() ,
             view_count INT DEFAULT 0 ,
             is_deleted BOOL default false
         );
-    </update>
+    </insert>
 
-    <select id="findAll">
+    <select id="findAll" resultType="com.fiveis.andcrowd.dto.crowd.DynamicCrowdBoardDTO$Find">
         SELECT
             crowd_board_id AS crowdBoardId ,
             crowd_id AS crowdId ,
@@ -28,17 +28,17 @@
             crowd_board_title AS crowdBoardTitle ,
             crowd_board_content AS crowdBoardContent ,
             crowd_img AS crowdImg ,
-            publishe_at AS publishedAt ,
+            published_at AS publishedAt ,
             updated_at AS updatedAt ,
             view_count AS viewCount ,
             is_deleted AS isDeleted
         FROM
-            crowd_board_#{crowd_id}
+            crowd_board_#{crowdId}
         ORDER BY
             crowdBoardId DESC
     </select>
 
-    <select id="findAllByIsDeletedFalse">
+    <select id="findAllByIsDeletedFalse" resultType="com.fiveis.andcrowd.dto.crowd.DynamicCrowdBoardDTO$Find">
         SELECT
             crowd_board_id AS crowdBoardId ,
             crowd_id AS crowdId ,
@@ -46,19 +46,23 @@
             crowd_board_title AS crowdBoardTitle ,
             crowd_board_content AS crowdBoardContent ,
             crowd_img AS crowdImg ,
-            publishe_at AS publishedAt ,
+            published_at AS publishedAt ,
             updated_at AS updatedAt ,
             view_count AS viewCount ,
             is_deleted AS isDeleted
         FROM
-            crowd_board_#{crowd_id}
+            crowd_board_#{crowdId}
         WHERE
             is_deleted = false
         ORDER BY
-            crowdBoardId DESC
+            CASE
+                WHEN crowd_board_tag = 0 THEN 0
+                ELSE 1
+                END, crowd_board_id DESC
+            LIMIT #{limit} OFFSET #{offset}
     </select>
 
-    <select id="findById" parameterType="int">
+    <select id="findById" resultType="com.fiveis.andcrowd.dto.crowd.DynamicCrowdBoardDTO$Find">
         SELECT
             crowd_board_id AS crowdBoardId ,
             crowd_id AS crowdId ,
@@ -66,7 +70,7 @@
             crowd_board_title AS crowdBoardTitle ,
             crowd_board_content AS crowdBoardContent ,
             crowd_img AS crowdImg ,
-            publishe_at AS publishedAt ,
+            published_at AS publishedAt ,
             updated_at AS updatedAt ,
             view_count AS viewCount ,
             is_deleted AS isDeleted
@@ -76,11 +80,13 @@
             crowd_board_id = #{crowdBoardId}
     </select>
 
-    <insert id="save" parameterType="com.fiveis.andcrowd.dto.crowd.DynamicCrowdBoardDTO$Save">
-        INSERT INTO
-            crowd_board_#{crowdId} (crowd_id, crowd_board_tag, crowd_board_title, crowd_board_content, crowd_img)
+    <insert id="save" parameterType="com.fiveis.andcrowd.dto.crowd.DynamicCrowdBoardDTO$Update">
+        INSERT INTO crowd_board_#{crowdId} (
+            crowd_id, crowd_board_tag, crowd_board_title, crowd_board_content, crowd_img,
+            published_at, updated_at, view_count, is_deleted)
         VALUES
-            (#{crowdId}, #{crowdBoardTag}, #{crowdBoardTitle}, #{crowdBoardContent}, #{crowdImg})
+            (#{crowdId}, #{crowdBoardTag}, #{crowdBoardTitle}, #{crowdBoardContent}, #{crowdImg},
+            #{publishedAt}, #{updatedAt}, #{viewCount}, #{isDeleted})
     </insert>
 
     <insert id="update" parameterType="com.fiveis.andcrowd.dto.crowd.DynamicCrowdBoardDTO$Update">
@@ -91,9 +97,11 @@
             crowd_board_title = #{crowdBoardTitle},
             crowd_board_content = #{crowdBoardContent},
             crowd_img = #{crowdImg},
-            updated_at = now()
+            updated_at = #{updatedAt},
+            view_count = #{viewCount},
+            is_deleted = #{isDeleted}
         WHERE
-            crowd_board_id = #{crowdBoardId}
+            crowd_id = #{crowdId} AND crowd_board_id = #{crowdBoardId}
     </insert>
 
     <delete id="deleteByCrowdBoardId" parameterType="int">
@@ -110,5 +118,16 @@
             crowd_board_#{crowdId}
         SET
             is_deleted = true
+        WHERE
+            crowd_id = #{crowdId}
+    </delete>
+
+    <delete id="deleteAll" parameterType="int">
+        UPDATE
+            crowd_board_#{crowdId}
+        SET
+            is_deleted = true
+        WHERE
+            crowd_id = #{crowdId}
     </delete>
 </mapper>
