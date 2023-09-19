@@ -32,8 +32,14 @@ public class CrowdOrderDetailsController {
 
     @RequestMapping(value = "/successorder", method = RequestMethod.POST)
     public ResponseEntity<String> insertOrder(@RequestBody CrowdOrderDetails crowdOrderDetails) {
-        crowdOrderDetailsService.save(crowdOrderDetails);
-        return ResponseEntity.ok("리워드가 결제되었습니다.");
+        try{
+            if(!crowdOrderDetailsService.save(crowdOrderDetails)){
+                return ResponseEntity.badRequest().body("결제 정보에 오류가 있습니다.");
+            }
+            return ResponseEntity.ok("리워드 결제 정보 저장 성공.");
+        } catch(Error e){
+            return ResponseEntity.badRequest().body("결제 정보에 오류가 있습니다.");
+        }
     }
 
     @RequestMapping(value = "/{purchaseId}", method = RequestMethod.GET)

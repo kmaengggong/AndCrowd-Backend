@@ -128,4 +128,8 @@ public class DynamicUserMakerServiceImpl implements DynamicUserMakerService{
     public void deleteByProjectId(String userEmail, int projectId, int projectType){
         dynamicUserMakerRepository.deleteByProjectId(userEmail, projectId, projectType);
     }
+
+    public void deleteTableByUserEmail(String userEmail){
+        dynamicUserMakerRepository.deleteTableByUserEmail(userEmail);
+    }
 }

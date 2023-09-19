@@ -17,5 +17,6 @@ public interface UserService {
     void deleteByUserEmail(String userEmail);
     void save(User user) throws Exception;
     void update(UserDTO.Update user);
+    void udpateForSocial(User user);
     User getByCredentials(String userEmail);
 }

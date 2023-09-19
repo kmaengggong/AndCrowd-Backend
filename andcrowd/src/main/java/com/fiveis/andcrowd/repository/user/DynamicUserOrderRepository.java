@@ -17,4 +17,5 @@ public interface DynamicUserOrderRepository {
     void save(@Param("userEmail") String userEmail, @Param("dynamicUserOrder") DynamicUserOrder dynamicUserOrder);
     void deleteById(@Param("userEmail") String userEmail, @Param("uOrderId") int uOrderId);
     void deleteByOrderId(@Param("userEmail") String userEmail, @Param("orderId") int orderId);
+    void deleteTableByUserEmail(@Param("userEmail") String userEmail);
 }

@@ -64,4 +64,8 @@
         WHERE
             and_Id = #{andId}
     </delete>
+
+    <update id="deleteTableByUserEmail">
+        DROP TABLE IF EXISTS user_and_${userEmail}
+    </update>
 </mapper>

@@ -59,4 +59,8 @@ public class DynamicUserFollowServiceImpl implements DynamicUserFollowService{
     public void deleteByUserId(String userEmail, int userId){
         dynamicUserFollowRepository.deleteByUserId(userEmail, userId);
     }
+
+    public void deleteTableByUserEmail(String userEmail){
+        dynamicUserFollowRepository.deleteTableByUserEmail(userEmail);
+    }
 }

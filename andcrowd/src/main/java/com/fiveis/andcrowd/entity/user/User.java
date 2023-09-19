@@ -37,10 +37,10 @@ public class User implements UserDetails {
 //    @Column(nullable = false)
     private String userPassword;  // 비밀번호
 
-    @Column(nullable = false)
+//    @Column(nullable = false)
     private String userKorName;  // 이름
 
-    @Column(nullable = false)
+//    @Column(nullable = false)
     private String userNickname;  // 닉네임
 
     //@Column(nullable = false)
@@ -55,13 +55,13 @@ public class User implements UserDetails {
     @CreationTimestamp
     private LocalDateTime userRegister;  // 가입일
 
-    @Column(nullable = false)
+//    @Column(nullable = false)
     private int userTos;  // 서비스 이용약관 동의
 
-    @Column(nullable = false)
+//    @Column(nullable = false)
     private int userPrivacy;  // 개인정보 동의
 
-    @Column(nullable = false)
+//    @Column(nullable = false)
     private int userMarketing;  // 마케팅 동의
 
     @ColumnDefault("0")
@@ -117,6 +117,15 @@ public class User implements UserDetails {
     }
     public User update(String userEmail){
         this.userEmail = userEmail;
+        return this;
+    }
+    public User updateForSocial(String userNickname, String userKorName,
+                       int userPrivacy, int userMarketing, int userTos){
+        this.userNickname = userNickname;
+        this.userKorName = userKorName;
+        this.userTos = userTos;
+        this.userPrivacy = userPrivacy;
+        this.userMarketing = userMarketing;
         return this;
     }
 

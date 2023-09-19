@@ -46,6 +46,18 @@ public class DynamicCrowdRewardController {
         dynamicCrowdRewardService.save(crowdRewardInsertDTO);
         return ResponseEntity.ok("리워드가 등록되었습니다.");
     }
+    @RequestMapping(value="/all", method=RequestMethod.POST)
+    public ResponseEntity<?> insertCrowdRewards(@RequestBody List<DynamicCrowdRewardDTO.Update> updateList){
+        System.out.println(updateList);
+        try{
+            for(DynamicCrowdRewardDTO.Update update : updateList){
+                dynamicCrowdRewardService.save(update);
+            }
+            return ResponseEntity.ok("리워드가 등록되었습니다.");
+        } catch(Error e){
+            return ResponseEntity.badRequest().body("리워드 등록 실패");
+        }
+    }
 
     @RequestMapping(value = "/{rewardId}", method = {RequestMethod.PUT, RequestMethod.PATCH})
     public ResponseEntity<String> updateCrowdReward(@PathVariable int rewardId,

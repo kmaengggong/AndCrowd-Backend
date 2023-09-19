@@ -28,6 +28,7 @@ public class OAuth2AuthorizationRequestBasedOnCookieRepository
         // 저장하려고 했지만 요청정보가 null인경우(비정상적인 인증요청인 경우)
         if(authorizationRequest == null){
             removeAuthorizationRequest(request, response);// 인증정보 제거 후
+            System.out.println("비정상 인증 요청");
             return; // 종료
         }
         // 쿠키에 직렬화된 토큰 정보 저장하기

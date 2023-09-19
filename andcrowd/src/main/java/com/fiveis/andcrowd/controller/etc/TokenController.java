@@ -1,13 +1,18 @@
 package com.fiveis.andcrowd.controller.etc;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fiveis.andcrowd.config.NaverOauthConfig;
 import com.fiveis.andcrowd.config.jwt.TokenProvider;
+import com.fiveis.andcrowd.config.oauth.OAuth2AuthorizationRequestBasedOnCookieRepository;
 import com.fiveis.andcrowd.dto.etc.AccessTokenResponseDTO;
 import com.fiveis.andcrowd.dto.user.NaverDTO;
 import com.fiveis.andcrowd.dto.user.UserDTO;
 import com.fiveis.andcrowd.entity.user.User;
+import com.fiveis.andcrowd.enums.SocialType;
 import com.fiveis.andcrowd.service.etc.TokenService;
+import com.fiveis.andcrowd.service.user.NaverService;
 import com.fiveis.andcrowd.service.user.UserService;
+import com.fiveis.andcrowd.util.CookieUtil;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -18,8 +23,13 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.List;
+import java.util.Map;
 
 @RequiredArgsConstructor
 @RestController
@@ -28,7 +38,8 @@ public class TokenController {
     private final TokenService tokenService;
     private final TokenProvider tokenProvider;
     private final UserService userService;
-    private final NaverOauthConfig naverOauthConfig;
+    private final NaverService naverService;
+
 
 //    @RequestMapping(value="/getUserId", method=RequestMethod.POST)
 //    public ResponseEntity<?> getUserId(HttpServletRequest request){
@@ -125,22 +136,112 @@ public class TokenController {
 //        }
 //    }
 
-    @RequestMapping(value="/oauth/naver", method=RequestMethod.GET)
-    public ResponseEntity<?> naverLogin(HttpServletResponse response/*@RequestBody NaverDTO.Params params*/) throws IOException {
+    @RequestMapping(value="/oauth/naver", method=RequestMethod.POST)
+    public ResponseEntity<?> naverLogin(HttpServletRequest request,
+                                        HttpServletResponse response,
+                                        @RequestBody Map<String, String> callback/*@RequestBody NaverDTO.Params params*/) throws Exception {
         System.out.println("naverLogin");
 
+        // 프론트 엔드를 통해 code, state를 받아옴
+        String grantType = "authorization_code";
+        String clientId = "VuPedkCMX9rG5c9njrEN";
+        String clientSecret = "BrOSKdntY6";
+        String code = callback.get("code");
+        String state = callback.get("state");
         String uri = UriComponentsBuilder
-                .fromUriString("https://nid.naver.com/oauth2.0/authorize")
-                .queryParam("response_type", "code")
-                .queryParam("client_id", naverOauthConfig.getClientId())
-                .queryParam("state", "test")
-                .queryParam("redirect_uri", naverOauthConfig.getRedirectUri())
+                .fromUriString("https://nid.naver.com/oauth2.0/token?")
+                .queryParam("grant_type", grantType)
+                .queryParam("client_id", clientId)
+                .queryParam("client_secret", clientSecret)
+                .queryParam("code", code)
+                .queryParam("state", state)
                 .toUriString();
 
-        System.out.println(uri);
-        response.sendRedirect(uri);
+        // 네이버 토큰 요청
+        String responseToken = naverService.getNaverToken(uri);
+        if(responseToken == null) return ResponseEntity.badRequest().body("Naver login failed: Could not get token");
 
-        return ResponseEntity.ok().build();
+        // 네이버 토큰 -> Map
+        ObjectMapper objectMapper = new ObjectMapper();
+        Map<String, String> tokenMap = objectMapper.readValue(responseToken, Map.class);
+        String accessToken = tokenMap.get("access_token");
+        String tokenType = tokenMap.get("token_type");
+        System.out.println("tokenMap: " + tokenMap);
+
+        // 네이버 토큰을 통해 유저 정보 요청
+        String userInfo = naverService.getUserInfo(tokenType, accessToken);
+        if(userInfo == null) return ResponseEntity.badRequest().body("Naver login failed: Could not get userinfo");
+
+        // 유저 정보 -> 읽을 수 있는 값으로
+        Map<String, Object> userInfoMap = objectMapper.readValue(userInfo, Map.class);
+        System.out.println("userInfoMap: " + userInfoMap);
+        String responseObject = userInfoMap.get("response").toString();
+        System.out.println("responseObject: " + responseObject);
+        responseObject = responseObject
+                .replace("{", "")
+                .replace("}", "");
+        String[] responseList = responseObject.split(",");
+        String id = "";
+        String nickname = "";
+        String email = "";
+        String name = "";
+        for(String res : responseList){
+            if(res.contains("id=")){
+                id = res.replace("id=", "").trim();
+            }
+            if(res.contains("nickname=")){
+                nickname = res.replace("nickname=", "").trim();
+            }
+            if(res.contains("email=")){
+                email = res.replace("email=", "").trim();
+            }
+            if(res.contains("name=")){
+                name = res.replace("name=", "").trim();
+            }
+        }
+
+        // 필터를 통해 잘못 생성된 토큰 제거
+        CookieUtil.deleteCookie(request, response,
+                OAuth2AuthorizationRequestBasedOnCookieRepository.OAUTH2_AUTHORIZATION_REQUEST_COOKIE_NAME);
+
+        User getUser = userService.findByUserEmail(email);
+
+        // 유저가 있으면 바로 로그인 시도
+        if(getUser != null){
+            if(getUser.getSocialId().equals(id)){
+                // 로그인
+                // 리프레쉬 토큰 생성
+                String at = tokenService.createAndSaveRTAndGetAT(request, response, getUser);
+                AccessTokenResponseDTO accessTokenResponseDTO = new AccessTokenResponseDTO(at);
+
+                // 엑세스 토큰은 로컬에 저장하기 때문에 반환
+                return ResponseEntity.ok(accessTokenResponseDTO);
+
+            }
+            else{
+                return ResponseEntity.badRequest().body("Naver login failed: userinfo corrupted");
+            }
+        }
+
+        // 유저 저장 후 로그인 처리
+        User user = User.builder()
+            .userEmail(email)
+            .userNickname(nickname)
+            .userKorName(name)
+            .socialType(SocialType.NAVER)
+            .socialId(id)
+            .userPrivacy(1)
+            .userTos(1)
+            .build();
+
+        userService.save(user);
+
+        // 리프레쉬 토큰 생성
+        String at = tokenService.createAndSaveRTAndGetAT(request, response, user);
+        AccessTokenResponseDTO accessTokenResponseDTO = new AccessTokenResponseDTO(at);
+
+        // 엑세스 토큰은 로컬에 저장하기 때문에 반환
+        return ResponseEntity.ok(accessTokenResponseDTO);
     }
 
     @RequestMapping(value="/isAdmin", method=RequestMethod.GET)

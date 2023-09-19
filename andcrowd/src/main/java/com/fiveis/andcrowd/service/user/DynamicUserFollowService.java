@@ -16,4 +16,5 @@ public interface DynamicUserFollowService {
     boolean save(String userEmail, DynamicUserFollow dynamicUserFollow);
     void deleteById(String userEmail, int uFollowId);
     void deleteByUserId(String userEmail, int userId);
+    void deleteTableByUserEmail(String userEmail);
 }

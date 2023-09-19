@@ -18,7 +18,7 @@ public class CrowdOrderDetailsDTO { // findAll, findById, update, save, delete
         private int userId;
         private int crowdId;
         private int rewardId;
-        private int sponsorId;
+        private String merchantUid;
         private String purchaseName;
         private String purchasePhone;
         private String purchaseAddress;
@@ -32,7 +32,7 @@ public class CrowdOrderDetailsDTO { // findAll, findById, update, save, delete
                     .userId(crowdOrderDetails.getUserId())
                     .crowdId(crowdOrderDetails.getCrowdId())
                     .rewardId(crowdOrderDetails.getRewardId())
-                    .sponsorId(crowdOrderDetails.getSponsorId())
+                    .merchantUid(crowdOrderDetails.getMerchantUid())
                     .purchaseName(crowdOrderDetails.getPurchaseName())
                     .purchasePhone(crowdOrderDetails.getPurchasePhone())
                     .purchaseAddress(crowdOrderDetails.getPurchaseAddress())
@@ -54,7 +54,7 @@ public class CrowdOrderDetailsDTO { // findAll, findById, update, save, delete
         private int userId;
         private int crowdId;
         private int rewardId;
-        private int sponsorId;
+        private String merchantUid;
         private String purchaseName;
         private String purchasePhone;
         private String purchaseAddress;

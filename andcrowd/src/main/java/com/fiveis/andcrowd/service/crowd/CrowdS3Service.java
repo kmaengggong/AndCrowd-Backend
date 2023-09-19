@@ -33,10 +33,6 @@ public class CrowdS3Service {
 
     @Transactional
     public List<CrowdS3DTO> uploadFiles(int crowdId, String fileType, List<MultipartFile> files) {
-        if (files.size() != 6) {
-            // 이미지가 6장이 아닌 경우 오류 처리 (예: 예외 또는 메시지 반환)
-            throw new IllegalArgumentException("이미지는 정확히 6장이어야 합니다.");
-        }
         List<CrowdS3DTO> fileUrls = new ArrayList<>();
         String uploadFilePath = crowdId + "/" + fileType;
 

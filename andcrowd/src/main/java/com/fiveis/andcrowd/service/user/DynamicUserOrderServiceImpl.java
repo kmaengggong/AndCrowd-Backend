@@ -55,4 +55,8 @@ public class DynamicUserOrderServiceImpl implements DynamicUserOrderService{
     public void deleteByOrderId(String userEmail, int orderId){
         dynamicUserOrderRepository.deleteByOrderId(userEmail, orderId);
     }
+
+    public void deleteTableByUserEmail(String userEmail){
+        dynamicUserOrderRepository.deleteTableByUserEmail(userEmail);
+    }
 }
