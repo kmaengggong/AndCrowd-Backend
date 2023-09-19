@@ -2,8 +2,12 @@ package com.fiveis.andcrowd.service.crowd;
 
 import com.fiveis.andcrowd.dto.crowd.CrowdDTO;
 import com.fiveis.andcrowd.entity.crowd.Crowd;
+import com.fiveis.andcrowd.entity.user.DynamicUserMaker;
 import com.fiveis.andcrowd.repository.crowd.*;
+import com.fiveis.andcrowd.repository.user.DynamicUserMakerRepository;
+import com.fiveis.andcrowd.repository.user.UserJPARepository;
 import jakarta.persistence.EntityNotFoundException;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,8 +17,10 @@ import java.util.List;
 import java.util.Optional;
 
 import static com.fiveis.andcrowd.dto.crowd.CrowdDTO.convertToCrowdFindDTO;
+import static com.fiveis.andcrowd.entity.user.User.toTableName;
 
 @Service
+@RequiredArgsConstructor
 public class CrowdServiceImpl implements CrowdService {
 
     private final CrowdJPARepository crowdJPARepository;
@@ -23,21 +29,9 @@ public class CrowdServiceImpl implements CrowdService {
     private final DynamicCrowdQnaRepository dynamicCrowdQnaRepository;
     private final DynamicCrowdQnaReplyRepository dynamicCrowdQnaReplyRepository;
     private final DynamicCrowdRewardRepository dynamicCrowdRewardRepository;
+    private final UserJPARepository userJPARepository;
+    private final DynamicUserMakerRepository dynamicUserMakerRepository;
 
-    @Autowired
-    public CrowdServiceImpl(CrowdJPARepository crowdJPARepository,
-                            CrowdCategoryJPARepository crowdCategoryJPARepository,
-                            DynamicCrowdBoardRepository dynamicCrowdBoardRepository,
-                            DynamicCrowdQnaRepository dynamicCrowdQnaRepository,
-                            DynamicCrowdQnaReplyRepository dynamicCrowdQnaReplyRepository,
-                            DynamicCrowdRewardRepository dynamicCrowdRewardRepository){
-        this.crowdJPARepository = crowdJPARepository;
-        this.crowdCategoryJPARepository = crowdCategoryJPARepository;
-        this.dynamicCrowdBoardRepository = dynamicCrowdBoardRepository;
-        this.dynamicCrowdQnaRepository = dynamicCrowdQnaRepository;
-        this.dynamicCrowdQnaReplyRepository = dynamicCrowdQnaReplyRepository;
-        this.dynamicCrowdRewardRepository = dynamicCrowdRewardRepository;
-    }
 
     @Override
     public Optional<CrowdDTO.FindById> findByCrowdId(int crowdId) {
@@ -99,6 +93,14 @@ public class CrowdServiceImpl implements CrowdService {
         dynamicCrowdBoardRepository.createDynamicCrowdBoardTable(insertCrowd.getCrowdId());
         dynamicCrowdQnaRepository.createDynamicCrowdQnaTable(insertCrowd.getCrowdId());
         dynamicCrowdQnaReplyRepository.createDynamicCrowdQnaReplyTable(insertCrowd.getCrowdId());
+
+        String userEmail = toTableName(userJPARepository.findByUserId(insertCrowd.getUserId()).get().getUserEmail());
+
+        DynamicUserMaker dynamicUserMaker = DynamicUserMaker.builder()
+                .projectId(insertCrowd.getCrowdId())
+                .projectType(1)
+                .build();
+        dynamicUserMakerRepository.save(userEmail, dynamicUserMaker);
     }
 
 //    @Override
@@ -133,10 +135,15 @@ public class CrowdServiceImpl implements CrowdService {
         Optional<Crowd> crowdOptional = crowdJPARepository.findById(crowd.getCrowdId());
         if (crowdOptional.isPresent()) {
             Crowd updatedCrowd = crowdOptional.get();
-            updatedCrowd.setCrowdTitle(crowd.getCrowdTitle());
-            updatedCrowd.setCrowdContent(crowd.getCrowdContent());
+
             // 업데이트된 엔터티 저장
-            crowdJPARepository.save(updatedCrowd);
+            crowdJPARepository.save(updatedCrowd
+                    .updateCrowd(crowd.getCrowdTitle(),
+                    crowd.getCrowdContent(),
+                    crowd.getCrowdCategoryId(),
+                    crowd.getCrowdStatus(),
+                    crowd.getCrowdGoal(),
+                    crowd.getCrowdEndDate()));
         } else {
             // 해당 ID의 엔터티가 존재하지 않을 경우 예외 처리 또는 메시지 전달
             // 예: throw new EntityNotFoundException("Entity with ID " + crowd.getCrowdId() + " not found");
@@ -163,10 +170,9 @@ public class CrowdServiceImpl implements CrowdService {
         Optional<Crowd> optionalCrowd = crowdJPARepository.findById(crowdId);
         if (optionalCrowd.isPresent()) {
             Crowd updatedCrowd = optionalCrowd.get();
-            updatedCrowd.setCrowdStatus(crowdStatus);
 
             // 변경된 And 객체를 다시 저장
-            crowdJPARepository.save(updatedCrowd);
+            crowdJPARepository.save(updatedCrowd.updateCrowdStatus(crowdStatus));
         }
     }
 }

@@ -28,7 +28,7 @@ public class Crowd {
     @Column(nullable = false)
     private int crowdCategoryId;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 6000)
     private String crowdContent;
 
     @Column(nullable = false)
@@ -84,5 +84,61 @@ public class Crowd {
     @PreUpdate
     public void setUpdatedAt(){
         this.updatedAt = LocalDateTime.now();
+    }
+<<<<<<< HEAD
+
+    public void setCrowdImg1(String crowdImg1) {
+        this.crowdImg1 = crowdImg1;
+    }
+
+    public void setCrowdImg2(String crowdImg2) {
+        this.crowdImg2 = crowdImg2;
+    }
+
+    public void setCrowdImg3(String crowdImg3) {
+        this.crowdImg3 = crowdImg3;
+    }
+
+    public void setCrowdImg4(String crowdImg4) {
+        this.crowdImg4 = crowdImg4;
+    }
+
+    public void setCrowdImg5(String crowdImg5) {
+        this.crowdImg5 = crowdImg5;
+    }
+    public Crowd updateCrowd(String crowdTitle,
+                             String crowdContent,
+                             int crowdCategoryId,
+                             int crowdStatus,
+                             int crowdGoal,
+                             LocalDateTime crowdEndDate){
+        this.crowdTitle = crowdTitle;
+        this.crowdContent = crowdContent;
+        this.crowdCategoryId = crowdCategoryId;
+        this.crowdStatus = crowdStatus;
+        this.crowdGoal = crowdGoal;
+        this.crowdEndDate = crowdEndDate;
+        return this;
+    }
+
+    public Crowd updateCrowdStatus(int crowdStatus) {
+        this.crowdStatus = crowdStatus;
+        return this;
+    }
+
+    public void setHeaderImg(String headerImg) {
+        this.headerImg = headerImg;
+    }
+
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    public void setCrowdEndDate(LocalDateTime crowdEndDate) {
+        this.crowdEndDate = crowdEndDate;
+    }
+
+    public void setDeleted(boolean deleted) {
+        isDeleted = deleted;
     }
 }

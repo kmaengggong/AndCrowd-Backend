@@ -66,8 +66,9 @@ public class CrowdController {
         }
     }
 
-    @RequestMapping(value = "/{crowdId}/update", method = {RequestMethod.PUT, RequestMethod.PATCH})
+    @RequestMapping(value = "/{crowdId}", method = {RequestMethod.PUT, RequestMethod.PATCH})
     public ResponseEntity<String> updateCrowd(@RequestBody Crowd crowd) {
+        System.out.println(crowd);
         crowdService.update(crowd);
         return ResponseEntity.ok("펀딩글이 수정되었습니다.");
     }
