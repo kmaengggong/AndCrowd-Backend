@@ -14,4 +14,5 @@ public interface DynamicUserOrderService {
     boolean save(String userEmail, DynamicUserOrder dynamicUserOrder);
     void deleteById(String userEmail, int uOrderId);
     void deleteByOrderId(String userEmail, int orderId);
+    void deleteTableByUserEmail(String userEmail);
 }

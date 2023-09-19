@@ -18,4 +18,5 @@ public interface DynamicUserLikeService {
     boolean save(String userEmail, DynamicUserLike dynamicUserLike);
     void deleteById(String userEmail, int uLikeId);
     void deleteByProjectId(String userEmail, int projectId, int projectType);
+    void deleteTableByUserEmail(String userEmail);
 }

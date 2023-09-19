@@ -128,4 +128,17 @@ public class SignController {
             return ResponseEntity.badRequest().body("Nickname already exist");
         else return ResponseEntity.ok("Good to use");
     }
+
+    @RequestMapping(value="/updateForSocial", method=RequestMethod.POST)
+    public ResponseEntity<?> updateForSocial(@RequestBody User user) throws Exception {
+        User userInfo = userService.findByUserEmail(user.getUserEmail());
+        userInfo.updateForSocial(user.getUserNickname(),
+                user.getUserKorName(),
+                user.getUserPrivacy(),
+                user.getUserMarketing(),
+                user.getUserTos());
+        userService.udpateForSocial(userInfo);
+
+        return ResponseEntity.ok("updateForSocial good");
+    }
 }

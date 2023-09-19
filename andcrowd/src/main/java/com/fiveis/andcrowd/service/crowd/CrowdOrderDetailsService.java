@@ -18,7 +18,7 @@ public interface CrowdOrderDetailsService {
    // 특정 crowd글의 결재내역을 조회할수 있는 기능 추가
    List<CrowdOrderDetailsDTO.FindById> findAllByCrowdId(int crowdId);
 
-   void save(CrowdOrderDetails crowdOrderDetails);
+   boolean save(CrowdOrderDetails crowdOrderDetails);
    void update(CrowdOrderDetailsDTO.Update updateDTO);
    void deleteById(int purchaseId);
    public CrowdOrderDetailsDTO.FindById convertToFindByIdDTO(CrowdOrderDetails crowdOrderDetails);

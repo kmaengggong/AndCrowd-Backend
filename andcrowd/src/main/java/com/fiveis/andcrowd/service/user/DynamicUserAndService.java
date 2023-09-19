@@ -15,4 +15,5 @@ public interface DynamicUserAndService {
     boolean save(String userEmail, DynamicUserAnd dynamicUserAnd);
     void deleteById(String userEmail, int uAndId);
     void deleteByAndId(String userEmail, int andId);
+    void deleteTableByUserEmail(String userEmail);
 }

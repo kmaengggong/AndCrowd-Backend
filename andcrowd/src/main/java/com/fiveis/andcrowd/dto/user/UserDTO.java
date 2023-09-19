@@ -61,6 +61,7 @@ public class UserDTO {
         private String userProfileImg;
         private LocalDateTime userBirth;
         private LocalDateTime userRegister;
+        private SocialType socialType;
     }
 
     @Getter
@@ -121,7 +122,7 @@ public class UserDTO {
     }
 
     public static UserDTO.FindAsUser convertToFindAsUserDTO(User user){
-        return UserDTO.FindAsUser.builder()
+        return FindAsUser.builder()
                 .userEmail(user.getUserEmail())
                 .userKorName(user.getUserKorName())
                 .userNickname(user.getUserNickname())
@@ -129,6 +130,7 @@ public class UserDTO {
                 .userProfileImg(user.getUserProfileImg())
                 .userBirth(user.getUserBirth())
                 .userRegister(user.getUserRegister())
+                .socialType(user.getSocialType())
                 .build();
     }
 

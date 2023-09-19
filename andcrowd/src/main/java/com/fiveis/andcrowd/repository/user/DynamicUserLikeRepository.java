@@ -21,4 +21,5 @@ public interface DynamicUserLikeRepository {
     void deleteByProjectId(@Param("userEmail") String userEmail,
                            @Param("projectId") int projectId,
                            @Param("projectType") int projectType);
+    void deleteTableByUserEmail(@Param("userEmail") String userEmail);
 }

@@ -2,8 +2,8 @@ package com.fiveis.andcrowd.controller.user;
 
 import com.fiveis.andcrowd.dto.user.UserDTO;
 import com.fiveis.andcrowd.dto.user.UserS3DTO;
-import com.fiveis.andcrowd.service.user.UserS3Service;
-import com.fiveis.andcrowd.service.user.UserService;
+import com.fiveis.andcrowd.entity.user.User;
+import com.fiveis.andcrowd.service.user.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -19,6 +19,11 @@ import java.util.List;
 public class UserController {
     private final UserService userService;
     private final UserS3Service userS3Service;
+    private final DynamicUserAndService dynamicUserAndService;
+    private final DynamicUserFollowService dynamicUserFollowService;
+    private final DynamicUserLikeService dynamicUserLikeService;
+    private final DynamicUserMakerService dynamicUserMakerService;
+    private final DynamicUserOrderService dynamicUserOrderService;
 
     @RequestMapping(value="/list", method=RequestMethod.GET)
     public ResponseEntity<?> findAllUser(){
@@ -106,6 +111,7 @@ public class UserController {
 
     @RequestMapping(value="/{userId}", method=RequestMethod.DELETE)
     public ResponseEntity<?> deleteUser(@PathVariable int userId){
+        System.out.println("user delete");
         // 권한 확인
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         List<String> authorityList = authentication
@@ -130,8 +136,17 @@ public class UserController {
             System.out.println("!!! 비로그인 유저 혹은 AccessToken 만료");
             return ResponseEntity.badRequest().body("Permission Denied");
         }
+
+        // 관리자 유저 및 본인 유저만 접근 가능
         try{
+            System.out.println("!!! 본인 혹은 어드민 유저");
             String userEmail = userService.findById(userId).getUserEmail();
+            String tblUserEmail = User.toTableName(userEmail);
+            dynamicUserAndService.deleteTableByUserEmail(tblUserEmail);
+            dynamicUserFollowService.deleteTableByUserEmail(tblUserEmail);
+            dynamicUserLikeService.deleteTableByUserEmail(tblUserEmail);
+            dynamicUserMakerService.deleteTableByUserEmail(tblUserEmail);
+            dynamicUserOrderService.deleteTableByUserEmail(tblUserEmail);
             userService.deleteByUserEmail(userEmail);
             return ResponseEntity.ok("User Deleted!");
         } catch(Exception e){

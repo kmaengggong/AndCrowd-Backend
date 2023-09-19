@@ -30,7 +30,7 @@ public class CrowdOrderDetails { // 크라우드 펀딩 후원결제
     private int rewardId; // 리워드 ID
 
     @Column(nullable = false)
-    private int sponsorId; // 후원 ID
+    private String merchantUid;  // 실제 결제 ID
 
     @Column(nullable = false)
     private String purchaseName; // 결제자 이름
@@ -46,6 +46,9 @@ public class CrowdOrderDetails { // 크라우드 펀딩 후원결제
 
     @Column(nullable = false)
     private String purchaseStatus; // 결제상태 (결제대기, 결제완료, 결제취소)
+
+    @Column(nullable = false)
+    private int purchaseAmount;
 
     @ColumnDefault("false")
     private boolean isDeleted; // 삭제여부
