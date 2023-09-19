@@ -132,6 +132,10 @@ public class AndController {
         andService.updateStatus(andId, status);
     }
 
+    @RequestMapping(value = "/{andId}/update/needNumMem/{needNumMem}", method = RequestMethod.PATCH)
+    public void updateNeedNumMem(@PathVariable("andId") int andId, @PathVariable("needNumMem") int needNumMem){
+        andService.updateNeedNumMem(andId, needNumMem);
+    }
 
     @RequestMapping("/{andId}/delete")
     public void deleteItem(@PathVariable("andId") int andId) {

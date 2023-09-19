@@ -6,6 +6,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 
+import java.util.Date;
+
 @Configuration
 @EnableScheduling
 public class AndEndDateStatusConfig {
@@ -13,8 +15,9 @@ public class AndEndDateStatusConfig {
     @Autowired
     private AndService andService;
 
-    @Scheduled(cron = "0 0 0 * * ?") // 매일 자정에 실행
+    @Scheduled(cron = "1 0 0 * * ?")
     public void updateStatusForExpiredItems() {
+        System.out.println("Scheduled task is executed at " + new Date());
         andService.updateStatusForExpiredItems();
     }
 }

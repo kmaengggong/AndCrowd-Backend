@@ -24,6 +24,7 @@ public interface AndService {
     void update(And and);
 
     void updateStatus(int andId, int andStatus);
+    void updateNeedNumMem(int andId, int needNumMem);
 
     void updateStatusForExpiredItems();
 

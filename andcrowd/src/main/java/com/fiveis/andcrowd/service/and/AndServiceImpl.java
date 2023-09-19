@@ -192,6 +192,12 @@ public class AndServiceImpl implements AndService{
     }
 
     @Override
+    @Transactional
+    public void updateNeedNumMem(int andId, int needNumMem) {
+        andJPARepository.updateNeedNumMem(andId, needNumMem);
+    }
+
+    @Override
     public void updateStatusForExpiredItems() {
         // 오늘 날짜 가져오기
         LocalDate today = LocalDate.now();
