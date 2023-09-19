@@ -72,4 +72,8 @@
         AND
             project_type = #{projectType}
     </delete>
+
+    <update id="deleteTableByUserEmail">
+        DROP TABLE IF EXISTS user_maker_${userEmail}
+    </update>
 </mapper>

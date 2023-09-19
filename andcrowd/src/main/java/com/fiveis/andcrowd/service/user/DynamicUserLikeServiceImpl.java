@@ -101,4 +101,8 @@ public class DynamicUserLikeServiceImpl implements DynamicUserLikeService{
     public void deleteByProjectId(String userEmail, int projectId, int projectType){
         dynamicUserLikeRepository.deleteByProjectId(userEmail, projectId, projectType);
     }
+
+    public void deleteTableByUserEmail(String userEmail){
+        dynamicUserLikeRepository.deleteTableByUserEmail(userEmail);
+    }
 }

@@ -69,13 +69,13 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
 //        String targetUrl = getTargetUrl(accessToken);
 //
 //        // 인증 관련 설정값, 쿠키 제거
-//        clearAuthenticationAttributes(request, response);
+        clearAuthenticationAttributes(request, response);
         String accessToken = tokenService.createAndSaveRTAndGetAT(request, response, user);
 //        AccessTokenResponseDTO accessTokenResponseDTO = new AccessTokenResponseDTO(accessToken);
 
         // 이미 가입된 유저인 경우
-        String targetUrl = getTargetUrl(accessToken, user.getUserEmail(), user.getUserPrivacy()==1);;
-
+        String targetUrl = getTargetUrl(accessToken, user.getUserEmail(), user.getUserKorName() != null);;
+        System.out.println("Redirect to " + targetUrl);
         // 리다이렉
         getRedirectStrategy().sendRedirect(request, response, targetUrl);
     }

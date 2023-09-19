@@ -93,7 +93,7 @@ public class UserServiceImpl implements UserService {
             throw new Exception("Exception: Nickname already exist");
         }
 
-        user.passwordEncode(bCryptPasswordEncoder);
+        if(user.getUserPassword() != null) user.passwordEncode(bCryptPasswordEncoder);
         System.out.println(user);
         userJPARepository.save(user);
 
