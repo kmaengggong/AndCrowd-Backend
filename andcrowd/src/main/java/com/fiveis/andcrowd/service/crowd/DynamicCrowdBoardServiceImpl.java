@@ -12,7 +12,7 @@ import java.util.List;
 @Service
 public class DynamicCrowdBoardServiceImpl implements DynamicCrowdBoardService{
 
-    DynamicCrowdBoardRepository dynamicCrowdBoardRepository;
+    private final DynamicCrowdBoardRepository dynamicCrowdBoardRepository;
 
     @Autowired
     public DynamicCrowdBoardServiceImpl(DynamicCrowdBoardRepository dynamicCrowdBoardRepository){

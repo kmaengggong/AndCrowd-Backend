@@ -37,25 +37,25 @@ public class DynamicCrowdQnaController {
     }
 
     @RequestMapping(value = "/{crowdQnaId}", method = RequestMethod.GET)
-    public ResponseEntity<DynamicCrowdQnaDTO.Find> findById(@PathVariable int crowdId, @PathVariable int crowdQnaId){
-        DynamicCrowdQnaDTO.Find qna = dynamicCrowdQnaService.findById(crowdId, crowdQnaId);
-        return ResponseEntity.ok().body(qna);
+    public DynamicCrowdQnaDTO.Find findById(@PathVariable("crowdId") int crowdId, @PathVariable("crowdQnaId") int crowdQnaId){
+        return dynamicCrowdQnaService.findById(crowdId, crowdQnaId);
     }
 
     @RequestMapping(value = "", method = RequestMethod.POST)
-    public ResponseEntity<String> insertCrowdQna(@RequestBody DynamicCrowdQnaDTO.Update dynamicCrowdQnaDTO){
+    public void insertCrowdQna(@RequestBody DynamicCrowdQnaDTO.Update dynamicCrowdQnaDTO){
         dynamicCrowdQnaService.save(dynamicCrowdQnaDTO);
-        return ResponseEntity.ok("문의글 등록 완료");
     }
 
     @RequestMapping(value = "/{crowdQnaId}", method = RequestMethod.PATCH)
-    public ResponseEntity<String> updateCrowdQna(@RequestBody DynamicCrowdQnaDTO.Update dynamicCrowdQnaDTOUpdate){
+    public String updateCrowdQna(@PathVariable("crowdId") int crowdId,
+                                @PathVariable("crowdQnaId")int crowdQnaId,
+                                @RequestBody DynamicCrowdQnaDTO.Update dynamicCrowdQnaDTOUpdate){
         dynamicCrowdQnaService.update(dynamicCrowdQnaDTOUpdate);
-        return ResponseEntity.ok("문의글 수정 완료");
+        return "redirect:/crowd/" + crowdId + "/qna/" + crowdQnaId;
     }
 
-    @RequestMapping(value = "/{crowdQnaId}/delete", method = RequestMethod.PATCH)
-    public ResponseEntity<String> deleteCrowdQna(@PathVariable int crowdId, @PathVariable int crowdQnaId){
+    @RequestMapping(value = "/{crowdQnaId}/delete", method = RequestMethod.DELETE)
+    public ResponseEntity<String> deleteCrowdQna(@PathVariable("crowdId") int crowdId, @PathVariable("crowdQnaId") int crowdQnaId){
         dynamicCrowdQnaService.deleteByCrowdQnaId(crowdId, crowdQnaId);
         return ResponseEntity.ok("문의글 삭제 완료");
     }

@@ -6,10 +6,10 @@
 <mapper namespace="com.fiveis.andcrowd.repository.crowd.DynamicCrowdQnaReplyRepository">
 
     <insert id="createDynamicCrowdQnaReplyTable" parameterType="int">
-        CREATE TABLE IF NOT EXISTS crowd_qna_reply_#{crowd_id}(
+        CREATE TABLE IF NOT EXISTS crowd_qna_reply_#{crowdId}(
             qna_reply_id INT AUTO_INCREMENT PRIMARY KEY ,
             crowd_qna_id INT NOT NULL ,
-            crowd_id INT default #{crowd_id},
+            crowd_id INT default #{crowdId},
             user_id INT NOT NULL,
             qna_reply_content VARCHAR(2000) NOT NULL ,
             published_at DATETIME DEFAULT now() ,
@@ -29,7 +29,7 @@
             updated_at AS updatedAt,
             is_deleted AS isDeleted
         FROM
-            crowd_qna_reply_#{crowd_id}
+            crowd_qna_reply_#{crowdId}
         ORDER BY
             qna_reply_id
     </select>
@@ -45,7 +45,7 @@
             updated_at AS updatedAt,
             is_deleted AS isDeleted
         FROM
-            crowd_qna_reply_#{crowd_id}
+            crowd_qna_reply_#{crowdId}
         WHERE
             is_deleted = false
     </select>
@@ -61,7 +61,7 @@
             updated_at AS updatedAt,
             is_deleted AS isDeleted
         FROM
-            crowd_qna_reply_#{crowd_id}
+            crowd_qna_reply_#{crowdId}
         WHERE
             qna_reply_id = #{qnaReplyId}
     </select>

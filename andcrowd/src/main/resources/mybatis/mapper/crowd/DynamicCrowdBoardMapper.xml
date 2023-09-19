@@ -6,14 +6,14 @@
 <mapper namespace="com.fiveis.andcrowd.repository.crowd.DynamicCrowdBoardRepository">
 
     <insert id="createDynamicCrowdBoardTable">
-        CREATE TABLE IF NOT EXISTS crowd_board_#{crowd_id} (
+        CREATE TABLE IF NOT EXISTS crowd_board_#{crowdId} (
             crowd_board_id INT AUTO_INCREMENT PRIMARY KEY ,
             crowd_id INT default #{crowd_id} ,
             crowd_board_tag INT,
             crowd_board_title VARCHAR(200) NOT NULL ,
             crowd_board_content VARCHAR(2000) NOT NULL ,
             crowd_img VARCHAR(255) ,
-            publishe_at DATETIME DEFAULT now() ,
+            published_at DATETIME DEFAULT now() ,
             updated_at DATETIME DEFAULT now() ,
             view_count INT DEFAULT 0 ,
             is_deleted BOOL default false
@@ -28,7 +28,7 @@
             crowd_board_title AS crowdBoardTitle ,
             crowd_board_content AS crowdBoardContent ,
             crowd_img AS crowdImg ,
-            publishe_at AS publishedAt ,
+            published_at AS publishedAt ,
             updated_at AS updatedAt ,
             view_count AS viewCount ,
             is_deleted AS isDeleted
@@ -46,7 +46,7 @@
             crowd_board_title AS crowdBoardTitle ,
             crowd_board_content AS crowdBoardContent ,
             crowd_img AS crowdImg ,
-            publishe_at AS publishedAt ,
+            published_at AS publishedAt ,
             updated_at AS updatedAt ,
             view_count AS viewCount ,
             is_deleted AS isDeleted
@@ -70,7 +70,7 @@
             crowd_board_title AS crowdBoardTitle ,
             crowd_board_content AS crowdBoardContent ,
             crowd_img AS crowdImg ,
-            publishe_at AS publishedAt ,
+            published_at AS publishedAt ,
             updated_at AS updatedAt ,
             view_count AS viewCount ,
             is_deleted AS isDeleted

@@ -20,18 +20,6 @@ public class DynamicCrowdQnaDTO {
         private boolean isDeleted;
     }
 
-//    @Getter @Setter @ToString @Builder
-//    @AllArgsConstructor
-//    @NoArgsConstructor
-//    public static class Save {
-//
-//        private int crowdId;
-//
-//        private String qnaTitle;
-//
-//        private String qnaContent;
-//    }
-
     @Getter @Setter @ToString @Builder
     @NoArgsConstructor
     @AllArgsConstructor

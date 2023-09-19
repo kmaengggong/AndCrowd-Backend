@@ -6,7 +6,7 @@
 <mapper namespace="com.fiveis.andcrowd.repository.crowd.DynamicCrowdQnaRepository">
 
     <insert id="createDynamicCrowdQnaTable">
-        CREATE TABLE IF NOT EXISTS crowd_qna_#{crowd_id}(
+        CREATE TABLE IF NOT EXISTS crowd_qna_#{crowdId}(
             crowd_qna_id INT AUTO_INCREMENT PRIMARY KEY ,
             crowd_id INT default #{crowd_id},
             user_id INT NOT NULL ,
