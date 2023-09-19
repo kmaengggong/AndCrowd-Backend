@@ -15,23 +15,27 @@ public class DynamicCrowdQnaReplyDTO {
 
         private int crowdQnaId;
 
+        private int userId;
+
         private String qnaReplyContent;
 
         private LocalDateTime publishedAt;
 
+        private LocalDateTime updatedAt;
+
         private boolean isDeleted;
     }
 
-    @Getter @Setter @ToString @Builder
-    @AllArgsConstructor
-    @NoArgsConstructor
-    public static class Save {
-        private int crowdId;
-
-        private int crowdQnaId;
-
-        private String qnaReplyContent;
-    }
+//    @Getter @Setter @ToString @Builder
+//    @AllArgsConstructor
+//    @NoArgsConstructor
+//    public static class Save {
+//        private int crowdId;
+//
+//        private int crowdQnaId;
+//
+//        private String qnaReplyContent;
+//    }
 
     @Getter @Setter @ToString @Builder
     @NoArgsConstructor
@@ -39,10 +43,18 @@ public class DynamicCrowdQnaReplyDTO {
     public static class Update {
         private int crowdId;
 
-        private int crowdQnaId;
-
         private int qnaReplyId;
 
+        private int crowdQnaId;
+
+        private int userId;
+
         private String qnaReplyContent;
+
+        private LocalDateTime publishedAt;
+
+        private LocalDateTime updatedAt;
+
+        private boolean isDeleted;
     }
 }

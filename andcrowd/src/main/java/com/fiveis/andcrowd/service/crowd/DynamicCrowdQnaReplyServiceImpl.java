@@ -44,7 +44,7 @@ public class DynamicCrowdQnaReplyServiceImpl implements DynamicCrowdQnaReplyServ
     }
 
     @Override
-    public void save(DynamicCrowdQnaReplyDTO.Save dynamicCrowdQnaReplyDTOSave) {
+    public void save(DynamicCrowdQnaReplyDTO.Update dynamicCrowdQnaReplyDTOSave) {
         dynamicCrowdQnaReplyRepository.save(dynamicCrowdQnaReplyDTOSave);
     }
 

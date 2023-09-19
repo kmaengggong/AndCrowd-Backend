@@ -22,9 +22,18 @@ public class DynamicCrowdQnaController {
     }
 
     @RequestMapping(value = "/all", method = RequestMethod.GET)
-    public ResponseEntity<List<DynamicCrowdQnaDTO.Find>> findAllQnas(@PathVariable int crowdId){
-        List<DynamicCrowdQnaDTO.Find> qnas = dynamicCrowdQnaService.findAllByIsDeletedFalse(crowdId);
-        return ResponseEntity.ok().body(qnas);
+    public List<DynamicCrowdQnaDTO.Find> findAllQnas(@RequestParam(defaultValue = "0") int page,
+                                                     @RequestParam(defaultValue = "5") int size,
+                                                     @PathVariable("crowdId") int crowdId){
+        int offset = page * size;
+        int limit = size;
+
+        return dynamicCrowdQnaService.findAllByIsDeletedFalse(offset, limit, crowdId);
+    }
+
+    @GetMapping("/all/count")
+    public int countAll(@PathVariable("crowdId") int crowdId) {
+        return dynamicCrowdQnaService.countAll(crowdId);
     }
 
     @RequestMapping(value = "/{crowdQnaId}", method = RequestMethod.GET)
@@ -34,8 +43,8 @@ public class DynamicCrowdQnaController {
     }
 
     @RequestMapping(value = "", method = RequestMethod.POST)
-    public ResponseEntity<String> insertCrowdQna(@RequestBody DynamicCrowdQnaDTO.Save dynamicCrowdQnaDTOSave){
-        dynamicCrowdQnaService.save(dynamicCrowdQnaDTOSave);
+    public ResponseEntity<String> insertCrowdQna(@RequestBody DynamicCrowdQnaDTO.Update dynamicCrowdQnaDTO){
+        dynamicCrowdQnaService.save(dynamicCrowdQnaDTO);
         return ResponseEntity.ok("문의글 등록 완료");
     }
 

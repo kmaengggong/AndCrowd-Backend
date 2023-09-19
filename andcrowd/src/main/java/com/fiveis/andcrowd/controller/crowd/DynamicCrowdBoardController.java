@@ -21,10 +21,18 @@ public class DynamicCrowdBoardController {
     }
 
     @RequestMapping(value = "/all", method = RequestMethod.GET)
-    public ResponseEntity<List<DynamicCrowdBoardDTO.Find>> findAllBoards(@PathVariable int crowdId){
-        List<DynamicCrowdBoardDTO.Find> boards = dynamicCrowdBoardService.findAllByIsDeletedFalse(crowdId);
+    public List<DynamicCrowdBoardDTO.Find> findAllBoards(@RequestParam(defaultValue = "0") int page,
+                                                             @RequestParam(defaultValue = "5") int size,
+                                                             @PathVariable("crowdId") int crowdId){
+        int offset = page * size;
+        int limit = size;
 
-        return ResponseEntity.ok().body(boards);
+        return dynamicCrowdBoardService.findAllByIsDeletedFalse(offset, limit, crowdId);
+    }
+
+    @GetMapping("/all/count")
+    public int countAll(@PathVariable("crowdId") int crowdId){
+        return dynamicCrowdBoardService.countAll(crowdId);
     }
 
     @RequestMapping(value = "/{crowdBoardId}", method = RequestMethod.GET)
@@ -35,8 +43,8 @@ public class DynamicCrowdBoardController {
     }
 
     @RequestMapping(value = "", method = RequestMethod.POST)
-    public ResponseEntity<String> insertCrowdBoard(@RequestBody DynamicCrowdBoardDTO.Save dynamicCrowdBoardDTOSave){
-        dynamicCrowdBoardService.save(dynamicCrowdBoardDTOSave);
+    public ResponseEntity<String> insertCrowdBoard(@RequestBody DynamicCrowdBoardDTO.Update dynamicCrowdBoardDTO){
+        dynamicCrowdBoardService.save(dynamicCrowdBoardDTO);
         return  ResponseEntity.ok("공지사항 등록 완료");
     }
 

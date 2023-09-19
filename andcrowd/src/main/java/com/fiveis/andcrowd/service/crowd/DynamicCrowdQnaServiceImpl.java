@@ -3,6 +3,7 @@ package com.fiveis.andcrowd.service.crowd;
 import com.fiveis.andcrowd.dto.crowd.DynamicCrowdQnaDTO;
 import com.fiveis.andcrowd.repository.crowd.DynamicCrowdQnaReplyRepository;
 import com.fiveis.andcrowd.repository.crowd.DynamicCrowdQnaRepository;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -33,8 +34,8 @@ public class DynamicCrowdQnaServiceImpl implements DynamicCrowdQnaService {
     }
 
     @Override
-    public List<DynamicCrowdQnaDTO.Find> findAllByIsDeletedFalse(int crowdId){
-        return dynamicCrowdQnaRepository.findAllByIsDeletedFalse(crowdId);
+    public List<DynamicCrowdQnaDTO.Find> findAllByIsDeletedFalse(@Param("offset") int offset, @Param("limit") int limit, int crowdId){
+        return dynamicCrowdQnaRepository.findAllByIsDeletedFalse(offset, limit, crowdId);
     }
 
     @Override
@@ -50,7 +51,7 @@ public class DynamicCrowdQnaServiceImpl implements DynamicCrowdQnaService {
     }
 
     @Override
-    public void save(DynamicCrowdQnaDTO.Save dynamicCrowdQnaDTOSave) {
+    public void save(DynamicCrowdQnaDTO.Update dynamicCrowdQnaDTOSave) {
         dynamicCrowdQnaRepository.save(dynamicCrowdQnaDTOSave);
     }
 
@@ -64,5 +65,10 @@ public class DynamicCrowdQnaServiceImpl implements DynamicCrowdQnaService {
     public void deleteAllByCrowdId(int crowdId){
         dynamicCrowdQnaReplyRepository.deleteAll(crowdId);
         dynamicCrowdQnaRepository.deleteAll(crowdId);
+    }
+
+    @Override
+    public int countAll(int crowdId) {
+        return dynamicCrowdQnaRepository.countNotDeleted(crowdId);
     }
 }

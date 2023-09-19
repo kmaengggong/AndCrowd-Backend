@@ -2,6 +2,7 @@ package com.fiveis.andcrowd.service.crowd;
 
 import com.fiveis.andcrowd.dto.crowd.DynamicCrowdBoardDTO;
 import com.fiveis.andcrowd.repository.crowd.DynamicCrowdBoardRepository;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,8 +29,8 @@ public class DynamicCrowdBoardServiceImpl implements DynamicCrowdBoardService{
     }
 
     @Override
-    public List<DynamicCrowdBoardDTO.Find> findAllByIsDeletedFalse(int crowdId){
-        return dynamicCrowdBoardRepository.findAllByIsDeletedFalse(crowdId);
+    public List<DynamicCrowdBoardDTO.Find> findAllByIsDeletedFalse(@Param("offset") int offset, @Param("limit") int limit, int crowdId){
+        return dynamicCrowdBoardRepository.findAllByIsDeletedFalse(offset, limit, crowdId);
     }
 
     @Override
@@ -43,7 +44,7 @@ public class DynamicCrowdBoardServiceImpl implements DynamicCrowdBoardService{
     }
 
     @Override
-    public void save(DynamicCrowdBoardDTO.Save dynamicCrowdBoardDTOSave) {
+    public void save(DynamicCrowdBoardDTO.Update dynamicCrowdBoardDTOSave) {
         dynamicCrowdBoardRepository.save(dynamicCrowdBoardDTOSave);
     }
 
@@ -56,5 +57,10 @@ public class DynamicCrowdBoardServiceImpl implements DynamicCrowdBoardService{
     @Override
     public void deleteByCrowdId(int crowdId) {
         dynamicCrowdBoardRepository.deleteByCrowdId(crowdId);
+    }
+
+    @Override
+    public int countAll(int crowdId) {
+        return dynamicCrowdBoardRepository.countNotDeleted(crowdId);
     }
 }
