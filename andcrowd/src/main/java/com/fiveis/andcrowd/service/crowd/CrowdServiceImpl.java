@@ -32,6 +32,7 @@ public class CrowdServiceImpl implements CrowdService {
     private final UserJPARepository userJPARepository;
     private final DynamicUserMakerRepository dynamicUserMakerRepository;
 
+
     @Override
     public Optional<CrowdDTO.FindById> findByCrowdId(int crowdId) {
         Optional<Crowd> crowdOptional = crowdJPARepository.findById(crowdId);

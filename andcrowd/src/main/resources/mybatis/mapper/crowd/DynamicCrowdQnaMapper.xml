@@ -5,57 +5,62 @@
 
 <mapper namespace="com.fiveis.andcrowd.repository.crowd.DynamicCrowdQnaRepository">
 
-    <update id="createDynamicCrowdQnaTable">
-        CREATE TABLE crowd_qna_#{crowdId}(
+    <insert id="createDynamicCrowdQnaTable">
+        CREATE TABLE IF NOT EXISTS crowd_qna_#{crowdId}(
             crowd_qna_id INT AUTO_INCREMENT PRIMARY KEY ,
-            crowd_id INT NOT NULL ,
+            crowd_id INT default #{crowd_id},
+            user_id INT NOT NULL ,
             qna_title VARCHAR(200) NOT NULL ,
             qna_content VARCHAR(2000) NOT NULL ,
-            publishe_at DATETIME DEFAULT now() ,
+            published_at DATETIME DEFAULT now() ,
             updated_at DATETIME DEFAULT now() ,
             is_deleted BOOL default false
         );
-    </update>
+    </insert>
 
-    <select id="findAll">
+    <select id="findAll" resultType="com.fiveis.andcrowd.dto.crowd.DynamicCrowdQnaDTO$Find">
         SELECT
             crowd_qna_id AS crowdQnaId ,
             crowd_id AS crowdId ,
+            user_id AS userId,
             qna_title AS qnaTitle ,
             qna_content AS qnaContent ,
-            publishe_at AS publishedAt ,
+            published_at AS publishedAt ,
             updated_at AS updatedAt ,
             is_deleted AS isDeleted
         FROM
             crowd_qna_#{crowd_id}
         ORDER BY
-            crowdQnaId DESC
+            crowd_qna_id DESC
     </select>
 
-    <select id="findAllByIsDeletedFalse">
+    <select id="findAllByIsDeletedFalse" resultType="com.fiveis.andcrowd.dto.crowd.DynamicCrowdQnaDTO$Find">
         SELECT
             crowd_qna_id AS crowdQnaId ,
             crowd_id AS crowdId ,
+            user_id AS userId,
             qna_title AS qnaTitle ,
             qna_content AS qnaContent ,
-            publishe_at AS publishedAt ,
+            published_at AS publishedAt ,
             updated_at AS updatedAt ,
             is_deleted AS isDeleted
         FROM
-            crowd_qna_#{crowd_id}
+            crowd_qna_#{crowdId}
         WHERE
             is_deleted = false
         ORDER BY
-            crowdQnaId DESC
+            crowd_qna_id DESC
+            LIMIT #{limit} OFFSET #{offset}
     </select>
 
-    <select id="findById" parameterType="int">
+    <select id="findById" resultType="com.fiveis.andcrowd.dto.crowd.DynamicCrowdQnaDTO$Find">
         SELECT
-            crowd_qna_id AS crowdqnaId ,
+            crowd_qna_id AS crowdQnaId ,
             crowd_id AS crowdId ,
+            user_id AS userId,
             qna_title AS qnaTitle ,
             qna_content AS qnaContent ,
-            publishe_at AS publishedAt ,
+            published_at AS publishedAt ,
             updated_at AS updatedAt ,
             is_deleted AS isDeleted
         FROM
@@ -64,11 +69,12 @@
             crowd_qna_id = #{crowdQnaId}
     </select>
 
-    <insert id="save" parameterType="com.fiveis.andcrowd.dto.crowd.DynamicCrowdQnaDTO$Save">
+    <insert id="save" parameterType="com.fiveis.andcrowd.dto.crowd.DynamicCrowdQnaDTO$Update">
         INSERT INTO
-            crowd_qna_#{crowdId} (crowd_id, qna_title, qna_content)
+            crowd_qna_#{crowdId} (
+            crowd_id, user_id, qna_title, qna_content, published_at, updated_at, is_deleted)
         VALUES
-            (#{crowdId}, #{qnaTitle}, #{qnaContent})
+            (#{crowdId}, #{userId}, #{qnaTitle}, #{qnaContent}, #{publishedAt}, #{updatedAt}, #{isDeleted})
     </insert>
 
     <update id="update" parameterType="com.fiveis.andcrowd.dto.crowd.DynamicCrowdQnaDTO$Update">
@@ -77,7 +83,8 @@
         SET
             qna_title = #{qnaTitle},
             qna_content = #{qnaContent},
-            updated_at = now()
+            updated_at = #{updatedAt},
+            is_deleted = #{isDeleted}
         WHERE
             crowd_qna_id = #{crowdQnaId}
     </update>
@@ -96,6 +103,8 @@
             crowd_qna_#{crowdId}
         SET
             is_deleted = true
+        WHERE
+            crowd_id = #{crowdId}
     </delete>
 
 </mapper>

@@ -34,8 +34,8 @@ public class DynamicCrowdQnaReplyController {
     }
 
     @RequestMapping(value = "", method = RequestMethod.POST)
-    public ResponseEntity<String> insertQnaReply(@RequestBody DynamicCrowdQnaReplyDTO.Save dynamicCrwodQnaReplyDTOSave){
-        dynamicCrowdQnaReplyService.save(dynamicCrwodQnaReplyDTOSave);
+    public ResponseEntity<String> insertQnaReply(@RequestBody DynamicCrowdQnaReplyDTO.Update dynamicCrwodQnaReplyDTO){
+        dynamicCrowdQnaReplyService.save(dynamicCrwodQnaReplyDTO);
         return ResponseEntity.ok("댓글 등록 완료");
     }
 

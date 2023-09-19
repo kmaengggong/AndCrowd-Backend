@@ -22,31 +22,40 @@ public class DynamicCrowdQnaController {
     }
 
     @RequestMapping(value = "/all", method = RequestMethod.GET)
-    public ResponseEntity<List<DynamicCrowdQnaDTO.Find>> findAllQnas(@PathVariable int crowdId){
-        List<DynamicCrowdQnaDTO.Find> qnas = dynamicCrowdQnaService.findAllByIsDeletedFalse(crowdId);
-        return ResponseEntity.ok().body(qnas);
+    public List<DynamicCrowdQnaDTO.Find> findAllQnas(@RequestParam(defaultValue = "0") int page,
+                                                     @RequestParam(defaultValue = "5") int size,
+                                                     @PathVariable("crowdId") int crowdId){
+        int offset = page * size;
+        int limit = size;
+
+        return dynamicCrowdQnaService.findAllByIsDeletedFalse(offset, limit, crowdId);
+    }
+
+    @GetMapping("/all/count")
+    public int countAll(@PathVariable("crowdId") int crowdId) {
+        return dynamicCrowdQnaService.countAll(crowdId);
     }
 
     @RequestMapping(value = "/{crowdQnaId}", method = RequestMethod.GET)
-    public ResponseEntity<DynamicCrowdQnaDTO.Find> findById(@PathVariable int crowdId, @PathVariable int crowdQnaId){
-        DynamicCrowdQnaDTO.Find qna = dynamicCrowdQnaService.findById(crowdId, crowdQnaId);
-        return ResponseEntity.ok().body(qna);
+    public DynamicCrowdQnaDTO.Find findById(@PathVariable("crowdId") int crowdId, @PathVariable("crowdQnaId") int crowdQnaId){
+        return dynamicCrowdQnaService.findById(crowdId, crowdQnaId);
     }
 
     @RequestMapping(value = "", method = RequestMethod.POST)
-    public ResponseEntity<String> insertCrowdQna(@RequestBody DynamicCrowdQnaDTO.Save dynamicCrowdQnaDTOSave){
-        dynamicCrowdQnaService.save(dynamicCrowdQnaDTOSave);
-        return ResponseEntity.ok("문의글 등록 완료");
+    public void insertCrowdQna(@RequestBody DynamicCrowdQnaDTO.Update dynamicCrowdQnaDTO){
+        dynamicCrowdQnaService.save(dynamicCrowdQnaDTO);
     }
 
     @RequestMapping(value = "/{crowdQnaId}", method = RequestMethod.PATCH)
-    public ResponseEntity<String> updateCrowdQna(@RequestBody DynamicCrowdQnaDTO.Update dynamicCrowdQnaDTOUpdate){
+    public String updateCrowdQna(@PathVariable("crowdId") int crowdId,
+                                @PathVariable("crowdQnaId")int crowdQnaId,
+                                @RequestBody DynamicCrowdQnaDTO.Update dynamicCrowdQnaDTOUpdate){
         dynamicCrowdQnaService.update(dynamicCrowdQnaDTOUpdate);
-        return ResponseEntity.ok("문의글 수정 완료");
+        return "redirect:/crowd/" + crowdId + "/qna/" + crowdQnaId;
     }
 
-    @RequestMapping(value = "/{crowdQnaId}/delete", method = RequestMethod.PATCH)
-    public ResponseEntity<String> deleteCrowdQna(@PathVariable int crowdId, @PathVariable int crowdQnaId){
+    @RequestMapping(value = "/{crowdQnaId}/delete", method = RequestMethod.DELETE)
+    public ResponseEntity<String> deleteCrowdQna(@PathVariable("crowdId") int crowdId, @PathVariable("crowdQnaId") int crowdQnaId){
         dynamicCrowdQnaService.deleteByCrowdQnaId(crowdId, crowdQnaId);
         return ResponseEntity.ok("문의글 삭제 완료");
     }

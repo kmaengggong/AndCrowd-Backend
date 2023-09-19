@@ -9,6 +9,7 @@ import org.hibernate.annotations.DynamicInsert;
 import java.time.LocalDateTime;
 
 @Getter
+@Setter
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
@@ -57,10 +58,10 @@ public class Crowd {
     @ColumnDefault("0")
     private int likeSum;
 
-    @Column(nullable = false)
+    @Column(nullable = true, columnDefinition = "datetime default CURRENT_TIMESTAMP")
     private LocalDateTime publishedAt;
 
-    @Column(nullable = false)
+    @Column(nullable = true, columnDefinition = "datetime default CURRENT_TIMESTAMP")
     private LocalDateTime updatedAt;
 
     @Column(nullable = false)
@@ -74,12 +75,17 @@ public class Crowd {
         this.crowdStatus = 0; // 펀딩글 첫 업로드시 자동으로 심사중 표기
         this.publishedAt = LocalDateTime.now();
         this.updatedAt = LocalDateTime.now();
+        this.isDeleted = false;
+        this.viewCount = 0;
+        this.likeSum = 0;
+        this.crowdStatus = 0;
     }
 
     @PreUpdate
     public void setUpdatedAt(){
         this.updatedAt = LocalDateTime.now();
     }
+<<<<<<< HEAD
 
     public void setCrowdImg1(String crowdImg1) {
         this.crowdImg1 = crowdImg1;

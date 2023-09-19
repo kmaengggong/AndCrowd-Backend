@@ -12,14 +12,16 @@ public interface DynamicCrowdBoardService {
 
     List<DynamicCrowdBoardDTO.Find> findAll(int crowdId);
 
-    List<DynamicCrowdBoardDTO.Find> findAllByIsDeletedFalse(int crowdId);
+    List<DynamicCrowdBoardDTO.Find> findAllByIsDeletedFalse(@Param("offset") int offset, @Param("limit") int limit, int crowdId);
 
     DynamicCrowdBoardDTO.Find findById(int crowdId, int crowdBoardId);
     void deleteByCrowdBoardId(int crowdId, int crowdBoardId);
 
-    void save(DynamicCrowdBoardDTO.Save dynamicCrowdBoardDTOSave);
+    void save(DynamicCrowdBoardDTO.Update dynamicCrowdBoardDTOSave);
 
     void update(DynamicCrowdBoardDTO.Update dynamicCrowdBoardDTOUpdate);
 
     void deleteByCrowdId(int crowdId);
+
+    int countAll(int crowdId);
 }
