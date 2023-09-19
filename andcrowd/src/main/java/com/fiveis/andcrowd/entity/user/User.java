@@ -34,34 +34,24 @@ public class User implements UserDetails {
     @Column(nullable = false)  // 이메일
     private String userEmail;
 
-//    @Column(nullable = false)
     private String userPassword;  // 비밀번호
 
-//    @Column(nullable = false)
     private String userKorName;  // 이름
 
-//    @Column(nullable = false)
     private String userNickname;  // 닉네임
 
-    //@Column(nullable = false)
     private String userPhone;  // 전화번호
 
     private String userProfileImg;  // 프로필 이미지 경로
 
-    //@Column(nullable = false)
     private LocalDateTime userBirth;  // 생년월일
 
     @Column(nullable = false)
     @CreationTimestamp
     private LocalDateTime userRegister;  // 가입일
 
-//    @Column(nullable = false)
     private int userTos;  // 서비스 이용약관 동의
-
-//    @Column(nullable = false)
     private int userPrivacy;  // 개인정보 동의
-
-//    @Column(nullable = false)
     private int userMarketing;  // 마케팅 동의
 
     @ColumnDefault("0")
