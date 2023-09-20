@@ -55,17 +55,15 @@ public class DynamicUserLikeServiceImpl implements DynamicUserLikeService{
             else{
                 if(crowdJPARepository.findById(find.getProjectId()).isEmpty()) continue;
                 Crowd crowd = crowdJPARepository.findById(find.getProjectId()).get();
-                LocalDate crowdEndDate = crowd.getCrowdEndDate();
-                LocalDateTime crowdEndDateTime = crowdEndDate.atStartOfDay(); // LocalDate를 LocalDateTime으로 변환
-
                 ProjectDTO.Find projectFind = ProjectDTO.Find.builder()
                         .projectId(crowd.getCrowdId())
                         .projectType(1)
                         .projectHeaderImg(crowd.getHeaderImg())
                         .projectTitle(crowd.getCrowdTitle())
                         .projectContent(crowd.getCrowdContent())
-                        .projectEndDate(crowdEndDateTime) // LocalDateTime을 설정
+                        .projectEndDate(crowd.getCrowdEndDate())
                         .build();
+                projectList.add(projectFind);
             }
         }
         return projectList;
