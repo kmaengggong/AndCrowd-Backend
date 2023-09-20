@@ -9,11 +9,17 @@ import com.fiveis.andcrowd.repository.user.UserJPARepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 import static com.fiveis.andcrowd.dto.crowd.CrowdDTO.convertToCrowdFindDTO;
@@ -22,6 +28,8 @@ import static com.fiveis.andcrowd.entity.user.User.toTableName;
 @Service
 @RequiredArgsConstructor
 public class CrowdServiceImpl implements CrowdService {
+
+    private static final int PAGE_SIZE = 6;
 
     private final CrowdJPARepository crowdJPARepository;
     private final CrowdCategoryJPARepository crowdCategoryJPARepository;
@@ -175,4 +183,22 @@ public class CrowdServiceImpl implements CrowdService {
             crowdJPARepository.save(updatedCrowd.updateCrowdStatus(crowdStatus));
         }
     }
+
+    @Override
+    public Page<CrowdDTO.FindById> searchPageList(Integer crowdStatus, String sortField, Integer pageNumber, Integer crowdCategoryId, String keyword, Pageable pageable) {
+        if (Objects.equals(sortField, "crowdEndDate")) {
+            System.out.println(" sort field : crowdEndDate !!!!!");
+            pageable = PageRequest.of(pageNumber, PAGE_SIZE, Sort.by(Sort.Direction.ASC, sortField));
+        } else {
+            pageable = PageRequest.of(pageNumber, PAGE_SIZE, Sort.by(Sort.Direction.DESC, sortField));
+        }
+
+        Specification<Crowd> spec = CrowdSpecifications.findByCriteria(crowdCategoryId, crowdStatus, keyword);
+        Page<Crowd> entityPage = crowdJPARepository.findAll(spec, pageable);
+
+        Page<CrowdDTO.FindById> pageList = entityPage.map(crowd -> convertToCrowdFindDTO(crowd));
+
+        return pageList;
+    }
+
 }
