@@ -1,6 +1,8 @@
 package com.fiveis.andcrowd.service.user;
 
+import com.fiveis.andcrowd.dto.crowd.CrowdDTO;
 import com.fiveis.andcrowd.dto.crowd.CrowdOrderDetailsDTO;
+import com.fiveis.andcrowd.dto.etc.ProjectDTO;
 import com.fiveis.andcrowd.dto.user.DynamicUserOrderDTO;
 import com.fiveis.andcrowd.entity.user.DynamicUserOrder;
 import org.springframework.stereotype.Service;
@@ -15,4 +17,5 @@ public interface DynamicUserOrderService {
     void deleteById(String userEmail, int uOrderId);
     void deleteByOrderId(String userEmail, int orderId);
     void deleteTableByUserEmail(String userEmail);
+    List<CrowdDTO.FindById> findAllCrowd(String userEmail);
 }

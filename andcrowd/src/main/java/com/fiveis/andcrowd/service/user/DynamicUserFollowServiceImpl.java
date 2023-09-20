@@ -13,8 +13,8 @@ import java.util.List;
 
 @Service
 public class DynamicUserFollowServiceImpl implements DynamicUserFollowService{
-    private static DynamicUserFollowRepository dynamicUserFollowRepository;
-    private static UserJPARepository userJPARepository;
+    private final DynamicUserFollowRepository dynamicUserFollowRepository;
+    private final UserJPARepository userJPARepository;
 
     @Autowired
     public DynamicUserFollowServiceImpl(DynamicUserFollowRepository dynamicUserFollowRepository,

@@ -85,7 +85,6 @@ public class Crowd {
     public void setUpdatedAt(){
         this.updatedAt = LocalDateTime.now();
     }
-<<<<<<< HEAD
 
     public void setCrowdImg1(String crowdImg1) {
         this.crowdImg1 = crowdImg1;
