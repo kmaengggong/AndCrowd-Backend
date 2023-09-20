@@ -11,6 +11,8 @@ import com.fiveis.andcrowd.repository.user.DynamicUserLikeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,15 +55,17 @@ public class DynamicUserLikeServiceImpl implements DynamicUserLikeService{
             else{
                 if(crowdJPARepository.findById(find.getProjectId()).isEmpty()) continue;
                 Crowd crowd = crowdJPARepository.findById(find.getProjectId()).get();
+                LocalDate crowdEndDate = crowd.getCrowdEndDate();
+                LocalDateTime crowdEndDateTime = crowdEndDate.atStartOfDay(); // LocalDate를 LocalDateTime으로 변환
+
                 ProjectDTO.Find projectFind = ProjectDTO.Find.builder()
                         .projectId(crowd.getCrowdId())
                         .projectType(1)
                         .projectHeaderImg(crowd.getHeaderImg())
                         .projectTitle(crowd.getCrowdTitle())
                         .projectContent(crowd.getCrowdContent())
-                        .projectEndDate(crowd.getCrowdEndDate())
+                        .projectEndDate(crowdEndDateTime) // LocalDateTime을 설정
                         .build();
-                projectList.add(projectFind);
             }
         }
         return projectList;

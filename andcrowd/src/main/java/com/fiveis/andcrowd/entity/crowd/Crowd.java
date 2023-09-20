@@ -6,6 +6,7 @@ import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Getter
@@ -32,7 +33,7 @@ public class Crowd {
     private String crowdContent;
 
     @Column(nullable = false)
-    private LocalDateTime crowdEndDate;
+    private LocalDate crowdEndDate;
 
     @Column(nullable = false)
     private int crowdGoal;
@@ -110,7 +111,7 @@ public class Crowd {
                              int crowdCategoryId,
                              int crowdStatus,
                              int crowdGoal,
-                             LocalDateTime crowdEndDate){
+                             LocalDate crowdEndDate){
         this.crowdTitle = crowdTitle;
         this.crowdContent = crowdContent;
         this.crowdCategoryId = crowdCategoryId;
@@ -133,7 +134,7 @@ public class Crowd {
         this.updatedAt = updatedAt;
     }
 
-    public void setCrowdEndDate(LocalDateTime crowdEndDate) {
+    public void setCrowdEndDate(LocalDate crowdEndDate) {
         this.crowdEndDate = crowdEndDate;
     }
 
