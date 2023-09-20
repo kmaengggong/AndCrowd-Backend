@@ -4,6 +4,7 @@ import com.fiveis.andcrowd.entity.and.And;
 
 import lombok.*;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class AndDTO {
@@ -22,7 +23,7 @@ public class AndDTO {
         private String andTitle;
         private String andHeaderImg;
         private String andContent;
-        private LocalDateTime andEndDate;
+        private LocalDate andEndDate;
         private int needNumMem;
         private String andImg1;
         private String andImg2;
@@ -53,7 +54,7 @@ public class AndDTO {
         private String andTitle;
         private String andHeaderImg;
         private String andContent;
-        private LocalDateTime andEndDate;
+        private LocalDate andEndDate;
         private int needNumMem;
         private String andImg1;
         private String andImg2;
