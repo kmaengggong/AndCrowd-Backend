@@ -2,6 +2,7 @@ package com.fiveis.andcrowd.dto.etc;
 
 import lombok.*;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class ProjectDTO {
@@ -17,6 +18,6 @@ public class ProjectDTO {
         private String projectHeaderImg;
         private String projectTitle;
         private String projectContent;
-        private LocalDateTime projectEndDate;
+        private LocalDate projectEndDate;
     }
 }
