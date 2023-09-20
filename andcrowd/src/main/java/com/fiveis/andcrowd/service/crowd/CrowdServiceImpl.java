@@ -3,20 +3,25 @@ package com.fiveis.andcrowd.service.crowd;
 import com.fiveis.andcrowd.dto.crowd.CrowdDTO;
 import com.fiveis.andcrowd.dto.user.DynamicUserLikeDTO;
 import com.fiveis.andcrowd.entity.crowd.Crowd;
-import com.fiveis.andcrowd.entity.user.DynamicUserLike;
 import com.fiveis.andcrowd.entity.user.DynamicUserMaker;
+import com.fiveis.andcrowd.entity.user.DynamicUserLike;
 import com.fiveis.andcrowd.repository.crowd.*;
 import com.fiveis.andcrowd.repository.user.DynamicUserMakerRepository;
 import com.fiveis.andcrowd.repository.user.UserJPARepository;
 import com.fiveis.andcrowd.service.user.DynamicUserLikeService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 import static com.fiveis.andcrowd.dto.crowd.CrowdDTO.convertToCrowdFindDTO;
@@ -25,6 +30,8 @@ import static com.fiveis.andcrowd.entity.user.User.toTableName;
 @Service
 @RequiredArgsConstructor
 public class CrowdServiceImpl implements CrowdService {
+
+    private static final int PAGE_SIZE = 6;
 
     private final CrowdJPARepository crowdJPARepository;
     private final CrowdCategoryJPARepository crowdCategoryJPARepository;
@@ -115,11 +122,11 @@ public class CrowdServiceImpl implements CrowdService {
             // 업데이트된 엔터티 저장
             crowdJPARepository.save(updatedCrowd
                     .updateCrowd(crowd.getCrowdTitle(),
-                            crowd.getCrowdContent(),
-                            crowd.getCrowdCategoryId(),
-                            crowd.getCrowdStatus(),
-                            crowd.getCrowdGoal(),
-                            crowd.getCrowdEndDate()));
+                    crowd.getCrowdContent(),
+                    crowd.getCrowdCategoryId(),
+                    crowd.getCrowdStatus(),
+                    crowd.getCrowdGoal(),
+                    crowd.getCrowdEndDate()));
         } else {
             // 해당 ID의 엔터티가 존재하지 않을 경우 예외 처리 또는 메시지 전달
             // 예: throw new EntityNotFoundException("Entity with ID " + crowd.getCrowdId() + " not found");
@@ -147,12 +154,29 @@ public class CrowdServiceImpl implements CrowdService {
         Optional<Crowd> optionalCrowd = crowdJPARepository.findById(crowdId);
         if (optionalCrowd.isPresent()) {
             Crowd updatedCrowd = optionalCrowd.get();
-            updatedCrowd.setCrowdStatus(crowdStatus);
 
             // 변경된 Crowd 객체를 다시 저장
-            crowdJPARepository.save(updatedCrowd);
+            crowdJPARepository.save(updatedCrowd.updateCrowdStatus(crowdStatus));
         }
     }
+
+    @Override
+    public Page<CrowdDTO.FindById> searchPageList(Integer crowdStatus, String sortField, Integer pageNumber, Integer crowdCategoryId, String keyword, Pageable pageable) {
+        if (Objects.equals(sortField, "crowdEndDate")) {
+            System.out.println(" sort field : crowdEndDate !!!!!");
+            pageable = PageRequest.of(pageNumber, PAGE_SIZE, Sort.by(Sort.Direction.ASC, sortField));
+        } else {
+            pageable = PageRequest.of(pageNumber, PAGE_SIZE, Sort.by(Sort.Direction.DESC, sortField));
+        }
+
+        Specification<Crowd> spec = CrowdSpecifications.findByCriteria(crowdCategoryId, crowdStatus, keyword);
+        Page<Crowd> entityPage = crowdJPARepository.findAll(spec, pageable);
+
+        Page<CrowdDTO.FindById> pageList = entityPage.map(crowd -> convertToCrowdFindDTO(crowd));
+
+        return pageList;
+    }
+
 
     @Override
     @Transactional

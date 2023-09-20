@@ -4,6 +4,8 @@ import com.fiveis.andcrowd.dto.crowd.CrowdDTO;
 import com.fiveis.andcrowd.entity.crowd.Crowd;
 import com.fiveis.andcrowd.service.crowd.CrowdService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -48,6 +50,20 @@ public class CrowdController {
         }
     }
 
+    @GetMapping(value = "/page")
+    public ResponseEntity<Page<CrowdDTO.FindById>> searchPageList(
+            @RequestParam(value = "crowdCategoryId", required = false) Integer crowdCategoryId,
+            @RequestParam(value = "crowdStatus", required = false) Integer crowdStatus,
+            @RequestParam(value = "sortField", defaultValue = "publishedAt",required = false) String sortField,
+            @RequestParam(value = "pageNumber", defaultValue = "0", required = false) Integer pageNumber,
+            @RequestParam(value = "searchKeyword", required = false) String searchKeyword,
+            Pageable pageable){
+
+        Page<CrowdDTO.FindById> crowdPage = crowdService.searchPageList(crowdStatus, sortField, pageNumber, crowdCategoryId, searchKeyword, pageable);
+
+        return ResponseEntity.ok(crowdPage);
+    }
+
     @PostMapping(value = "/create")
     public ResponseEntity<Integer> createCrowd(@RequestBody Crowd crowd) {
         crowdService.save(crowd);
@@ -66,8 +82,9 @@ public class CrowdController {
         }
     }
 
-    @RequestMapping(value = "/{crowdId}/update", method = {RequestMethod.PUT, RequestMethod.PATCH})
+    @RequestMapping(value = "/{crowdId}", method = {RequestMethod.PUT, RequestMethod.PATCH})
     public ResponseEntity<String> updateCrowd(@RequestBody Crowd crowd) {
+        System.out.println(crowd);
         crowdService.update(crowd);
         return ResponseEntity.ok("펀딩글이 수정되었습니다.");
     }
