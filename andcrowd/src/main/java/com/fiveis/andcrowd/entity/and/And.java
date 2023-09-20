@@ -8,6 +8,7 @@ import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Getter @Setter @ToString
@@ -43,7 +44,7 @@ public class And {
     private String andContent;
 
     @Column(nullable = true)
-    private LocalDateTime andEndDate;
+    private LocalDate andEndDate;
 
     @Column(nullable = true)
     private int needNumMem;

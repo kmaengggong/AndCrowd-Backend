@@ -3,6 +3,7 @@ package com.fiveis.andcrowd.dto.crowd;
 import com.fiveis.andcrowd.entity.crowd.Crowd;
 import lombok.*;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class CrowdDTO {
@@ -19,7 +20,7 @@ public class CrowdDTO {
         private int andId;
         private int crowdCategoryId;
         private String crowdContent;
-        private LocalDateTime crowdEndDate;
+        private LocalDate crowdEndDate;
         private int crowdGoal;
         private String crowdImg1;
         private String crowdImg2;
@@ -49,7 +50,7 @@ public class CrowdDTO {
         private int crowdId;
         private int crowdCategoryId;
         private String crowdContent;
-        private LocalDateTime crowdEndDate;
+        private LocalDate crowdEndDate;
         private String crowdImg1;
         private String crowdImg2;
         private String crowdImg3;
@@ -71,7 +72,7 @@ public class CrowdDTO {
         private int crowdId;
         private int crowdCategoryId;
         private String crowdContent;
-        private LocalDateTime crowdEndDate;
+        private LocalDate crowdEndDate;
         private int crowdGoal;
         private int crowdStatus; // 1:펀딩중, 2:반려, 3:종료, 0:심사중
         private String crowdTitle;
