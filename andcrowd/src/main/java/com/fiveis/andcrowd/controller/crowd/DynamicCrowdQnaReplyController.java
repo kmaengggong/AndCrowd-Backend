@@ -4,7 +4,6 @@ import com.fiveis.andcrowd.dto.crowd.DynamicCrowdQnaReplyDTO;
 
 import com.fiveis.andcrowd.service.crowd.CrowdService;
 import com.fiveis.andcrowd.service.crowd.DynamicCrowdQnaReplyService;
-import com.fiveis.andcrowd.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -18,13 +17,13 @@ import java.util.List;
 @RequestMapping("/crowd/{crowdId}/qna/{crowdQnaId}/qnareply")
 public class DynamicCrowdQnaReplyController {
 
-    private final UserService userService;
+    private final CrowdService crowdService;
     private final DynamicCrowdQnaReplyService dynamicCrowdQnaReplyService;
 
     @Autowired
-    public DynamicCrowdQnaReplyController(UserService userService,
+    public DynamicCrowdQnaReplyController(CrowdService crowdService,
                                           DynamicCrowdQnaReplyService dynamicCrowdQnaReplyService){
-        this.userService = userService;
+        this.crowdService = crowdService;
         this.dynamicCrowdQnaReplyService = dynamicCrowdQnaReplyService;
     }
 
