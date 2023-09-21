@@ -1,7 +1,8 @@
 package com.fiveis.andcrowd.controller.crowd;
 
 import com.fiveis.andcrowd.dto.crowd.DynamicCrowdQnaReplyDTO;
-import com.fiveis.andcrowd.entity.user.User;
+
+import com.fiveis.andcrowd.service.crowd.CrowdService;
 import com.fiveis.andcrowd.service.crowd.DynamicCrowdQnaReplyService;
 import com.fiveis.andcrowd.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,7 @@ import java.util.List;
 @CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/crowd/{crowdId}/qna/{crowdQnaId}/qnareply")
 public class DynamicCrowdQnaReplyController {
+
     private final UserService userService;
     private final DynamicCrowdQnaReplyService dynamicCrowdQnaReplyService;
 
@@ -56,5 +58,15 @@ public class DynamicCrowdQnaReplyController {
     public ResponseEntity<String> deleteQnaReply(@PathVariable int crowdId, @PathVariable int qnaReplyId){
         dynamicCrowdQnaReplyService.deleteByQnaReplyId(crowdId, qnaReplyId);
         return ResponseEntity.ok("댓글 삭제 완료");
+    }
+
+    @GetMapping(value = "/user-check/{userId}")
+    public boolean checkCrowdUser(@PathVariable("crowdId") int crowdId, @PathVariable("userId") int userId){
+        int crowdUserId = crowdService.findByCrowdId(crowdId).get().getUserId();
+        if(crowdUserId == userId){
+            return true;
+        }else {
+            return false;
+        }
     }
 }

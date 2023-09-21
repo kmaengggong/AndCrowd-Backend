@@ -126,7 +126,8 @@ public class CrowdServiceImpl implements CrowdService {
                     crowd.getCrowdCategoryId(),
                     crowd.getCrowdStatus(),
                     crowd.getCrowdGoal(),
-                    crowd.getCrowdEndDate()));
+                    crowd.getCrowdEndDate(),
+                    crowd.getUpdatedAt()));
         } else {
             // 해당 ID의 엔터티가 존재하지 않을 경우 예외 처리 또는 메시지 전달
             // 예: throw new EntityNotFoundException("Entity with ID " + crowd.getCrowdId() + " not found");
