@@ -14,8 +14,8 @@ import java.util.List;
 
 @Service
 public class DynamicUserAndServiceImpl implements DynamicUserAndService{
-    private static DynamicUserAndRepository dynamicUserAndRepository;
-    private static AndJPARepository andJPARepository;
+    private final DynamicUserAndRepository dynamicUserAndRepository;
+    private final AndJPARepository andJPARepository;
 
     @Autowired
     public DynamicUserAndServiceImpl(DynamicUserAndRepository dynamicUserAndRepository,

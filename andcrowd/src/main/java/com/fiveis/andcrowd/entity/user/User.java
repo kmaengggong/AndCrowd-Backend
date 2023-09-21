@@ -105,6 +105,9 @@ public class User implements UserDetails {
     public void setUserProfileImg(String userProfileImg){
         this.userProfileImg = userProfileImg;
     }
+    public void setSocialType(SocialType socialType){
+        this.socialType = socialType;
+    }
     public User update(String userEmail){
         this.userEmail = userEmail;
         return this;

@@ -30,4 +30,14 @@ public interface CrowdService {
 
     Page<CrowdDTO.FindById> searchPageList(Integer crowdStatus, String sortField, Integer pageNumber, Integer crowdCategoryId, String keyword, Pageable pageable);
 
+    int updateView(int crowdId);
+
+    void increaseLike(Integer crowdId);
+
+    void decreaseLike(Integer crowdId);
+
+    void updateLike(Integer crowdId, int userId);
+
+    boolean isLiked(int crowdId, int userId);
+
 }

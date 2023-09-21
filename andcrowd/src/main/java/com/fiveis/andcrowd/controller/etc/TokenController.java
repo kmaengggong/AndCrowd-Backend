@@ -40,26 +40,6 @@ public class TokenController {
     private final UserService userService;
     private final NaverService naverService;
 
-
-//    @RequestMapping(value="/getUserId", method=RequestMethod.POST)
-//    public ResponseEntity<?> getUserId(HttpServletRequest request){
-//        try{
-//            return ResponseEntity.ok(tokenProvider.getUserId(request.getHeader("Authorization")));
-//        } catch(Exception e){
-//            return ResponseEntity.badRequest().body("/getUserId: Invalid Access Token");
-//        }
-//    }
-
-//    @RequestMapping(value="/accessTokenValid", method=RequestMethod.POST)
-//    public ResponseEntity<?> isAccessTokenValid(@RequestBody AccessTokenResponseDTO accessToken){
-//        if(tokenProvider.validToken(accessToken.getAccessToken())){
-//            return ResponseEntity.ok("Valid AccessToken");
-//        }
-//        else {
-//            return ResponseEntity.badRequest().body("Invalid AccessToken");
-//        }
-//    }
-
     @RequestMapping(value="/accessTokenValid", method=RequestMethod.POST)
     public ResponseEntity<?> isAccessTokenValid(HttpServletRequest request,
                                                 HttpServletResponse response){
@@ -112,29 +92,6 @@ public class TokenController {
             return ResponseEntity.badRequest().body("/accessTokenValid: " + e);
         }
     }
-
-//    @RequestMapping(value="/getNewAccessToken", method=RequestMethod.POST)
-//    public ResponseEntity<?> createNewAccessToken(
-//            HttpServletRequest request,
-//            HttpServletResponse response,
-//            @CookieValue String refresh_token){
-//        if(tokenProvider.isRefreshTokenValid(refresh_token)){
-//            int userId = tokenProvider.getUserId(refresh_token);
-//            UserDTO.FindAsAdmin findAsAdmin = userService.findById(userId);
-//            User user = userService.getByCredentials(findAsAdmin.getUserEmail());
-//
-//            // 리프레쉬 토큰 생성
-//            String accessToken = tokenService.createAndSaveRTAndGetAT(request, response, user);
-//            AccessTokenResponseDTO accessTokenResponseDTO = new AccessTokenResponseDTO(accessToken);
-//
-//            // 엑세스 토큰은 로컬에 저장하기 때문에 반환
-//            return ResponseEntity.ok(accessTokenResponseDTO);
-//        }
-//        else{
-//            tokenService.deleteRefreshToken(request, response);
-//            return ResponseEntity.badRequest().body("/getNewAccessToken: Invalid RefreshToken");
-//        }
-//    }
 
     @RequestMapping(value="/oauth/naver", method=RequestMethod.POST)
     public ResponseEntity<?> naverLogin(HttpServletRequest request,
@@ -210,6 +167,9 @@ public class TokenController {
         if(getUser != null){
             if(getUser.getSocialId().equals(id)){
                 // 로그인
+                getUser.setSocialType(SocialType.NAVER);
+                userService.udpateForSocial(getUser);
+
                 // 리프레쉬 토큰 생성
                 String at = tokenService.createAndSaveRTAndGetAT(request, response, getUser);
                 AccessTokenResponseDTO accessTokenResponseDTO = new AccessTokenResponseDTO(at);

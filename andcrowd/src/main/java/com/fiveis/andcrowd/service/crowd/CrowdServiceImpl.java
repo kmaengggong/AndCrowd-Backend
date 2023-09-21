@@ -1,8 +1,10 @@
 package com.fiveis.andcrowd.service.crowd;
 
 import com.fiveis.andcrowd.dto.crowd.CrowdDTO;
+import com.fiveis.andcrowd.dto.user.DynamicUserLikeDTO;
 import com.fiveis.andcrowd.entity.crowd.Crowd;
 import com.fiveis.andcrowd.entity.user.DynamicUserMaker;
+import com.fiveis.andcrowd.entity.user.DynamicUserLike;
 import com.fiveis.andcrowd.repository.crowd.*;
 import com.fiveis.andcrowd.repository.user.DynamicUserMakerRepository;
 import com.fiveis.andcrowd.repository.user.UserJPARepository;
@@ -111,33 +113,6 @@ public class CrowdServiceImpl implements CrowdService {
         dynamicUserMakerRepository.save(userEmail, dynamicUserMaker);
     }
 
-//    @Override
-//    public CrowdDTO.FindById convertToAndFindByCrowdId(Crowd crowd) {
-//        return CrowdDTO.FindById.builder()
-//                .crowdId(crowd.getCrowdId())
-//                .adId(crowd.getAdId())
-//                .andId(crowd.getAndId())
-//                .crowdCategoryId(crowd.getCrowdCategoryId())
-//                .crowdContent(crowd.getCrowdContent())
-//                .crowdEndDate(crowd.getCrowdEndDate())
-//                .crowdGoal(crowd.getCrowdGoal())
-//                .crowdImg1(crowd.getCrowdImg1())
-//                .crowdImg2(crowd.getCrowdImg2())
-//                .crowdImg3(crowd.getCrowdImg3())
-//                .crowdImg4(crowd.getCrowdImg4())
-//                .crowdImg5(crowd.getCrowdImg5())
-//                .crowdStatus(crowd.getCrowdStatus())
-//                .crowdTitle(crowd.getCrowdTitle())
-//                .headerImg(crowd.getHeaderImg())
-//                .isDeleted(crowd.isDeleted())
-//                .likeSum(crowd.getLikeSum())
-//                .publishedAt(crowd.getPublishedAt())
-//                .updatedAt(crowd.getUpdatedAt())
-//                .userId(crowd.getUserId())
-//                .viewCount(crowd.getViewCount())
-//                .build();
-//    }
-
     @Override
     public void update(Crowd crowd) {
         Optional<Crowd> crowdOptional = crowdJPARepository.findById(crowd.getCrowdId());
@@ -175,12 +150,13 @@ public class CrowdServiceImpl implements CrowdService {
     }
 
     @Override
+    @Transactional
     public void updateStatus(int crowdId, int crowdStatus) {
         Optional<Crowd> optionalCrowd = crowdJPARepository.findById(crowdId);
         if (optionalCrowd.isPresent()) {
             Crowd updatedCrowd = optionalCrowd.get();
 
-            // 변경된 And 객체를 다시 저장
+            // 변경된 Crowd 객체를 다시 저장
             crowdJPARepository.save(updatedCrowd.updateCrowdStatus(crowdStatus));
         }
     }
@@ -202,4 +178,55 @@ public class CrowdServiceImpl implements CrowdService {
         return pageList;
     }
 
+
+    @Override
+    @Transactional
+    public int updateView(int crowdId) {
+        return crowdJPARepository.updateView(crowdId);
+    }
+
+    @Override
+    @Transactional
+    public void increaseLike(Integer crowdId) {
+        crowdJPARepository.increaseLike(crowdId);
+    }
+
+    @Override
+    @Transactional
+    public void decreaseLike(Integer crowdId) {
+        crowdJPARepository.decreaseLike(crowdId);
+    }
+
+    @Override
+    @Transactional
+    public void updateLike(Integer crowdId, int userId) {
+        String userEmail = userJPARepository.findByUserId(userId).get().getUserEmail();
+        String convertedUserEmail = toTableName(userEmail);
+        DynamicUserLikeDTO.Find like = dynamicUserLikeService.findByProject(convertedUserEmail, crowdId, 1);
+
+        if(like == null) {
+            increaseLike(crowdId);
+            DynamicUserLike dynamicUserLike = DynamicUserLike.builder()
+                    .projectId(crowdId)
+                    .projectType(1)
+                    .build();
+            dynamicUserLikeService.save(convertedUserEmail, dynamicUserLike);
+        } else {
+            decreaseLike(crowdId);
+            dynamicUserLikeService.deleteByProjectId(convertedUserEmail, crowdId, 1);
+        }
+    }
+
+    @Override
+    @Transactional
+    public boolean isLiked(int crowdId, int userId) {
+        String userEmail = userJPARepository.findByUserId(userId).get().getUserEmail();
+        DynamicUserLikeDTO.Find like = dynamicUserLikeService.findByProject(userEmail, crowdId, 1);
+
+        if (like == null) {
+            return false;
+        } else {
+            return true;
+        }
+    }
 }
