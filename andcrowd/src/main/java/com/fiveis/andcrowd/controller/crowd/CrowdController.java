@@ -104,4 +104,10 @@ public class CrowdController {
         crowdService.updateStatus(crowdId, status.get("status"));
     }
 
+    @GetMapping(value = "/popular/top5")
+    public ResponseEntity<List<CrowdDTO.FindById>> findByViewCountAndLikeSum() {
+        List<CrowdDTO.FindById> popularList = crowdService.findByViewCountAndLikeSum();
+        return ResponseEntity.ok(popularList);
+    }
+
 }

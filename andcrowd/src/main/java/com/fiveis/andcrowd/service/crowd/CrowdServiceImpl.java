@@ -201,4 +201,20 @@ public class CrowdServiceImpl implements CrowdService {
         return pageList;
     }
 
+    @Override
+    public List<CrowdDTO.FindById> findByViewCountAndLikeSum() {
+        List<Crowd> crowdList = crowdJPARepository.findByViewCountAndLikeSum();
+        List<CrowdDTO.FindById> dtoList = new ArrayList<>();
+
+        int limit = Math.min(crowdList.size(), 5); // 결과 리스트 크기와 5 중 작은 값을 선택
+
+        for (int i = 0; i < limit; i++) {
+            Crowd crowd = crowdList.get(i);
+            CrowdDTO.FindById result = convertToCrowdFindDTO(crowd);
+            dtoList.add(result);
+        }
+
+        return dtoList;
+    }
+
 }

@@ -35,4 +35,7 @@ public interface CrowdJPARepository extends JpaRepository<Crowd, Integer>, JpaSp
     @Query("UPDATE Crowd c SET c.likeSum = c.likeSum - 1 WHERE c.crowdId = :crowdId")
     void decreaseLike(@Param("crowdId") Integer crowdId);
 
+    @Query("SELECT c FROM Crowd c WHERE c.crowdStatus = 1 ORDER BY (c.viewCount + c.likeSum) DESC")
+    List<Crowd> findByViewCountAndLikeSum();
+
 }
