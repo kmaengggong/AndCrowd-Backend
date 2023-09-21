@@ -131,7 +131,6 @@ public class AndServiceImpl implements AndService{
         dynamicAndQnaReplyRepository.deleteAll(andId);
         dynamicAndQnaRepository.deleteAll(andId);
         andJPARepository.deleteById(andId);
-
     }
 
     @Override
@@ -143,7 +142,6 @@ public class AndServiceImpl implements AndService{
         andDynamicRepository.createDynamicAndRoleTable(savedAnd.getAndId());
         andDynamicRepository.createDynamicAndApplicantTable(savedAnd.getAndId());
         andDynamicRepository.createDynamicAndQnaReplyTable(savedAnd.getAndId());
-        chatRoomService.createAndChatroom(savedAnd.getAndId());
 
         String userEmail = toTableName(userJPARepository.findByUserId(savedAnd.getUserId()).get().getUserEmail());
         DynamicUserAnd dynamicUserAnd = DynamicUserAnd.builder()
@@ -181,6 +179,9 @@ public class AndServiceImpl implements AndService{
     @Override
     @Transactional
     public void updateStatus(int andId, int andStatus) {
+        if(andStatus == 1){
+            chatRoomService.createAndChatroom(andId);
+        }
         Optional<And> optionalAnd = andJPARepository.findById(andId);
         if (optionalAnd.isPresent()) {
             And updatedAnd = optionalAnd.get();

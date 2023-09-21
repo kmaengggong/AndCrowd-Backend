@@ -71,13 +71,31 @@ public class ChatRoomService {
     }
 
 
+//    public void createAndChatroom(int andId) {
+//        Optional<And> and = andRepository.findById(andId);
+//        ChatRoom andChatRoom = new ChatRoom();
+//        andChatRoom.setName("Chat Room for " + and.get().getAndTitle());
+//        andChatRoom.setAndId(andId);
+//        chatRoomRepository.save(andChatRoom);
+//    }
     public void createAndChatroom(int andId) {
-        Optional<And> and = andRepository.findById(andId);
-        ChatRoom andChatRoom = new ChatRoom();
-        andChatRoom.setName("Chat Room for " + and.get().getAndTitle());
-        andChatRoom.setAndId(andId);
-        chatRoomRepository.save(andChatRoom);
+        // 이미 채팅 룸이 생성되었는지 확인
+        ChatRoom existingChatRoom = chatRoomRepository.findByAndId(andId);
+        if (existingChatRoom == null) {
+            Optional<And> and = andRepository.findById(andId);
+            if (and.isPresent()) {
+                ChatRoom andChatRoom = new ChatRoom();
+                andChatRoom.setName("Chat Room for " + and.get().getAndTitle());
+                andChatRoom.setAndId(andId);
+                chatRoomRepository.save(andChatRoom);
+            } else {
+                // 해당 andId에 대한 And 객체를 찾을 수 없는 경우 예외 처리
+                throw new IllegalArgumentException("Invalid andId");
+            }
+        }
     }
+
+
 
     public void updateChatRoomName(Long roomId, String newName) {
         ChatRoom chatRoom = chatRoomRepository.findByRoomId(roomId)
