@@ -1,6 +1,7 @@
 package com.fiveis.andcrowd.controller.crowd;
 
 import com.fiveis.andcrowd.dto.crowd.DynamicCrowdBoardDTO;
+import com.fiveis.andcrowd.service.crowd.CrowdService;
 import com.fiveis.andcrowd.service.crowd.DynamicCrowdBoardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -13,10 +14,13 @@ import java.util.List;
 @RequestMapping("/crowd/{crowdId}/board")
 public class DynamicCrowdBoardController {
 
+    private final CrowdService crowdService;
     private final DynamicCrowdBoardService dynamicCrowdBoardService;
 
     @Autowired
-    public DynamicCrowdBoardController(DynamicCrowdBoardService dynamicCrowdBoardService){
+    public DynamicCrowdBoardController(CrowdService crowdService,
+                                       DynamicCrowdBoardService dynamicCrowdBoardService){
+        this.crowdService = crowdService;
         this.dynamicCrowdBoardService = dynamicCrowdBoardService;
     }
 
@@ -58,5 +62,15 @@ public class DynamicCrowdBoardController {
     public ResponseEntity<String> deleteCrowdBoard(@PathVariable int crowdId, @PathVariable int crowdBoardId){
         dynamicCrowdBoardService.deleteByCrowdBoardId(crowdId, crowdBoardId);
         return ResponseEntity.ok("공지사항 삭제 완료");
+    }
+
+    @GetMapping(value = "/user-check/{userId}")
+    public boolean checkCrowdUser(@PathVariable("crowdId") int crowdId, @PathVariable("userId") int userId){
+        int crowdUserId = crowdService.findByCrowdId(crowdId).get().getUserId();
+        if(crowdUserId == userId){
+            return true;
+        }else {
+            return false;
+        }
     }
 }
