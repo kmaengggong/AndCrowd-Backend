@@ -130,4 +130,8 @@
         WHERE
             crowd_id = #{crowdId}
     </delete>
+
+    <select id="countNotDeleted" resultType="int">
+        SELECT COUNT(*) FROM crowd_board_#{crowdId} WHERE is_deleted = false
+    </select>
 </mapper>
