@@ -28,6 +28,7 @@ public class CrowdOrderDetails { // 크라우드 펀딩 후원결제
 
     //@Column(nullable = false)
     private int rewardId; // 리워드 ID
+    private String rewardName;  // 리워드 이름
 
     @Column(nullable = false)
     private String merchantUid;  // 실제 결제 ID

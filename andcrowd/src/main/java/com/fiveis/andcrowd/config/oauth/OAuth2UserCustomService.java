@@ -71,6 +71,9 @@ public class OAuth2UserCustomService extends DefaultOAuth2UserService {
             return user;
         }
         else{
+            User user = userJPARepository.findByUserEmail(email).get();
+            user.setSocialType(SocialType.GOOGLE);
+            userJPARepository.save(user);
             return userJPARepository.findByUserEmail(email).get();
         }
     }

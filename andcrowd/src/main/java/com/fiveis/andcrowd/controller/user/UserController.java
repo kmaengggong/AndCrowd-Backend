@@ -160,7 +160,7 @@ public class UserController {
             @RequestParam(value="fileType") String fileType,
             @RequestParam(value="file")MultipartFile multipartFile){
         UserS3DTO profileImg = userS3Service.uploadFile(userId, fileType, multipartFile);
-        return ResponseEntity.ok().body(profileImg);
+        return ResponseEntity.ok(profileImg);
     }
 
     @RequestMapping(value="{userId}/isNotAdmin", method=RequestMethod.GET)

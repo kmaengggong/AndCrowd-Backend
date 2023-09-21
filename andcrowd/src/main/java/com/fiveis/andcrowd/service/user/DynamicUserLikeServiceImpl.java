@@ -18,9 +18,9 @@ import static com.fiveis.andcrowd.entity.user.User.toTableName;
 
 @Service
 public class DynamicUserLikeServiceImpl implements DynamicUserLikeService{
-    private static DynamicUserLikeRepository dynamicUserLikeRepository;
-    private static AndJPARepository andJPARepository;
-    private static CrowdJPARepository crowdJPARepository;
+    private final DynamicUserLikeRepository dynamicUserLikeRepository;
+    private final AndJPARepository andJPARepository;
+    private final CrowdJPARepository crowdJPARepository;
 
     @Autowired
     public DynamicUserLikeServiceImpl(DynamicUserLikeRepository dynamicUserLikeRepository,
