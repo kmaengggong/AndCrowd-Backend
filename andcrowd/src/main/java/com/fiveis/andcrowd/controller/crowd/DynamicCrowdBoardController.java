@@ -36,27 +36,31 @@ public class DynamicCrowdBoardController {
     }
 
     @RequestMapping(value = "/{crowdBoardId}", method = RequestMethod.GET)
-    public ResponseEntity<DynamicCrowdBoardDTO.Find> findById(@PathVariable int crowdId, @PathVariable int crowdBoardId){
-        DynamicCrowdBoardDTO.Find board = dynamicCrowdBoardService.findById(crowdId, crowdBoardId);
-
-        return ResponseEntity.ok().body(board);
+    public DynamicCrowdBoardDTO.Find findById(@PathVariable("crowdId") int crowdId,
+                                                              @PathVariable("crowdBoardId") int crowdBoardId){
+        return dynamicCrowdBoardService.findById(crowdId, crowdBoardId);
     }
 
     @RequestMapping(value = "", method = RequestMethod.POST)
-    public ResponseEntity<String> insertCrowdBoard(@RequestBody DynamicCrowdBoardDTO.Update dynamicCrowdBoardDTO){
+    public void insertCrowdBoard(@RequestBody DynamicCrowdBoardDTO.Update dynamicCrowdBoardDTO){
         dynamicCrowdBoardService.save(dynamicCrowdBoardDTO);
-        return  ResponseEntity.ok("공지사항 등록 완료");
     }
 
     @RequestMapping(value = "/{crowdBoardId}/update", method = RequestMethod.PATCH)
-    public ResponseEntity<String> updateCrowdBoard(@RequestBody DynamicCrowdBoardDTO.Update dynamicCrowdBoardDTOupdate){
+    public void updateCrowdBoard(@PathVariable("crowdId")int crowdId,
+                                   @PathVariable("crowdBoardId") int crowdBoardId,
+                                   @RequestBody DynamicCrowdBoardDTO.Update dynamicCrowdBoardDTOupdate){
         dynamicCrowdBoardService.update(dynamicCrowdBoardDTOupdate);
-        return ResponseEntity.ok("공지사항 수정 완료");
+    }
+
+    @RequestMapping(value = "/delete", method = RequestMethod.DELETE)
+    public void deleteByCrowdId(@PathVariable("crowdId")int crowdId) {
+        dynamicCrowdBoardService.deleteByCrowdId(crowdId);
     }
 
     @RequestMapping(value = "/{crowdBoardId}/delete", method = RequestMethod.DELETE)
-    public ResponseEntity<String> deleteCrowdBoard(@PathVariable int crowdId, @PathVariable int crowdBoardId){
+    public void deleteCrowdBoard(@PathVariable("crowdId") int crowdId,
+                                 @PathVariable("crowdBoardId") int crowdBoardId){
         dynamicCrowdBoardService.deleteByCrowdBoardId(crowdId, crowdBoardId);
-        return ResponseEntity.ok("공지사항 삭제 완료");
     }
 }

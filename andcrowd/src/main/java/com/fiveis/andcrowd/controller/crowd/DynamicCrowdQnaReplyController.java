@@ -1,9 +1,13 @@
 package com.fiveis.andcrowd.controller.crowd;
 
 import com.fiveis.andcrowd.dto.crowd.DynamicCrowdQnaReplyDTO;
+import com.fiveis.andcrowd.entity.user.User;
 import com.fiveis.andcrowd.service.crowd.DynamicCrowdQnaReplyService;
+import com.fiveis.andcrowd.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -12,10 +16,13 @@ import java.util.List;
 @CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/crowd/{crowdId}/qna/{crowdQnaId}/qnareply")
 public class DynamicCrowdQnaReplyController {
+    private final UserService userService;
     private final DynamicCrowdQnaReplyService dynamicCrowdQnaReplyService;
 
     @Autowired
-    public DynamicCrowdQnaReplyController(DynamicCrowdQnaReplyService dynamicCrowdQnaReplyService){
+    public DynamicCrowdQnaReplyController(UserService userService,
+                                          DynamicCrowdQnaReplyService dynamicCrowdQnaReplyService){
+        this.userService = userService;
         this.dynamicCrowdQnaReplyService = dynamicCrowdQnaReplyService;
     }
 
@@ -34,8 +41,8 @@ public class DynamicCrowdQnaReplyController {
     }
 
     @RequestMapping(value = "", method = RequestMethod.POST)
-    public ResponseEntity<String> insertQnaReply(@RequestBody DynamicCrowdQnaReplyDTO.Update dynamicCrwodQnaReplyDTO){
-        dynamicCrowdQnaReplyService.save(dynamicCrwodQnaReplyDTO);
+    public ResponseEntity<String> insertQnaReply(@RequestBody DynamicCrowdQnaReplyDTO.Update dynamicCrowdQnaReplyDTO){
+        dynamicCrowdQnaReplyService.save(dynamicCrowdQnaReplyDTO);
         return ResponseEntity.ok("댓글 등록 완료");
     }
 
