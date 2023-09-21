@@ -9,14 +9,13 @@ import com.fiveis.andcrowd.entity.user.DynamicUserAnd;
 import com.fiveis.andcrowd.entity.user.DynamicUserFollow;
 import com.fiveis.andcrowd.entity.user.DynamicUserLike;
 import com.fiveis.andcrowd.entity.user.DynamicUserMaker;
-import com.fiveis.andcrowd.entity.user.User;
 import com.fiveis.andcrowd.repository.and.*;
+import com.fiveis.andcrowd.repository.crowd.CrowdJPARepository;
 import com.fiveis.andcrowd.repository.user.DynamicUserAndRepository;
 import com.fiveis.andcrowd.repository.user.DynamicUserMakerRepository;
 import com.fiveis.andcrowd.repository.user.UserJPARepository;
 import com.fiveis.andcrowd.service.user.DynamicUserFollowService;
 import com.fiveis.andcrowd.service.user.DynamicUserLikeService;
-import com.fiveis.andcrowd.service.user.DynamicUserLikeServiceImpl;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
@@ -48,6 +47,7 @@ public class AndServiceImpl implements AndService{
     private final DynamicUserFollowService dynamicUserFollowService;
     private final DynamicUserMakerRepository dynamicUserMakerRepository;
     private final JPAQueryFactory query;
+    private final CrowdJPARepository crowdJPARepository;
 
 
     @Autowired
@@ -63,8 +63,8 @@ public class AndServiceImpl implements AndService{
                           DynamicUserLikeService dynamicUserLikeService,
                           DynamicUserFollowService dynamicUserFollowService,
                           DynamicUserMakerRepository dynamicUserMakerRepository,
-                          EntityManager em
-                          ){
+                          EntityManager em,
+                          CrowdJPARepository crowdJPARepository){
         this.andJPARepository = andJPARepository;
         this.andDynamicRepository = andDynamicRepository;
         this.dynamicAndQnaRepository = dynamicAndQnaRepository;
@@ -78,6 +78,7 @@ public class AndServiceImpl implements AndService{
         this.dynamicUserFollowService = dynamicUserFollowService;
         this.dynamicUserMakerRepository = dynamicUserMakerRepository;
         this.query = new JPAQueryFactory(em);
+        this.crowdJPARepository = crowdJPARepository;
     }
 
 
@@ -186,9 +187,14 @@ public class AndServiceImpl implements AndService{
         if (optionalAnd.isPresent()) {
             And updatedAnd = optionalAnd.get();
             updatedAnd.setAndStatus(andStatus);
-
             // 변경된 And 객체를 다시 저장
             andJPARepository.save(updatedAnd);
+
+            // 크라우드에도 연계된 andId 저장
+            int crowdId = updatedAnd.getCrowdId();
+            if(crowdId != 0){
+                crowdJPARepository.updateAndId(crowdId, andId);
+            }
         }
     }
 
