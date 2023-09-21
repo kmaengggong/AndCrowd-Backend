@@ -41,6 +41,7 @@ public class UserDTO {
     @AllArgsConstructor
     @NoArgsConstructor
     public static class FindAsPublic{
+        private int userId;
         private String userNickname;
         private String userProfileImg;
         private LocalDateTime userRegister;
@@ -116,6 +117,7 @@ public class UserDTO {
     // Entity -> DTO Converter
     public static UserDTO.FindAsPublic convertToFindAsPublicDTO(User user){
         return UserDTO.FindAsPublic.builder()
+                .userId(user.getUserId())
                 .userNickname(user.getUserNickname())
                 .userProfileImg(user.getUserProfileImg())
                 .build();

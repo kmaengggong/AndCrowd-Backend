@@ -15,6 +15,8 @@ public class DynamicCrowdBoardDTO {
 
         private int crowdBoardId;
 
+        private int userId;
+
         private int crowdBoardTag;
 
         private String crowdBoardTitle;
@@ -56,6 +58,8 @@ public class DynamicCrowdBoardDTO {
         private int crowdId;
 
         private int crowdBoardId;
+
+        private int userId;
 
         private int crowdBoardTag;
 

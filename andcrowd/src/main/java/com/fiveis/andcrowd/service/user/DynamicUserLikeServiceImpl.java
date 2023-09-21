@@ -11,6 +11,8 @@ import com.fiveis.andcrowd.repository.user.DynamicUserLikeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,9 +20,9 @@ import static com.fiveis.andcrowd.entity.user.User.toTableName;
 
 @Service
 public class DynamicUserLikeServiceImpl implements DynamicUserLikeService{
-    private static DynamicUserLikeRepository dynamicUserLikeRepository;
-    private static AndJPARepository andJPARepository;
-    private static CrowdJPARepository crowdJPARepository;
+    private final DynamicUserLikeRepository dynamicUserLikeRepository;
+    private final AndJPARepository andJPARepository;
+    private final CrowdJPARepository crowdJPARepository;
 
     @Autowired
     public DynamicUserLikeServiceImpl(DynamicUserLikeRepository dynamicUserLikeRepository,

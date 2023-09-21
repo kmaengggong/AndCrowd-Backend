@@ -6,9 +6,10 @@
 <mapper namespace="com.fiveis.andcrowd.repository.crowd.DynamicCrowdBoardRepository">
 
     <insert id="createDynamicCrowdBoardTable">
-        CREATE TABLE IF NOT EXISTS crowd_board_#{crowdId} (
+        CREATE TABLE IF NOT EXISTS crowd_board_#{crowd_id} (
             crowd_board_id INT AUTO_INCREMENT PRIMARY KEY ,
             crowd_id INT default #{crowd_id} ,
+            user_id INT NOT NULL,
             crowd_board_tag INT,
             crowd_board_title VARCHAR(200) NOT NULL ,
             crowd_board_content VARCHAR(2000) NOT NULL ,
@@ -24,6 +25,7 @@
         SELECT
             crowd_board_id AS crowdBoardId ,
             crowd_id AS crowdId ,
+            user_id AS userId,
             crowd_board_tag AS crowdBoardTag ,
             crowd_board_title AS crowdBoardTitle ,
             crowd_board_content AS crowdBoardContent ,
@@ -34,14 +36,13 @@
             is_deleted AS isDeleted
         FROM
             crowd_board_#{crowdId}
-        ORDER BY
-            crowdBoardId DESC
     </select>
 
     <select id="findAllByIsDeletedFalse" resultType="com.fiveis.andcrowd.dto.crowd.DynamicCrowdBoardDTO$Find">
         SELECT
             crowd_board_id AS crowdBoardId ,
             crowd_id AS crowdId ,
+            user_id AS userId,
             crowd_board_tag AS crowdBoardTag ,
             crowd_board_title AS crowdBoardTitle ,
             crowd_board_content AS crowdBoardContent ,
@@ -66,6 +67,7 @@
         SELECT
             crowd_board_id AS crowdBoardId ,
             crowd_id AS crowdId ,
+            user_id AS userId,
             crowd_board_tag AS crowdBoardTag ,
             crowd_board_title AS crowdBoardTitle ,
             crowd_board_content AS crowdBoardContent ,
@@ -80,12 +82,16 @@
             crowd_board_id = #{crowdBoardId}
     </select>
 
+    <select id="countNotDeleted" resultType="int">
+        SELECT COUNT(*) FROM crowd_board_#{crowdId} WHERE is_deleted = false
+    </select>
+
     <insert id="save" parameterType="com.fiveis.andcrowd.dto.crowd.DynamicCrowdBoardDTO$Update">
         INSERT INTO crowd_board_#{crowdId} (
-            crowd_id, crowd_board_tag, crowd_board_title, crowd_board_content, crowd_img,
+            crowd_id, user_id, crowd_board_tag, crowd_board_title, crowd_board_content, crowd_img,
             published_at, updated_at, view_count, is_deleted)
         VALUES
-            (#{crowdId}, #{crowdBoardTag}, #{crowdBoardTitle}, #{crowdBoardContent}, #{crowdImg},
+            (#{crowdId}, #{userId}, #{crowdBoardTag}, #{crowdBoardTitle}, #{crowdBoardContent}, #{crowdImg},
             #{publishedAt}, #{updatedAt}, #{viewCount}, #{isDeleted})
     </insert>
 
@@ -93,6 +99,7 @@
         UPDATE
             crowd_board_#{crowdId}
         SET
+            user_id = #{userId},
             crowd_board_tag = #{crowdBoardTag},
             crowd_board_title = #{crowdBoardTitle},
             crowd_board_content = #{crowdBoardContent},
@@ -130,4 +137,5 @@
         WHERE
             crowd_id = #{crowdId}
     </delete>
+
 </mapper>

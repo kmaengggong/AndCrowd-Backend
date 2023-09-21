@@ -50,7 +50,6 @@ public class CrowdController {
         }
     }
 
-
     @GetMapping(value = "/page")
     public ResponseEntity<Page<CrowdDTO.FindById>> searchPageList(
             @RequestParam(value = "crowdCategoryId", required = false) Integer crowdCategoryId,
@@ -64,8 +63,6 @@ public class CrowdController {
 
         return ResponseEntity.ok(crowdPage);
     }
-
-
 
     @PostMapping(value = "/create")
     public ResponseEntity<Integer> createCrowd(@RequestBody Crowd crowd) {
@@ -108,6 +105,23 @@ public class CrowdController {
     public ResponseEntity<List<CrowdDTO.FindById>> findByViewCountAndLikeSum() {
         List<CrowdDTO.FindById> popularList = crowdService.findByViewCountAndLikeSum();
         return ResponseEntity.ok(popularList);
+    }
+
+    @PutMapping("/{crowdId}/updateView")
+    public ResponseEntity<String> updateView(@PathVariable("crowdId")int crowdId) {
+        crowdService.updateView(crowdId);
+        return ResponseEntity.ok("조회수 업데이트 완료");
+    }
+
+    @PostMapping("/{crowdId}/like/{userId}")
+    public ResponseEntity<String> updateLike(@PathVariable("crowdId") int crowdId, @PathVariable("userId")int userId) {
+        crowdService.updateLike(crowdId, userId);
+        return ResponseEntity.ok("좋아요 버튼 업데이트");
+    }
+
+    @GetMapping("/{crowdId}/like/{userId}")
+    public boolean isLike(@PathVariable("crowdId")int crowdId, @PathVariable("userId")int userId) {
+        return crowdService.isLiked(crowdId, userId);
     }
 
 }

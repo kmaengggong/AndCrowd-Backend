@@ -32,4 +32,14 @@ public interface CrowdService {
 
     List<CrowdDTO.FindById> findByViewCountAndLikeSum();
 
+    int updateView(int crowdId);
+
+    void increaseLike(Integer crowdId);
+
+    void decreaseLike(Integer crowdId);
+
+    void updateLike(Integer crowdId, int userId);
+
+    boolean isLiked(int crowdId, int userId);
+
 }

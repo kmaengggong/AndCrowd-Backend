@@ -80,6 +80,15 @@
         WHERE reward_id = #{rewardId}
     </delete>
 
+    <delete id="deleteAll" parameterType="int">
+        UPDATE
+            crowd_reward_#{crowdId}
+        SET
+            is_deleted = true
+        WHERE
+            crowd_id = #{crowdId}
+    </delete>
+
     <!--  테스트용 쿼리문  -->
     <update id="testCreateDynamicCrowdRewardTable">
         CREATE TABLE crowd_reward_123(

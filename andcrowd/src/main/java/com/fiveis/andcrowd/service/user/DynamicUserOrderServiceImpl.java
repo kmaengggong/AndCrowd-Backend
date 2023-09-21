@@ -1,28 +1,26 @@
 package com.fiveis.andcrowd.service.user;
 
+import com.fiveis.andcrowd.dto.crowd.CrowdDTO;
 import com.fiveis.andcrowd.dto.crowd.CrowdOrderDetailsDTO;
 import com.fiveis.andcrowd.dto.user.DynamicUserOrderDTO;
+import com.fiveis.andcrowd.entity.crowd.Crowd;
 import com.fiveis.andcrowd.entity.crowd.CrowdOrderDetails;
 import com.fiveis.andcrowd.entity.user.DynamicUserOrder;
+import com.fiveis.andcrowd.repository.crowd.CrowdJPARepository;
 import com.fiveis.andcrowd.repository.crowd.CrowdOrderDetailsJPARepository;
 import com.fiveis.andcrowd.repository.user.DynamicUserOrderRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class DynamicUserOrderServiceImpl implements DynamicUserOrderService{
-    private static DynamicUserOrderRepository dynamicUserOrderRepository;
-    private static CrowdOrderDetailsJPARepository crowdOrderDetailsJPARepository;
-
-    @Autowired
-    public DynamicUserOrderServiceImpl(DynamicUserOrderRepository dynamicUserOrderRepository,
-                                       CrowdOrderDetailsJPARepository crowdOrderDetailsJPARepository){
-        this.dynamicUserOrderRepository = dynamicUserOrderRepository;
-        this.crowdOrderDetailsJPARepository = crowdOrderDetailsJPARepository;
-    }
+    private final DynamicUserOrderRepository dynamicUserOrderRepository;
+    private final CrowdOrderDetailsJPARepository crowdOrderDetailsJPARepository;
+    private final CrowdJPARepository crowdJPARepository;
 
     public List<CrowdOrderDetailsDTO.FindById> findAll(String userEmail){
         List<DynamicUserOrderDTO.Find> findList = dynamicUserOrderRepository.findAll(userEmail);
@@ -58,5 +56,33 @@ public class DynamicUserOrderServiceImpl implements DynamicUserOrderService{
 
     public void deleteTableByUserEmail(String userEmail){
         dynamicUserOrderRepository.deleteTableByUserEmail(userEmail);
+    }
+
+    public List<CrowdDTO.FindById> findAllCrowd(String userEmail){
+        // 유저 테이블의 결제 정보를 가져옴(orderId)
+        List<DynamicUserOrderDTO.Find> findList = dynamicUserOrderRepository.findAll(userEmail);
+
+        // orderId를 기준으로 결제 상세 정보를 가져옴(crowdId)
+        List<CrowdOrderDetailsDTO.FindById> orderList = findAll(userEmail);
+
+        // crowdId 중복 제거
+        List<Integer> crowdIdList = new ArrayList<>();
+        for(CrowdOrderDetailsDTO.FindById order : orderList){
+            if(!crowdIdList.contains(order.getCrowdId())){
+                crowdIdList.add(order.getCrowdId());
+            }
+        }
+
+        List<CrowdDTO.FindById> crowdList = new ArrayList<>();
+
+        // crowdId를 기준으로 후원한 펀딩 내용을 가져옴
+        for(Integer crowdId : crowdIdList){
+            if(crowdJPARepository.findById(crowdId).isEmpty()) continue;
+            CrowdDTO.FindById crowd = CrowdDTO.convertToCrowdFindDTO(crowdJPARepository.findById(crowdId).get());
+            if(crowdList.contains(crowd)) continue;
+            crowdList.add(crowd);
+        }
+
+        return crowdList;
     }
 }
