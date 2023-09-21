@@ -201,18 +201,18 @@ public class CrowdServiceImpl implements CrowdService {
     public void updateLike(Integer crowdId, int userId) {
         String userEmail = userJPARepository.findByUserId(userId).get().getUserEmail();
         String convertedUserEmail = toTableName(userEmail);
-        DynamicUserLikeDTO.Find like = dynamicUserLikeService.findByProject(convertedUserEmail, crowdId, 0);
+        DynamicUserLikeDTO.Find like = dynamicUserLikeService.findByProject(convertedUserEmail, crowdId, 1);
 
         if(like == null) {
             increaseLike(crowdId);
             DynamicUserLike dynamicUserLike = DynamicUserLike.builder()
                     .projectId(crowdId)
-                    .projectType(0)
+                    .projectType(1)
                     .build();
             dynamicUserLikeService.save(convertedUserEmail, dynamicUserLike);
         } else {
             decreaseLike(crowdId);
-            dynamicUserLikeService.deleteByProjectId(convertedUserEmail, crowdId, 0);
+            dynamicUserLikeService.deleteByProjectId(convertedUserEmail, crowdId, 1);
         }
     }
 
@@ -220,7 +220,7 @@ public class CrowdServiceImpl implements CrowdService {
     @Transactional
     public boolean isLiked(int crowdId, int userId) {
         String userEmail = userJPARepository.findByUserId(userId).get().getUserEmail();
-        DynamicUserLikeDTO.Find like = dynamicUserLikeService.findByProject(userEmail, crowdId, 0);
+        DynamicUserLikeDTO.Find like = dynamicUserLikeService.findByProject(userEmail, crowdId, 1);
 
         if (like == null) {
             return false;
