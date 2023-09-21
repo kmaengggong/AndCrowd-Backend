@@ -1,11 +1,13 @@
 package com.fiveis.andcrowd.service.crowd;
 
 import com.fiveis.andcrowd.dto.crowd.CrowdDTO;
+import com.fiveis.andcrowd.dto.crowd.DynamicCrowdMemberDTO;
 import com.fiveis.andcrowd.entity.crowd.Crowd;
 import com.fiveis.andcrowd.entity.user.DynamicUserMaker;
 import com.fiveis.andcrowd.repository.crowd.*;
 import com.fiveis.andcrowd.repository.user.DynamicUserMakerRepository;
 import com.fiveis.andcrowd.repository.user.UserJPARepository;
+import com.fiveis.andcrowd.service.user.DynamicUserLikeService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,7 +41,8 @@ public class CrowdServiceImpl implements CrowdService {
     private final DynamicCrowdRewardRepository dynamicCrowdRewardRepository;
     private final UserJPARepository userJPARepository;
     private final DynamicUserMakerRepository dynamicUserMakerRepository;
-
+    private final DynamicCrowdMemberRepository crowdMemberRepository;
+    private final DynamicUserLikeService dynamicUserLikeService;
 
     @Override
     public Optional<CrowdDTO.FindById> findByCrowdId(int crowdId) {
@@ -97,6 +100,7 @@ public class CrowdServiceImpl implements CrowdService {
     @Override
     public void save(Crowd crowd) {
         Crowd insertCrowd = crowdJPARepository.save(crowd);
+        crowdMemberRepository.createDynamicCrowdMemberTable(insertCrowd.getCrowdId());
         dynamicCrowdRewardRepository.createDynamicCrowdRewardTable(insertCrowd.getCrowdId());
         dynamicCrowdBoardRepository.createDynamicCrowdBoardTable(insertCrowd.getCrowdId());
         dynamicCrowdQnaRepository.createDynamicCrowdQnaTable(insertCrowd.getCrowdId());
@@ -109,6 +113,12 @@ public class CrowdServiceImpl implements CrowdService {
                 .projectType(1)
                 .build();
         dynamicUserMakerRepository.save(userEmail, dynamicUserMaker);
+
+        DynamicCrowdMemberDTO.Update userMember = DynamicCrowdMemberDTO.Update.builder()
+                .userId(insertCrowd.getUserId())
+                .crowdId(insertCrowd.getCrowdId())
+                .build();
+        crowdMemberRepository.save(userMember);
     }
 
 //    @Override
@@ -151,7 +161,8 @@ public class CrowdServiceImpl implements CrowdService {
                     crowd.getCrowdCategoryId(),
                     crowd.getCrowdStatus(),
                     crowd.getCrowdGoal(),
-                    crowd.getCrowdEndDate()));
+                    crowd.getCrowdEndDate(),
+                    crowd.getUpdatedAt()));
         } else {
             // 해당 ID의 엔터티가 존재하지 않을 경우 예외 처리 또는 메시지 전달
             // 예: throw new EntityNotFoundException("Entity with ID " + crowd.getCrowdId() + " not found");

@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fiveis.andcrowd.repository.crowd.DynamicCrowdMemberRepository">
+
+    <insert id="createDynamicCrowdMemberTable">
+        CREATE TABLE IF NOT EXISTS crowd_member_#{crowd_id} (
+            member_id INT AUTO_INCREMENT PRIMARY KEY ,
+            crowd_id INT DEFAULT #{crowd_id},
+            user_id INT NOT NULL,
+            is_deleted BOOL default false
+        );
+    </insert>
+
+    <insert id="save" parameterType="com.fiveis.andcrowd.dto.crowd.DynamicCrowdMemberDTO$Update">
+        INSERT INTO crowd_member_#{crowdId} (
+            crowd_id, user_id, is_deleted
+        )
+        VALUES (
+            #{crowdId}, #{userId}, #{isDeleted}
+        )
+    </insert>
+
+    <select id="findByCrowdMemberId" resultType="com.fiveis.andcrowd.dto.crowd.DynamicCrowdMemberDTO$FindByCrowdMemberId">
+        SELECT
+            member_id AS memberId,
+            crowd_id AS crowdId,
+            user_id AS userId,
+            is_deleted AS isDeleted
+        FROM crowd_member_#{crowdId}
+        WHERE member_id = #{memberId}
+    </select>
+
+    <update id="update" parameterType="com.fiveis.andcrowd.dto.crowd.DynamicCrowdMemberDTO$Update">
+        UPDATE crowd_member_#{crowdId}
+        SET user_id = #{userId}, is_deleted = #{isDeleted}
+        WHERE member_id = #{memberId}
+    </update>
+
+    <select id="findAll" resultType="com.fiveis.andcrowd.dto.crowd.DynamicCrowdMemberDTO$FindByCrowdMemberId">
+        SELECT member_id AS memberId,
+            crowd_id AS crowdId,
+            user_id AS userId,
+            is_deleted AS isDeleted
+        FROM crowd_member_#{crowdId}
+    </select>
+
+    <select id="findAllNotDeleted" resultType="com.fiveis.andcrowd.dto.crowd.DynamicCrowdMemberDTO$FindByCrowdMemberId">
+        SELECT member_id AS memberId,
+            crowd_id AS crowdId,
+            user_id AS userId,
+            is_deleted AS isDeleted
+        FROM crowd_member_#{crowdId}
+        WHERE is_deleted = false
+    </select>
+
+    <select id="findAllNotDeletedByUserId" resultType="com.fiveis.andcrowd.dto.crowd.DynamicCrowdMemberDTO$FindByCrowdMemberId">
+        SELECT member_id AS memberId,
+            crowd_id AS crowdId,
+            user_id AS userId,
+            is_deleted AS isDeleted
+        FROM crowd_member_#{crowdId}
+        WHERE is_deleted = false AND user_id = #{userId}
+    </select>
+
+    <delete id="deletedById" parameterType="int">
+        UPDATE
+            crowd_member_#{crowdId}
+        SET
+            is_deleted = true
+        WHERE
+            member_id = #{memberId}
+    </delete>
+
+    <delete id="deletedByUserId" parameterType="int">
+        UPDATE
+            crowd_member_#{crowdId}
+        SET
+            is_deleted = true
+        WHERE
+            user_id = #{userId}
+    </delete>
+
+    <insert id="createCrowdMemberTable">
+        CREATE TABLE crowd_member_1111 (
+            member_id INT AUTO_INCREMENT PRIMARY KEY,
+            crowd_id INT NOT NULL,
+            user_id INT NOT NULL,
+            is_deleted BOOL DEFAULT false
+            );
+    </insert>
+
+    <update id="dropCrowdMemberTable">
+        DROP TABLE crowd_member_1111;
+    </update>
+
+    <insert id="insertTestData">
+        INSERT IGNORE INTO crowd_member_1111 (crowd_id, user_id)
+        VALUES
+        (1111, 1),
+        (1111, 2),
+        (1111, 3);
+    </insert>
+</mapper>

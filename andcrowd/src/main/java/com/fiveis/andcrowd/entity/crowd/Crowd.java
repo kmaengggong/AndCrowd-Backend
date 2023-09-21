@@ -111,13 +111,15 @@ public class Crowd {
                              int crowdCategoryId,
                              int crowdStatus,
                              int crowdGoal,
-                             LocalDate crowdEndDate){
+                             LocalDate crowdEndDate,
+                             LocalDateTime updatedAt){
         this.crowdTitle = crowdTitle;
         this.crowdContent = crowdContent;
         this.crowdCategoryId = crowdCategoryId;
         this.crowdStatus = crowdStatus;
         this.crowdGoal = crowdGoal;
         this.crowdEndDate = crowdEndDate;
+        this.updatedAt = updatedAt;
         return this;
     }
 
@@ -130,9 +132,9 @@ public class Crowd {
         this.headerImg = headerImg;
     }
 
-    public void setUpdatedAt(LocalDateTime updatedAt) {
-        this.updatedAt = updatedAt;
-    }
+//    public void setUpdatedAt(LocalDateTime updatedAt) {
+//        this.updatedAt = updatedAt;
+//    } 코드 중복
 
     public void setCrowdEndDate(LocalDate crowdEndDate) {
         this.crowdEndDate = crowdEndDate;
