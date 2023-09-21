@@ -1,7 +1,6 @@
 package com.fiveis.andcrowd.service.crowd;
 
 import com.fiveis.andcrowd.dto.crowd.CrowdDTO;
-import com.fiveis.andcrowd.dto.crowd.DynamicCrowdMemberDTO;
 import com.fiveis.andcrowd.entity.crowd.Crowd;
 import com.fiveis.andcrowd.entity.user.DynamicUserMaker;
 import com.fiveis.andcrowd.repository.crowd.*;
@@ -10,7 +9,6 @@ import com.fiveis.andcrowd.repository.user.UserJPARepository;
 import com.fiveis.andcrowd.service.user.DynamicUserLikeService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -41,7 +39,6 @@ public class CrowdServiceImpl implements CrowdService {
     private final DynamicCrowdRewardRepository dynamicCrowdRewardRepository;
     private final UserJPARepository userJPARepository;
     private final DynamicUserMakerRepository dynamicUserMakerRepository;
-    private final DynamicCrowdMemberRepository crowdMemberRepository;
     private final DynamicUserLikeService dynamicUserLikeService;
 
     @Override
@@ -100,7 +97,6 @@ public class CrowdServiceImpl implements CrowdService {
     @Override
     public void save(Crowd crowd) {
         Crowd insertCrowd = crowdJPARepository.save(crowd);
-        crowdMemberRepository.createDynamicCrowdMemberTable(insertCrowd.getCrowdId());
         dynamicCrowdRewardRepository.createDynamicCrowdRewardTable(insertCrowd.getCrowdId());
         dynamicCrowdBoardRepository.createDynamicCrowdBoardTable(insertCrowd.getCrowdId());
         dynamicCrowdQnaRepository.createDynamicCrowdQnaTable(insertCrowd.getCrowdId());
@@ -113,12 +109,6 @@ public class CrowdServiceImpl implements CrowdService {
                 .projectType(1)
                 .build();
         dynamicUserMakerRepository.save(userEmail, dynamicUserMaker);
-
-        DynamicCrowdMemberDTO.Update userMember = DynamicCrowdMemberDTO.Update.builder()
-                .userId(insertCrowd.getUserId())
-                .crowdId(insertCrowd.getCrowdId())
-                .build();
-        crowdMemberRepository.save(userMember);
     }
 
 //    @Override
