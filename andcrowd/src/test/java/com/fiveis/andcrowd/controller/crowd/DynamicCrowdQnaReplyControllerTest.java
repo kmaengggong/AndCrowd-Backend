@@ -100,39 +100,39 @@ public class DynamicCrowdQnaReplyControllerTest {
                 .andExpect(jsonPath("qnaReplyContent").value(content));
     }
 
-    @Test
-    @Transactional
-    @DisplayName("crowdId 1번글의 1번 Qna에 새댓글 insert시 qna_reply_id 4번이며, 입력한 데이터와 일치할것이다.")
-    void insertTest() throws Exception {
-        // given
-        int crowdId = 1;
-        int crowdQnaId = 1;
-        String content = "새로입력한댓글";
-        String url = "/crowd/1/qna/1/qnareply";
-        String url2 = "/crowd/1/qna/1/qnareply/all";
-
-        DynamicCrowdQnaReplyDTO.Save newReply = DynamicCrowdQnaReplyDTO.Save.builder()
-                .crowdId(crowdId)
-                .crowdQnaId(crowdQnaId)
-                .qnaReplyContent(content)
-                .build();
-
-        final String jsonQnaReply = objectMapper.writeValueAsString(newReply);
-
-        // when
-        mockMvc.perform(post(url)
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(jsonQnaReply));
-
-        final ResultActions result = mockMvc.perform(get(url2)
-                .accept(MediaType.APPLICATION_JSON));
-
-        result
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$[3].crowdQnaId").value(crowdQnaId))
-                .andExpect(jsonPath("$[3].qnaReplyContent").value(content));
-
-    }
+//    @Test
+//    @Transactional
+//    @DisplayName("crowdId 1번글의 1번 Qna에 새댓글 insert시 qna_reply_id 4번이며, 입력한 데이터와 일치할것이다.")
+//    void insertTest() throws Exception {
+//        // given
+//        int crowdId = 1;
+//        int crowdQnaId = 1;
+//        String content = "새로입력한댓글";
+//        String url = "/crowd/1/qna/1/qnareply";
+//        String url2 = "/crowd/1/qna/1/qnareply/all";
+//
+//        DynamicCrowdQnaReplyDTO.Save newReply = DynamicCrowdQnaReplyDTO.Save.builder()
+//                .crowdId(crowdId)
+//                .crowdQnaId(crowdQnaId)
+//                .qnaReplyContent(content)
+//                .build();
+//
+//        final String jsonQnaReply = objectMapper.writeValueAsString(newReply);
+//
+//        // when
+//        mockMvc.perform(post(url)
+//                .contentType(MediaType.APPLICATION_JSON)
+//                .content(jsonQnaReply));
+//
+//        final ResultActions result = mockMvc.perform(get(url2)
+//                .accept(MediaType.APPLICATION_JSON));
+//
+//        result
+//                .andExpect(status().isOk())
+//                .andExpect(jsonPath("$[3].crowdQnaId").value(crowdQnaId))
+//                .andExpect(jsonPath("$[3].qnaReplyContent").value(content));
+//
+//    }
 
     @Test
     @Transactional

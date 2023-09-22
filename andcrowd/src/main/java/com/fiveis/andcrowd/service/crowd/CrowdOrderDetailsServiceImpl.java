@@ -152,4 +152,28 @@ public class CrowdOrderDetailsServiceImpl implements CrowdOrderDetailsService{
                 .isDeleted(crowdOrderDetails.isDeleted())
                 .build();
     }
+
+    @Override
+    public List<CrowdOrderDetailsDTO.rewardCounts> rewardSales(int crowdId) {
+        List<CrowdOrderDetailsDTO.rewardCounts> rewardCountsList = crowdOrderDetailsJPARepository.countRewardsByCrowdId(crowdId);
+
+        // rewardCountsList에 rewardAmount 추가
+        for (CrowdOrderDetailsDTO.rewardCounts dto : rewardCountsList) {
+            int rewardId = dto.getRewardId();
+            int rewardCount = dto.getRewardCounts();
+
+            // rewardId를 기반으로 rewardAmount 가져오기
+            int rewardAmount = dynamicCrowdRewardRepository.findByRewardId(crowdId,rewardId).getRewardAmount();
+
+            // rewardCountsList에 rewardAmount 추가
+            dto.setRewardAmount(rewardAmount);
+
+            // rewardCount와 rewardAmount를 곱한 값을 rewardSale로 추가
+            int rewardSale = rewardCount * rewardAmount;
+            dto.setRewardSale(rewardSale);
+        }
+
+
+        return rewardCountsList;
+    }
 }

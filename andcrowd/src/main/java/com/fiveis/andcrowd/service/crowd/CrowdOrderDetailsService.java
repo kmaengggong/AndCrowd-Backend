@@ -22,4 +22,5 @@ public interface CrowdOrderDetailsService {
    void update(CrowdOrderDetailsDTO.Update updateDTO);
    void deleteById(int purchaseId);
    public CrowdOrderDetailsDTO.FindById convertToFindByIdDTO(CrowdOrderDetails crowdOrderDetails);
+   List <CrowdOrderDetailsDTO.rewardCounts> rewardSales(int crowdId);
 }

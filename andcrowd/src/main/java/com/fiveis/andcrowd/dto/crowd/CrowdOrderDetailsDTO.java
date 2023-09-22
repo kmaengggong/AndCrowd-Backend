@@ -66,4 +66,17 @@ public class CrowdOrderDetailsDTO { // findAll, findById, update, save, delete
         private boolean isDeleted;
 
     }
+
+    @Getter
+    @Setter
+    @AllArgsConstructor
+    @NoArgsConstructor
+    @ToString
+    @Builder
+    public static class rewardCounts {
+        private int rewardId; // 리워드ID
+        private int rewardCounts; // 해당 리워드의 판매량
+        private int rewardAmount; // 리워드 가격
+        private int rewardSale; // 해당 리워드의 총 판매액
+    }
 }

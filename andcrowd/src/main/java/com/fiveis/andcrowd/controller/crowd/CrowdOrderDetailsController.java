@@ -68,4 +68,21 @@ public class CrowdOrderDetailsController {
         return "redirect:/crowd_order/list";
     }
 
+    @GetMapping(value = "/{crowdId}")
+    public ResponseEntity<List<CrowdOrderDetailsDTO.rewardCounts>> getRewardSales(@PathVariable("crowdId") int crowdId){
+        List<CrowdOrderDetailsDTO.rewardCounts> rewardCountList = crowdOrderDetailsService.rewardSales(crowdId);
+        return ResponseEntity.ok(rewardCountList);
+    }
+
+    @GetMapping(value = "/{crowdId}/total")
+    public ResponseEntity<Integer> getTotalSales(@PathVariable("crowdId") int crowdId){
+        List<CrowdOrderDetailsDTO.rewardCounts> rewardCountList = crowdOrderDetailsService.rewardSales(crowdId);
+        int totalSales = rewardCountList.stream()
+                .mapToInt(CrowdOrderDetailsDTO.rewardCounts::getRewardSale)
+                .sum();
+
+        return ResponseEntity.ok(totalSales);
+    }
+
+
 }
