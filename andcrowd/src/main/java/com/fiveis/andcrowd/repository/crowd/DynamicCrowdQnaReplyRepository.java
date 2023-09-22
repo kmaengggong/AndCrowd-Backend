@@ -11,17 +11,20 @@ import java.util.List;
 public interface DynamicCrowdQnaReplyRepository {
     void createDynamicCrowdQnaReplyTable(int crowdId);
 
-    List<DynamicCrowdQnaReplyDTO.Find> findAll(@Param("crowdId") int crowdId, @Param("crowdQnaId") int crowdQnaId);
+//    List<DynamicCrowdQnaReplyDTO.Find> findAll(@Param("crowdId") int crowdId, @Param("crowdQnaId") int crowdQnaId);
+    List<DynamicCrowdQnaReplyDTO.Find> findAll(int crowdId);
+//    List<DynamicCrowdQnaReplyDTO.Find> findAllByIsDeletedFalse(@Param("crowdId") int crowdId, @Param("crowdQnaId") int crowdQnaId);
+    List<DynamicCrowdQnaReplyDTO.Find> findAllNotDeleted(int crowdId);
 
-    List<DynamicCrowdQnaReplyDTO.Find> findAllByIsDeletedFalse(@Param("crowdId") int crowdId, @Param("crowdQnaId") int crowdQnaId);
+    List<DynamicCrowdQnaReplyDTO.Find> findAllByCrowdQnaId(@Param("crowdId")int crowdId, @Param("crowdQnaId")int crowdQnaId);
 
     DynamicCrowdQnaReplyDTO.Find findById(@Param("crowdId") int crowdId, @Param("qnaReplyId") int qnaReplyId);
-
-    void deleteByQnaReplyId(@Param("crowdId") int crowdId, @Param("qnaReplyId") int qnaReplyId);
 
     void save(DynamicCrowdQnaReplyDTO.Update dynamicCrowdQnaReplyDTOSave);
 
     void update(DynamicCrowdQnaReplyDTO.Update dynamicCrowdBoardReplyDTOUpdate);
+
+    void deleteByQnaReplyId(@Param("crowdId") int crowdId, @Param("qnaReplyId") int qnaReplyId);
 
     // qna글 삭제시 연관된 reply의 is_delete를 전부 true로 바꾸는 기능
     void deleteAllByQnaId(@Param("crowdId") int crowdId, @Param("crowdQnaId") int crowdQnaId);
