@@ -68,7 +68,7 @@ public class CrowdOrderDetailsController {
         return "redirect:/crowd_order/list";
     }
 
-    @GetMapping(value = "/{crowdId}")
+    @GetMapping(value = "/{crowdId}/reward")
     public ResponseEntity<List<CrowdOrderDetailsDTO.rewardCounts>> getRewardSales(@PathVariable("crowdId") int crowdId){
         List<CrowdOrderDetailsDTO.rewardCounts> rewardCountList = crowdOrderDetailsService.rewardSales(crowdId);
         return ResponseEntity.ok(rewardCountList);
