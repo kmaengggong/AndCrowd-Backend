@@ -45,6 +45,8 @@ public class DynamicCrowdBoardServiceImpl implements DynamicCrowdBoardService{
 
     @Override
     public void save(DynamicCrowdBoardDTO.Update dynamicCrowdBoardDTOSave) {
+        dynamicCrowdBoardDTOSave.setPublishedAt(LocalDateTime.now());
+        dynamicCrowdBoardDTOSave.setUpdatedAt(LocalDateTime.now());
         dynamicCrowdBoardRepository.save(dynamicCrowdBoardDTOSave);
     }
 

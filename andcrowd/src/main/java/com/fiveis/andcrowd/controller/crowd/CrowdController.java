@@ -118,4 +118,14 @@ public class CrowdController {
         return crowdService.isLiked(crowdId, userId);
     }
 
+    @GetMapping(value = "/{crowdId}/user-check/{userId}")
+    public boolean checkCrowdUser(@PathVariable("crowdId") int crowdId, @PathVariable("userId") int userId){
+        int crowdUserId = crowdService.findByCrowdId(crowdId).get().getUserId();
+        if(crowdUserId == userId){
+            return true;
+        }else {
+            return false;
+        }
+    }
+
 }
