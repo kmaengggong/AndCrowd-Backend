@@ -40,4 +40,8 @@ public interface AndJPARepository extends JpaRepository<And, Integer>, AndQueryR
     @Modifying
     @Query("UPDATE And a SET a.needNumMem = :needNumMem WHERE a.andId = :andId")
     void updateNeedNumMem(@Param("andId") int andId, @Param("needNumMem") int needNumMem);
+
+    @Modifying
+    @Query("UPDATE And a SET a.crowdId = :crowdId WHERE a.andId = :andId")
+    void updateCrowdId(@Param("andId") int andId, @Param("crowdId") int crowdId);
 }
