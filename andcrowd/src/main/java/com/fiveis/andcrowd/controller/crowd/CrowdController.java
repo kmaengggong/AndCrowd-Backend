@@ -125,13 +125,29 @@ public class CrowdController {
     }
 
     @GetMapping(value = "/{crowdId}/user-check/{userId}")
-    public boolean checkCrowdUser(@PathVariable("crowdId") int crowdId, @PathVariable("userId") int userId){
+    public boolean checkCrowdUser(@PathVariable("crowdId") int crowdId, @PathVariable("userId") int userId){ // 펀딩글 권한 확인
         int crowdUserId = crowdService.findByCrowdId(crowdId).get().getUserId();
         if(crowdUserId == userId){
             return true;
         }else {
             return false;
         }
+    }
+
+    @GetMapping("/total/{searchKeyword}")
+    public int getSearchKeyword(@PathVariable String searchKeyword) { // 키워드 검색
+        return crowdService.totalCount(searchKeyword);
+    }
+
+    @GetMapping("/updateStatusForExpiredCrowd")
+    public String updateStatusForExpiredCrowd() { // 마감날짜에 도래하면 자동으로 펀딩 종료
+        crowdService.updateStatusForExpiredCrowd();
+        return "Status updated for expired Crowd.";
+    }
+
+    @PatchMapping(value = "/{crowdId}/update/status/{status}")
+    public void updateCrowdStatusPath(@PathVariable("crowdId") int crowdId, @PathVariable("status") int status) { // crowd글 생성시 상태코드 변경 구문
+        crowdService.updateStatus(crowdId, status);
     }
 
 }

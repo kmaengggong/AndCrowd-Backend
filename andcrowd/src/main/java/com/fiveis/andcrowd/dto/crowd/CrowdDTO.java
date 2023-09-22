@@ -27,7 +27,7 @@ public class CrowdDTO {
         private String crowdImg3;
         private String crowdImg4;
         private String crowdImg5;
-        private int crowdStatus; // 1:펀딩중, 2:반려, 3:종료, 0:심사중
+        private int crowdStatus; // 1:모집중, 2:반려, 3:종료, 4: 작성중, 0:심사중
         private String crowdTitle;
         private String headerImg;
         private boolean isDeleted;
@@ -74,7 +74,7 @@ public class CrowdDTO {
         private String crowdContent;
         private LocalDate crowdEndDate;
         private int crowdGoal;
-        private int crowdStatus; // 1:펀딩중, 2:반려, 3:종료, 0:심사중
+        private int crowdStatus; // 1:모집중, 2:반려, 3:종료, 4: 작성중, 0:심사중
         private String crowdTitle;
         private String headerImg;
         private LocalDateTime publishedAt;

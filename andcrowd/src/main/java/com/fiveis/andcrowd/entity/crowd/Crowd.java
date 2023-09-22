@@ -44,8 +44,8 @@ public class Crowd {
     private String crowdImg4;
     private String crowdImg5;
 
-    @ColumnDefault("0")
-    private int crowdStatus; // 1:펀딩중, 2:반려, 3:종료, 0:심사중
+//    @ColumnDefault("0")
+    private int crowdStatus; // 1:모집중, 2:반려, 3:종료, 4: 작성중, 0:심사중
 
     @Column(nullable = false)
     private String crowdTitle;
@@ -73,7 +73,7 @@ public class Crowd {
 
     @PrePersist
     public void setDefaultValue(){
-        this.crowdStatus = 0; // 펀딩글 첫 업로드시 자동으로 심사중 표기
+//        this.crowdStatus = 0; // 펀딩글 첫 업로드시 자동으로 심사중 표기
         this.publishedAt = LocalDateTime.now();
         this.updatedAt = LocalDateTime.now();
         this.isDeleted = false;
