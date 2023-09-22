@@ -20,6 +20,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -168,6 +169,17 @@ public class CrowdServiceImpl implements CrowdService {
     }
 
     @Override
+    public void updateStatusForExpiredCrowd() {
+        LocalDate today = LocalDate.now();
+
+        List<Crowd> expiredCrowd = crowdJPARepository.findExpiredCrowd(today.atStartOfDay(), 3);
+        for(Crowd crowd : expiredCrowd) {
+            crowd.setCrowdStatus(3);
+            crowdJPARepository.save(crowd);
+        }
+    }
+
+    @Override
     public Page<CrowdDTO.FindById> searchPageList(Integer crowdStatus, String sortField, Integer pageNumber, Integer crowdCategoryId, String keyword, Pageable pageable) {
         if (Objects.equals(sortField, "crowdEndDate")) {
             System.out.println(" sort field : crowdEndDate !!!!!");
@@ -199,8 +211,6 @@ public class CrowdServiceImpl implements CrowdService {
 
         return dtoList;
     }
-
-
 
     @Override
     @Transactional
@@ -251,5 +261,10 @@ public class CrowdServiceImpl implements CrowdService {
         } else {
             return true;
         }
+    }
+
+    @Override
+    public int totalCount(String searchKeyword) {
+        return crowdJPARepository.totalCount(searchKeyword);
     }
 }

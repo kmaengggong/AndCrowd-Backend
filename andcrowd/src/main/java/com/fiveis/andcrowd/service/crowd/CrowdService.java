@@ -28,6 +28,8 @@ public interface CrowdService {
     void update(Crowd crowd);
     void updateStatus(int crowdId, int crowdStatus);
 
+    void updateStatusForExpiredCrowd();
+
     Page<CrowdDTO.FindById> searchPageList(Integer crowdStatus, String sortField, Integer pageNumber, Integer crowdCategoryId, String keyword, Pageable pageable);
 
     List<CrowdDTO.FindById> findByViewCountAndLikeSum();
@@ -41,5 +43,7 @@ public interface CrowdService {
     void updateLike(Integer crowdId, int userId);
 
     boolean isLiked(int crowdId, int userId);
+
+    int totalCount(String searchKeyword);
 
 }

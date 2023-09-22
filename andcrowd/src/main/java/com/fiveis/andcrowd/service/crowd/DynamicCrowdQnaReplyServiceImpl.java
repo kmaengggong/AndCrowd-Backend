@@ -24,13 +24,18 @@ public class DynamicCrowdQnaReplyServiceImpl implements DynamicCrowdQnaReplyServ
 //    }
 
     @Override
-    public List<DynamicCrowdQnaReplyDTO.Find> findAll(int crowdId, int crowdQnaId) {
-        return dynamicCrowdQnaReplyRepository.findAll(crowdId, crowdQnaId);
+    public List<DynamicCrowdQnaReplyDTO.Find> findAll(int crowdId) {
+        return dynamicCrowdQnaReplyRepository.findAll(crowdId);
     }
 
     @Override
-    public List<DynamicCrowdQnaReplyDTO.Find> findAllByIsDeletedFalse(int crowdId, int crowdQnaId){
-        return dynamicCrowdQnaReplyRepository.findAllByIsDeletedFalse(crowdId, crowdQnaId);
+    public List<DynamicCrowdQnaReplyDTO.Find> findAllNotDeleted(int crowdId){
+        return dynamicCrowdQnaReplyRepository.findAllNotDeleted(crowdId);
+    }
+
+    @Override
+    public List<DynamicCrowdQnaReplyDTO.Find> findAllByCrowdQnaId(int crowdId, int crowdQnaId) {
+        return dynamicCrowdQnaReplyRepository.findAllByCrowdQnaId(crowdId, crowdQnaId);
     }
 
     @Override
@@ -41,6 +46,16 @@ public class DynamicCrowdQnaReplyServiceImpl implements DynamicCrowdQnaReplyServ
     @Override
     public void deleteByQnaReplyId(int crowdId, int qnaReplyId) {
         dynamicCrowdQnaReplyRepository.deleteByQnaReplyId(crowdId, qnaReplyId);
+    }
+
+    @Override
+    public void deleteAllByQnaId(int crowdId, int crowdQnaId) {
+        dynamicCrowdQnaReplyRepository.deleteAllByQnaId(crowdId, crowdQnaId);
+    }
+
+    @Override
+    public void deletedAll(int crowdId) {
+        dynamicCrowdQnaReplyRepository.deleteAll(crowdId);
     }
 
     @Override

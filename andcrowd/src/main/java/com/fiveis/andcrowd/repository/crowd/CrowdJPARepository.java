@@ -12,6 +12,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Repository
@@ -41,4 +42,10 @@ public interface CrowdJPARepository extends JpaRepository<Crowd, Integer>, JpaSp
     @Modifying
     @Query("UPDATE Crowd c SET c.andId = :andId WHERE c.crowdId = :crowdId")
     void updateAndId(@Param("crowdId") int crowdId, @Param("andId") int andId);
+
+    @Query("SELECT c FROM Crowd c WHERE c.crowdEndDate < :endDate AND c.crowdStatus <> :status")
+    List<Crowd> findExpiredCrowd(@Param("endDate")LocalDateTime endDate, @Param("status")int status);
+
+    @Query("SELECT COUNT(c) FROM Crowd c WHERE c.crowdTitle LIKE %:searchKeyword% AND c.crowdStatus IN (1,3) AND c.isDeleted = false")
+    int totalCount(@Param("searchKeyword") String searchKeyword);
 }

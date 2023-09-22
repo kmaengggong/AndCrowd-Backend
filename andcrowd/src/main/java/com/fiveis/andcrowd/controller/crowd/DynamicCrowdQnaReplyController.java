@@ -14,7 +14,7 @@ import java.util.List;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
-@RequestMapping("/crowd/{crowdId}/qna/{crowdQnaId}/qnareply")
+@RequestMapping("/crowd/{crowdId}/qna/reply")
 public class DynamicCrowdQnaReplyController {
 
     private final CrowdService crowdService;
@@ -27,36 +27,52 @@ public class DynamicCrowdQnaReplyController {
         this.dynamicCrowdQnaReplyService = dynamicCrowdQnaReplyService;
     }
 
-    @RequestMapping(value = "/all", method = RequestMethod.GET)
-    public ResponseEntity<List<DynamicCrowdQnaReplyDTO.Find>> findAllQnaReplies(@PathVariable int crowdId,
-                                                                               @PathVariable int crowdQnaId){
-        List<DynamicCrowdQnaReplyDTO.Find> replies = dynamicCrowdQnaReplyService.findAllByIsDeletedFalse(crowdId, crowdQnaId);
-        return ResponseEntity.ok().body(replies);
+    @RequestMapping(value = "/list", method = RequestMethod.GET)
+    public List<DynamicCrowdQnaReplyDTO.Find> getList(@PathVariable("crowdId") int crowdId){
+        List<DynamicCrowdQnaReplyDTO.Find> replies = dynamicCrowdQnaReplyService.findAllNotDeleted(crowdId);
+        return replies;
+    }
+
+    @RequestMapping(value = "/{crowdQnaId}/all", method = RequestMethod.GET)
+    public List<DynamicCrowdQnaReplyDTO.Find> getReplies(@PathVariable("crowdId") int crowdId,
+                                                                      @PathVariable("crowdQnaId") int crowdQnaId){
+        List<DynamicCrowdQnaReplyDTO.Find> replies = dynamicCrowdQnaReplyService.findAllByCrowdQnaId(crowdId, crowdQnaId);
+        return replies;
     }
 
     @RequestMapping(value = "/{qnaReplyId}", method = RequestMethod.GET)
-    public ResponseEntity<DynamicCrowdQnaReplyDTO.Find> findByReplyId(@PathVariable int crowdId,
-                                                                      @PathVariable int qnaReplyId){
-        DynamicCrowdQnaReplyDTO.Find reply = dynamicCrowdQnaReplyService.findById(crowdId, qnaReplyId);
-        return ResponseEntity.ok().body(reply);
+    public DynamicCrowdQnaReplyDTO.Find getReply(@PathVariable("crowdId")int crowdId, @PathVariable("qnaReplyId")int qnaReplyId) {
+        DynamicCrowdQnaReplyDTO.Find reply = dynamicCrowdQnaReplyService.findById(crowdId,qnaReplyId);
+        return reply;
     }
 
-    @RequestMapping(value = "", method = RequestMethod.POST)
-    public ResponseEntity<String> insertQnaReply(@RequestBody DynamicCrowdQnaReplyDTO.Update dynamicCrowdQnaReplyDTO){
-        dynamicCrowdQnaReplyService.save(dynamicCrowdQnaReplyDTO);
-        return ResponseEntity.ok("댓글 등록 완료");
+    @RequestMapping(value = "/{crowdQnaId}/create", method = RequestMethod.POST)
+    public void insertQnaReply(@PathVariable("crowdId")int crowdId,
+                               @PathVariable("crowdQnaId")int crowdQnaId,@RequestBody DynamicCrowdQnaReplyDTO.Update saveReplyDTO){
+        dynamicCrowdQnaReplyService.save(saveReplyDTO);
     }
 
-    @RequestMapping(value = "/{qnaReplyId}", method = RequestMethod.PATCH)
-    public ResponseEntity<String> updateQnaReply(@RequestBody DynamicCrowdQnaReplyDTO.Update dynamicCrowdQnaReplyDTOUpdate){
+    @RequestMapping(value = "/{crowdQnaId}/{qnaReplyId}/update", method = RequestMethod.PATCH)
+    public String updateQnaReply(@PathVariable("crowdId")int crowdId,
+                                 @PathVariable("crowdQnaId")int crowdQnaId,
+                                 @PathVariable("qnaReplyId")int qnaReplyId,
+                                 @RequestBody DynamicCrowdQnaReplyDTO.Update dynamicCrowdQnaReplyDTOUpdate){
         dynamicCrowdQnaReplyService.update(dynamicCrowdQnaReplyDTOUpdate);
-        return ResponseEntity.ok("댓글 수정 완료");
+        return "redirect:/crowd/" + crowdId + "/qna/" + crowdQnaId + "/all";
     }
 
-    @RequestMapping(value = "/{qnaReplyId}/delete", method = RequestMethod.DELETE)
-    public ResponseEntity<String> deleteQnaReply(@PathVariable int crowdId, @PathVariable int qnaReplyId){
+    @RequestMapping(value = "/{crowdQnaId}/{qnaReplyId}/delete", method = RequestMethod.DELETE)
+    public String deleteQnaReply(@PathVariable("crowdId") int crowdId,
+                                 @PathVariable("crowdQnaId")int crowdQnaId,
+                                 @PathVariable("qnaReplyId") int qnaReplyId){
         dynamicCrowdQnaReplyService.deleteByQnaReplyId(crowdId, qnaReplyId);
-        return ResponseEntity.ok("댓글 삭제 완료");
+        return "redirect:/crowd/" + crowdId + "/qna/" + crowdQnaId + "/all";
+    }
+
+    @RequestMapping(value = "/{andQnaId}/all/delete", method = RequestMethod.DELETE)
+    public String deleteReplies(@PathVariable("crowdId") int crowdId, @PathVariable("crowdQnaId") int crowdQnaId){
+        dynamicCrowdQnaReplyService.deleteAllByQnaId(crowdId, crowdQnaId);
+        return "redirect:/and/" + crowdId + "/qna/reply/" + crowdQnaId + "/all";
     }
 
     @GetMapping(value = "/user-check/{userId}")
