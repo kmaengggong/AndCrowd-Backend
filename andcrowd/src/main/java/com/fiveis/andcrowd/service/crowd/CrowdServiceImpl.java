@@ -5,6 +5,7 @@ import com.fiveis.andcrowd.dto.user.DynamicUserLikeDTO;
 import com.fiveis.andcrowd.entity.crowd.Crowd;
 import com.fiveis.andcrowd.entity.user.DynamicUserMaker;
 import com.fiveis.andcrowd.entity.user.DynamicUserLike;
+import com.fiveis.andcrowd.repository.and.AndJPARepository;
 import com.fiveis.andcrowd.repository.crowd.*;
 import com.fiveis.andcrowd.repository.user.DynamicUserMakerRepository;
 import com.fiveis.andcrowd.repository.user.UserJPARepository;
@@ -42,6 +43,7 @@ public class CrowdServiceImpl implements CrowdService {
     private final UserJPARepository userJPARepository;
     private final DynamicUserMakerRepository dynamicUserMakerRepository;
     private final DynamicUserLikeService dynamicUserLikeService;
+    private final AndJPARepository andJPARepository;
 
     @Override
     public Optional<CrowdDTO.FindById> findByCrowdId(int crowdId) {
@@ -155,9 +157,13 @@ public class CrowdServiceImpl implements CrowdService {
         Optional<Crowd> optionalCrowd = crowdJPARepository.findById(crowdId);
         if (optionalCrowd.isPresent()) {
             Crowd updatedCrowd = optionalCrowd.get();
-
             // 변경된 Crowd 객체를 다시 저장
             crowdJPARepository.save(updatedCrowd.updateCrowdStatus(crowdStatus));
+
+            int andId = updatedCrowd.getAndId();
+            if(andId != 0){
+                andJPARepository.updateCrowdId(andId, crowdId);
+            }
         }
     }
 
@@ -177,6 +183,23 @@ public class CrowdServiceImpl implements CrowdService {
 
         return pageList;
     }
+
+    @Override
+    public List<CrowdDTO.FindById> findByViewCountAndLikeSum() {
+        List<Crowd> crowdList = crowdJPARepository.findByViewCountAndLikeSum();
+        List<CrowdDTO.FindById> dtoList = new ArrayList<>();
+
+        int limit = Math.min(crowdList.size(), 5); // 결과 리스트 크기와 5 중 작은 값을 선택
+
+        for (int i = 0; i < limit; i++) {
+            Crowd crowd = crowdList.get(i);
+            CrowdDTO.FindById result = convertToCrowdFindDTO(crowd);
+            dtoList.add(result);
+        }
+
+        return dtoList;
+    }
+
 
 
     @Override
