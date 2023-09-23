@@ -78,6 +78,7 @@ public class DynamicUserController {
 
     @RequestMapping(value="{userId}/follow/{fUserId}", method=RequestMethod.POST)
     public ResponseEntity<?> saveUserFollow(@PathVariable int userId, @PathVariable int fUserId){
+        if(userId == fUserId) return ResponseEntity.badRequest().body("똑같은 아이디");
         String userEmail = User.toTableName(userService.findById(userId).getUserEmail());
         DynamicUserFollow dynamicUserFollow = DynamicUserFollow.builder().userId(fUserId).build();
         if(!dynamicUserFollowService.save(userEmail, dynamicUserFollow)) return ResponseEntity.badRequest().body("Save Failed!");
@@ -214,6 +215,5 @@ public class DynamicUserController {
         } catch(Error e){
             return ResponseEntity.badRequest().body("findUserCrowd error");
         }
-
     }
 }

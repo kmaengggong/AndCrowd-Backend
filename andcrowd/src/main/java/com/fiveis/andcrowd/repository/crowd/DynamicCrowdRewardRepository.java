@@ -22,5 +22,6 @@ public interface DynamicCrowdRewardRepository {
     void testCreateDynamicCrowdRewardTable();
     void dropCrowdRewardTable();
     void insertTestData();
+    void updateRewardLeft(DynamicCrowdRewardDTO.UpdateRewardLeft updateRewardLeft);
 
 }

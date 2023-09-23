@@ -22,4 +22,7 @@ public interface CrowdOrderDetailsJPARepository extends JpaRepository<CrowdOrder
     @Query("UPDATE CrowdOrderDetails c SET c.purchaseStatus = :purchaseStatus WHERE c.purchaseId = :purchaseId")
     void updatePurchaseStatus(@Param("purchaseId") int purchaseId, @Param("purchaseStatus") String purchaseStatus);
 
+    Optional<CrowdOrderDetails> findByMerchantUid(String merchantUid);
+
+//    CrowdOrderDetailsDT findByMerchantUid(String merchantUid);
 }
