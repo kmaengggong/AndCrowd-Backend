@@ -2,6 +2,7 @@ package com.fiveis.andcrowd.controller.crowd;
 
 import com.fiveis.andcrowd.dto.crowd.CrowdOrderDetailsDTO;
 import com.fiveis.andcrowd.entity.crowd.CrowdOrderDetails;
+import com.fiveis.andcrowd.repository.crowd.CrowdOrderDetailsJPARepository;
 import com.fiveis.andcrowd.service.crowd.CrowdOrderDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -9,7 +10,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Controller
@@ -18,10 +21,12 @@ import java.util.Optional;
 public class CrowdOrderDetailsController {
 
     private final CrowdOrderDetailsService crowdOrderDetailsService;
+    private final CrowdOrderDetailsJPARepository crowdOrderDetailsJPARepository;
 
     @Autowired
-    public CrowdOrderDetailsController(CrowdOrderDetailsService crowdOrderDetailsService) {
+    public CrowdOrderDetailsController(CrowdOrderDetailsService crowdOrderDetailsService, CrowdOrderDetailsJPARepository crowdOrderDetailsJPARepository) {
         this.crowdOrderDetailsService = crowdOrderDetailsService;
+        this.crowdOrderDetailsJPARepository = crowdOrderDetailsJPARepository;
     }
 
     @RequestMapping(value = "/list", method = RequestMethod.GET) // 관리자 권한 전체 조회 // 일반 유저는 조회 불가
@@ -69,20 +74,34 @@ public class CrowdOrderDetailsController {
     }
 
     @GetMapping(value = "/{crowdId}/reward")
-    public ResponseEntity<List<CrowdOrderDetailsDTO.rewardCounts>> getRewardSales(@PathVariable("crowdId") int crowdId){
-        List<CrowdOrderDetailsDTO.rewardCounts> rewardCountList = crowdOrderDetailsService.rewardSales(crowdId);
+    public ResponseEntity<List<CrowdOrderDetailsDTO.RewardSales>> getRewardSales(@PathVariable("crowdId") int crowdId){
+        List<CrowdOrderDetailsDTO.RewardSales> rewardCountList = crowdOrderDetailsService.rewardSales(crowdId);
         return ResponseEntity.ok(rewardCountList);
     }
 
     @GetMapping(value = "/{crowdId}/total")
     public ResponseEntity<Integer> getTotalSales(@PathVariable("crowdId") int crowdId){
-        List<CrowdOrderDetailsDTO.rewardCounts> rewardCountList = crowdOrderDetailsService.rewardSales(crowdId);
+        List<CrowdOrderDetailsDTO.RewardSales> rewardCountList = crowdOrderDetailsService.rewardSales(crowdId);
         int totalSales = rewardCountList.stream()
-                .mapToInt(CrowdOrderDetailsDTO.rewardCounts::getRewardSale)
+                .mapToInt(CrowdOrderDetailsDTO.RewardSales::getRewardSale)
                 .sum();
 
         return ResponseEntity.ok(totalSales);
     }
 
+    @GetMapping(value = "/{crowdId}/list")
+    public ResponseEntity<List<CrowdOrderDetailsDTO.Manage>> findAllByCrowdId(@PathVariable("crowdId") int crowdId){
+
+        List<CrowdOrderDetailsDTO.Manage> purchaseList = crowdOrderDetailsService.crowdIdManage(crowdId);
+
+        return ResponseEntity.ok(purchaseList);
+    }
+
+    @RequestMapping(value="/crowd/purchase/{purchaseId}/update/status" , method=RequestMethod.PATCH)
+    public ResponseEntity<String> updatePurchaseStatus( @PathVariable("purchaseId") int purchaseId, @RequestBody Map<String, String> purchaseStatus) {
+        System.out.println("updatePurchaseStatus!!!!!! purchaseId: "+purchaseId+", purchaseStatus: "+purchaseStatus);
+        crowdOrderDetailsService.updatePurchaseStatus(purchaseId, purchaseStatus.get("purchaseStatus"));
+        return ResponseEntity.ok("주문 상태가 정상적으로 업데이트 되었습니다.");
+    }
 
 }
