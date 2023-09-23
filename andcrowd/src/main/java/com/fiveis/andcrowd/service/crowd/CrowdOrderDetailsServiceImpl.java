@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -51,6 +52,20 @@ public class CrowdOrderDetailsServiceImpl implements CrowdOrderDetailsService{
         return orderListByCrowdId.stream()
                 .map(this::convertToFindByIdDTO)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<CrowdOrderDetailsDTO.Manage> crowdIdManage(int crowdId){
+        List<CrowdOrderDetails> orderListByCrowdId = crowdOrderDetailsJPARepository.findAllByCrowdId(crowdId);
+        return orderListByCrowdId.stream()
+                .map(this::convertToManageDTO)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    @Transactional
+    public void updatePurchaseStatus(int purchaseId, String purchaseStatus) {
+        crowdOrderDetailsJPARepository.updatePurchaseStatus(purchaseId, purchaseStatus);
     }
 
 
@@ -153,27 +168,47 @@ public class CrowdOrderDetailsServiceImpl implements CrowdOrderDetailsService{
                 .build();
     }
 
-    @Override
-    public List<CrowdOrderDetailsDTO.rewardCounts> rewardSales(int crowdId) {
-        List<CrowdOrderDetailsDTO.rewardCounts> rewardCountsList = crowdOrderDetailsJPARepository.countRewardsByCrowdId(crowdId);
+    public CrowdOrderDetailsDTO.Manage convertToManageDTO(CrowdOrderDetails crowdOrderDetails) {
+        return CrowdOrderDetailsDTO.Manage.builder()
+                .purchaseId(crowdOrderDetails.getPurchaseId())
+                .userId(crowdOrderDetails.getUserId())
+                .rewardName(crowdOrderDetails.getRewardName())
+                .purchaseAmount(crowdOrderDetails.getPurchaseAmount())
+                .purchaseStatus(crowdOrderDetails.getPurchaseStatus())
+                .purchaseDate(crowdOrderDetails.getPurchaseDate())
+                .purchaseName(crowdOrderDetails.getPurchaseName())
+                .purchasePhone(crowdOrderDetails.getPurchasePhone())
+                .purchaseAddress(crowdOrderDetails.getPurchaseAddress())
+                .build();
+    }
 
-        // rewardCountsList에 rewardAmount 추가
-        for (CrowdOrderDetailsDTO.rewardCounts dto : rewardCountsList) {
-            int rewardId = dto.getRewardId();
-            int rewardCount = dto.getRewardCounts();
+
+
+    @Override
+    public List<CrowdOrderDetailsDTO.RewardSales> rewardSales(int crowdId) {
+        List<CrowdOrderDetailsDTO.RewardCounts> rewardCountsList = crowdOrderDetailsJPARepository.countRewardsByCrowdId(crowdId);
+        List<CrowdOrderDetailsDTO.RewardSales> rewardSalesList = new ArrayList<>();
+
+        for (CrowdOrderDetailsDTO.RewardCounts counts : rewardCountsList) {
+            int rewardId = counts.getRewardId();
+            Long rewardCount = counts.getRewardCounts();
 
             // rewardId를 기반으로 rewardAmount 가져오기
-            int rewardAmount = dynamicCrowdRewardRepository.findByRewardId(crowdId,rewardId).getRewardAmount();
+            int rewardAmount = dynamicCrowdRewardRepository.findByRewardId(crowdId, rewardId).getRewardAmount();
 
-            // rewardCountsList에 rewardAmount 추가
-            dto.setRewardAmount(rewardAmount);
+            // rewardCounts를 rewardSales로 변환하고 필드 추가
+            CrowdOrderDetailsDTO.RewardSales sales = new CrowdOrderDetailsDTO.RewardSales(
+                    counts.getRewardId(),
+                    counts.getRewardName(),
+                    counts.getRewardCounts(),
+                    rewardAmount,
+                    (int) (rewardCount * rewardAmount)
+            );
 
-            // rewardCount와 rewardAmount를 곱한 값을 rewardSale로 추가
-            int rewardSale = rewardCount * rewardAmount;
-            dto.setRewardSale(rewardSale);
+            rewardSalesList.add(sales);
         }
 
-
-        return rewardCountsList;
+        return rewardSalesList;
     }
+
 }
