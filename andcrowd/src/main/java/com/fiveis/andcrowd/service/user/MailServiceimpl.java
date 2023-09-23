@@ -1,7 +1,7 @@
 package com.fiveis.andcrowd.service.user;
 
-import com.fiveis.andcrowd.config.MailConfig;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.mail.*;
@@ -13,7 +13,11 @@ import java.util.Properties;
 @Service
 @RequiredArgsConstructor
 public class MailServiceimpl implements MailService{
-    private final MailConfig mailConfig;
+    @Value("${mail.from_email}")
+    private String fromEmail;
+
+    @Value("${mail.email_password}")
+    private String password;
 
     @Override
     public String getRandomNumber() {
@@ -23,9 +27,6 @@ public class MailServiceimpl implements MailService{
 
     @Override
     public String setEmail(String userEmail){
-        final String fromEmail = mailConfig.getFromEmail(); //requires valid gmail id
-        final String password = mailConfig.getEmailPassword(); // correct password for gmail id
-
         System.out.println("TLSEmail Start");
         Properties props = new Properties();
         props.put("mail.smtp.host", "smtp.gmail.com"); //SMTP Host

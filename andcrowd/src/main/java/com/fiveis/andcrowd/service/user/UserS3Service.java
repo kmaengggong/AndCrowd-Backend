@@ -23,7 +23,7 @@ public class UserS3Service {
     private final AmazonS3Client amazonS3Client;
     private final UserJPARepository userJPARepository;
 
-    @Value("${user-bucket}")
+    @Value("${cloud.aws.s3.user-bucket}")
     private String userBucket;
 
     @Transactional
