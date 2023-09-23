@@ -5,13 +5,13 @@ spring:
       prefix: /WEB-INF/views/
       suffix: .jsp
   profiles:
-    active: db, jwt, cd, oauth2, bucket, mail, chatbot
+    active: jwt, cd, oauth2, bucket, mail
   datasource:
     # DB
-    url: ${url}
-    username: ${usrname}
-    password: ${password}
-    driver-class-name: ${driver-class-name}
+    url: ENC(Ucwc5RTGxg4JELzN/vLvd1ttxjr39I8TQCwSWqcJvh28Usn7PHOojAZAHF0rPD4HbBMtXEdnYsWaRCnw19Vf/Stbz28EEqFI7HNVhf5LawDWv+Y2ubUsACNQ85gDgG2XUZSeV+Zi69Pd6OZC/VE+DGserjqYwFdUCj7h/V6UIHk=)
+    username: ENC(K6J8J2OV427mm5gg/UUZNAGQ7YCJ8Ab0)
+    password: ENC(rT4DVzL9Ssz/ImmSscm0VpybxbM9FT+4)
+    driver-class-name: com.mysql.cj.jdbc.Driver
   # JPA
   jpa:
     hibernate:
@@ -68,8 +68,8 @@ mybatis:
 cloud:
   aws:
     credentials:
-      access-key: ${access}
-      secret-key: ${secret}
+      access-key: ENC(9FOmz95F5NWStTIz2g9PVuZZkWCnS/w4DxAjfgdXkcg=)
+      secret-key: ENC(HrfUswm81Ul1Ud+O9AeDUNRqcDPeztWMK7dZ9uURAg4QPShHxSdPBUspCLLLiXYvC0icziJqHkM=)
     stack:
       auto: false
     region:
@@ -77,10 +77,10 @@ cloud:
     s3:
       endpoint: https://kr.object.ncloudstorage.com
       #      endpoint: s3.ap-northeast-2.amazonaws.com
-      chat-bucket: ${chat-bucket}
-      and-bucket: ${and-bucket}
-      crowd-bucket: ${crowd-bucket}
-      user-bucket: ${user-bucket}
+      chat-bucket: ENC(FOC6zx1je7l7FAjPa9MmnarhjTbu7qiz)
+      and-bucket: ENC(KiJnsDuYOIE6Snu3HhSh5LQ6NswoKgUB)
+      crowd-bucket: ENC(TwU+nqA78ILhlHIO6VObGV7FRD7ViO6T)
+      user-bucket: ENC(wh+4+HbaUkBSDrqQNR7woxbQbzL6gev7)
 
 # clova chatbot
 chatbot:
