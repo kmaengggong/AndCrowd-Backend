@@ -15,7 +15,7 @@ import java.util.Optional;
 public interface CrowdOrderDetailsJPARepository extends JpaRepository<CrowdOrderDetails, Integer> {
     List<CrowdOrderDetails> findAllByCrowdId(int crowdId);
 
-    @Query("SELECT NEW com.fiveis.andcrowd.dto.crowd.CrowdOrderDetailsDTO$RewardCounts(c.rewardId, c.rewardName, CAST(COUNT(c.rewardId) AS Long)) FROM CrowdOrderDetails c WHERE c.crowdId = :crowdId AND c.purchaseStatus = '결제완료' GROUP BY c.rewardId")
+    @Query("SELECT NEW com.fiveis.andcrowd.dto.crowd.CrowdOrderDetailsDTO$RewardCounts(c.rewardId, c.rewardName, CAST(COUNT(c.rewardId) AS Long)) FROM CrowdOrderDetails c WHERE c.crowdId = :crowdId AND c.purchaseStatus NOT IN ('결제대기', '결제취소') GROUP BY c.rewardId")
     List<CrowdOrderDetailsDTO.RewardCounts> countRewardsByCrowdId(@Param("crowdId") int crowdId);
 
     @Modifying
