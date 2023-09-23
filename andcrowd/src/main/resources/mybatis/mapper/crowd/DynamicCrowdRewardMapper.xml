@@ -6,9 +6,9 @@
 
     <update id="createDynamicCrowdRewardTable">
         CREATE TABLE IF NOT EXISTS
-            crowd_reward_#{crowdId} (
+            crowd_reward_#{crowd_id} (
                 reward_id INT AUTO_INCREMENT PRIMARY KEY,
-                crowd_id INT default #{crowdId},
+                crowd_id INT default #{crowd_id},
                 reward_title VARCHAR(255) NOT NULL,
                 reward_content VARCHAR(255) NOT NULL,
                 reward_amount INT NOT NULL,
