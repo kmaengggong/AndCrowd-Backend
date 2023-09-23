@@ -14,6 +14,7 @@ public interface CrowdOrderDetailsService {
 
    // 해당 로직은 단일 객체만 불러오는 기능으로 결제내역 단일건에 대한 조회로 PK를 파라미터로 사용
    Optional<CrowdOrderDetailsDTO.FindById> findById(int purchaseId);
+   Optional<CrowdOrderDetailsDTO.FindById> findByMerchantUid(String merchantUid);
 
    // 특정 crowd글의 결재내역을 조회할수 있는 기능 추가
    List<CrowdOrderDetailsDTO.FindById> findAllByCrowdId(int crowdId);

@@ -21,5 +21,7 @@ public class DynamicCrowdReward { // 리워드 카테고리
 
     private int rewardLimit; // 리워드 제한
 
+    private int rewardLeft;  // 남은 리워드
+
     private boolean isDeleted;
 }
