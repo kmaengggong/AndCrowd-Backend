@@ -10,6 +10,7 @@ import io.jsonwebtoken.Header;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -26,9 +27,14 @@ public class TokenProvider {
     public static final Duration REFRESH_TOKEN_DURATION = Duration.ofDays(2); // 이틀(리프레시 토큰의 유효기간)
     public static final Duration ACCESS_TOKEN_DURATION = Duration.ofHours(2); // 2시간(억세스 토큰의 유효기간)
 
-    private final JwtProperties jwtProperties;
     private final RefreshTokenRepository refreshTokenRepository;
     private final UserJPARepository userJPARepository;
+
+    @Value("${jwt.issuer}")
+    private String issuer;
+    @Value("${jwt.secret_key")
+    private String secretKey;
+
 
     public String generateToken(User user, Duration expiredAt){
         Date now = new Date();
@@ -40,12 +46,12 @@ public class TokenProvider {
 
         return Jwts.builder()
                 .setHeaderParam(Header.TYPE, Header.JWT_TYPE)
-                .setIssuer(jwtProperties.getIssuer())
+                .setIssuer(issuer)
                 .setIssuedAt(now)
                 .setExpiration(expiry)
                 .setSubject(user.getUserEmail())
                 .claim("userId", user.getUserId()) // 클레임에는 PK 제공
-                .signWith(SignatureAlgorithm.HS256, jwtProperties.getSecretKey())
+                .signWith(SignatureAlgorithm.HS256, secretKey)
                 .compact();
     }
 
@@ -65,7 +71,7 @@ public class TokenProvider {
     public boolean validToken(String token){
         try{
             Jwts.parser()
-                    .setSigningKey(jwtProperties.getSecretKey())
+                    .setSigningKey(secretKey)
                     .parseClaimsJws(token);
             return true;
         } catch (Exception e){
@@ -118,7 +124,7 @@ public class TokenProvider {
 
     private Claims getClaims(String token){
         return Jwts.parser()
-                .setSigningKey(jwtProperties.getSecretKey())
+                .setSigningKey(secretKey)
                 .parseClaimsJws(token)
                 .getBody();
     }

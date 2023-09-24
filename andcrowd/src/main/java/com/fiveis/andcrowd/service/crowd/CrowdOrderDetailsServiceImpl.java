@@ -45,6 +45,12 @@ public class CrowdOrderDetailsServiceImpl implements CrowdOrderDetailsService{
         return crowdOrderDetailsOptional.map(this::convertToFindByIdDTO);
     } // 특정 주문을 ID로 조회하는 메서드
 
+    @Override
+    public Optional<CrowdOrderDetailsDTO.FindById> findByMerchantUid(String merchantUid){
+        Optional<CrowdOrderDetails> crowdOrderDetailsOptional = crowdOrderDetailsJPARepository.findByMerchantUid(merchantUid);
+        return crowdOrderDetailsOptional.map(this::convertToFindByIdDTO);
+    }
+
     // crowdId를 기준으로 조회하는 메서드
     @Override
     public List<CrowdOrderDetailsDTO.FindById> findAllByCrowdId(int crowdId){
@@ -79,6 +85,20 @@ public class CrowdOrderDetailsServiceImpl implements CrowdOrderDetailsService{
         if(find.getRewardAmount() != crowdOrderDetails.getPurchaseAmount()){
             return false;
         }
+        DynamicCrowdRewardDTO.FindAllById reward = dynamicCrowdRewardRepository
+                .findByRewardId(crowdOrderDetails.getCrowdId(), crowdOrderDetails.getRewardId());
+        // 한 번 더 재고 파악
+        if(reward.getRewardLeft() < 1){
+            return false;
+        }
+        // 재고 감소
+        DynamicCrowdRewardDTO.UpdateRewardLeft update = DynamicCrowdRewardDTO.UpdateRewardLeft.builder()
+                .rewardId(crowdOrderDetails.getRewardId())
+                .crowdId(crowdOrderDetails.getCrowdId())
+                .rewardLeft(reward.getRewardLeft()-1)
+                .build();
+
+        dynamicCrowdRewardRepository.updateRewardLeft(update);
 
         // 결제 정보 저장
         long milliseconds = Long.parseLong(crowdOrderDetails.getMerchantUid().split("_")[1]);

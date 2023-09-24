@@ -1,11 +1,9 @@
 package com.fiveis.andcrowd.controller.etc;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fiveis.andcrowd.config.NaverOauthConfig;
 import com.fiveis.andcrowd.config.jwt.TokenProvider;
 import com.fiveis.andcrowd.config.oauth.OAuth2AuthorizationRequestBasedOnCookieRepository;
 import com.fiveis.andcrowd.dto.etc.AccessTokenResponseDTO;
-import com.fiveis.andcrowd.dto.user.NaverDTO;
 import com.fiveis.andcrowd.dto.user.UserDTO;
 import com.fiveis.andcrowd.entity.user.User;
 import com.fiveis.andcrowd.enums.SocialType;
@@ -17,17 +15,13 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.List;
 import java.util.Map;
 
@@ -39,6 +33,13 @@ public class TokenController {
     private final TokenProvider tokenProvider;
     private final UserService userService;
     private final NaverService naverService;
+
+    @Value("${spring.security.oauth2.client.registration.naver.authorization-grant-type")
+    private String grantType;
+    @Value("${spring.security.oauth2.client.registration.naver.client-id")
+    private String clientId;
+    @Value("${spring.security.oauth2.client.registration.naver.client-secret")
+    private String clientSecret;
 
     @RequestMapping(value="/accessTokenValid", method=RequestMethod.POST)
     public ResponseEntity<?> isAccessTokenValid(HttpServletRequest request,
@@ -100,9 +101,6 @@ public class TokenController {
         System.out.println("naverLogin");
 
         // 프론트 엔드를 통해 code, state를 받아옴
-        String grantType = "authorization_code";
-        String clientId = "VuPedkCMX9rG5c9njrEN";
-        String clientSecret = "BrOSKdntY6";
         String code = callback.get("code");
         String state = callback.get("state");
         String uri = UriComponentsBuilder

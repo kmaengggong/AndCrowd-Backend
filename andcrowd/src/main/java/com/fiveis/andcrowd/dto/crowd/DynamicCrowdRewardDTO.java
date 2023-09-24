@@ -14,6 +14,7 @@ public class DynamicCrowdRewardDTO { // FindAllByUserId, update, save, delete
         private String rewardContent;
         private int rewardAmount;
         private int rewardLimit;
+        private int rewardLeft;
         private boolean isDeleted;
     }
 
@@ -28,7 +29,18 @@ public class DynamicCrowdRewardDTO { // FindAllByUserId, update, save, delete
         private String rewardContent;
         private int rewardAmount;
         private int rewardLimit;
+        private int rewardLeft;
         private boolean isDeleted;
+    }
+
+    @Getter @Setter
+    @Builder @ToString
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class UpdateRewardLeft{
+        private int rewardId;
+        private int crowdId;
+        private int rewardLeft;
     }
 
 }
