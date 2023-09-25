@@ -19,7 +19,7 @@ import java.util.Map;
 import java.util.Optional;
 
 @Controller
-@CrossOrigin(origins = "http://localhost:3000")
+// @CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/crowd_order")
 @RequiredArgsConstructor
 public class CrowdOrderDetailsController {
@@ -102,7 +102,6 @@ public class CrowdOrderDetailsController {
 
     @RequestMapping(value="/crowd/purchase/{purchaseId}/update/status" , method=RequestMethod.PATCH)
     public ResponseEntity<String> updatePurchaseStatus( @PathVariable("purchaseId") int purchaseId, @RequestBody Map<String, String> purchaseStatus) {
-        System.out.println("updatePurchaseStatus!!!!!! purchaseId: "+purchaseId+", purchaseStatus: "+purchaseStatus);
         crowdOrderDetailsService.updatePurchaseStatus(purchaseId, purchaseStatus.get("purchaseStatus"));
         return ResponseEntity.ok("주문 상태가 정상적으로 업데이트 되었습니다.");
     }
