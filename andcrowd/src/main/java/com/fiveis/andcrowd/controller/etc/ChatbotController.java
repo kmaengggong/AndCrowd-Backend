@@ -35,9 +35,13 @@ public class ChatbotController {
     @Value("${chatbot.apiUrl}")
     private String apiUrl;
 
-    @MessageMapping("/sendMessage")
+    @MessageMapping("/sendMessage/{userId}")
     @SendTo("/chatbot/{userId}")
-    public String sendMessage(@Payload String chatMessage, @DestinationVariable("userId") int userId) throws IOException
+//    @MessageMapping("/sendMessage")
+//    @SendTo("/chatbot")
+    public String sendMessage(@Payload String chatMessage
+            , @DestinationVariable("userId") int userId
+    ) throws IOException
     {
 
         URL url = new URL(apiUrl);
