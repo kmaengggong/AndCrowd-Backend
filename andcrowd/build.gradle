@@ -61,7 +61,6 @@ dependencies {
 
 tasks.named('test') {
 	useJUnitPlatform()
-	systemProperty "jasypt.encryptor.password", System.getProperties().get("jasypt.encryptor.password")
 }
 
 // queryDSL 추가 : QueryDSL 빌드 옵션
