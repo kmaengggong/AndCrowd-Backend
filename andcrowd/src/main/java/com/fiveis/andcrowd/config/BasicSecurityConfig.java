@@ -116,8 +116,7 @@ public class BasicSecurityConfig {
 
     @Bean
     public OAuth2SuccessHandler oAuth2SuccessHandler() {
-        return new OAuth2SuccessHandler(tokenProvider,
-                refreshTokenRepository,
+        return new OAuth2SuccessHandler(refreshTokenRepository,
                 oAuth2AuthorizationRequestBasedOnCookieRepository(),
                 userService, tokenService);
     }
