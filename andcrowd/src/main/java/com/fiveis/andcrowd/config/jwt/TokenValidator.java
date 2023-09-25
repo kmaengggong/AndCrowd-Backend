@@ -14,7 +14,7 @@ import java.util.Map;
 public class TokenValidator {
     private final ObjectMapper objectMapper;
 
-    @Value("${jwt.secret_key")
+    @Value("${jwt.secret_key}")
     private String secretKey;
 
     public boolean isAccessTokenValid(String accessToken){
