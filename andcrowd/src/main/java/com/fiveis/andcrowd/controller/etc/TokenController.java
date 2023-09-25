@@ -34,11 +34,11 @@ public class TokenController {
     private final UserService userService;
     private final NaverService naverService;
 
-    @Value("${spring.security.oauth2.client.registration.naver.authorization-grant-type")
+    @Value("${spring.security.oauth2.client.registration.naver.authorization-grant-type}")
     private String grantType;
-    @Value("${spring.security.oauth2.client.registration.naver.client-id")
+    @Value("${spring.security.oauth2.client.registration.naver.client-id}")
     private String clientId;
-    @Value("${spring.security.oauth2.client.registration.naver.client-secret")
+    @Value("${spring.security.oauth2.client.registration.naver.client-secret}")
     private String clientSecret;
 
     @RequestMapping(value="/accessTokenValid", method=RequestMethod.POST)
@@ -97,7 +97,7 @@ public class TokenController {
     @RequestMapping(value="/oauth/naver", method=RequestMethod.POST)
     public ResponseEntity<?> naverLogin(HttpServletRequest request,
                                         HttpServletResponse response,
-                                        @RequestBody Map<String, String> callback/*@RequestBody NaverDTO.Params params*/) throws Exception {
+                                        @RequestBody Map<String, String> callback) throws Exception {
         System.out.println("naverLogin");
 
         // 프론트 엔드를 통해 code, state를 받아옴
