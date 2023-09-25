@@ -6,12 +6,14 @@ import net.minidev.json.parser.JSONParser;
 import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
@@ -23,7 +25,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Date;
 
-@CrossOrigin(origins="http://localhost:3000")
+//@CrossOrigin(origins="http://localhost:3000")
 @Controller
 public class ChatbotController {
 
@@ -34,8 +36,8 @@ public class ChatbotController {
     private String apiUrl;
 
     @MessageMapping("/sendMessage")
-    @SendTo("/chatbot/public")
-    public String sendMessage(@Payload String chatMessage) throws IOException
+    @SendTo("/chatbot/{userId}")
+    public String sendMessage(@Payload String chatMessage, @DestinationVariable("userId") int userId) throws IOException
     {
 
         URL url = new URL(apiUrl);
