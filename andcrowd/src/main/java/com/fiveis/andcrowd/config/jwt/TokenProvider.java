@@ -32,7 +32,7 @@ public class TokenProvider {
 
     @Value("${jwt.issuer}")
     private String issuer;
-    @Value("${jwt.secret_key")
+    @Value("${jwt.secret_key}")
     private String secretKey;
 
 
