@@ -30,7 +30,7 @@ import java.util.stream.Collectors;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(value = "/and")
-@CrossOrigin(origins = "http://localhost:3000") // 프론트엔드 도메인 설정
+// @CrossOrigin(origins = "http://localhost:3000") // 프론트엔드 도메인 설정
 @Log4j2
 public class RoomRestController {
     private final ChatRoomRepository chatRoomRepository;

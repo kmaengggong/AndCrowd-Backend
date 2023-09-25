@@ -11,7 +11,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/crowd/{crowdId}/reward")
-@CrossOrigin(origins = "http://localhost:3000")
+// @CrossOrigin(origins = "http://localhost:3000")
 public class DynamicCrowdRewardController {
 
     private final DynamicCrowdRewardService dynamicCrowdRewardService;
@@ -24,7 +24,7 @@ public class DynamicCrowdRewardController {
     @RequestMapping(value = "/all", method = RequestMethod.GET)
     public ResponseEntity<List<DynamicCrowdRewardDTO.FindAllById>> findAllRewardList(@PathVariable int crowdId) {
         // 리워드 목록 들고오기
-        List<DynamicCrowdRewardDTO.FindAllById> rewards = dynamicCrowdRewardService.findAll(crowdId);
+        List<DynamicCrowdRewardDTO.FindAllById> rewards = dynamicCrowdRewardService.findAllNotDeleted(crowdId);
         return ResponseEntity.ok()
                 .body(rewards);
     }
