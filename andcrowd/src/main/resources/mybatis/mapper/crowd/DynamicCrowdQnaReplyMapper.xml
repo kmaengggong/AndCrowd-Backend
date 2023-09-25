@@ -29,9 +29,9 @@
             updated_at AS updatedAt,
             is_deleted AS isDeleted
         FROM
-            crowd_qna_reply_#{crowdId}
+            crowd_qna_reply_#{crowd_id}
         ORDER BY
-            qna_reply_id
+            qna_reply_id DESC
     </select>
 
     <select id="findAllNotDeleted" resultType="com.fiveis.andcrowd.dto.crowd.DynamicCrowdQnaReplyDTO$Find">
@@ -45,7 +45,7 @@
             updated_at AS updatedAt,
             is_deleted AS isDeleted
         FROM
-            crowd_qna_reply_#{crowdId}
+            crowd_qna_reply_#{crowd_id}
         WHERE
             is_deleted = false
     </select>
@@ -63,7 +63,7 @@
         FROM
             crowd_qna_reply_#{crowdId}
         WHERE
-            qna_reply_id = #{crowdQnaId}
+            crowd_qna_id = #{crowdQnaId}
             AND is_deleted = false
     </select>
 

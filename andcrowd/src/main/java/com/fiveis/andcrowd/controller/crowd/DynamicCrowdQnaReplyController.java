@@ -17,13 +17,13 @@ import java.util.List;
 @RequestMapping("/crowd/{crowdId}/qna/reply")
 public class DynamicCrowdQnaReplyController {
 
-    private final CrowdService crowdService;
+//    private final CrowdService crowdService;
     private final DynamicCrowdQnaReplyService dynamicCrowdQnaReplyService;
 
     @Autowired
-    public DynamicCrowdQnaReplyController(CrowdService crowdService,
+    public DynamicCrowdQnaReplyController(//CrowdService crowdService,
                                           DynamicCrowdQnaReplyService dynamicCrowdQnaReplyService){
-        this.crowdService = crowdService;
+//        this.crowdService = crowdService;
         this.dynamicCrowdQnaReplyService = dynamicCrowdQnaReplyService;
     }
 
@@ -75,13 +75,13 @@ public class DynamicCrowdQnaReplyController {
         return "redirect:/and/" + crowdId + "/qna/reply/" + crowdQnaId + "/all";
     }
 
-    @GetMapping(value = "/user-check/{userId}")
-    public boolean checkCrowdUser(@PathVariable("crowdId") int crowdId, @PathVariable("userId") int userId){
-        int crowdUserId = crowdService.findByCrowdId(crowdId).get().getUserId();
-        if(crowdUserId == userId){
-            return true;
-        }else {
-            return false;
-        }
-    }
+//    @GetMapping(value = "/user-check/{userId}")
+//    public boolean checkCrowdUser(@PathVariable("crowdId") int crowdId, @PathVariable("userId") int userId){
+//        int crowdUserId = crowdService.findByCrowdId(crowdId).get().getUserId();
+//        if(crowdUserId == userId){
+//            return true;
+//        }else {
+//            return false;
+//        }
+//    }
 }
