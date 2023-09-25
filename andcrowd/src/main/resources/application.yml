@@ -38,7 +38,7 @@ spring:
           naver:
             client-id: ENC(fgrwPAAkg9upSD51Ok+utdtlg919Oom658OVFgF3TDE=)
             client-secret: ENC(/PmnnK1Y5u37cmRJRJJ9DEbLz/iOJ0Ye)
-            redirect-uri: http://223.130.161.96:3000   # http://223.130.161.96:3000/
+            redirect-uri: http://223.130.161.96:3000/oauth/redirected/naver
             authorization-grant-type: authorization_code
             scope: name, email, profile_image
             client-name: Naver
