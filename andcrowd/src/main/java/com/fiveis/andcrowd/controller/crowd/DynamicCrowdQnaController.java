@@ -41,12 +41,12 @@ public class DynamicCrowdQnaController {
         return dynamicCrowdQnaService.findById(crowdId, crowdQnaId);
     }
 
-    @RequestMapping(value = "", method = RequestMethod.POST)
+    @RequestMapping(value = "/create", method = RequestMethod.POST)
     public void insertCrowdQna(@RequestBody DynamicCrowdQnaDTO.Update dynamicCrowdQnaDTO){
         dynamicCrowdQnaService.save(dynamicCrowdQnaDTO);
     }
 
-    @RequestMapping(value = "/{crowdQnaId}", method = RequestMethod.PATCH)
+    @RequestMapping(value = "/{crowdQnaId}/update", method = RequestMethod.PATCH)
     public String updateCrowdQna(@PathVariable("crowdId") int crowdId,
                                 @PathVariable("crowdQnaId")int crowdQnaId,
                                 @RequestBody DynamicCrowdQnaDTO.Update dynamicCrowdQnaDTOUpdate){

@@ -58,7 +58,7 @@ public class DynamicCrowdQnaReplyController {
                                  @PathVariable("qnaReplyId")int qnaReplyId,
                                  @RequestBody DynamicCrowdQnaReplyDTO.Update dynamicCrowdQnaReplyDTOUpdate){
         dynamicCrowdQnaReplyService.update(dynamicCrowdQnaReplyDTOUpdate);
-        return "redirect:/crowd/" + crowdId + "/qna/" + crowdQnaId + "/all";
+        return "redirect:/crowd/" + crowdId + "/qna/" + crowdQnaId;
     }
 
     @RequestMapping(value = "/{crowdQnaId}/{qnaReplyId}/delete", method = RequestMethod.DELETE)
