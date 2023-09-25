@@ -25,9 +25,8 @@ import java.time.Duration;
 @RequiredArgsConstructor
 public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
     public static final String REFRESH_TOKEN_COOKIE_NAME = "refresh_token";
-    public static final String REDIRECT_PATH = "http://localhost:3000/callback/from/oauth";
+    public static final String REDIRECT_PATH = "http://223.130.161.96/callback/from/oauth";
 
-    private final TokenProvider tokenProvider;
     private final RefreshTokenRepository refreshTokenRepository;
 
     // @Configuration 으로 등록된 설정 클래스 내부 메서드에 @Bean 어노테이션이 붙어있다면
