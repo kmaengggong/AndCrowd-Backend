@@ -33,16 +33,6 @@ public class QCrowd extends EntityPathBase<Crowd> {
 
     public final NumberPath<Integer> crowdId = createNumber("crowdId", Integer.class);
 
-    public final StringPath crowdImg1 = createString("crowdImg1");
-
-    public final StringPath crowdImg2 = createString("crowdImg2");
-
-    public final StringPath crowdImg3 = createString("crowdImg3");
-
-    public final StringPath crowdImg4 = createString("crowdImg4");
-
-    public final StringPath crowdImg5 = createString("crowdImg5");
-
     public final NumberPath<Integer> crowdStatus = createNumber("crowdStatus", Integer.class);
 
     public final StringPath crowdTitle = createString("crowdTitle");

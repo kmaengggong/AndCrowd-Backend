@@ -210,7 +210,7 @@ public class AndServiceImpl implements AndService{
         LocalDate today = LocalDate.now();
 
         // 오늘 날짜보다 이전인 항목들을 가져와서 상태 코드를 3으로 업데이트
-        List<And> expiredItems = andJPARepository.findExpiredAnds(today.atStartOfDay(), 3);
+        List<And> expiredItems = andJPARepository.findExpiredAnds(today, 3);
         for (And item : expiredItems) {
             item.setAndStatus(3);
             andJPARepository.save(item);
