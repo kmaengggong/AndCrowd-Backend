@@ -26,7 +26,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 
 @Configuration
 @RequiredArgsConstructor
-@CrossOrigin(origins="http://localhost:3000")
+// @CrossOrigin(origins="http://localhost:3000")
 public class BasicSecurityConfig {
     private final UserDetailsService userDetailsService;
     private final TokenProvider tokenProvider;

@@ -49,15 +49,15 @@ public class And {
     @Column(nullable = true)
     private int needNumMem;
 
-    private String andImg1;
-
-    private String andImg2;
-
-    private String andImg3;
-
-    private String andImg4;
-
-    private String andImg5;
+//    private String andImg1;
+//
+//    private String andImg2;
+//
+//    private String andImg3;
+//
+//    private String andImg4;
+//
+//    private String andImg5;
 
     @Column(nullable = true, columnDefinition = "datetime default CURRENT_TIMESTAMP")
     private LocalDateTime publishedAt;

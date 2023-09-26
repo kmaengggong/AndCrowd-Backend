@@ -10,6 +10,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -41,11 +42,11 @@ public class CrowdJPARepositoryTest {
         String crowdContent = "1번본문";
         LocalDateTime crowdEndDate = LocalDateTime.of(2023, 10, 19, 0,0,0);
         int crowdGoal = 10000000;
-        String crowdImg1 = "펀딩이미지1";
-        String crowdImg2 = "펀딩이미지2";
-        String crowdImg3 = "펀딩이미지3";
-        String crowdImg4 = "펀딩이미지4";
-        String crowdImg5 = "펀딩이미지5";
+//        String crowdImg1 = "펀딩이미지1";
+//        String crowdImg2 = "펀딩이미지2";
+//        String crowdImg3 = "펀딩이미지3";
+//        String crowdImg4 = "펀딩이미지4";
+//        String crowdImg5 = "펀딩이미지5";
         int crowdStatus = 1;
         String crowdTitle = "1번제목";
         String headerImg = "헤더이미지1";
@@ -57,13 +58,13 @@ public class CrowdJPARepositoryTest {
                 .andId(andId)
                 .crowdCategoryId(crowdCategoryId)
                 .crowdContent(crowdContent)
-                .crowdEndDate(crowdEndDate)
+                .crowdEndDate(LocalDate.from(crowdEndDate))
                 .crowdGoal(crowdGoal)
-                .crowdImg1(crowdImg1)
-                .crowdImg2(crowdImg2)
-                .crowdImg3(crowdImg3)
-                .crowdImg4(crowdImg4)
-                .crowdImg5(crowdImg5)
+//                .crowdImg1(crowdImg1)
+//                .crowdImg2(crowdImg2)
+//                .crowdImg3(crowdImg3)
+//                .crowdImg4(crowdImg4)
+//                .crowdImg5(crowdImg5)
                 .crowdStatus(crowdStatus)
                 .crowdTitle(crowdTitle)
                 .headerImg(headerImg)
