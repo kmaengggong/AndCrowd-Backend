@@ -38,11 +38,11 @@ public class Crowd {
     @Column(nullable = false)
     private int crowdGoal;
 
-    private String crowdImg1;
-    private String crowdImg2;
-    private String crowdImg3;
-    private String crowdImg4;
-    private String crowdImg5;
+//    private String crowdImg1;
+//    private String crowdImg2;
+//    private String crowdImg3;
+//    private String crowdImg4;
+//    private String crowdImg5;
 
 //    @ColumnDefault("0")
     private int crowdStatus; // 1:모집중, 2:반려, 3:종료, 4: 작성중, 0:심사중
@@ -87,25 +87,25 @@ public class Crowd {
         this.updatedAt = LocalDateTime.now();
     }
 
-    public void setCrowdImg1(String crowdImg1) {
-        this.crowdImg1 = crowdImg1;
-    }
-
-    public void setCrowdImg2(String crowdImg2) {
-        this.crowdImg2 = crowdImg2;
-    }
-
-    public void setCrowdImg3(String crowdImg3) {
-        this.crowdImg3 = crowdImg3;
-    }
-
-    public void setCrowdImg4(String crowdImg4) {
-        this.crowdImg4 = crowdImg4;
-    }
-
-    public void setCrowdImg5(String crowdImg5) {
-        this.crowdImg5 = crowdImg5;
-    }
+//    public void setCrowdImg1(String crowdImg1) {
+//        this.crowdImg1 = crowdImg1;
+//    }
+//
+//    public void setCrowdImg2(String crowdImg2) {
+//        this.crowdImg2 = crowdImg2;
+//    }
+//
+//    public void setCrowdImg3(String crowdImg3) {
+//        this.crowdImg3 = crowdImg3;
+//    }
+//
+//    public void setCrowdImg4(String crowdImg4) {
+//        this.crowdImg4 = crowdImg4;
+//    }
+//
+//    public void setCrowdImg5(String crowdImg5) {
+//        this.crowdImg5 = crowdImg5;
+//    }
     public Crowd updateCrowd(String crowdTitle,
                              String crowdContent,
                              int crowdCategoryId,

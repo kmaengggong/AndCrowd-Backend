@@ -22,11 +22,11 @@ public class CrowdDTO {
         private String crowdContent;
         private LocalDate crowdEndDate;
         private int crowdGoal;
-        private String crowdImg1;
-        private String crowdImg2;
-        private String crowdImg3;
-        private String crowdImg4;
-        private String crowdImg5;
+//        private String crowdImg1;
+//        private String crowdImg2;
+//        private String crowdImg3;
+//        private String crowdImg4;
+//        private String crowdImg5;
         private int crowdStatus; // 1:모집중, 2:반려, 3:종료, 4: 작성중, 0:심사중
         private String crowdTitle;
         private String headerImg;
@@ -51,11 +51,11 @@ public class CrowdDTO {
         private int crowdCategoryId;
         private String crowdContent;
         private LocalDate crowdEndDate;
-        private String crowdImg1;
-        private String crowdImg2;
-        private String crowdImg3;
-        private String crowdImg4;
-        private String crowdImg5;
+//        private String crowdImg1;
+//        private String crowdImg2;
+//        private String crowdImg3;
+//        private String crowdImg4;
+//        private String crowdImg5;
         private String crowdTitle;
         private String headerImg;
 
@@ -93,11 +93,11 @@ public class CrowdDTO {
                 .crowdContent(crowd.getCrowdContent())
                 .crowdEndDate(crowd.getCrowdEndDate())
                 .crowdGoal(crowd.getCrowdGoal())
-                .crowdImg1(crowd.getCrowdImg1())
-                .crowdImg2(crowd.getCrowdImg2())
-                .crowdImg3(crowd.getCrowdImg3())
-                .crowdImg4(crowd.getCrowdImg4())
-                .crowdImg5(crowd.getCrowdImg5())
+//                .crowdImg1(crowd.getCrowdImg1())
+//                .crowdImg2(crowd.getCrowdImg2())
+//                .crowdImg3(crowd.getCrowdImg3())
+//                .crowdImg4(crowd.getCrowdImg4())
+//                .crowdImg5(crowd.getCrowdImg5())
                 .crowdStatus(crowd.getCrowdStatus())
                 .crowdTitle(crowd.getCrowdTitle())
                 .headerImg(crowd.getHeaderImg())

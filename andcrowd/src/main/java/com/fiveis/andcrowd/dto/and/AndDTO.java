@@ -25,11 +25,11 @@ public class AndDTO {
         private String andContent;
         private LocalDate andEndDate;
         private int needNumMem;
-        private String andImg1;
-        private String andImg2;
-        private String andImg3;
-        private String andImg4;
-        private String andImg5;
+//        private String andImg1;
+//        private String andImg2;
+//        private String andImg3;
+//        private String andImg4;
+//        private String andImg5;
         private LocalDateTime publishedAt;
         private LocalDateTime updatedAt;
         private int andLikeCount;
@@ -56,11 +56,11 @@ public class AndDTO {
         private String andContent;
         private LocalDate andEndDate;
         private int needNumMem;
-        private String andImg1;
-        private String andImg2;
-        private String andImg3;
-        private String andImg4;
-        private String andImg5;
+//        private String andImg1;
+//        private String andImg2;
+//        private String andImg3;
+//        private String andImg4;
+//        private String andImg5;
         private LocalDateTime publishedAt;
         private LocalDateTime updatedAt;
         private int adId;
@@ -98,11 +98,11 @@ public class AndDTO {
                 .andContent(and.getAndContent())
                 .andEndDate(and.getAndEndDate())
                 .needNumMem(and.getNeedNumMem())
-                .andImg1(and.getAndImg1())
-                .andImg2(and.getAndImg2())
-                .andImg3(and.getAndImg3())
-                .andImg4(and.getAndImg4())
-                .andImg5(and.getAndImg5())
+//                .andImg1(and.getAndImg1())
+//                .andImg2(and.getAndImg2())
+//                .andImg3(and.getAndImg3())
+//                .andImg4(and.getAndImg4())
+//                .andImg5(and.getAndImg5())
                 .publishedAt(and.getPublishedAt())
                 .updatedAt(and.getUpdatedAt())
                 .andLikeCount(and.getAndLikeCount())
