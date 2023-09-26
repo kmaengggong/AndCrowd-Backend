@@ -31,16 +31,6 @@ public class QAnd extends EntityPathBase<And> {
 
     public final NumberPath<Integer> andId = createNumber("andId", Integer.class);
 
-    public final StringPath andImg1 = createString("andImg1");
-
-    public final StringPath andImg2 = createString("andImg2");
-
-    public final StringPath andImg3 = createString("andImg3");
-
-    public final StringPath andImg4 = createString("andImg4");
-
-    public final StringPath andImg5 = createString("andImg5");
-
     public final NumberPath<Integer> andLikeCount = createNumber("andLikeCount", Integer.class);
 
     public final NumberPath<Integer> andStatus = createNumber("andStatus", Integer.class);

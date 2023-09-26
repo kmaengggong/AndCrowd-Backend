@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -35,7 +36,7 @@ public interface AndJPARepository extends JpaRepository<And, Integer>, AndQueryR
 
     // 현재 날짜 이전의 andEndDate와 andStatus가 특정 값(3)이 아닌 엔티티 검색
     @Query("SELECT a FROM And a WHERE a.andEndDate < :endDate AND a.andStatus <> :status")
-    List<And> findExpiredAnds(@Param("endDate") LocalDateTime endDate, @Param("status") int status);
+    List<And> findExpiredAnds(@Param("endDate") LocalDate endDate, @Param("status") int status);
 
     @Modifying
     @Query("UPDATE And a SET a.needNumMem = :needNumMem WHERE a.andId = :andId")
